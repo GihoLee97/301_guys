@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Setting"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/bgm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="음량조절"
+            />
+        <Button
+            android:id="@+id/push_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람 설정"
+            />
+        <Button
+            android:id="@+id/autoset_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동플레이 속도 조절"
+            />
+        <Button
+            android:id="@+id/thema_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화면 테마 설정"
+            />
+        <Button
+            android:id="@+id/question_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="문의"
+            />
+        <Button
+            android:id="@+id/private_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개인정보취급방법"
+            />
+        <Button
+            android:id="@+id/index_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="표시할 경제지표 선택"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
