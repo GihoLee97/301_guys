@@ -1,241 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".GameNormal"
-    android:orientation="vertical"
-    android:weightSum="32"
-    >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0074CC"
-        android:text="Nasdaq"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_weight="2"
-        />
 
-    <ScrollView
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:layout_weight="3"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="32"
+        tools:context=".GameNormal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#0074CC"
+            android:gravity="center"
+            android:text="Nasdaq"
+            android:textColor="@color/black" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:scrollbarAlwaysDrawHorizontalTrack="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="환율" />
+
+                    <ImageView
+                        android:id="@+id/exchange_image"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="금값" />
+
+                    <ImageView
+                        android:id="@+id/gold_image"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="장단기 금리" />
+
+                    <ImageView
+                        android:id="@+id/shortlonginterest_image"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="금리" />
+
+                    <ImageView
+                        android:id="@+id/interest_image"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="통화량" />
+
+                    <ImageView
+                        android:id="@+id/money_image"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="18"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_chart"
+                android:layout_width="match_parent"
+                android:layout_height="350dp" />
+
+            <ImageView
+                android:id="@+id/assist_chart"
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="3"
             android:orientation="horizontal"
-            >
-            <LinearLayout
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="News" />
+
+            <TextView
+                android:id="@+id/news"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="환율"
-                    />
-                <ImageView
-                    android:id="@+id/exchange_image"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    />
-            </LinearLayout>
+                android:layout_weight="1"
+                android:text="뉴스내용" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="금값"
-                    />
-                <ImageView
-                    android:id="@+id/gold_image"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="장단기 금리"
-                    />
-                <ImageView
-                    android:id="@+id/shortlonginterest_image"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="금리"
-                    />
-                <ImageView
-                    android:id="@+id/interest_image"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="통화량"
-                    />
-                <ImageView
-                    android:id="@+id/money_image"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    />
-            </LinearLayout>
-
-
+                />
 
         </LinearLayout>
-    </ScrollView>
-    <LinearLayout
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/evaluation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="원화평가금액:    " />
+
+            <TextView
+                android:id="@+id/profit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="수익률:  " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <Button
+                android:id="@+id/buy_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="매수"
+                android:textColor="@android:color/holo_red_light"
+
+                />
+
+            <Button
+                android:id="@+id/sell_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="매도"
+                android:textColor="@android:color/holo_blue_bright" />
+
+            <Button
+                android:id="@+id/auto_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="자동"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/item_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="아이템"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/buy_dialog_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="18"
-        >
-        <ImageView
-            android:id="@+id/main_chart"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            />
-        <ImageView
-            android:id="@+id/assist_chart"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:layout_weight="3"
-        android:weightSum="1"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="News"
-            />
-        <TextView
-            android:id="@+id/news"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="뉴스내용"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="vertical"
-        android:layout_weight="3"
-        >
-        <TextView
-            android:id="@+id/evaluation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="원화평가금액:    "
-            />
-        <TextView
-            android:id="@+id/profit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="수익률:  "
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_weight="3"
-        android:weightSum="4"
-        >
-        <Button
-            android:id="@+id/buy_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="매수"
-            android:textColor="@android:color/holo_red_light"
-            android:layout_weight="1"
-
-            />
-        <Button
-            android:id="@+id/sell_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="매도"
-            android:textColor="@android:color/holo_blue_bright"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/auto_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="자동"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/item_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="아이템"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            />
-
-    </LinearLayout>
-
-
-</LinearLayout>
+        />
+</FrameLayout>
