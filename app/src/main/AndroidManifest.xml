@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".ResultNormal"></activity>
+        <activity android:name=".Initial"></activity>
+        <activity android:name=".inital" />
+        <activity android:name=".ResultNormal" />
         <activity android:name=".GameNormal" />
         <activity android:name=".Setting" />
         <activity android:name=".Profile" />

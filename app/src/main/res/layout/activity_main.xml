@@ -42,7 +42,7 @@
             android:id="@+id/profile1_btn"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@android:color/holo_blue_bright"
+            android:background="#0007c4"
             android:text="프로필" />
 
         <Button
