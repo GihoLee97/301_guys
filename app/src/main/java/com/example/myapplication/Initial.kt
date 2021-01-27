@@ -2,20 +2,17 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.databinding.ActivityInitialBinding
 
 class Initial : AppCompatActivity() {
-
-    private lateinit var binding : ActivityInitialBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInitialBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_initial)
 
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        val btn_login = findViewById<Button>(R.id.btn_login)
+        btn_login.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java) //Main으로 이동
             startActivity(intent)
         }
     }

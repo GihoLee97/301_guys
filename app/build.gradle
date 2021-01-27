@@ -8,11 +8,6 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    buildFeatures {
-        // 뷰 바인딩 활성화
-        viewBinding = true
-    }
-
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdkVersion 16
