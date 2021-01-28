@@ -1,11 +1,17 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class Setting : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
-    }
+@Entity
+class Setting(@PrimaryKey(autoGenerate = true)var id:Long?,
+@ColumnInfo(name="volume")var volume: Int,
+              @ColumnInfo(name="push")var push: Boolean,
+              @ColumnInfo(name="autospeed")var autospeed: Int,
+              @ColumnInfo(name="thema")var thema: String,
+              @ColumnInfo(name="index")var index: MutableList<String>
+)
+{
+    constructor(): this(null,5,false,5,"default", mutableListOf("nothing"))
 }
