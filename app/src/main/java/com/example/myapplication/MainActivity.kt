@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,GameNormal::class.java)
             startActivity(intent)
         }
+
     }
 
 }
