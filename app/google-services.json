@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "736423790876",
+    "project_id": "stockedu-40575",
+    "storage_bucket": "stockedu-40575.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736423790876:android:65619cea99c03d10e952d9",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736423790876-803lu70toddvom8g44782ug4nossgl6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "0cd27057f839182e83bfdb35990fa59dc1ab34c1"
+          }
+        },
+        {
+          "client_id": "736423790876-kovr3omkf31trb18v6kmm2o2ub3f0hnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdENQs_UcnoYcLh6ov0pRaCWxyuc8Hlzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736423790876-kovr3omkf31trb18v6kmm2o2ub3f0hnd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
