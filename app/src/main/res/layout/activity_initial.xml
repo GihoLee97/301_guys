@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InitialActivity"
     android:padding="10dp"
-    >
+    tools:context=".InitialActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -62,17 +61,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_ini"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/ll_ini" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_googleSignIn"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login"></com.google.android.gms.common.SignInButton>
+        app:layout_constraintTop_toBottomOf="@+id/btn_login">
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_googleSignIn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login"></com.google.android.gms.common.SignInButton>
 
+        <ImageButton
+            android:id="@+id/btn_kakaoLogin"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:src="@drawable/kakao_login_medium_wide"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_googleSignIn" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
