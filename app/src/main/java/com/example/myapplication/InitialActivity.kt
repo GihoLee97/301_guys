@@ -21,6 +21,7 @@ import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.user.UserApiClient
 
 class InitialActivity : AppCompatActivity() {
+    // google signin
     var auth: FirebaseAuth? = null
     val GOOGLE_REQUEST_CODE = 99
     val TAG = "googleLogin"
@@ -30,7 +31,7 @@ class InitialActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
 
-        KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
+        // KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
 
 
         val btn_login = findViewById<Button>(R.id.btn_login)

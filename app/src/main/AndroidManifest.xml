@@ -9,25 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <!-- android:name 설정 -->
-        android:name=".GlobalApplication"
-        <activity android:name=".InitialActivity">
+        <activity android:name=".LoadnAutoauthonizeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            </intent-filter></activity>
+        <activity android:name=".InitialActivity"/>
+        // kakao
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"
-            />
+            android:value="@string/kakao_app_key" />
+
         <activity android:name=".ResultNormalActivity" />
         <activity android:name=".GameNormalActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MainActivity"></activity>
-
-        <!-- kakao (2020-1-29)-->
+        <activity android:name=".MainActivity" /> <!-- kakao (2020-1-29) -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
