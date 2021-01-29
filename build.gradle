@@ -20,6 +20,9 @@ allprojects {
         google()
         jcenter()
 
+        // kakao SDK repository config
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
     }
 }
 

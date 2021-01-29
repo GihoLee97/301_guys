@@ -4,4 +4,6 @@
     <string name="setting_str">설정</string>
     <string name="game_str">게임</string>
     <string name="buy_str">매수</string>
-   </resources>
+    <string name="kakao_app_key">0c9ac0ead6e3f965c35fa7c9d0973b7f</string>
+</resources>
+
