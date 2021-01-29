@@ -1,11 +1,36 @@
 package com.example.myapplication
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 
 @Dao
 interface SettingDao {
     @Query("SELECT * FROM Setting")
-    fun getAll()
+    fun getAll(): MutableList<Setting>
+
+    @Query("SELECT volume FROM Setting")
+    fun getVolume(): Boolean
+
+    @Query("SELECT push FROM Setting")
+    fun getPush(): Boolean
+
+    @Query("SELECT autospeed FROM Setting")
+    fun getAutoSpeed(): Int
+
+    @Query("SELECT thema FROM Setting")
+    fun getThema(): Boolean
+
+    @Query("SELECT `index` FROM Setting")
+    fun getIndex(): MutableList<String>
+
+    @Insert
+    fun insert(setting: Setting)
+
+    @Update
+    fun update(setting: Setting)
+
+
 }

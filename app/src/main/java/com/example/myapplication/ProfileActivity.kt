@@ -7,9 +7,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class ProfileActivity : AppCompatActivity() {
+    //receive profile room data
+    private var profileDb : ProflieDB? = null
+    private var proflie = mutableListOf<Profile>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        profileDb = ProflieDB.getInstace(this)
+
 
         val nickname_btn = findViewById<Button>(R.id.nickname_btn)
         nickname_btn.setOnClickListener {

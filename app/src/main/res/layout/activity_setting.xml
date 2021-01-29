@@ -11,6 +11,7 @@
     tools:context=".SettingActivity">
 
     <TextView
+        android:id="@+id/print"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,15 +27,16 @@
         android:orientation="vertical">
 
         <Switch
-            android:id="@+id/bgm_btn"
+            android:id="@+id/bgm_sw"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="BGM on/off"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            />
 
         <Switch
-            android:id="@+id/push_btn"
+            android:id="@+id/push_sw"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -78,13 +80,14 @@
                 android:textSize="20dp" />
 
             <RadioGroup
+                android:id="@+id/thema"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/light_btn"
                     android:layout_width="150dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -92,7 +95,7 @@
 
 
                 <RadioButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/dark_btn"
                     android:layout_width="150dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -138,32 +141,50 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5"
+                >
 
-                <RadioButton
+                <CheckBox
+                    android:id="@+id/interest_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="금리" />
+                    android:text="금리"
+                    android:layout_weight="1"
+                    android:textSize="10dp"
+                    />
 
-                <RadioButton
+                <CheckBox
+                    android:id="@+id/exchange_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="환율" />
+                    android:text="환율"
+                    android:layout_weight="1"
+                    android:textSize="10dp" />
 
-                <RadioButton
+                <CheckBox
+                    android:id="@+id/shortlonginterest_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="히히" />
+                    android:text="장단기금리"
+                    android:layout_weight="1"
+                    android:textSize="10dp" />
 
-                <RadioButton
+                <CheckBox
+                    android:id="@+id/gold_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="하하" />
+                    android:text="금값"
+                    android:layout_weight="1"
+                    android:textSize="10dp"/>
 
-                <RadioButton
+                <CheckBox
+                    android:id="@+id/money_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="호호" />
+                    android:text="통화량"
+                    android:layout_weight="1"
+                    android:textSize="10dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -180,6 +201,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="개인정보취급방법" />
+
+        <Button
+            android:id="@+id/complete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="확인" />
 
     </LinearLayout>
 
