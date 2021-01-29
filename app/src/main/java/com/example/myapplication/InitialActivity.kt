@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,10 +16,16 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.user.UserApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class InitialActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
@@ -32,12 +39,19 @@ class InitialActivity : AppCompatActivity() {
 
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
 
-
         val btn_login = findViewById<Button>(R.id.btn_login)
         btn_login.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java) //Main으로 이동
-            startActivity(intent)
+            val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php"
+            val id1: TextView = findViewById(R.id.et_id)
+            val pw1: TextView = findViewById(R.id.et_pw)
+            val loginID: String = id1.text.toString().trim()
+            val loginPW: String = pw1.text.toString().trim()
+
+            setidpw(loginID, loginPW)
+            startActivity(Intent(this, MainActivity::class.java))
         }
+
 
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -73,8 +87,31 @@ class InitialActivity : AppCompatActivity() {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
         })
-    }
 
+    }
+    fun setidpw(u_id: String, u_pw: String) {
+        val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php/"
+        var gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
+//        //creating retrofit object
+        var retrofit =
+            Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        //creating our api
+        var server = retrofit.create(Retrofitservice::class.java)
+        server.post_setidpw(u_id, u_pw).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
+            }
+        })
+    }
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
