@@ -3,7 +3,9 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -13,6 +15,10 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.user.UserApiClient
 
 class InitialActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
@@ -23,6 +29,9 @@ class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
+
+        KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
+
 
         val btn_login = findViewById<Button>(R.id.btn_login)
         btn_login.setOnClickListener{
@@ -41,7 +50,31 @@ class InitialActivity : AppCompatActivity() {
         btn_googleSignIn.setOnClickListener {
             signIn()
         }
+
+        val btn_kakaoLogin = findViewById<ImageButton>(R.id.btn_kakaoLogin)
+        btn_kakaoLogin.setOnClickListener(View.OnClickListener {
+
+            // 로그인 공통 callback 구성
+            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                if (error != null) {
+                    Log.e(TAG, "로그인 실패", error)
+                }
+                else if (token != null) {
+                    Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                    val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+                    startActivity(intent)
+                }
+            }
+
+            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
+                LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
+            } else {
+                LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
+        })
     }
+
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
