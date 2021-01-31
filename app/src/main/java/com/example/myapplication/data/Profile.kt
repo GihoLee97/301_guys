@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,8 +9,9 @@ data class Profile (@PrimaryKey(autoGenerate = true) var id: Long?,
 @ColumnInfo(name="nickname") var nickname : String,
                @ColumnInfo(name="profit") var profit : Int,
                @ColumnInfo(name="history") var history : String,
-               @ColumnInfo(name="level") var level : Int
+               @ColumnInfo(name="level") var level : Int,
+               @ColumnInfo(name= "login" ) var login: String
 )
 {
-    constructor(): this(null,"nickname",0,"no play",0)
+    constructor(): this(null,"nickname",0,"no play",0, "never")
 }

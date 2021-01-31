@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.data.Profile
+import com.example.myapplication.data.ProflieDB
 
 class ProfileActivity : AppCompatActivity() {
     //receive profile room data

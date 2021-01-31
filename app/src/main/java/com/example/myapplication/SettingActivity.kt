@@ -3,11 +3,12 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
-import androidx.room.Entity
+import com.example.myapplication.data.Setting
+import com.example.myapplication.data.SettingDB
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SettingActivity : AppCompatActivity() {
     //초기 설정값들
@@ -15,17 +16,17 @@ class SettingActivity : AppCompatActivity() {
     val dpush: Boolean = false
     val dautoplay: Int = 5
     val dthema: Int = 0
-    val dindex: List<Boolean> = listOf(true, true, true, true, true)
-
+    var thema:Int = 0
     private var settingDb : SettingDB? =null
-    private var setting = mutableListOf<Setting>()
+    private var setList = mutableListOf<Setting>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
+        settingDb = SettingDB.getInstace(this)
+
         //변수선언
-        var start:Int = 0
         var print = findViewById<TextView>(R.id.print)
         var bgm_sw = findViewById<Switch>(R.id.bgm_sw)
         var push_sw = findViewById<Switch>(R.id.push_sw)
@@ -40,38 +41,75 @@ class SettingActivity : AppCompatActivity() {
         var gold = findViewById<CheckBox>(R.id.gold_btn)
         var money = findViewById<CheckBox>(R.id.money_btn)
         var complete = findViewById<Button>(R.id.complete_btn)
-        var volume: Boolean
-        var push: Boolean = false
-        var autoplay: Int = 5
         var thema: Int = 0
-        var index:List<Boolean> = listOf(interest.isChecked, exchange.isChecked, shortlonginterest.isChecked, gold.isChecked, money.isChecked)
+        val startRunnable = Runnable {
+            setList = settingDb?.settingDao()?.getAll()!!
+        }
+        var id: List<Int> = settingDb?.settingDao()?.getId()!!
 
-        settingDb = SettingDB.getInstace(this)
 
+        val startThread = Thread(startRunnable)
+        startThread.start()
 
-        if(setting != null&&start==0){
-            start=start+1
+        if(settingDb==null){
             bgm_sw.isChecked=dvolume
             push_sw.isChecked=dpush
             autoplay_bar.progress=dautoplay
             thema_choose.check(themas[dthema].id)
+            print.text= "SetList is Empty"
+            var t = Toast.makeText(this,"실행", Toast.LENGTH_SHORT)
+            t.show()
+
+        } else{
+            bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]
+            push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]
+            autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!![0]
+            thema_choose.check(themas[settingDb?.settingDao()?.getThema()!![0]].id)
         }
 
-        print.text=start.toString()//지우기
+
+
 
 
         //확인 버튼
         complete.setOnClickListener {
+            val setRunnable = Runnable {
+                val newSetting = Setting()
+                newSetting.id = 1
+                newSetting.autospeed = autoplay_bar.progress
+                newSetting.volume = bgm_sw.isChecked
+                newSetting.push = push_sw.isChecked
+                if(light.isChecked){ thema = 0 }
+                else if(dark.isChecked){ thema = 1 }
+                newSetting.thema = thema//수정필요
+                newSetting.index = 10000*toInt(interest.isChecked)+1000*toInt(exchange.isChecked)+100*toInt(shortlonginterest.isChecked)+10*toInt(gold.isChecked)+toInt(money.isChecked)
+                settingDb?.settingDao()?.insert(newSetting)
+            }
+
+            var setThread = Thread(setRunnable)
+            setThread.start()
+
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
-            volume = bgm_sw.isChecked
-            push = push_sw.isChecked
-            autoplay = autoplay_bar.progress
+
         }
 
 
-
-
     }
+
+
+
+
+    fun toInt(bool: Boolean): Int{
+        if (bool==true)return 1
+        else return 0
+    }
+
+    override fun onDestroy() {
+        SettingDB.destroyINSTACE()
+        super.onDestroy()
+    }
+
+
 }
 

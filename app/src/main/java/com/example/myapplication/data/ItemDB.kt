@@ -1,23 +1,22 @@
-package com.example.myapplication
+package com.example.myapplication.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-
-@Database(entities =  [Profile::class], version =  1)
-abstract class ProflieDB: RoomDatabase() {
-    abstract  fun profileDao(): ProfileDao
+@Database(entities =  [Item::class], version =  1)
+abstract  class ItemDB: RoomDatabase() {
+    abstract  fun itemDao(): ItemDao
 
     companion object{
-        private var INSTANCE : ProflieDB? =null
+        private var INSTANCE : ItemDB? =null
 
-        fun getInstace(context: Context): ProflieDB?{
+        fun getInstace(context: Context): ItemDB?{
             if (INSTANCE == null){
-                synchronized(ProflieDB::class){
+                synchronized(ItemDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        ProflieDB::class.java,
+                        ItemDB::class.java,
                         "playlist.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()

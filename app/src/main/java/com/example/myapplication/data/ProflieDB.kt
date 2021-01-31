@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.data
 
 import android.content.Context
 import androidx.room.Database
@@ -6,18 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [Setting::class],version = 1)
-abstract class SettingDB: RoomDatabase() {
-    abstract fun settingDao(): SettingDao
+@Database(entities =  [Profile::class], version =  1)
+abstract class ProflieDB: RoomDatabase() {
+    abstract  fun profileDao(): ProfileDao
 
     companion object{
-        private  var INSTANCE: SettingDB? = null
+        private var INSTANCE : ProflieDB? =null
 
-        fun getInstace(context: Context): SettingDB?{
+        fun getInstace(context: Context): ProflieDB?{
             if (INSTANCE == null){
-                synchronized(SettingDB::class){
+                synchronized(ProflieDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        SettingDB::class.java,
+                        ProflieDB::class.java,
                         "playlist.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()
