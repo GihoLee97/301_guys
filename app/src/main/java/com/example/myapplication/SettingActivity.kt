@@ -70,8 +70,6 @@ class SettingActivity : AppCompatActivity() {
 
 
 
-
-
         //확인 버튼, settingDB 저장
         complete.setOnClickListener {
             val setRunnable = Runnable {

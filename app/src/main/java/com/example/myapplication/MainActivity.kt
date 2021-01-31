@@ -29,7 +29,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,GameNormalActivity::class.java)
             startActivity(intent)
         }
-
+    }
+    override fun onBackPressed() {
+        startActivity(Intent(this, InitialActivity::class.java))
+        finish()
     }
 
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.data.Dialog_nick
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 
@@ -22,10 +23,11 @@ class ProfileActivity : AppCompatActivity() {
 
         val nickname_btn = findViewById<Button>(R.id.nickname_btn)
         nickname_btn.setOnClickListener {
-            val layoutInflater: LayoutInflater = getLayoutInflater()
-            val builder = AlertDialog.Builder(this)
-            val dialogview = layoutInflater.inflate(R.layout.nickname_dialog,null)
-            builder.setView(dialogview).show()
+
+            val dlg_nick = Dialog_nick(this)
+            val layoutInflater_nick: LayoutInflater = getLayoutInflater()
+            val builder_nick = AlertDialog.Builder(this)
+            dlg_nick.start()
 
 
         }
