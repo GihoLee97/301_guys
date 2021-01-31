@@ -21,10 +21,10 @@ interface SettingDao {
     fun getAutoSpeed(): Int
 
     @Query("SELECT thema FROM Setting")
-    fun getThema(): Boolean
+    fun getThema(): Int
 
     @Query("SELECT `index` FROM Setting")
-    fun getIndex(): MutableList<String>
+    fun getIndex(): Int
 
     @Insert
     fun insert(setting: Setting)
@@ -32,5 +32,6 @@ interface SettingDao {
     @Update
     fun update(setting: Setting)
 
-
+    @Query("DELETE FROM Setting")
+    fun deleteAll()
 }
