@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         <!--Splash Activity-->
-        <activity android:name=".LoadnAutoauthonizeActivity"></activity>
-        // kakao
+<!--        <activity android:name=".LoadnAutoauthonizeActivity"></activity>-->
+<!--        // kakao-->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key"

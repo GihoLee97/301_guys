@@ -15,7 +15,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({ //delay를 위한 handler
-            startActivity(Intent(this, InitialActivity::class.java))
+            var enterAccess = "google"
+
+            if(enterAccess==""){ // No access authority
+                val intent = Intent(this, InitialActivity::class.java) //Initial으로 이동
+                startActivity(intent)
+            }
+            else{ // available access authority
+                val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+                startActivity(intent)
+            }
             finish()
         }, SPLASH_VIEW_TIME)
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
