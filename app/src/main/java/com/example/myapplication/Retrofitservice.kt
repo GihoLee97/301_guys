@@ -11,5 +11,6 @@ interface Retrofitservice{
     @POST("test/testlogin.php/")
     fun post_setidpw(
             @Field("u_id") u_id : String,
-            @Field("u_pw") u_pw : String): Call<String>
+            @Field("u_pw") u_pw : String,
+            @Field("u_date") u_date : String): Call<String>
 }
