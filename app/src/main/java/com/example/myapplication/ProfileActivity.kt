@@ -26,6 +26,8 @@ class ProfileActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             val dialogview = layoutInflater.inflate(R.layout.nickname_dialog,null)
             builder.setView(dialogview).show()
+
+
         }
     }
 }

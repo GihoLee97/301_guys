@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.widget.*
 import com.example.myapplication.data.Setting
 import com.example.myapplication.data.SettingDB
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import java.lang.Math.pow
+import java.util.EnumSet.range
 
 class SettingActivity : AppCompatActivity() {
     //초기 설정값들
@@ -16,7 +15,6 @@ class SettingActivity : AppCompatActivity() {
     val dpush: Boolean = false
     val dautoplay: Int = 5
     val dthema: Int = 0
-    var thema:Int = 0
     private var settingDb : SettingDB? =null
     private var setList = mutableListOf<Setting>()
 
@@ -27,7 +25,6 @@ class SettingActivity : AppCompatActivity() {
         settingDb = SettingDB.getInstace(this)
 
         //변수선언
-        var print = findViewById<TextView>(R.id.print)
         var bgm_sw = findViewById<Switch>(R.id.bgm_sw)
         var push_sw = findViewById<Switch>(R.id.push_sw)
         var autoplay_bar = findViewById<SeekBar>(R.id.autoPlaySpeed_seekBar)
@@ -35,6 +32,7 @@ class SettingActivity : AppCompatActivity() {
         var light = findViewById<RadioButton>(R.id.light_btn)
         var dark = findViewById<RadioButton>(R.id.dark_btn)
         var themas:List<RadioButton> = listOf(light, dark)
+        var indexcount: Int = 5
         var interest = findViewById<CheckBox>(R.id.interest_btn)
         var exchange = findViewById<CheckBox>(R.id.exchange_btn)
         var shortlonginterest = findViewById<CheckBox>(R.id.shortlonginterest_btn)
@@ -45,33 +43,36 @@ class SettingActivity : AppCompatActivity() {
         val startRunnable = Runnable {
             setList = settingDb?.settingDao()?.getAll()!!
         }
-        var id: List<Int> = settingDb?.settingDao()?.getId()!!
-
 
         val startThread = Thread(startRunnable)
         startThread.start()
 
-        if(settingDb==null){
+
+        //화면 초기 setting
+        if(settingDb?.settingDao()?.getId()?.isEmpty() == true){
             bgm_sw.isChecked=dvolume
             push_sw.isChecked=dpush
             autoplay_bar.progress=dautoplay
             thema_choose.check(themas[dthema].id)
-            print.text= "SetList is Empty"
-            var t = Toast.makeText(this,"실행", Toast.LENGTH_SHORT)
-            t.show()
-
         } else{
             bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]
             push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]
             autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!![0]
             thema_choose.check(themas[settingDb?.settingDao()?.getThema()!![0]].id)
+            if(settingDb?.settingDao()?.getIndex()!![0]>=10000){interest.isChecked = true}
+            var indexlist:MutableList<Boolean> = intToList(settingDb?.settingDao()?.getIndex()!![0], indexcount)
+            interest.isChecked = indexlist[0].not()
+            exchange.isChecked=indexlist[1].not()
+            shortlonginterest.isChecked=indexlist[2].not()
+            gold.isChecked=indexlist[3].not()
+            money.isChecked=indexlist[4].not()
         }
 
 
 
 
 
-        //확인 버튼
+        //확인 버튼, settingDB 저장
         complete.setOnClickListener {
             val setRunnable = Runnable {
                 val newSetting = Setting()
@@ -101,8 +102,21 @@ class SettingActivity : AppCompatActivity() {
 
 
     fun toInt(bool: Boolean): Int{
-        if (bool==true)return 1
-        else return 0
+        var i: Int
+        if (bool==true) i = 0
+        else i = 1
+        return i
+    }
+
+    fun intToList(i : Int, n : Int): MutableList<Boolean>{
+        var index:MutableList<Boolean> = mutableListOf()
+        for(c in 1..n){index.add(true)}
+        var input:Int = i
+        for(a in 0..n-1){
+            if(input < pow(10.0, (n-1-a).toDouble())){ index[a]=false }
+            else{ input=input- pow(10.0, (n-1-a).toDouble()).toInt() }
+        }
+        return index
     }
 
     override fun onDestroy() {

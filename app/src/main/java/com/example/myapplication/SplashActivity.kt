@@ -15,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({ //delay를 위한 handler
-            var enterAccess = "google"
+            var enterAccess = ""
 
             if(enterAccess==""){ // No access authority
                 val intent = Intent(this, InitialActivity::class.java) //Initial으로 이동

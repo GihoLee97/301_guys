@@ -28,6 +28,7 @@ abstract class SettingDB: RoomDatabase() {
             return INSTANCE
         }
 
+
         fun destroyINSTACE(){
             INSTANCE = null
         }
