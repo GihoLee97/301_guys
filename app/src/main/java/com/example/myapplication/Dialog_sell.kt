@@ -27,17 +27,17 @@ class Dialog_sell(context : Context) {
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                amount_sell.text = "${progress*0.01*money} 원"
+                amount_sell.text = "${Math.round(progress*0.01*money)/100f} 원"
                 // 수수료 0.1퍼센트
-                tax.text="${progress*0.01*money*0.001} 원"
+                tax.text="${Math.round(progress*0.01*money*0.001)/100f} 원"
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                amount_sell.text = "${seekBar!!.progress *0.01*money} 원"
-                tax.text = "${seekBar!!.progress *0.01*money*0.001} 원"
+                amount_sell.text = "${Math.round(seekBar!!.progress *0.01*money)/100f} 원"
+                tax.text = "${Math.round(seekBar!!.progress *0.01*money*0.001)/100f} 원"
             }
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                amount_sell.text = "${seekBar!!.progress*0.01*money} 원"
-                tax.text = "${seekBar!!.progress*0.01*money*0.001} 원"
+                amount_sell.text = "${Math.round(seekBar!!.progress*0.01*money)/100f} 원"
+                tax.text = "${Math.round(seekBar!!.progress*0.01*money*0.001)/100f} 원"
             }
         })
 

@@ -26,6 +26,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class InitialActivity : AppCompatActivity() {
     // google signin
@@ -46,10 +48,16 @@ class InitialActivity : AppCompatActivity() {
             val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
+
+            val time1: LocalDateTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val formatted = time1.format(formatter)
             val loginID: String = id1.text.toString().trim()
             val loginPW: String = pw1.text.toString().trim()
+            val loginDate : String = formatted.toString().trim()
+            setidpw(loginID, loginPW, loginDate)
+            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()
 
-            setidpw(loginID, loginPW)
             startActivity(Intent(this, MainActivity::class.java))
         }
 
@@ -90,7 +98,7 @@ class InitialActivity : AppCompatActivity() {
         })
 
     }
-    fun setidpw(u_id: String, u_pw: String) {
+    fun setidpw(u_id: String, u_pw: String, u_date : String) {
         val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
@@ -103,7 +111,7 @@ class InitialActivity : AppCompatActivity() {
                 .build()
         //creating our api
         var server = retrofit.create(Retrofitservice::class.java)
-        server.post_setidpw(u_id, u_pw).enqueue(object : Callback<String> {
+        server.post_setidpw(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
             }

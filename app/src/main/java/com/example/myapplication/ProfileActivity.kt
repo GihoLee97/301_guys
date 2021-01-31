@@ -11,7 +11,6 @@ class ProfileActivity : AppCompatActivity() {
     private var profileDb : ProflieDB? = null
     private var proflie = mutableListOf<Profile>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -26,6 +25,5 @@ class ProfileActivity : AppCompatActivity() {
             val dialogview = layoutInflater.inflate(R.layout.nickname_dialog,null)
             builder.setView(dialogview).show()
         }
-
     }
 }
