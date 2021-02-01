@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -47,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
             // update nickname
             call_dialog_nick()
         } else { // recall database
-            nickname_textView.text = profileDb?.profileDao()?.getNickname()
+            nickname_textView.text = profileDb?.profileDao()?.getNickname().toString()
         }
 
         val startThread = Thread(startRunnable)
@@ -72,6 +73,3 @@ class ProfileActivity : AppCompatActivity() {
 }
 
 
-        }
-    }
-}
