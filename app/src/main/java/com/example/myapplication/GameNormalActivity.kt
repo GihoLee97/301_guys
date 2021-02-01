@@ -114,15 +114,17 @@ class GameNormalActivity : AppCompatActivity(){
          //creating our api
         var server = retrofit.create(RetrofitGet::class.java)
         server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
-        //server.getdata().enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
+                //Log.d("data: ",data)
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful && response.body() != null) {
                     val getted_name: String = response.body()!!
                     Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()
+                    Log.d("---:",response.isSuccessful.toString())
+                   // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
                 }
             }
         })

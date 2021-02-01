@@ -28,6 +28,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import retrofit2.Converter
 
 class InitialActivity : AppCompatActivity() {
     // google signin
@@ -41,24 +42,39 @@ class InitialActivity : AppCompatActivity() {
         setContentView(R.layout.activity_initial)
 
         // KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
-
-        val btn_login = findViewById<Button>(R.id.btn_login)
-        btn_login.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java) //Main으로 이동
-            val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php"
+        // 회원가입
+        val btn_signup = findViewById<Button>(R.id.btn_signup)
+        btn_signup.setOnClickListener{
+            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+            val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
-
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
             val loginID: String = id1.text.toString().trim()
             val loginPW: String = pw1.text.toString().trim()
             val loginDate : String = formatted.toString().trim()
-            setidpw(loginID, loginPW, loginDate)
+            signup(loginID, loginPW, loginDate)
             //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()
 
-            startActivity(Intent(this, MainActivity::class.java))
+            //startActivity(Intent(this, MainActivity::class.java))
+        }
+        // 로그인
+        val btn_login = findViewById<Button>(R.id.btn_login)
+        btn_login.setOnClickListener{
+            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+            val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
+            val id1: TextView = findViewById(R.id.et_id)
+            val pw1: TextView = findViewById(R.id.et_pw)
+            val time1: LocalDateTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val formatted = time1.format(formatter)
+            val loginID: String = id1.text.toString().trim()
+            val loginPW: String = pw1.text.toString().trim()
+            val loginDate : String = formatted.toString().trim()
+            login_check(loginID, loginPW, loginDate)
+            //startActivity(Intent(this, MainActivity::class.java))
         }
 
 
@@ -98,8 +114,10 @@ class InitialActivity : AppCompatActivity() {
         })
 
     }
-    fun setidpw(u_id: String, u_pw: String, u_date : String) {
-        val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php/"
+    // 회원가입
+    fun signup(u_id: String, u_pw: String, u_date : String) {
+        var api_signup: Retrofitsignup? = null
+        val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
@@ -110,17 +128,66 @@ class InitialActivity : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         //creating our api
-        var server = retrofit.create(Retrofitservice::class.java)
-        server.post_setidpw(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+        api_signup = retrofit.create(Retrofitsignup::class.java)
+        api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@InitialActivity, "회원가입 실패...", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
+                val code: String = response.body()!!
+                if(code == "444"){
+                    Toast.makeText(this@InitialActivity, "공백 아이디는 불가합니다.", Toast.LENGTH_LONG).show()
+                }
+                if(code == "555"){
+                    Toast.makeText(this@InitialActivity, "이미 등록된 아이디입니다.", Toast.LENGTH_LONG).show()
+                }
+                if(code == "666"){
+                    Toast.makeText(this@InitialActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
+    //
+
+    //
+    ///로그인
+    fun login_check(u_id: String, u_pw: String, u_date: String) {
+        var funlogincheck: Retrofitlogincheck? = null
+        val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
+        var gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
+//        //creating retrofit object
+        var retrofit =
+            Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        //creating our api
+        funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
+        funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                //Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
+
+            }
+
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val okcode: String = response.body()!!
+                    if (okcode == "777"){
+                        Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@InitialActivity ,MainActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                }
+            }
+        })
+    }
+
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
