@@ -147,7 +147,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -171,30 +171,42 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="3"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/cash"
+            android:layout_height="wrap_content"
+            android:layout_weight="4">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="현금:     "/>
+                android:layout_height="60dp"
+                android:layout_weight="4"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/assets"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="총자산:    "/>
 
-            <TextView
-                android:id="@+id/evaluation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="원화평가금액:    " />
+                <TextView
+                    android:id="@+id/cash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="현금:     "/>
 
-            <TextView
-                android:id="@+id/profit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="수익률:  " />
+                <TextView
+                    android:id="@+id/evaluation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="원화평가금액:    " />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/profit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="수익률:  " />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"

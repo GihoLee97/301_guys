@@ -26,6 +26,7 @@ class GameNormalActivity : AppCompatActivity(){
         val startcash: Float = 5000000F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
+        val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
         val evaluation = findViewById<TextView>(R.id.evaluation)
         val profit = findViewById<TextView>(R.id.profit)
@@ -36,7 +37,12 @@ class GameNormalActivity : AppCompatActivity(){
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
 
         //초기화
-        viewModel.initialize(startcash, startevaluation, startprofit)
+        viewModel.initialize(startcash, startevaluation, startprofit)//화면 전환시 data reset되는 문제 발생
+
+        //실시간 data 반영
+        viewModel.assets().observe(this, Observer {
+            assets.text ="총자산: "+it.toString()+"원"
+        })
         viewModel.cash().observe(this, Observer {
             cash.text = "현금: "+it.toString()+"원"
         })
@@ -56,7 +62,7 @@ class GameNormalActivity : AppCompatActivity(){
             val dlg_buy = Dialog_buy(this)
             val layoutInflater_buy: LayoutInflater = getLayoutInflater()
             val builder_buy = AlertDialog.Builder(this)
-            dlg_buy.start()
+            dlg_buy.start(viewModel.cash().value!!)
             dlg_buy.setOnBuyClickedListener { content->
                 buy=content
                 viewModel.buyStock(buy[0], buy[1])
@@ -69,7 +75,7 @@ class GameNormalActivity : AppCompatActivity(){
             val dlg_sell = Dialog_sell(this)
             val layoutInflater_sell: LayoutInflater = getLayoutInflater()
             val builder_sell = AlertDialog.Builder(this)
-            dlg_sell.start()
+            dlg_sell.start(viewModel.evaluation().value!!)
             dlg_sell.setOnSellClickedListener { content->
                 sell=content
                 viewModel.sellStock(sell[0], sell[1])

@@ -15,6 +15,8 @@ class Dialog_nick(context : Context) {
     private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감
     private lateinit var btn_ok : Button
     private lateinit var nickname_editText : EditText
+    private lateinit var listenter: Dialog_nick.NicknameDialogClickedListener
+
 
     fun start(profileDb :ProflieDB?) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
@@ -41,11 +43,23 @@ class Dialog_nick(context : Context) {
             var setThread = Thread(setRunnable)
             setThread.start()
 
+            var result:String = nickname_editText.text.toString()
+            listenter.onNicknameClicked(result)
             dlg.dismiss()
         }
-
-
-
         dlg.show()
     }
+
+    fun setOnNicknameClickedListener(listener: (String)->Unit){
+        this.listenter = object : NicknameDialogClickedListener{
+            override fun onNicknameClicked(content: String) {
+                listener(content)
+            }
+        }
+    }
+
+    interface NicknameDialogClickedListener{
+        fun onNicknameClicked(content: String)
+    }
+
 }

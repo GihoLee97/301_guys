@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.Dialog_nick
 import com.example.myapplication.data.Profile
@@ -31,7 +32,14 @@ class ProfileActivity : AppCompatActivity() {
         nickname_textView = findViewById(R.id.nickName_text)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProfileActivityViewModel::class.java)
+        lateinit var changenick: String
+        var count:Int = 0
 
+
+        viewModel.nickname().observe(this, Observer {
+            nickname_textView.text = it
+        })
         val startRunnable = Runnable {
             profileList = profileDb?.profileDao()?.getAll()!!
         }
@@ -45,17 +53,32 @@ class ProfileActivity : AppCompatActivity() {
             }
             var setThread = Thread(setRunnable)
             setThread.start()
+            viewModel.initialize("닉네임을 아직 정하지 않았습니다.")
             // update nickname
-            call_dialog_nick()
-        } else { // recall database
-            nickname_textView.text = profileDb?.profileDao()?.getNickname().toString()
+            viewModel.nicknameChange("닉네임을 아직 정하지 않았습니다.")
+            val dlg_nick = Dialog_nick(this)
+            profileDb = ProflieDB.getInstace(this)
+            dlg_nick.start(profileDb)
+            dlg_nick.setOnNicknameClickedListener { content->
+                changenick=content
+                viewModel.nicknameChange(changenick)
+            }
+//            count=count+1
+        } else  { // recall database
+            viewModel.initialize(profileDb?.profileDao()?.getNickname().toString())
+//            count=count+1
         }
 
         val startThread = Thread(startRunnable)
         startThread.start()
 
         nickname_btn.setOnClickListener {
-            call_dialog_nick()
+            val dlg_nick = Dialog_nick(this)
+            dlg_nick.start(profileDb)
+            dlg_nick.setOnNicknameClickedListener { content->
+                changenick=content
+                viewModel.nicknameChange(changenick)
+            }
         }
 
         accountManagement_btn.setOnClickListener {
@@ -64,12 +87,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    // call dialog_nick and update nickname
-    private fun call_dialog_nick() {
-        val dlg_nick = Dialog_nick(this)
-        dlg_nick.start(profileDb)
-        nickname_textView.text = profileDb?.profileDao()?.getNickname() //TODO!!!!!
-    }
+
 }
 
 
