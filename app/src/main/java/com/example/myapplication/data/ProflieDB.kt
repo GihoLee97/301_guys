@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import com.example.myapplication.ProfileActivity
 
 
-@Database(entities =  [Profile::class], version =  1)
+@Database(entities =  [Profile::class], version =  3)
 abstract class ProflieDB: RoomDatabase() {
     abstract  fun profileDao(): ProfileDao
 

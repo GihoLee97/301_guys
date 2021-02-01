@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/splashimg"
@@ -10,31 +12,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+        <activity android:name=".AccountManagementActivity"></activity>
         <!-- android:name 설정 -->
-        android:name=".GlobalApplication"
-
-        <!--Splash Activity-->
-        <activity android:name=".SplashActivity"
+        <!-- Splash Activity -->
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!--Splash Activity-->
-<!--        <activity android:name=".LoadnAutoauthonizeActivity"></activity>-->
-<!--        // kakao-->
+        </activity> <!-- Splash Activity -->
+        <!-- <activity android:name=".LoadnAutoauthonizeActivity"></activity> -->
+        <!-- // kakao -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key"
-            />
-        <activity android:name=".InitialActivity"/>
+            android:value="@string/kakao_app_key" />
+
+        <activity android:name=".InitialActivity" />
         <activity android:name=".ResultNormalActivity" />
         <activity android:name=".GameNormalActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MainActivity"/>
-        <!-- kakao (2020-1-29)-->
+        <activity android:name=".MainActivity" /> <!-- kakao (2020-1-29) -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -49,6 +50,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest>
