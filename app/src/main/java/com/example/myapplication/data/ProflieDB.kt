@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities =  [Profile::class], version =  1)
+@Database(entities =  [Profile::class], version =  3)
 abstract class ProflieDB: RoomDatabase() {
     abstract  fun profileDao(): ProfileDao
 
