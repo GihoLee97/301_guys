@@ -72,7 +72,7 @@ class GameNormalActivity : AppCompatActivity(){
             dlg_sell.start()
             dlg_sell.setOnSellClickedListener { content->
                 sell=content
-                viewModel.buyStock(sell[0], sell[1])
+                viewModel.sellStock(sell[0], sell[1])
             }
         }
 
