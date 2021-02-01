@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.data.Dialog_nick
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.Dialog_nick
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), LifecycleOwner {
     //receive profile room data
     private var profileDb : ProflieDB? = null
     private var proflie = mutableListOf<Profile>()
@@ -18,6 +20,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        var nickname = findViewById<Button>(R.id.nickname_btn)
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProfileActivityViewModel::class.java)
         profileDb = ProflieDB.getInstace(this)
 
 

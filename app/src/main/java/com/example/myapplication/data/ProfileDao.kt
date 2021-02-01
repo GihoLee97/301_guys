@@ -11,19 +11,22 @@ interface ProfileDao {
     fun getAll(): MutableList<Profile>
 
     @Query("SELECT id FROM Profile")
-    fun getId(): Int
+    fun getId(): List<Int>
 
     @Query("SELECT nickname FROM Profile")
-    fun getNickname(): String
+    fun getNickname(): List<String>
 
     @Query("SELECT profit FROM Profile")
-    fun getProfit(): Int
+    fun getProfit(): List<Int>
 
     @Query("SELECT History FROM Profile")
-    fun getHistory(): String
+    fun getHistory(): List<String>
 
     @Query("SELECT level FROM Profile")
-    fun getLevel(): Int
+    fun getLevel(): List<Int>
+
+    @Query("SELECT rank FROM Profile")
+    fun getRank(): List<Int>
 
     @Query("SELECT login FROM Profile")
     fun getLogin(): String

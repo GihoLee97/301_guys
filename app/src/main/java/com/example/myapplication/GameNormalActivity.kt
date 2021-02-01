@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -18,21 +21,61 @@ class GameNormalActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
+        //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
-        buy_btn.setOnClickListener {
+        val startcash: Float = 5000000F
+        val startevaluation: Float = 0F
+        val startprofit: Float = 0F
+        val cash = findViewById<TextView>(R.id.cash)
+        val evaluation = findViewById<TextView>(R.id.evaluation)
+        val profit = findViewById<TextView>(R.id.profit)
+        //Buy Dialog로 부터 결과를 받아오는 list
+        lateinit var buy: List<Float>
+        lateinit var sell: List<Float>
+        //viewModel 객체
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
+
+        //초기화
+        viewModel.initialize(startcash, startevaluation, startprofit)
+        viewModel.cash().observe(this, Observer {
+            cash.text = "현금: "+it.toString()+"원"
+        })
+        viewModel.evaluation().observe(this, Observer {
+            evaluation.text = "원화평가금액: "+it.toString()+"원"
+        })
+        viewModel.profit().observe(this, Observer {
+            profit.text = "수익률"+it.toString()+"%"
+        })
+
+
+
+        //Button 동작
+
+        //매수
+       buy_btn.setOnClickListener {
             val dlg_buy = Dialog_buy(this)
             val layoutInflater_buy: LayoutInflater = getLayoutInflater()
             val builder_buy = AlertDialog.Builder(this)
             dlg_buy.start()
+            dlg_buy.setOnBuyClickedListener { content->
+                buy=content
+                viewModel.buyStock(buy[0], buy[1])
+            }
         }
 
+        //매도
         val sell_btn = findViewById<Button>(R.id.sell_btn)
         sell_btn.setOnClickListener {
             val dlg_sell = Dialog_sell(this)
             val layoutInflater_sell: LayoutInflater = getLayoutInflater()
             val builder_sell = AlertDialog.Builder(this)
             dlg_sell.start()
+            dlg_sell.setOnSellClickedListener { content->
+                sell=content
+                viewModel.buyStock(sell[0], sell[1])
+            }
         }
+
         val auto_btn = findViewById<Button>(R.id.auto_btn)
         auto_btn.setOnClickListener {
             val layoutInflater: LayoutInflater = getLayoutInflater()

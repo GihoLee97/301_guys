@@ -1,9 +1,9 @@
 package com.example.myapplication.data
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.myapplication.ProfileActivity
 
 
 @Database(entities =  [Profile::class], version =  1)
@@ -13,7 +13,7 @@ abstract class ProflieDB: RoomDatabase() {
     companion object{
         private var INSTANCE : ProflieDB? =null
 
-        fun getInstace(context: Context): ProflieDB?{
+        fun getInstace(context: ProfileActivity): ProflieDB?{
             if (INSTANCE == null){
                 synchronized(ProflieDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,

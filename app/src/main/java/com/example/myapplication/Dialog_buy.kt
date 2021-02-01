@@ -12,6 +12,7 @@ class Dialog_buy(context : Context) {
     private lateinit var btnOK : Button
     private lateinit var btnCancel : Button
     private lateinit var seekBar: SeekBar
+    private lateinit var listenter: BuyDialogClickedListener
 
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
@@ -20,17 +21,22 @@ class Dialog_buy(context : Context) {
         // 임시로 설정한 값
         val money = 1000000
         //
-        val amount_buy: TextView = dlg.findViewById(R.id.매수금액_숫자)
-        val tax : TextView = dlg.findViewById(R.id.수수료_숫자)
+        val amount_buy: TextView = dlg.findViewById(R.id.price)
+        val tax : TextView = dlg.findViewById(R.id.fees)
         //text = dlg.findViewById(R.id.매수금액_숫자)
+        var price: Float = 0F
+        var fees: Float = 0F
         seekBar = dlg.findViewById(R.id.seekbar_buy)
+
 
         seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
                 amount_buy.text = "${Math.round(progress*0.01*money)/100f} 원"
+                price = Math.round(progress*0.01*money)/100f
                 // 수수료 0.1퍼센트
                 tax.text="${Math.round(progress*0.01*money*0.001)/100f} 원"
+                fees = Math.round(progress*0.01*money*0.001)/100f
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 amount_buy.text = "${Math.round(seekBar!!.progress *0.01*money)/100f} 원"
@@ -45,7 +51,8 @@ class Dialog_buy(context : Context) {
         btnOK = dlg.findViewById(R.id.okButton)
         btnOK.setOnClickListener {
             //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
-
+            var result: List<Float> = listOf(price, fees)
+            listenter.onBuyClicked(result)
             dlg.dismiss()
         }
 
@@ -55,6 +62,18 @@ class Dialog_buy(context : Context) {
         }
 
         dlg.show()
+    }
+
+    fun setOnBuyClickedListener(listener: (List<Float>)->Unit){
+        this.listenter = object : BuyDialogClickedListener{
+            override fun onBuyClicked(content: List<Float>) {
+                listener(content)
+            }
+        }
+    }
+
+    interface BuyDialogClickedListener{
+        fun onBuyClicked(content: List<Float>)
     }
 
 }

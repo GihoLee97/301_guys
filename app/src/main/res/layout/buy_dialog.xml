@@ -122,7 +122,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
-            android:id="@+id/매수금액_숫자"
+            android:id="@+id/price"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -160,7 +160,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
-            android:id="@+id/수수료_숫자"
+            android:id="@+id/fees"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

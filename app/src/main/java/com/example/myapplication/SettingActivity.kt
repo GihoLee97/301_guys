@@ -85,7 +85,7 @@ class SettingActivity : AppCompatActivity() {
                 settingDb?.settingDao()?.insert(newSetting)
             }
 
-            var setThread = Thread(setRunnable)
+            val setThread = Thread(setRunnable)
             setThread.start()
 
             val intent = Intent(this,MainActivity::class.java)
