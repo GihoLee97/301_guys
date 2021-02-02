@@ -127,6 +127,7 @@ class GameNormalActivity : AppCompatActivity(){
         //viewModel 객체
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
 
+
         //초기화
         viewModel.initialize(startcash, startevaluation, startprofit)//화면 전환시 data reset되는 문제 발생
 
@@ -195,22 +196,23 @@ class GameNormalActivity : AppCompatActivity(){
             click = !click //////////////////////////////////////////////////////////////////////////
         }
 
+
         // 차트 ////////////////////////////////////////////////////////////////////////////////////
         CoroutineScope(Dispatchers.Default).launch {
-            val chartdata = runBlocking {
+            val chartdata = launch {
                 chartdata()
             }
 
-            val inidraw = runBlocking {
+            chartdata.join()
+
+            val inidraw = launch {
                 inidraw()
             }
 
-            val nowdraw = launch {
-                nowdraw()
-            }
+            inidraw.join()
+            nowdraw()
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
-
     }
     // 데이터 가지고 오기
     fun getRoomListDataHttp(){
@@ -250,8 +252,6 @@ class GameNormalActivity : AppCompatActivity(){
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
-
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
