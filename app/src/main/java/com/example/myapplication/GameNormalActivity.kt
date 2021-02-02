@@ -155,6 +155,11 @@ class GameNormalActivity : AppCompatActivity() {
             startitem3
         )//화면 전환시 data reset되는 문제 발생
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        // 차트 click, gameend 변수 초기화
+        click = false
+        gameend  = false
+
         //실시간 data 반영
         viewModel.assets().observe(this, Observer {
             assets.text = "총자산: " + it.toString() + "원"
@@ -190,8 +195,7 @@ class GameNormalActivity : AppCompatActivity() {
                 buy = content
                 viewModel.buyStock(buy[0], buy[1])
             }
-            click =
-                !click //////////////////////////////////////////////////////////////////////////
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
