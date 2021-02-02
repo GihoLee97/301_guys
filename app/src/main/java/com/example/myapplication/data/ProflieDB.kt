@@ -3,6 +3,8 @@ package com.example.myapplication.data
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.myapplication.AccountManagementActivity
+import com.example.myapplication.InitialActivity
 import com.example.myapplication.ProfileActivity
 
 
@@ -21,8 +23,32 @@ abstract class ProflieDB: RoomDatabase() {
                         "playlist.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()
+                }
+            }
+            return INSTANCE
+        }
 
+        fun getInstace(context: InitialActivity): ProflieDB?{
+            if (INSTANCE == null){
+                synchronized(ProflieDB::class){
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                        ProflieDB::class.java,
+                        "playlist.db")
+                        .allowMainThreadQueries().fallbackToDestructiveMigration()
+                        .build()
+                }
+            }
+            return INSTANCE
+        }
 
+        fun getInstace(context: AccountManagementActivity): ProflieDB?{
+            if (INSTANCE == null){
+                synchronized(ProflieDB::class){
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                        ProflieDB::class.java,
+                        "playlist.db")
+                        .allowMainThreadQueries().fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return INSTANCE

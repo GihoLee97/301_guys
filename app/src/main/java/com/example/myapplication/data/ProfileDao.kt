@@ -26,7 +26,7 @@ interface ProfileDao {
     fun getLevel(): Int
 
     @Query("SELECT login FROM Profile")
-    fun getLogin(): String
+    fun getLogin(): Int
 
     @Insert
     fun insert(profile: Profile)

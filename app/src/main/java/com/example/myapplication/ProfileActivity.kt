@@ -44,15 +44,9 @@ class ProfileActivity : AppCompatActivity() {
             profileList = profileDb?.profileDao()?.getAll()!!
         }
 
-        if (profileDb?.profileDao()?.getAll().isNullOrEmpty()) { // PreSet the setting in the case of first running
+        if (profileDb?.profileDao()?.getNickname()=="") { // PreSet the setting in the case of first running
             nickname_textView.text = "닉네임을 아직 정하지 않았습니다."
             // preinsert profile for call_dialog_nick which just update the database
-            val setRunnable = Runnable {
-                val newProfile = Profile(1, "닉네임을 아직 정하지 않았습니다.", 0, "", 1, "")
-                profileDb?.profileDao()?.insert(newProfile)
-            }
-            var setThread = Thread(setRunnable)
-            setThread.start()
             viewModel.initialize("닉네임을 아직 정하지 않았습니다.")
             // update nickname
             viewModel.nicknameChange("닉네임을 아직 정하지 않았습니다.")
@@ -82,7 +76,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         accountManagement_btn.setOnClickListener {
-            val intent = Intent(this, AccountManagementActivity::class.java) //Main으로 이동
+            val intent = Intent(this, AccountManagementActivity::class.java)
             startActivity(intent)
         }
     }

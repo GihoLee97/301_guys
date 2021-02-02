@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.data.Profile
+import com.example.myapplication.data.ProflieDB
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -22,15 +24,12 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import retrofit2.Converter
 
 class InitialActivity : AppCompatActivity() {
     // google signin
@@ -40,15 +39,24 @@ class InitialActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     @RequiresApi(Build.VERSION_CODES.O)
+    private lateinit var btn_googleSignIn : SignInButton
+    private lateinit var btn_generalSignup : Button
+    private lateinit var btn_generalLogin : Button
+    private lateinit var btn_kakaoLogin : ImageButton
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
 
-        // KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
-        // 회원가입
-        val btn_signup = findViewById<Button>(R.id.btn_signup)
-        btn_signup.setOnClickListener{
-            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+        btn_googleSignIn = findViewById(R.id.btn_googleSignIn)
+        btn_generalSignup = findViewById(R.id.btn_generalsignup)
+        btn_generalLogin = findViewById(R.id.btn_generalLogin)
+        btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
+
+
+        // 회원가입 & onClickListner
+        btn_generalSignup.setOnClickListener{
             val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
@@ -58,15 +66,11 @@ class InitialActivity : AppCompatActivity() {
             val loginID: String = id1.text.toString().trim()
             val loginPW: String = pw1.text.toString().trim()
             val loginDate : String = formatted.toString().trim()
-            signup(loginID, loginPW, loginDate)
-            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()
-
-            //startActivity(Intent(this, MainActivity::class.java))
+            generalSignup(loginID, loginPW, loginDate)
         }
-        // 로그인
-        val btn_login = findViewById<Button>(R.id.btn_login)
-        btn_login.setOnClickListener{
-            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+
+        // 로그인 & onClickListner
+        btn_generalLogin.setOnClickListener{
             val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
@@ -76,11 +80,10 @@ class InitialActivity : AppCompatActivity() {
             val loginID: String = id1.text.toString().trim()
             val loginPW: String = pw1.text.toString().trim()
             val loginDate : String = formatted.toString().trim()
-            login_check(loginID, loginPW, loginDate)
-            //startActivity(Intent(this, MainActivity::class.java))
+            generalLoginCheck(loginID, loginPW, loginDate)
         }
 
-
+        // google Sign in & onClickListner
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -88,14 +91,12 @@ class InitialActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        val btn_googleSignIn = findViewById<SignInButton>(R.id.btn_googleSignIn)
         btn_googleSignIn.setOnClickListener {
-            signIn()
+            googleSignIn()
         }
 
-        val btn_kakaoLogin = findViewById<ImageButton>(R.id.btn_kakaoLogin)
+        // kakao login & onClickListner
         btn_kakaoLogin.setOnClickListener(View.OnClickListener {
-
             // 로그인 공통 callback 구성
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
@@ -103,11 +104,9 @@ class InitialActivity : AppCompatActivity() {
                 }
                 else if (token != null) {
                     Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                    val intent = Intent(this, MainActivity::class.java) //Main으로 이동
-                    startActivity(intent)
+                    loginSuccess("KAKAO") // memorize login method and move to MainActivity
                 }
             }
-
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
                 LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
@@ -115,16 +114,16 @@ class InitialActivity : AppCompatActivity() {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
         })
-
     }
-    // 회원가입
-    fun signup(u_id: String, u_pw: String, u_date : String) {
+
+    // general signup
+    fun generalSignup(u_id: String, u_pw: String, u_date : String) {
         var api_signup: Retrofitsignup? = null
         val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
-//        //creating retrofit object
+        //creating retrofit object
         var retrofit =
             Retrofit.Builder()
                 .baseUrl(url)
@@ -134,10 +133,8 @@ class InitialActivity : AppCompatActivity() {
         api_signup = retrofit.create(Retrofitsignup::class.java)
         api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-//                Toast.makeText(this@InitialActivity, "회원가입 실패...", Toast.LENGTH_LONG).show()
                 Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
             }
-
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 val code: String = response.body()!!
                 if(code == "444"){
@@ -152,17 +149,15 @@ class InitialActivity : AppCompatActivity() {
             }
         })
     }
-    //
 
-    //
-    ///로그인
-    fun login_check(u_id: String, u_pw: String, u_date: String) {
+    // general login
+    fun generalLoginCheck(u_id: String, u_pw: String, u_date: String) {
         var funlogincheck: Retrofitlogincheck? = null
         val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
-//        //creating retrofit object
+        //creating retrofit object
         var retrofit =
             Retrofit.Builder()
                 .baseUrl(url)
@@ -173,26 +168,21 @@ class InitialActivity : AppCompatActivity() {
         funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
-                //Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
-
             }
-
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     val okcode: String = response.body()!!
                     if (okcode == "777"){
                         Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
-                        val intent = Intent(this@InitialActivity ,MainActivity::class.java)
-                        startActivity(intent)
+                        loginSuccess("GENERAL") // memorize login method and move to MainActivity
                     }
-
                 }
             }
         })
     }
 
-
-    private fun signIn() {
+    // google Sign In
+    private fun googleSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)
     }
@@ -215,6 +205,7 @@ class InitialActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth?.signInWithCredential(credential)
@@ -223,18 +214,54 @@ class InitialActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "로그인 성공")
                     val user = auth!!.currentUser
-                    loginSuccess()
+                    loginSuccess("GOOGLE") // memorize login method and move to MainActivity
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
     }
-    private fun loginSuccess(){
+
+    private fun loginSuccess(method: String){
+        memorizeLogMethod(method)
         val intent = Intent(this,MainActivity::class.java)
         startActivity(intent)
         finish()
     }
+
+    // remember which login method did user used with DB
+    private fun memorizeLogMethod(method : String){
+        var profileDb = ProflieDB?.getInstace(this)
+        // if profile DB is empty insert dummy
+        if(profileDb?.profileDao()?.getAll().isNullOrEmpty()){
+            val setRunnable = Runnable {
+                val newProfile = Profile(1, "", 0, "", 1, 0)
+                profileDb?.profileDao()?.insert(newProfile)
+            }
+            var setThread = Thread(setRunnable)
+            setThread.start()
+        }
+        // save which login method user have used
+        profileDb = ProflieDB?.getInstace(this)
+        var temp = profileDb?.profileDao()?.getLogin()
+        if(method=="GENERAL")   temp = temp?.or(1)
+        else if(method=="GOOGLE")   temp = temp?.or(2)
+        else if(method=="KAKAO")    temp = temp?.or(4)
+        // update the login method to DB
+        val setRunnable = Runnable {
+            val newProfile = Profile()
+            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+            newProfile.history = profileDb?.profileDao()?.getHistory()!!
+            newProfile.level = profileDb?.profileDao()?.getLevel()!!
+            newProfile.login = temp!!
+            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            profileDb?.profileDao()?.update(newProfile)
+        }
+        var setThread = Thread(setRunnable)
+        setThread.start()
+    }
+
     // 두번 누르면 종료되는 코드
     var time3: Long = 0
     override fun onBackPressed() {

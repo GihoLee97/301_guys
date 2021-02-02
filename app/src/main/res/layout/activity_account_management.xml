@@ -8,7 +8,7 @@
     tools:context=".AccountManagementActivity">
 
     <LinearLayout
-        android:id="@+id/GeneralAccountManagementLayout"
+        android:id="@+id/layout_generalAccountManagement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -94,7 +94,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/GoogleAccountManagementLayout"
+        android:id="@+id/layout_googleAccountManagement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -180,7 +180,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/KakaoAccountManagementLayout"
+        android:id="@+id/layout_kakaoAccountManagement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

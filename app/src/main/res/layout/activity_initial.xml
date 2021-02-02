@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_signup"
+        android:id="@+id/btn_generalsignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_ini" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_generalLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+        app:layout_constraintTop_toBottomOf="@+id/btn_generalLogin">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_googleSignIn"
@@ -95,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"></com.google.android.gms.common.SignInButton>
+            app:layout_constraintTop_toBottomOf="@+id/btn_generalLogin"></com.google.android.gms.common.SignInButton>
 
         <ImageButton
             android:id="@+id/btn_kakaoLogin"
