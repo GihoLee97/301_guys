@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -24,17 +26,13 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var textView_googleAcountID : TextView
     private lateinit var textView_kakaoAcountID : TextView
     private lateinit var btn_generalAcountID : Button
-    private lateinit var btn_googleAcountID : Button
-    private lateinit var btn_kakaoAcountID : Button
     private lateinit var textView_generalAcountEmail : TextView
     private lateinit var textView_googleAcountEmail : TextView
     private lateinit var textView_kakaoAcountEmail : TextView
     private lateinit var btn_generalAcountEmail : Button
-    private lateinit var btn_googleAcountEmail : Button
-    private lateinit var btn_kakaoAcountEmail : Button
     private lateinit var btn_generalAcountPW : Button
-    private lateinit var btn_googleAcountPW : Button
-    private lateinit var btn_kakaoAcountPW : Button
+    private lateinit var btn_googleAcountSignOut : Button
+    private lateinit var btn_kakaoAcountDelete : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,18 +49,14 @@ class AccountManagementActivity : AppCompatActivity() {
         layout_googleAccountManagement = findViewById(R.id.layout_googleAccountManagement)
         imageView_googleAccountProfile = findViewById(R.id.imageView_googleAccountProfile)
         textView_googleAcountID = findViewById(R.id.editText_googleAcountID)
-        btn_googleAcountID = findViewById(R.id.btn_googleAccountID)
         textView_googleAcountEmail = findViewById(R.id.editText_googleAcountEmail)
-        btn_googleAcountEmail = findViewById(R.id.btn_googleAcountEmail)
-        btn_googleAcountPW = findViewById(R.id.btn_googleAcountPW)
+        btn_googleAcountSignOut = findViewById(R.id.btn_googleAccountSignOut)
 
         layout_kakaoAccountManagement = findViewById(R.id.layout_kakaoAccountManagement)
         imageView_kakaoAccountProfile = findViewById(R.id.imageView_kakaoAccountProfile)
         textView_kakaoAcountID = findViewById(R.id.editText_kakaoAcountID)
-        btn_kakaoAcountID = findViewById(R.id.btn_kakaoAcountID)
         textView_kakaoAcountEmail = findViewById(R.id.editText_kakaoAcountEmail)
-        btn_kakaoAcountEmail = findViewById(R.id.btn_kakaoAcountEmail)
-        btn_kakaoAcountPW = findViewById(R.id.btn_kakaoAcountPW)
+        btn_kakaoAcountDelete = findViewById(R.id.btn_kakaoAccountDelete)
 
         // 현재 로그인된 계정만 띄우기
         profileDb = ProflieDB?.getInstace(this)
@@ -98,7 +92,51 @@ class AccountManagementActivity : AppCompatActivity() {
                 }
             }
             else layout_kakaoAccountManagement.visibility = View.GONE
+        }
 
+        btn_googleAcountSignOut.setOnClickListener {
+            googleAuth = FirebaseAuth.getInstance()
+            googleAuth.signOut()
+            updatelogOutInFo2DB("GOOGLE")
+            val intent = Intent(this,InitialActivity::class.java)
+            startActivity(intent)
+        }
+
+        btn_kakaoAcountDelete.setOnClickListener {
+            UserApiClient.instance.logout { error ->
+                if (error != null) {
+                    Log.e("KAKAO LOGOUT", "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                }
+                else {
+                    Log.i("KAKAO LOGOUT", "로그아웃 성공. SDK에서 토큰 삭제됨")
+                }
+            }
+            updatelogOutInFo2DB("KAKAO")
+            val intent = Intent(this,InitialActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun updatelogOutInFo2DB(method : String){
+        var mask : Int = 0
+        if (method=="GENERAL") mask = 1
+        else if(method=="GOOGLE") mask = 2
+        else if(method=="KAKAO") mask = 4
+
+        profileDb = ProflieDB?.getInstace(this)
+        if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
+            val setRunnable = Runnable {
+                val newProfile = Profile()
+                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!-mask
+                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                profileDb?.profileDao()?.update(newProfile)
+            }
+            var setThread = Thread(setRunnable)
+            setThread.start()
         }
     }
 }

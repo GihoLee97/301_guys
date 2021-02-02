@@ -134,13 +134,7 @@
                 android:layout_weight="10"
                 android:text="stockedu"
                 android:textSize="20dp"/>
-            <Button
-                android:id="@+id/btn_googleAccountID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/teal_700"
-                android:text="변경"
-                android:textSize="20dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -160,22 +154,15 @@
                 android:layout_weight="10"
                 android:text="stockedu@gmail.com"
                 android:textSize="20dp"/>
-            <Button
-                android:id="@+id/btn_googleAcountEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/teal_700"
-                android:text="변경"
-                android:textSize="20dp"/>
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_googleAcountPW"
+            android:id="@+id/btn_googleAccountSignOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/teal_700"
             android:layout_gravity="center"
-            android:text="비밀번호 변경"
+            android:text="구글 계정 연결 해제"
             android:textSize="20dp" />
     </LinearLayout>
 
@@ -220,13 +207,7 @@
                 android:layout_weight="10"
                 android:text="stockedu"
                 android:textSize="20dp"/>
-            <Button
-                android:id="@+id/btn_kakaoAcountID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/teal_700"
-                android:text="변경"
-                android:textSize="20dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -246,22 +227,16 @@
                 android:layout_weight="10"
                 android:text="stockedu@gmail.com"
                 android:textSize="20dp"/>
-            <Button
-                android:id="@+id/btn_kakaoAcountEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/teal_700"
-                android:text="변경"
-                android:textSize="20dp"/>
+
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_kakaoAcountPW"
+            android:id="@+id/btn_kakaoAccountDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/teal_700"
             android:layout_gravity="center"
-            android:text="비밀번호 변경"
+            android:text="카카오 계정 연결 해제"
             android:textSize="20dp" />
     </LinearLayout>
 </LinearLayout>

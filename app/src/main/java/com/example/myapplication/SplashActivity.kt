@@ -30,15 +30,20 @@ class SplashActivity : AppCompatActivity() {
             profileDb = ProflieDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
                 var loginMethod = profileDb?.profileDao()?.getLogin()
-                if(loginMethod?.and(1)==1) {}// general login
-                else if(loginMethod?.and(2)==2){ // google login
-                    if(isGoogleAuthChecked()) go2MainActivity()
+                if(loginMethod?.and(1)==1) go2MainActivity() // general login
+                else if(loginMethod?.and(2)==2) { // google login
+                    if (isGoogleAuthChecked()) go2MainActivity()
                 }
                 else if(loginMethod?.and(4)==4){ // kakao login
                     KakaoLogin()
                     go2MainActivity()
                 }
-            } else go2InitialActivity()
+                else{
+                    go2InitialActivity()
+                }
+            } else{
+                go2InitialActivity()
+            }
             finish()
         }, SPLASH_VIEW_TIME)
     }
