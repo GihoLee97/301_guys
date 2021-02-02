@@ -117,19 +117,28 @@ class GameNormalActivity : AppCompatActivity(){
         val startcash: Float = 5000000F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
+        var startitem1 : Int = 0
+        var startitem2 : Int = 0
+        var startitem3 : Int = 0
         val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
         val evaluation = findViewById<TextView>(R.id.evaluation)
         val profit = findViewById<TextView>(R.id.profit)
+        val item1 = findViewById<TextView>(R.id.item1)
+        val item2 = findViewById<TextView>(R.id.item2)
+        val item3 = findViewById<TextView>(R.id.item3)
+
         //Buy Dialog로 부터 결과를 받아오는 list
         lateinit var buy: List<Float>
         lateinit var sell: List<Float>
+        lateinit var item: List<Int>
+
         //viewModel 객체
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
 
 
         //초기화
-        viewModel.initialize(startcash, startevaluation, startprofit)//화면 전환시 data reset되는 문제 발생
+        viewModel.initialize(startcash, startevaluation, startprofit, startitem1, startitem2, startitem3)//화면 전환시 data reset되는 문제 발생
 
         //실시간 data 반영
         viewModel.assets().observe(this, Observer {
@@ -144,8 +153,15 @@ class GameNormalActivity : AppCompatActivity(){
         viewModel.profit().observe(this, Observer {
             profit.text = "수익률"+it.toString()+"%"
         })
-
-
+        viewModel.item1().observe(this, Observer {
+            item1.text ="아이템1: "+it.toString()+"개"
+        })
+        viewModel.item2().observe(this, Observer {
+            item2.text ="아이템2: "+it.toString()+"개"
+        })
+        viewModel.item3().observe(this, Observer {
+            item3.text ="아이템3: "+it.toString()+"개"
+        })
 
         //Button 동작
 
@@ -189,10 +205,13 @@ class GameNormalActivity : AppCompatActivity(){
 
         val item_btn = findViewById<Button>(R.id.item_btn)
         item_btn.setOnClickListener {
-            val layoutInflater: LayoutInflater = getLayoutInflater()
-            val builder = AlertDialog.Builder(this)
-            val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)
-            builder.setView(dialogview).show()
+            val dlg_item = Dialog_item(this)
+            dlg_item.start(viewModel.item1().value!!,viewModel.item2().value!!,viewModel.item3().value!!)
+            dlg_item.setOnItemClickedListener { content->
+                item = content
+                viewModel.setitem(item[0],item[1],item[2])
+            }
+//            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()
             click = !click //////////////////////////////////////////////////////////////////////////
         }
 
@@ -428,6 +447,7 @@ class GameNormalActivity : AppCompatActivity(){
             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월
             findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
         }
+
     }
     private suspend fun nowdraw() {
 // 현재 데이터
