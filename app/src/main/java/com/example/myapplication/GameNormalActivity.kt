@@ -27,11 +27,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-// 버튼 클릭 판별
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// 버튼 클릭 판별자 생성
 var click: Boolean = false
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-class GameNormalActivity : AppCompatActivity(){
+class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
@@ -45,7 +47,7 @@ class GameNormalActivity : AppCompatActivity(){
     // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
     // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
     private val random = Random()
-    private val sp = random.nextInt((snp_date.size - gl - given)) + given // Starting Point
+    private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
@@ -111,7 +113,6 @@ class GameNormalActivity : AppCompatActivity(){
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
@@ -121,9 +122,9 @@ class GameNormalActivity : AppCompatActivity(){
         val startcash: Float = 5000000F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
-        var startitem1 : Int = 0
-        var startitem2 : Int = 0
-        var startitem3 : Int = 0
+        var startitem1: Int = 0
+        var startitem2: Int = 0
+        var startitem3: Int = 0
         val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
         val evaluation = findViewById<TextView>(R.id.evaluation)
@@ -138,48 +139,57 @@ class GameNormalActivity : AppCompatActivity(){
         lateinit var item: List<Int>
 
         //viewModel 객체
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
+        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            GameNormalActivityVeiwModel::class.java
+        )
 
 
         //초기화
-        viewModel.initialize(startcash, startevaluation, startprofit, startitem1, startitem2, startitem3)//화면 전환시 data reset되는 문제 발생
+        viewModel.initialize(
+            startcash,
+            startevaluation,
+            startprofit,
+            startitem1,
+            startitem2,
+            startitem3
+        )//화면 전환시 data reset되는 문제 발생
 
         //실시간 data 반영
         viewModel.assets().observe(this, Observer {
-            assets.text ="총자산: "+it.toString()+"원"
+            assets.text = "총자산: " + it.toString() + "원"
         })
         viewModel.cash().observe(this, Observer {
-            cash.text = "현금: "+it.toString()+"원"
+            cash.text = "현금: " + it.toString() + "원"
         })
         viewModel.evaluation().observe(this, Observer {
-            evaluation.text = "원화평가금액: "+it.toString()+"원"
+            evaluation.text = "원화평가금액: " + it.toString() + "원"
         })
         viewModel.profit().observe(this, Observer {
-            profit.text = "수익률"+it.toString()+"%"
+            profit.text = "수익률" + it.toString() + "%"
         })
         viewModel.item1().observe(this, Observer {
-            item1.text ="아이템1: "+it.toString()+"개"
+            item1.text = "아이템1: " + it.toString() + "개"
         })
         viewModel.item2().observe(this, Observer {
-            item2.text ="아이템2: "+it.toString()+"개"
+            item2.text = "아이템2: " + it.toString() + "개"
         })
         viewModel.item3().observe(this, Observer {
-            item3.text ="아이템3: "+it.toString()+"개"
+            item3.text = "아이템3: " + it.toString() + "개"
         })
 
         //Button 동작
 
         //매수
-       buy_btn.setOnClickListener {
+        buy_btn.setOnClickListener {
             val dlg_buy = Dialog_buy(this)
             val layoutInflater_buy: LayoutInflater = getLayoutInflater()
             val builder_buy = AlertDialog.Builder(this)
             dlg_buy.start(viewModel.cash().value!!)
-            dlg_buy.setOnBuyClickedListener { content->
-                buy=content
+            dlg_buy.setOnBuyClickedListener { content ->
+                buy = content
                 viewModel.buyStock(buy[0], buy[1])
             }
-           click = !click //////////////////////////////////////////////////////////////////////////
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
@@ -189,8 +199,8 @@ class GameNormalActivity : AppCompatActivity(){
             val layoutInflater_sell: LayoutInflater = getLayoutInflater()
             val builder_sell = AlertDialog.Builder(this)
             dlg_sell.start(viewModel.evaluation().value!!)
-            dlg_sell.setOnSellClickedListener { content->
-                sell=content
+            dlg_sell.setOnSellClickedListener { content ->
+                sell = content
                 viewModel.sellStock(sell[0], sell[1])
             }
             click = !click /////////////////////////////////////////////////////////////////////////
@@ -211,10 +221,14 @@ class GameNormalActivity : AppCompatActivity(){
         val item_btn = findViewById<Button>(R.id.item_btn)
         item_btn.setOnClickListener {
             val dlg_item = Dialog_item(this)
-            dlg_item.start(viewModel.item1().value!!,viewModel.item2().value!!,viewModel.item3().value!!)
-            dlg_item.setOnItemClickedListener { content->
+            dlg_item.start(
+                viewModel.item1().value!!,
+                viewModel.item2().value!!,
+                viewModel.item3().value!!
+            )
+            dlg_item.setOnItemClickedListener { content ->
                 item = content
-                viewModel.setitem(item[0],item[1],item[2])
+                viewModel.setitem(item[0], item[1], item[2])
             }
 //            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()
             click = !click /////////////////////////////////////////////////////////////////////////
@@ -240,13 +254,14 @@ class GameNormalActivity : AppCompatActivity(){
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
+
     // 데이터 가지고 오기
-    fun getRoomListDataHttp(){
+    fun getRoomListDataHttp() {
         val u_id = ""
         val u_pw = ""
         val u_date = ""
         val url: String = "http://stockgame.dothome.co.kr/test/call.php/"
-        Log.d("데이터 받기 ","받기시도 중")
+        Log.d("데이터 받기 ", "받기시도 중")
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
@@ -257,24 +272,26 @@ class GameNormalActivity : AppCompatActivity(){
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
-         //creating our api
+        //creating our api
         var server = retrofit.create(RetrofitGet::class.java)
         server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
                 //Log.d("data: ",data)
             }
+
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
                 if (response.isSuccessful && response.body() != null) {
                     val getted_name: String = response.body()!!
                     Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()
-                    Log.d("---:",response.isSuccessful.toString())
-                   // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
+                    Log.d("---:", response.isSuccessful.toString())
+                    // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
                 }
             }
         })
     }
+
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
@@ -282,8 +299,6 @@ class GameNormalActivity : AppCompatActivity(){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     private fun chartdata() {
         // Entry 배열 초기값 입력
         snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))
@@ -332,7 +347,10 @@ class GameNormalActivity : AppCompatActivity(){
 
 
         for (i in 0..(given - 1)) {
-            snpD.addEntry(Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()), 0)
+            snpD.addEntry(
+                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()),
+                0
+            )
 
             var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
             var snpDate = snp_date[sp - given + 1 + i]
@@ -381,7 +399,12 @@ class GameNormalActivity : AppCompatActivity(){
                 indproC = snpDateSf.time - indproDateSf.time
             }
             indproCount += 1
-            indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)
+            indproD.addEntry(
+                Entry(
+                    (indproCount - 1250).toFloat(),
+                    indpro_val[indproIndex - 1].toFloat()
+                ), 0
+            )
 
             while (unemC > 0) {
                 unemIndex += 1
@@ -390,7 +413,10 @@ class GameNormalActivity : AppCompatActivity(){
                 unemC = snpDateSf.time - indproDateSf.time
             }
             unemCount += 1
-            unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)
+            unemD.addEntry(
+                Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),
+                0
+            )
 
             while (infC > 0) {
                 infIndex += 1
@@ -503,7 +529,12 @@ class GameNormalActivity : AppCompatActivity(){
                         fund_c = snpDate_sf.time - fundDate_sf.time
                     }
                     fundCount += 1
-                    fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)
+                    fundD.addEntry(
+                        Entry(
+                            (fundCount - 1250).toFloat(),
+                            fund_val[fundIndex].toFloat()
+                        ), 0
+                    )
                     println("fund date : $fundDate")
 
                     while (bond_c > 0) {
@@ -513,7 +544,12 @@ class GameNormalActivity : AppCompatActivity(){
                         bond_c = snpDate_sf.time - bondDate_sf.time
                     }
                     bondCount += 1
-                    bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)
+                    bondD.addEntry(
+                        Entry(
+                            (bondCount - 1250).toFloat(),
+                            bond_val[bondIndex].toFloat()
+                        ), 0
+                    )
 
                     while (indpro_c > 0) {
                         indproIndex += 1
@@ -522,7 +558,12 @@ class GameNormalActivity : AppCompatActivity(){
                         indpro_c = snpDate_sf.time - indproDate_sf.time
                     }
                     indproCount += 1
-                    indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)
+                    indproD.addEntry(
+                        Entry(
+                            (indproCount - 1250).toFloat(),
+                            indpro_val[indproIndex - 1].toFloat()
+                        ), 0
+                    )
 
                     while (unem_c > 0) {
                         unemIndex += 1
@@ -531,7 +572,12 @@ class GameNormalActivity : AppCompatActivity(){
                         unem_c = snpDate_sf.time - indproDate_sf.time
                     }
                     unemCount += 1
-                    unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)
+                    unemD.addEntry(
+                        Entry(
+                            (unemCount - 1250).toFloat(),
+                            unem_val[unemIndex - 1].toFloat()
+                        ), 0
+                    )
 
                     while (inf_c > 0) {
                         infIndex += 1
@@ -540,7 +586,12 @@ class GameNormalActivity : AppCompatActivity(){
                         inf_c = snpDate_sf.time - infDate_sf.time
                     }
                     infCount += 1
-                    infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)
+                    infD.addEntry(
+                        Entry(
+                            (infCount - 1250).toFloat(),
+                            inf_val[infIndex - 1].toFloat()
+                        ), 0
+                    )
 
                     println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
@@ -576,15 +627,11 @@ class GameNormalActivity : AppCompatActivity(){
 
 
                     dayPlus += 1 // 시간 진행
-                }
-
-                else {
+                } else {
                     println("게임 끝")
                     break
                 }
-            }
-
-            else {
+            } else {
                 delay(btnRefresh)
             }
             delay(oneday)
