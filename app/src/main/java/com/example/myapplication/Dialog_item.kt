@@ -2,12 +2,9 @@ package com.example.myapplication
 
 import android.app.Dialog
 import android.content.Context
-import android.view.View
 import android.view.Window
 import android.widget.Button
-import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 
 class Dialog_item(context : Context) {
     var mContext: Context? = context
@@ -53,9 +50,11 @@ class Dialog_item(context : Context) {
             listenter.onItemClicked(result)
 
             dlg.dismiss()
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
         btncancel.setOnClickListener {
             dlg.dismiss()
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
         btn_item1_plus.setOnClickListener{
             item1_number = item1_number.toInt() + 1

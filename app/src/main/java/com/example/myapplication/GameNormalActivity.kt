@@ -26,6 +26,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+
+// 버튼 클릭 판별
+var click: Boolean = false
+
+
 class GameNormalActivity : AppCompatActivity(){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,8 +97,6 @@ class GameNormalActivity : AppCompatActivity(){
 
 
     // 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 ///////////////////////////////////////////////
-    // 버튼 클릭 판별
-    private var click: Boolean = false
 
     // 일시정지 시 현재 값 저장
     private var snpNowDate: String = "yyyy-mm-dd"
@@ -190,7 +193,7 @@ class GameNormalActivity : AppCompatActivity(){
                 sell=content
                 viewModel.sellStock(sell[0], sell[1])
             }
-            click = !click //////////////////////////////////////////////////////////////////////////
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
         val auto_btn = findViewById<Button>(R.id.auto_btn)
@@ -202,6 +205,7 @@ class GameNormalActivity : AppCompatActivity(){
 //            val u_date = " "
 //            getRoomListDataHttp(u_id, u_pw, u_date)
             getRoomListDataHttp()
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
         val item_btn = findViewById<Button>(R.id.item_btn)
@@ -213,7 +217,7 @@ class GameNormalActivity : AppCompatActivity(){
                 viewModel.setitem(item[0],item[1],item[2])
             }
 //            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()
-            click = !click //////////////////////////////////////////////////////////////////////////
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
 

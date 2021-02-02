@@ -59,6 +59,7 @@ class Dialog_sell(context : Context) {
                 var result: List<Float> = listOf(price, fees)
                 listenter.onBuyClicked(result)
                 dlg.dismiss()
+                click = !click //////////////////////////////////////////////////////////////////////////
             }
             else{    Toast.makeText(dlg.context,"주식 보유량이 부족하여 매도할 수 없습니다.", Toast.LENGTH_LONG).show() }
         }
@@ -66,6 +67,7 @@ class Dialog_sell(context : Context) {
         btnCancel = dlg.findViewById(R.id.cancelButton)
         btnCancel.setOnClickListener {
             dlg.dismiss()
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
         dlg.show()
     }
