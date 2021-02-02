@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.data.GameNormal
+import com.example.myapplication.data.GameNormalDB
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -114,10 +117,16 @@ class GameNormalActivity : AppCompatActivity() {
     private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //Roomdata관련
+    private var gameNormalDb : GameNormalDB? = null
+    private var gameHistory = listOf<GameNormal>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
+
+        gameNormalDb = GameNormalDB.getInstace(this)
 
         //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
@@ -127,6 +136,14 @@ class GameNormalActivity : AppCompatActivity() {
         var startitem1: Int = 0
         var startitem2: Int = 0
         var startitem3: Int = 0
+        var uassets: Float = 0F
+        var ucash: Float = 0F
+        var uevaluation: Float = 0F
+        var uprofit: Float = 0F
+        var uitem1count: Int = 0
+        var uitem2count: Int = 0
+        var uitem3count: Int = 0
+        var localDatatime: LocalDateTime = LocalDateTime.now()
         val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
         val evaluation = findViewById<TextView>(R.id.evaluation)
@@ -134,25 +151,34 @@ class GameNormalActivity : AppCompatActivity() {
         val item1 = findViewById<TextView>(R.id.item1)
         val item2 = findViewById<TextView>(R.id.item2)
         val item3 = findViewById<TextView>(R.id.item3)
+        val startRunnable = Runnable {
+            gameHistory = gameNormalDb!!.gameNormalDao().getAll()
+        }
+        val startThread = Thread(startRunnable)
+        startThread.start()
 
         //Buy Dialog로 부터 결과를 받아오는 list
         lateinit var buy: List<Float>
         lateinit var sell: List<Float>
         lateinit var item: List<Int>
 
+
         //viewModel 객체
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             GameNormalActivityVeiwModel::class.java
         ).also {
             //초기화
-            it.initialize(
-                startcash,
-                startevaluation,
-                startprofit,
-                startitem1,
-                startitem2,
-                startitem3
-            )
+            if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
+                it.initialize(startcash, startevaluation, startprofit, startitem1, startitem2, startitem3)
+            }else{
+                it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item2count,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item3count)
+            }
+
         }//화면 전환시 data reset되는 문제 발생
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,24 +189,31 @@ class GameNormalActivity : AppCompatActivity() {
         //실시간 data 반영
         viewModel.assets().observe(this, Observer {
             assets.text = "총자산: " + it.toString() + "원"
+            uassets = it
         })
         viewModel.cash().observe(this, Observer {
             cash.text = "현금: " + it.toString() + "원"
+            ucash = it
         })
         viewModel.evaluation().observe(this, Observer {
             evaluation.text = "원화평가금액: " + it.toString() + "원"
+            uevaluation = it
         })
         viewModel.profit().observe(this, Observer {
             profit.text = "수익률" + it.toString() + "%"
+            uprofit = it
         })
         viewModel.item1().observe(this, Observer {
             item1.text = "아이템1: " + it.toString() + "개"
+            uitem1count = it
         })
         viewModel.item2().observe(this, Observer {
             item2.text = "아이템2: " + it.toString() + "개"
+            uitem2count = it
         })
         viewModel.item3().observe(this, Observer {
             item3.text = "아이템3: " + it.toString() + "개"
+            uitem3count = it
         })
 
         //Button 동작
@@ -190,10 +223,17 @@ class GameNormalActivity : AppCompatActivity() {
             val dlg_buy = Dialog_buy(this)
             val layoutInflater_buy: LayoutInflater = getLayoutInflater()
             val builder_buy = AlertDialog.Builder(this)
+            val addRunnable = Runnable {
+                localDatatime = LocalDateTime.now()
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,uevaluation,uprofit,true,buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
+                gameNormalDb?.gameNormalDao()?.insert(newhistory)
+            }
             dlg_buy.start(viewModel.cash().value!!)
             dlg_buy.setOnBuyClickedListener { content ->
                 buy = content
                 viewModel.buyStock(buy[0], buy[1])
+                val addThread = Thread(addRunnable)
+                addThread.start()
             }
             click = !click //////////////////////////////////////////////////////////////////////////
         }
@@ -204,10 +244,17 @@ class GameNormalActivity : AppCompatActivity() {
             val dlg_sell = Dialog_sell(this)
             val layoutInflater_sell: LayoutInflater = getLayoutInflater()
             val builder_sell = AlertDialog.Builder(this)
+            val addRunnable = Runnable {
+                localDatatime = LocalDateTime.now()
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,uevaluation,uprofit,false,sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
+                gameNormalDb?.gameNormalDao()?.insert(newhistory)
+            }
             dlg_sell.start(viewModel.evaluation().value!!)
             dlg_sell.setOnSellClickedListener { content ->
                 sell = content
                 viewModel.sellStock(sell[0], sell[1])
+                val addThread = Thread(addRunnable)
+                addThread.start()
             }
             click = !click /////////////////////////////////////////////////////////////////////////
         }

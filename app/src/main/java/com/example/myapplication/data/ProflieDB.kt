@@ -1,5 +1,6 @@
 package com.example.myapplication.data
 
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -16,7 +17,7 @@ abstract class ProflieDB: RoomDatabase() {
     companion object{
         private var INSTANCE : ProflieDB? =null
 
-        fun getInstace(context: ProfileActivity): ProflieDB?{
+        fun getInstace(context: Context): ProflieDB?{
             if (INSTANCE == null){
                 synchronized(ProflieDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
@@ -29,44 +30,6 @@ abstract class ProflieDB: RoomDatabase() {
             return INSTANCE
         }
 
-        fun getInstace(context: InitialActivity): ProflieDB?{
-            if (INSTANCE == null){
-                synchronized(ProflieDB::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        ProflieDB::class.java,
-                        "playlist.db")
-                        .allowMainThreadQueries().fallbackToDestructiveMigration()
-                        .build()
-                }
-            }
-            return INSTANCE
-        }
-
-        fun getInstace(context: AccountManagementActivity): ProflieDB?{
-            if (INSTANCE == null){
-                synchronized(ProflieDB::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        ProflieDB::class.java,
-                        "playlist.db")
-                        .allowMainThreadQueries().fallbackToDestructiveMigration()
-                        .build()
-                }
-            }
-            return INSTANCE
-        }
-
-        fun getInstace(context: SplashActivity): ProflieDB?{
-            if (INSTANCE == null){
-                synchronized(ProflieDB::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        ProflieDB::class.java,
-                        "playlist.db")
-                        .allowMainThreadQueries().fallbackToDestructiveMigration()
-                        .build()
-                }
-            }
-            return INSTANCE
-        }
 
         fun destroyINSTACE(){
             INSTANCE = null
