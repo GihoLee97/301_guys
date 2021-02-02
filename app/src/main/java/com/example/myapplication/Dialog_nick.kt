@@ -1,11 +1,14 @@
 
 package com.example.myapplication
 
+
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.provider.ContactsContract
 import android.view.Window
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
@@ -26,9 +29,8 @@ class Dialog_nick(context : Context) {
         btn_ok = dlg.findViewById(R.id.nicknameokbtn)
         nickname_editText = dlg.findViewById(R.id.editNickName)
 
-        btn_ok.setOnClickListener {
-            //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
 
+        btn_ok.setOnClickListener {
             val setRunnable = Runnable {
                 val newProfile = Profile()
                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()

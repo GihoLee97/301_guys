@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -117,6 +118,7 @@ class GameNormalActivity : AppCompatActivity(){
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
+
          //creating our api
         var server = retrofit.create(RetrofitGet::class.java)
         server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
@@ -134,6 +136,12 @@ class GameNormalActivity : AppCompatActivity(){
                 }
             }
         })
+    }
+    override fun onBackPressed() {
+        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
+        dlg_exit.start()
+
+
     }
 
 }
