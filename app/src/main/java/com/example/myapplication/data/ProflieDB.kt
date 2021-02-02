@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import com.example.myapplication.AccountManagementActivity
 import com.example.myapplication.InitialActivity
 import com.example.myapplication.ProfileActivity
+import com.example.myapplication.SplashActivity
 
 
 @Database(entities =  [Profile::class], version =  3)
@@ -42,6 +43,19 @@ abstract class ProflieDB: RoomDatabase() {
         }
 
         fun getInstace(context: AccountManagementActivity): ProflieDB?{
+            if (INSTANCE == null){
+                synchronized(ProflieDB::class){
+                    INSTANCE = Room.databaseBuilder(context.applicationContext,
+                        ProflieDB::class.java,
+                        "playlist.db")
+                        .allowMainThreadQueries().fallbackToDestructiveMigration()
+                        .build()
+                }
+            }
+            return INSTANCE
+        }
+
+        fun getInstace(context: SplashActivity): ProflieDB?{
             if (INSTANCE == null){
                 synchronized(ProflieDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,

@@ -25,7 +25,7 @@
             android:textAlignment="center"
             android:textSize="20dp"/>
         <ImageView
-            android:id="@+id/GeneralAccountProfileImage"
+            android:id="@+id/imageView_generalAccountProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
@@ -42,14 +42,14 @@
                 android:text="ID"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/GeneralAccountID"
+                android:id="@+id/editText_generalAcountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_GeneralAccountID"
+                android:id="@+id/btn_generalAccountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -68,14 +68,14 @@
                 android:text="E-mail"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/GeneralAccountEmail"
+                android:id="@+id/editText_generalAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu@gmail.com"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_GeneralAccountEmail"
+                android:id="@+id/btn_generalAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -84,7 +84,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_GeneralAccountPW"
+            android:id="@+id/btn_generalAccountPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/teal_700"
@@ -111,7 +111,7 @@
             android:textAlignment="center"
             android:textSize="20dp"/>
         <ImageView
-            android:id="@+id/GoogleAccountProfileImage"
+            android:id="@+id/imageView_googleAccountProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
@@ -128,14 +128,14 @@
                 android:text="ID"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/GoogleAccountID"
+                android:id="@+id/editText_googleAcountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_GoogleAccountID"
+                android:id="@+id/btn_googleAccountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -154,14 +154,14 @@
                 android:text="E-mail"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/GoogleAccountEmail"
+                android:id="@+id/editText_googleAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu@gmail.com"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_GoogleAccountEmail"
+                android:id="@+id/btn_googleAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -170,7 +170,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_GoogleAccountPW"
+            android:id="@+id/btn_googleAcountPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/teal_700"
@@ -197,7 +197,7 @@
             android:textAlignment="center"
             android:textSize="20dp"/>
         <ImageView
-            android:id="@+id/KakaoAccountProfileImage"
+            android:id="@+id/imageView_kakaoAccountProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
@@ -214,14 +214,14 @@
                 android:text="ID"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/KakaoAccountID"
+                android:id="@+id/editText_kakaoAcountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_KakaoAccountID"
+                android:id="@+id/btn_kakaoAcountID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -240,14 +240,14 @@
                 android:text="E-mail"
                 android:textSize="20dp"/>
             <TextView
-                android:id="@+id/KakaoAccountEmail"
+                android:id="@+id/editText_kakaoAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:text="stockedu@gmail.com"
                 android:textSize="20dp"/>
             <Button
-                android:id="@+id/btn_KakaoAccountEmail"
+                android:id="@+id/btn_kakaoAcountEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/teal_700"
@@ -256,7 +256,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_KakaoAccountPW"
+            android:id="@+id/btn_kakaoAcountPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/teal_700"

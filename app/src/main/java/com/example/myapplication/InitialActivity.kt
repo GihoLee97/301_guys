@@ -57,7 +57,6 @@ class InitialActivity : AppCompatActivity() {
 
         // 회원가입 & onClickListner
         btn_generalSignup.setOnClickListener{
-            val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
             val time1: LocalDateTime = LocalDateTime.now()
@@ -71,7 +70,6 @@ class InitialActivity : AppCompatActivity() {
 
         // 로그인 & onClickListner
         btn_generalLogin.setOnClickListener{
-            val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
             val time1: LocalDateTime = LocalDateTime.now()
@@ -119,7 +117,7 @@ class InitialActivity : AppCompatActivity() {
     // general signup
     fun generalSignup(u_id: String, u_pw: String, u_date : String) {
         var api_signup: Retrofitsignup? = null
-        val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
+        val url = "http://stockgame.dothome.co.kr/test/Signup.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
@@ -153,7 +151,7 @@ class InitialActivity : AppCompatActivity() {
     // general login
     fun generalLoginCheck(u_id: String, u_pw: String, u_date: String) {
         var funlogincheck: Retrofitlogincheck? = null
-        val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
+        val url = "http://stockgame.dothome.co.kr/test/logincheck.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
             .create()
