@@ -15,6 +15,8 @@ class GameNormalActivityVeiwModel: ViewModel() {
     private var _item1 = MutableLiveData<Int>()
     private var _item2 = MutableLiveData<Int>()
     private var _item3 = MutableLiveData<Int>()
+    private var _priceNow = MutableLiveData<Float>()
+    private var _priceBefore = MutableLiveData<Float>()
     //게임 초기화
     fun initialize(startcash:Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
         _cash.value = startcash
@@ -44,6 +46,13 @@ class GameNormalActivityVeiwModel: ViewModel() {
         _assets.value = _cash.value?.plus(_evaluation.value!!)
         return _assets
     }
+    //시세 현재가
+    fun priceNow(): LiveData<Float>{
+        return _priceNow
+    }
+    fun priceBefore(): LiveData<Float>{
+        return _priceBefore
+    }
     //아이템 반환
     fun item1(): LiveData<Int>{
         return _item1
@@ -55,7 +64,6 @@ class GameNormalActivityVeiwModel: ViewModel() {
         return _item3
     }
     // 아이템 값 입력
-
     fun setitem(item1:Int, item2:Int, item3:Int){
         _item1.value = item1
         _item2.value = item2
@@ -67,6 +75,13 @@ class GameNormalActivityVeiwModel: ViewModel() {
     fun fluctuate(fluctuation: Float){
         _evaluation.value = _evaluation.value?.times(fluctuation)
         update()
+    }
+    //시세 받아오기
+    fun priceUpdate(priceNow: Float, priceBefore:Float){
+        _priceBefore.value = priceBefore
+        _priceNow.value = priceNow
+        val fluctuation = (_priceNow.value!! - _priceBefore.value!!)/ _priceBefore.value!!
+        fluctuate(fluctuation)
     }
     //매수
     fun buyStock(price:Float, fees:Float){
@@ -89,7 +104,11 @@ class GameNormalActivityVeiwModel: ViewModel() {
     //자산 수익률 업데이트
     fun update(){
         _assets.value = _cash.value?.plus(_evaluation.value!!)
-        _profit.value = (_assets.value?.minus(startassets))?.div(startassets)
+        _profit.value = (_assets.value?.minus(startassets))?.div(startassets)?.times(100)
+    }
+    //게임 종료
+    fun result(): List<Float?> {
+        return listOf(_assets.value, _cash.value, _evaluation.value, _profit.value)
     }
 
     override fun onCleared() {

@@ -105,6 +105,7 @@ class GameNormalActivity : AppCompatActivity() {
     private var snpNowDate: String = "yyyy-mm-dd"
     private var snpNowdays: Int = 0
     private var snpNowVal: Float = 0F
+    private var snpBeforeVal : Float = 0F
 
 
     // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
@@ -142,18 +143,17 @@ class GameNormalActivity : AppCompatActivity() {
         //viewModel 객체
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             GameNormalActivityVeiwModel::class.java
-        )
-
-
-        //초기화
-        viewModel.initialize(
-            startcash,
-            startevaluation,
-            startprofit,
-            startitem1,
-            startitem2,
-            startitem3
-        )//화면 전환시 data reset되는 문제 발생
+        ).also {
+            //초기화
+            it.initialize(
+                startcash,
+                startevaluation,
+                startprofit,
+                startitem1,
+                startitem2,
+                startitem3
+            )
+        }//화면 전환시 data reset되는 문제 발생
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // 차트 click, gameend 변수 초기화
@@ -255,8 +255,9 @@ class GameNormalActivity : AppCompatActivity() {
             }
 
             inidraw.join()
-
+            snpBeforeVal=snpNowVal
             nowdraw()
+            viewModel.priceUpdate(snpNowVal, snpBeforeVal)
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
     }
