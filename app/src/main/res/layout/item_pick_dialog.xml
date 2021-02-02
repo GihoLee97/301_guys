@@ -43,7 +43,6 @@
                 android:textSize="16dp"
                 android:background="@drawable/sandclock"/>
             <TextView
-
                 android:id="@+id/item1_number"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -57,7 +56,7 @@
 
                 <Button
                     android:id="@+id/btn_item1_plus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -66,7 +65,7 @@
                     android:textColor="#000000"/>
                 <Button
                     android:id="@+id/btn_item1_minus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="-"
                     android:layout_weight="1"
@@ -107,7 +106,7 @@
 
                 <Button
                     android:id="@+id/btn_item2_plus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -116,7 +115,7 @@
                     android:textColor="#000000"/>
                 <Button
                     android:id="@+id/btn_item2_minus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="-"
                     android:layout_weight="1"
@@ -159,7 +158,7 @@
 
                 <Button
                     android:id="@+id/btn_item3_plus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -168,7 +167,7 @@
                     android:textColor="#000000"/>
                 <Button
                     android:id="@+id/btn_item3_minus"
-                    android:layout_width="20dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="-"
                     android:layout_weight="1"
