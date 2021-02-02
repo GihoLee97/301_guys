@@ -19,7 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-
+        //MPAndroidChart
+        maven { url 'https://jitpack.io' }
         // kakao SDK repository config
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
 

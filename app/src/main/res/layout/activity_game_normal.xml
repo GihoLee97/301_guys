@@ -15,134 +15,73 @@
         android:weightSum="32"
         tools:context=".GameNormalActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="#0074CC"
-            android:gravity="center"
-            android:text="Nasdaq"
-            android:textColor="@color/black" />
 
         <HorizontalScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:scrollbarAlwaysDrawHorizontalTrack="true">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/cht_snp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/cht_fund"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="환율" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/cht_bond"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/exchange_image"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp" />
-                </LinearLayout>
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/cht_indpro"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/cht_unem"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="금값" />
-
-                    <ImageView
-                        android:id="@+id/gold_image"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="장단기 금리" />
-
-                    <ImageView
-                        android:id="@+id/shortlonginterest_image"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="금리" />
-
-                    <ImageView
-                        android:id="@+id/interest_image"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="통화량" />
-
-                    <ImageView
-                        android:id="@+id/money_image"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/cht_inf"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </LinearLayout>
+
         </HorizontalScrollView>
 
-        <LinearLayout
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/cht_snp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="18"
-            android:orientation="vertical">
+            android:layout_height="250dp"
+            android:layout_marginBottom="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/any_chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                />
-
-
-            <ImageView
-                android:id="@+id/assist_chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
