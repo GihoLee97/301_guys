@@ -2,6 +2,8 @@ package com.example.myapplication
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.SeekBar
@@ -9,11 +11,18 @@ import android.widget.TextView
 import android.widget.Toast
 
 class Dialog_buy(context : Context) {
+    var mContext: Context? = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnOK : Button
     private lateinit var btnCancel : Button
     private lateinit var seekBar: SeekBar
     private lateinit var listenter: BuyDialogClickedListener
+    private lateinit var btnmultionep : Button
+    private lateinit var btnmultithreep : Button
+    private lateinit var btnmultionem : Button
+    private lateinit var btnmultithreem : Button
+
+
 
     fun start(cash: Float) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
@@ -28,7 +37,45 @@ class Dialog_buy(context : Context) {
         var price: Float = 0F
         var fees: Float = 0F
         seekBar = dlg.findViewById(R.id.seekbar_buy)
+        btnOK = dlg.findViewById(R.id.okButton)
+        btnCancel = dlg.findViewById(R.id.cancelButton)
+        btnmultionep = dlg.findViewById(R.id.btn1)
+        btnmultithreep = dlg.findViewById(R.id.btn2)
+        btnmultionem = dlg.findViewById(R.id.btn3)
+        btnmultithreem = dlg.findViewById(R.id.btn4)
 
+
+        btnmultionep.setOnClickListener{
+
+            //red #FFE77070
+            //gray #FF808080
+            btnmultionep.setBackgroundColor(Color.parseColor("#FFE77070"))
+            btnmultithreep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultionem.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreem.setBackgroundColor(Color.parseColor("#FF808080"))
+
+        }
+        btnmultithreep.setOnClickListener{
+            //red
+            btnmultionep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreep.setBackgroundColor(Color.parseColor("#FFE77070"))
+            btnmultionem.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreem.setBackgroundColor(Color.parseColor("#FF808080"))
+        }
+        btnmultionem.setOnClickListener{
+            //red
+            btnmultionep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultionem.setBackgroundColor(Color.parseColor("#FFE77070"))
+            btnmultithreem.setBackgroundColor(Color.parseColor("#FF808080"))
+        }
+        btnmultithreem.setOnClickListener{
+            //red
+            btnmultionep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreep.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultionem.setBackgroundColor(Color.parseColor("#FF808080"))
+            btnmultithreem.setBackgroundColor(Color.parseColor("#FFE77070"))
+        }
 
         seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -49,7 +96,6 @@ class Dialog_buy(context : Context) {
             }
         })
 
-        btnOK = dlg.findViewById(R.id.okButton)
         btnOK.setOnClickListener {
             //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
             if(money>=(price+fees)){
@@ -61,7 +107,6 @@ class Dialog_buy(context : Context) {
             else{    Toast.makeText(dlg.context,"현금이 부족하여 매수할 수 없습니다.", Toast.LENGTH_LONG).show() }
         }
 
-        btnCancel = dlg.findViewById(R.id.cancelButton)
         btnCancel.setOnClickListener {
             dlg.dismiss()
             click = !click /////////////////////////////////////////////////////////////////////////
