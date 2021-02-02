@@ -29,6 +29,7 @@ import kotlin.collections.ArrayList
 class GameNormalActivity : AppCompatActivity(){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    // 차트 데이터 및 차트 설정 변수 생성
     private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
 
@@ -217,6 +218,7 @@ class GameNormalActivity : AppCompatActivity(){
 
 
         // 차트 ////////////////////////////////////////////////////////////////////////////////////
+        // 차트 코루틴 시작
         CoroutineScope(Dispatchers.Default).launch {
             val chartdata = launch {
                 chartdata()
@@ -229,6 +231,7 @@ class GameNormalActivity : AppCompatActivity(){
             }
 
             inidraw.join()
+
             nowdraw()
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,6 +275,9 @@ class GameNormalActivity : AppCompatActivity(){
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     private fun chartdata() {
@@ -441,6 +447,8 @@ class GameNormalActivity : AppCompatActivity(){
         unemD.notifyDataChanged()
         infD.notifyDataChanged()
     }
+
+    // S&P500 과거 5년간의 차트 그리기
     private suspend fun inidraw() {
         for (i in 0..(given - 1)) {
             delay(1)
@@ -449,6 +457,8 @@ class GameNormalActivity : AppCompatActivity(){
         }
 
     }
+
+    // Real time 차트 생성 및 현재 데이터 저장
     private suspend fun nowdraw() {
 // 현재 데이터
         while (true) {
