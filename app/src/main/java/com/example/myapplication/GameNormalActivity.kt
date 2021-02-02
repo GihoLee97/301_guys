@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +11,107 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class GameNormalActivity : AppCompatActivity(){
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
+    private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
+
+    // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
+    // 5년은 대략 1250 거래일.
+    // 게임 시작 시점으로부터 5년 전, 10년 후의 데이터 확보가 가능해야함.
+    // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.
+    // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
+    // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
+    private val random = Random()
+    private val sp = random.nextInt((snp_date.size - gl - given)) + given // Starting Point
+
+
+    // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
+    // Entry 배열 생성
+    private val snpEn: ArrayList<Entry> = ArrayList()
+    private val fundEn: ArrayList<Entry> = ArrayList()
+    private val bondEn: ArrayList<Entry> = ArrayList()
+    private val indproEn: ArrayList<Entry> = ArrayList()
+    private val unemEn: ArrayList<Entry> = ArrayList()
+    private val infEn: ArrayList<Entry> = ArrayList()
+
+    // 그래프 구현을 위한 LineDataSet 생성
+    private val snpDs: LineDataSet = LineDataSet(snpEn, "S&P500 Index")
+    private val fundDs: LineDataSet = LineDataSet(fundEn, "Fund Rate")
+    private val bondDs: LineDataSet = LineDataSet(bondEn, "bond Rate")
+    private val indproDs: LineDataSet = LineDataSet(indproEn, "Ind Pro Rate")
+    private val unemDs: LineDataSet = LineDataSet(unemEn, "Un Em Rate")
+    private val infDs: LineDataSet = LineDataSet(infEn, "Infla Rate")
+
+    // 그래프 data 생성 -> 최종 입력 데이터
+    private val snpD: LineData = LineData(snpDs)
+    private val fundD: LineData = LineData(fundDs)
+    private val bondD: LineData = LineData(bondDs)
+    private val indproD: LineData = LineData(indproDs)
+    private val unemD: LineData = LineData(unemDs)
+    private val infD: LineData = LineData(infDs)
+
+    // 차트 데이터 추가
+    private var fundIndex: Int = 0
+    private var bondIndex: Int = 0
+    private var indproIndex: Int = 0
+    private var unemIndex: Int = 0
+    private var infIndex: Int = 0
+
+    // 차트 설정
+    private val snpLineColor: String = "#1A237E" // S&P 선 색깔
+    private val snpFillColor: String = "#1565C0" // S&P 채움 색깔
+    private val snpHighColor: String = "#B71C1C" // S&P 하이라이트 색깔
+    private val ecoLineColor: String = "#1A237E" // 경제 지표 선 색깔
+
+
+    // Count 값들 //////////////////////////////////////////////////////////////////////////////////
+    private var dayPlus: Int = 1 // sp(Starting Point) 이후 경과한 거래일 수
+    private var fundCount: Int = 0
+    private var bondCount: Int = 0
+    private var indproCount: Int = 0
+    private var unemCount: Int = 0
+    private var infCount: Int = 0
+
+
+    // 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 ///////////////////////////////////////////////
+    // 버튼 클릭 판별
+    private var click: Boolean = false
+
+    // 일시정지 시 현재 값 저장
+    private var snpNowDate: String = "yyyy-mm-dd"
+    private var snpNowdays: Int = 0
+    private var snpNowVal: Float = 0F
+
+
+    // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
+    // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간
+    private val oneday: Long = 240 // 거래일 간 간격
+    private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
+
         //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
         val startcash: Float = 5000000F
@@ -68,6 +158,7 @@ class GameNormalActivity : AppCompatActivity(){
                 buy=content
                 viewModel.buyStock(buy[0], buy[1])
             }
+           click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
@@ -81,6 +172,7 @@ class GameNormalActivity : AppCompatActivity(){
                 sell=content
                 viewModel.sellStock(sell[0], sell[1])
             }
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         val auto_btn = findViewById<Button>(R.id.auto_btn)
@@ -100,7 +192,25 @@ class GameNormalActivity : AppCompatActivity(){
             val builder = AlertDialog.Builder(this)
             val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)
             builder.setView(dialogview).show()
+            click = !click //////////////////////////////////////////////////////////////////////////
         }
+
+        // 차트 ////////////////////////////////////////////////////////////////////////////////////
+        CoroutineScope(Dispatchers.Default).launch {
+            val chartdata = runBlocking {
+                chartdata()
+            }
+
+            val inidraw = runBlocking {
+                inidraw()
+            }
+
+            val nowdraw = launch {
+                nowdraw()
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
     }
     // 데이터 가지고 오기
     fun getRoomListDataHttp(){
@@ -143,5 +253,309 @@ class GameNormalActivity : AppCompatActivity(){
 
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private fun chartdata() {
+        // Entry 배열 초기값 입력
+        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))
+        fundEn.add(Entry(-1250F, fund_val[0].toFloat()))
+        bondEn.add(Entry(-1250F, bond_val[0].toFloat()))
+        indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))
+        unemEn.add(Entry(-1250F, unem_val[0].toFloat()))
+        infEn.add(Entry(-1250F, inf_val[0].toFloat()))
+
+
+        // 차트 설정
+        snpDs.color = Color.parseColor(snpLineColor) // 차트 선
+        snpDs.setDrawCircles(false)
+        snpDs.setDrawValues(false) // 차트 지점마다 값 표시
+        snpDs.lineWidth = 1.5F
+        snpDs.fillAlpha = 80 // 차트 스커트
+        snpDs.fillColor = Color.parseColor(snpFillColor)
+        snpDs.setDrawFilled(true)
+        snpDs.highLightColor = Color.parseColor(snpHighColor) // 터치 시 하이라이트
+        snpDs.highlightLineWidth = 1F
+
+        fundDs.color = Color.parseColor(ecoLineColor)
+        fundDs.setDrawCircles(false) // 지점마다 원 표시
+        fundDs.setDrawValues(false) // 지점마다 값 표시
+        fundDs.lineWidth = 0.7F // 선 굵기
+
+        bondDs.color = Color.parseColor(ecoLineColor)
+        bondDs.setDrawCircles(false) // 지점마다 원 표시
+        bondDs.setDrawValues(false) // 지점마다 값 표시
+        bondDs.lineWidth = 0.7F // 선 굵기
+
+        indproDs.color = Color.parseColor(ecoLineColor)
+        indproDs.setDrawCircles(false) // 지점마다 원 표시
+        indproDs.setDrawValues(false) // 지점마다 값 표시
+        indproDs.lineWidth = 0.7F // 선 굵기
+
+        unemDs.color = Color.parseColor(ecoLineColor)
+        unemDs.setDrawCircles(false) // 지점마다 원 표시
+        unemDs.setDrawValues(false) // 지점마다 값 표시
+        unemDs.lineWidth = 0.7F // 선 굵기
+
+        infDs.color = Color.parseColor(ecoLineColor)
+        infDs.setDrawCircles(false) // 지점마다 원 표시
+        infDs.setDrawValues(false) // 지점마다 값 표시
+        infDs.lineWidth = 0.7F // 선 굵기
+
+
+        for (i in 0..(given - 1)) {
+            snpD.addEntry(Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()), 0)
+
+            var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
+            var snpDate = snp_date[sp - given + 1 + i]
+            var snpDateSf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
+
+            var fundDate = fund_date[fundIndex]
+            var fundDateSf = sf.parse(fundDate)
+            var bondDate = bond_date[bondIndex]
+            var bondDateSf = sf.parse(bondDate)
+            var indproDate = indpro_date[indproIndex]
+            var indproDateSf = sf.parse(indproDate)
+            var unemDate = unem_date[unemIndex]
+            var unemDateSf = sf.parse(unemDate)
+            var infDate = inf_date[infIndex]
+            var infDateSf = sf.parse(infDate)
+
+            var fundC = snpDateSf.time - fundDateSf.time
+            var bondC = snpDateSf.time - bondDateSf.time
+            var indproC = snpDateSf.time - indproDateSf.time
+            var unemC = snpDateSf.time - unemDateSf.time
+            var infC = snpDateSf.time - infDateSf.time
+
+            while (fundC > 0) {
+                fundIndex += 1
+                fundDate = fund_date[fundIndex]
+                fundDateSf = sf.parse(fundDate)
+                fundC = snpDateSf.time - fundDateSf.time
+            }
+            fundCount += 1
+            fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)
+            println("fund date : $fundDate")
+
+            while (bondC > 0) {
+                bondIndex += 1
+                bondDate = bond_date[bondIndex]
+                bondDateSf = sf.parse(bondDate)
+                bondC = snpDateSf.time - bondDateSf.time
+            }
+            bondCount += 1
+            bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)
+
+            while (indproC > 0) {
+                indproIndex += 1
+                indproDate = indpro_date[indproIndex]
+                indproDateSf = sf.parse(indproDate)
+                indproC = snpDateSf.time - indproDateSf.time
+            }
+            indproCount += 1
+            indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)
+
+            while (unemC > 0) {
+                unemIndex += 1
+                unemDate = unem_date[unemIndex]
+                unemDateSf = sf.parse(unemDate)
+                unemC = snpDateSf.time - indproDateSf.time
+            }
+            unemCount += 1
+            unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)
+
+            while (infC > 0) {
+                infIndex += 1
+                infDate = inf_date[infIndex]
+                infDateSf = sf.parse(infDate)
+                infC = snpDateSf.time - infDateSf.time
+            }
+            infCount += 1
+            infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)
+            println("인덱스 : $i")
+        }
+        println("Fund count : $fundCount")
+        println("랜덤넘버 COUNT : " + sp.toString() + " | " + "시작 날짜 : " + snp_date[sp])
+        // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////
+
+
+        // layout 에 배치된 lineChart 에 데이터 연결
+        findViewById<LineChart>(R.id.cht_snp).data = snpD
+        findViewById<LineChart>(R.id.cht_fund).data = fundD
+        findViewById<LineChart>(R.id.cht_bond).data = bondD
+        findViewById<LineChart>(R.id.cht_indpro).data = indproD
+        findViewById<LineChart>(R.id.cht_unem).data = unemD
+        findViewById<LineChart>(R.id.cht_inf).data = infD
+
+
+        // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////
+        runOnUiThread {
+            // 차트 생성
+            findViewById<LineChart>(R.id.cht_snp).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_fund).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)
+            findViewById<LineChart>(R.id.cht_fund).setTouchEnabled(false)
+            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)
+            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)
+            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)
+            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)
+            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
+            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+        }
+
+        // 추가분 반영
+        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+
+        snpD.notifyDataChanged()
+        fundD.notifyDataChanged()
+        bondD.notifyDataChanged()
+        unemD.notifyDataChanged()
+        infD.notifyDataChanged()
+    }
+    private suspend fun inidraw() {
+        for (i in 0..(given - 1)) {
+            delay(1)
+            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월
+            findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
+        }
+    }
+    private suspend fun nowdraw() {
+// 현재 데이터
+        while (true) {
+            if (!click) {
+                if (dayPlus <= gl) {
+
+                    delay(250) // 게임상에서 1 거래일의 실제시간
+
+
+                    var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
+                    var snpDate = snp_date[sp + dayPlus]
+                    var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
+
+                    var fundDate = fund_date[fundIndex]
+                    var fundDate_sf = sf.parse(fundDate)
+                    var bondDate = bond_date[bondIndex]
+                    var bondDate_sf = sf.parse(bondDate)
+                    var indproDate = indpro_date[indproIndex]
+                    var indproDate_sf = sf.parse(indproDate)
+                    var unemDate = unem_date[unemIndex]
+                    var unemDate_sf = sf.parse(unemDate)
+                    var infDate = inf_date[infIndex]
+                    var infDate_sf = sf.parse(infDate)
+
+                    var fund_c = snpDate_sf.time - fundDate_sf.time
+                    var bond_c = snpDate_sf.time - bondDate_sf.time
+                    var indpro_c = snpDate_sf.time - indproDate_sf.time
+                    var unem_c = snpDate_sf.time - unemDate_sf.time
+                    var inf_c = snpDate_sf.time - infDate_sf.time
+
+
+                    snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)
+
+                    while (fund_c > 0) {
+                        fundIndex += 1
+                        fundDate = fund_date[fundIndex]
+                        fundDate_sf = sf.parse(fundDate)
+                        fund_c = snpDate_sf.time - fundDate_sf.time
+                    }
+                    fundCount += 1
+                    fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)
+                    println("fund date : $fundDate")
+
+                    while (bond_c > 0) {
+                        bondIndex += 1
+                        bondDate = bond_date[bondIndex]
+                        bondDate_sf = sf.parse(bondDate)
+                        bond_c = snpDate_sf.time - bondDate_sf.time
+                    }
+                    bondCount += 1
+                    bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)
+
+                    while (indpro_c > 0) {
+                        indproIndex += 1
+                        indproDate = indpro_date[indproIndex]
+                        indproDate_sf = sf.parse(indproDate)
+                        indpro_c = snpDate_sf.time - indproDate_sf.time
+                    }
+                    indproCount += 1
+                    indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)
+
+                    while (unem_c > 0) {
+                        unemIndex += 1
+                        unemDate = unem_date[unemIndex]
+                        unemDate_sf = sf.parse(unemDate)
+                        unem_c = snpDate_sf.time - indproDate_sf.time
+                    }
+                    unemCount += 1
+                    unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)
+
+                    while (inf_c > 0) {
+                        infIndex += 1
+                        infDate = inf_date[infIndex]
+                        infDate_sf = sf.parse(infDate)
+                        inf_c = snpDate_sf.time - infDate_sf.time
+                    }
+                    infCount += 1
+                    infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)
+
+                    println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
+
+                    //
+                    findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+
+                    snpD.notifyDataChanged()
+                    fundD.notifyDataChanged()
+                    bondD.notifyDataChanged()
+                    unemD.notifyDataChanged()
+                    infD.notifyDataChanged()
+
+                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+
+                    findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                    findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                    findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                    findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                    findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+
+
+                    // 현재 값 저장
+                    snpNowDate = snp_date[sp + dayPlus]
+                    snpNowdays = dayPlus
+                    snpNowVal = snp_val[sp + dayPlus].toFloat()
+                    println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
+
+
+                    dayPlus += 1 // 시간 진행
+                }
+
+                else {
+                    println("게임 끝")
+                    break
+                }
+            }
+
+            else {
+                delay(btnRefresh)
+            }
+            delay(oneday)
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
