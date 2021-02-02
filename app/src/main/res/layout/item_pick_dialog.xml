@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,11 +24,8 @@
         android:layout_height="240dp"
         android:orientation="horizontal"
         android:textColor="#000000"
-        android:textSize="16dp" >
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
+        android:textSize="16dp"
+        android:weightSum="3">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,7 +35,6 @@
                 android:id="@+id/btn_item1"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="16dp"
@@ -51,8 +48,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_item1_plus"
@@ -74,10 +70,6 @@
                     android:textColor="#000000"/>
             </LinearLayout>
         </LinearLayout>
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -87,22 +79,20 @@
                 android:id="@+id/btn_item2"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:background="@drawable/newspaper"
                 android:textColor="#000000"
-                android:textSize="16dp"/>
+                android:textSize="16dp"
+                android:background="@drawable/sandclock"/>
             <TextView
-
                 android:id="@+id/item2_number"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:text="0"/>
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_item2_plus"
@@ -124,12 +114,6 @@
                     android:textColor="#000000"/>
             </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -139,22 +123,20 @@
                 android:id="@+id/btn_item3"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="아이템 3"
                 android:textColor="#000000"
                 android:textSize="16dp"
-                android:background="@drawable/edge"/>
+                android:background="@drawable/newspaper"/>
             <TextView
                 android:id="@+id/item3_number"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:text="0"/>
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_item3_plus"
@@ -176,12 +158,8 @@
                     android:textColor="#000000"/>
             </LinearLayout>
         </LinearLayout>
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
