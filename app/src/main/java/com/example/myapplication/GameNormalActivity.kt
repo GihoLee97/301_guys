@@ -29,7 +29,8 @@ import kotlin.collections.ArrayList
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 버튼 클릭 판별자 생성
-var click: Boolean = false
+var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
+var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -189,7 +190,8 @@ class GameNormalActivity : AppCompatActivity() {
                 buy = content
                 viewModel.buyStock(buy[0], buy[1])
             }
-            click = !click //////////////////////////////////////////////////////////////////////////
+            click =
+                !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
@@ -295,6 +297,7 @@ class GameNormalActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
+        click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -492,149 +495,153 @@ class GameNormalActivity : AppCompatActivity() {
     private suspend fun nowdraw() {
 // 현재 데이터
         while (true) {
-            if (!click) {
-                if (dayPlus <= gl) {
+            if (!gameend) {
+                if (!click) {
+                    if (dayPlus <= gl) {
 
-                    delay(250) // 게임상에서 1 거래일의 실제시간
-
-
-                    var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
-                    var snpDate = snp_date[sp + dayPlus]
-                    var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
-
-                    var fundDate = fund_date[fundIndex]
-                    var fundDate_sf = sf.parse(fundDate)
-                    var bondDate = bond_date[bondIndex]
-                    var bondDate_sf = sf.parse(bondDate)
-                    var indproDate = indpro_date[indproIndex]
-                    var indproDate_sf = sf.parse(indproDate)
-                    var unemDate = unem_date[unemIndex]
-                    var unemDate_sf = sf.parse(unemDate)
-                    var infDate = inf_date[infIndex]
-                    var infDate_sf = sf.parse(infDate)
-
-                    var fund_c = snpDate_sf.time - fundDate_sf.time
-                    var bond_c = snpDate_sf.time - bondDate_sf.time
-                    var indpro_c = snpDate_sf.time - indproDate_sf.time
-                    var unem_c = snpDate_sf.time - unemDate_sf.time
-                    var inf_c = snpDate_sf.time - infDate_sf.time
+                        delay(oneday) // 게임상에서 1 거래일의 실제시간
 
 
-                    snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)
+                        var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
+                        var snpDate = snp_date[sp + dayPlus]
+                        var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
-                    while (fund_c > 0) {
-                        fundIndex += 1
-                        fundDate = fund_date[fundIndex]
-                        fundDate_sf = sf.parse(fundDate)
-                        fund_c = snpDate_sf.time - fundDate_sf.time
+                        var fundDate = fund_date[fundIndex]
+                        var fundDate_sf = sf.parse(fundDate)
+                        var bondDate = bond_date[bondIndex]
+                        var bondDate_sf = sf.parse(bondDate)
+                        var indproDate = indpro_date[indproIndex]
+                        var indproDate_sf = sf.parse(indproDate)
+                        var unemDate = unem_date[unemIndex]
+                        var unemDate_sf = sf.parse(unemDate)
+                        var infDate = inf_date[infIndex]
+                        var infDate_sf = sf.parse(infDate)
+
+                        var fund_c = snpDate_sf.time - fundDate_sf.time
+                        var bond_c = snpDate_sf.time - bondDate_sf.time
+                        var indpro_c = snpDate_sf.time - indproDate_sf.time
+                        var unem_c = snpDate_sf.time - unemDate_sf.time
+                        var inf_c = snpDate_sf.time - infDate_sf.time
+
+
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)
+
+                        while (fund_c > 0) {
+                            fundIndex += 1
+                            fundDate = fund_date[fundIndex]
+                            fundDate_sf = sf.parse(fundDate)
+                            fund_c = snpDate_sf.time - fundDate_sf.time
+                        }
+                        fundCount += 1
+                        fundD.addEntry(
+                            Entry(
+                                (fundCount - 1250).toFloat(),
+                                fund_val[fundIndex].toFloat()
+                            ), 0
+                        )
+                        println("fund date : $fundDate")
+
+                        while (bond_c > 0) {
+                            bondIndex += 1
+                            bondDate = bond_date[bondIndex]
+                            bondDate_sf = sf.parse(bondDate)
+                            bond_c = snpDate_sf.time - bondDate_sf.time
+                        }
+                        bondCount += 1
+                        bondD.addEntry(
+                            Entry(
+                                (bondCount - 1250).toFloat(),
+                                bond_val[bondIndex].toFloat()
+                            ), 0
+                        )
+
+                        while (indpro_c > 0) {
+                            indproIndex += 1
+                            indproDate = indpro_date[indproIndex]
+                            indproDate_sf = sf.parse(indproDate)
+                            indpro_c = snpDate_sf.time - indproDate_sf.time
+                        }
+                        indproCount += 1
+                        indproD.addEntry(
+                            Entry(
+                                (indproCount - 1250).toFloat(),
+                                indpro_val[indproIndex - 1].toFloat()
+                            ), 0
+                        )
+
+                        while (unem_c > 0) {
+                            unemIndex += 1
+                            unemDate = unem_date[unemIndex]
+                            unemDate_sf = sf.parse(unemDate)
+                            unem_c = snpDate_sf.time - indproDate_sf.time
+                        }
+                        unemCount += 1
+                        unemD.addEntry(
+                            Entry(
+                                (unemCount - 1250).toFloat(),
+                                unem_val[unemIndex - 1].toFloat()
+                            ), 0
+                        )
+
+                        while (inf_c > 0) {
+                            infIndex += 1
+                            infDate = inf_date[infIndex]
+                            infDate_sf = sf.parse(infDate)
+                            inf_c = snpDate_sf.time - infDate_sf.time
+                        }
+                        infCount += 1
+                        infD.addEntry(
+                            Entry(
+                                (infCount - 1250).toFloat(),
+                                inf_val[infIndex - 1].toFloat()
+                            ), 0
+                        )
+
+                        println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
+
+                        //
+                        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+
+                        snpD.notifyDataChanged()
+                        fundD.notifyDataChanged()
+                        bondD.notifyDataChanged()
+                        unemD.notifyDataChanged()
+                        infD.notifyDataChanged()
+
+                        findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+
+                        findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                        findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                        findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                        findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                        findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                        findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+
+
+                        // 현재 값 저장
+                        snpNowDate = snp_date[sp + dayPlus]
+                        snpNowdays = dayPlus
+                        snpNowVal = snp_val[sp + dayPlus].toFloat()
+                        println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
+
+
+                        dayPlus += 1 // 시간 진행
+                    } else {
+                        println("게임 끝")
+                        break
                     }
-                    fundCount += 1
-                    fundD.addEntry(
-                        Entry(
-                            (fundCount - 1250).toFloat(),
-                            fund_val[fundIndex].toFloat()
-                        ), 0
-                    )
-                    println("fund date : $fundDate")
-
-                    while (bond_c > 0) {
-                        bondIndex += 1
-                        bondDate = bond_date[bondIndex]
-                        bondDate_sf = sf.parse(bondDate)
-                        bond_c = snpDate_sf.time - bondDate_sf.time
-                    }
-                    bondCount += 1
-                    bondD.addEntry(
-                        Entry(
-                            (bondCount - 1250).toFloat(),
-                            bond_val[bondIndex].toFloat()
-                        ), 0
-                    )
-
-                    while (indpro_c > 0) {
-                        indproIndex += 1
-                        indproDate = indpro_date[indproIndex]
-                        indproDate_sf = sf.parse(indproDate)
-                        indpro_c = snpDate_sf.time - indproDate_sf.time
-                    }
-                    indproCount += 1
-                    indproD.addEntry(
-                        Entry(
-                            (indproCount - 1250).toFloat(),
-                            indpro_val[indproIndex - 1].toFloat()
-                        ), 0
-                    )
-
-                    while (unem_c > 0) {
-                        unemIndex += 1
-                        unemDate = unem_date[unemIndex]
-                        unemDate_sf = sf.parse(unemDate)
-                        unem_c = snpDate_sf.time - indproDate_sf.time
-                    }
-                    unemCount += 1
-                    unemD.addEntry(
-                        Entry(
-                            (unemCount - 1250).toFloat(),
-                            unem_val[unemIndex - 1].toFloat()
-                        ), 0
-                    )
-
-                    while (inf_c > 0) {
-                        infIndex += 1
-                        infDate = inf_date[infIndex]
-                        infDate_sf = sf.parse(infDate)
-                        inf_c = snpDate_sf.time - infDate_sf.time
-                    }
-                    infCount += 1
-                    infD.addEntry(
-                        Entry(
-                            (infCount - 1250).toFloat(),
-                            inf_val[infIndex - 1].toFloat()
-                        ), 0
-                    )
-
-                    println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
-
-                    //
-                    findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
-
-                    snpD.notifyDataChanged()
-                    fundD.notifyDataChanged()
-                    bondD.notifyDataChanged()
-                    unemD.notifyDataChanged()
-                    infD.notifyDataChanged()
-
-                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-
-                    findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                    findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                    findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                    findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                    findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
-
-
-                    // 현재 값 저장
-                    snpNowDate = snp_date[sp + dayPlus]
-                    snpNowdays = dayPlus
-                    snpNowVal = snp_val[sp + dayPlus].toFloat()
-                    println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
-
-
-                    dayPlus += 1 // 시간 진행
                 } else {
-                    println("게임 끝")
-                    break
+                    delay(btnRefresh)
                 }
             } else {
-                delay(btnRefresh)
+                break
             }
-            delay(oneday)
+            delay(btnRefresh)
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////

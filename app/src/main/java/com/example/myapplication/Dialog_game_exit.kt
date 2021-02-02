@@ -3,11 +3,8 @@ package com.example.myapplication
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.view.View
 import android.view.Window
 import android.widget.Button
-import android.widget.Toast
 
 class Dialog_game_exit (context : Context)  {
     var mContext: Context? = context
@@ -23,6 +20,7 @@ class Dialog_game_exit (context : Context)  {
 
         btnsave = dlg.findViewById(R.id.btn_save)
         btnsave.setOnClickListener{
+            gameend = !gameend /////////////////////////////////////////////////////////////////////
         }
 
 
@@ -38,11 +36,13 @@ class Dialog_game_exit (context : Context)  {
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
             dlg.dismiss()
+            gameend = !gameend /////////////////////////////////////////////////////////////////////
             (mContext as Activity).finish()
         }
         btncancel = dlg.findViewById(R.id.btn_cancel)
         btncancel.setOnClickListener {
             dlg.dismiss()
+            click = !click /////////////////////////////////////////////////////////////////////
         }
         dlg.show()
     }
