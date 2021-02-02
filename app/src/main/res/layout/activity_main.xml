@@ -54,7 +54,7 @@
             android:id="@+id/game_btn"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:text="게임" />
+            android:text="로딩 중" />
 
     </LinearLayout>
 

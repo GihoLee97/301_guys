@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,10 +25,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val game_btn = findViewById<Button>(R.id.game_btn)
+
+        var game_btn =  findViewById<Button>(R.id.game_btn)
+        game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
+
         game_btn.setOnClickListener{
             val intent = Intent(this,GameNormalActivity::class.java)
             startActivity(intent)
+        }
+
+        while (true) {
+            if (loadcomp) {
+                game_btn.isEnabled = true
+                game_btn.text = "게임 시작"
+                break
+            }
+            Thread.sleep(50)
         }
 
     }
