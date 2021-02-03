@@ -9,19 +9,19 @@ interface SettingDao {
     fun getAll(): MutableList<Setting>
 
     @Query("SELECT volume FROM Setting WHERE id = 1 ")
-    fun getVolume(): List<Boolean>
+    fun getVolume(): Boolean
 
     @Query("SELECT push FROM Setting WHERE id = 1")
-    fun getPush(): List<Boolean>
+    fun getPush(): Boolean
 
     @Query("SELECT autospeed FROM Setting WHERE id = 1")
-    fun getAutoSpeed(): List<Int>
+    fun getAutoSpeed(): Int
 
     @Query("SELECT thema FROM Setting WHERE id = 1")
-    fun getThema(): List<Int>
+    fun getThema(): Int
 
     @Query("SELECT `index` FROM Setting WHERE id = 1")
-    fun getIndex(): List<Int>
+    fun getIndex(): Int
 
     @Query("SELECT id FROM Setting")
     fun getId(): List<Int>

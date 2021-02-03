@@ -98,8 +98,10 @@ class Dialog_sell(context : Context) {
 
         btnOK.setOnClickListener {
             //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
-            var result: List<Float> = listOf(price, fees)
-            listenter.onBuyClicked(result)
+            if(money>0F){
+                var result: List<Float> = listOf(price, fees)
+                listenter.onBuyClicked(result)
+            }
             dlg.dismiss()
             click = !click //////////////////////////////////////////////////////////////////////////
         }

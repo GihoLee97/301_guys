@@ -183,7 +183,7 @@ class GameNormalActivity : AppCompatActivity() {
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item3count)
             }
 
-        }//화면 전환시 data reset되는 문제 발생
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         // 차트 click, gameend 변수 초기화
@@ -261,8 +261,10 @@ class GameNormalActivity : AppCompatActivity() {
             dlg_sell.setOnSellClickedListener { content ->
                 sell = content
                 viewModel.sellStock(sell[0], sell[1])
-                val addThread = Thread(addRunnable)
-                addThread.start()
+                if(sell[0]>0F){
+                    val addThread = Thread(addRunnable)
+                    addThread.start()
+                }
             }
             click = !click /////////////////////////////////////////////////////////////////////////
         }

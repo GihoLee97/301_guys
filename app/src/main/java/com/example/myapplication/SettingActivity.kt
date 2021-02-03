@@ -40,12 +40,12 @@ class SettingActivity : AppCompatActivity() {
         var money = findViewById<CheckBox>(R.id.money_btn)
         var complete = findViewById<Button>(R.id.complete_btn)
         var thema: Int = 0
-        val startRunnable = Runnable {
-            setList = settingDb?.settingDao()?.getAll()!!
-        }
-
-        val startThread = Thread(startRunnable)
-        startThread.start()
+//        val startRunnable = Runnable {
+//            setList = settingDb?.settingDao()?.getAll()!!
+//        }
+//
+//        val startThread = Thread(startRunnable)
+//        startThread.start()
 
 
         //화면 초기 setting
@@ -55,17 +55,16 @@ class SettingActivity : AppCompatActivity() {
             autoplay_bar.progress=dautoplay
             thema_choose.check(themas[dthema].id)
         } else{
-            bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]
-            push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]
-            autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!![0]
-            thema_choose.check(themas[settingDb?.settingDao()?.getThema()!![0]].id)
-            if(settingDb?.settingDao()?.getIndex()!![0]>=10000){interest.isChecked = true}
-            var indexlist:MutableList<Boolean> = intToList(settingDb?.settingDao()?.getIndex()!![0], indexcount)
-            interest.isChecked = indexlist[0].not()
-            exchange.isChecked=indexlist[1].not()
-            shortlonginterest.isChecked=indexlist[2].not()
-            gold.isChecked=indexlist[3].not()
-            money.isChecked=indexlist[4].not()
+            bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!!
+            push_sw.isChecked= settingDb?.settingDao()?.getPush()!!
+            autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!!
+            thema_choose.check(themas[settingDb?.settingDao()?.getThema()!!].id)
+            var indexlist:MutableList<Boolean> = intToList(settingDb?.settingDao()?.getIndex()!!, indexcount)
+            interest.isChecked = indexlist[0]
+            exchange.isChecked=indexlist[1]
+            shortlonginterest.isChecked=indexlist[2]
+            gold.isChecked=indexlist[3]
+            money.isChecked=indexlist[4]
         }
 
 
@@ -81,7 +80,7 @@ class SettingActivity : AppCompatActivity() {
                 if(light.isChecked){ thema = 0 }
                 else if(dark.isChecked){ thema = 1 }
                 newSetting.thema = thema//수정필요
-                newSetting.index = 10000*toInt(interest.isChecked)+1000*toInt(exchange.isChecked)+100*toInt(shortlonginterest.isChecked)+10*toInt(gold.isChecked)+toInt(money.isChecked)
+                newSetting.index = 10000*toInt(interest.isChecked.not())+1000*toInt(exchange.isChecked.not())+100*toInt(shortlonginterest.isChecked.not())+10*toInt(gold.isChecked.not())+toInt(money.isChecked.not())
                 settingDb?.settingDao()?.insert(newSetting)
             }
 
@@ -118,7 +117,6 @@ class SettingActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        SettingDB.destroyINSTACE()
         super.onDestroy()
     }
 
