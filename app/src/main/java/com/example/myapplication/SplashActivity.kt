@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({ //delay를 위한 handler
             profileDb = ProflieDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
-                var loginMethod = profileDb?.profileDao()?.getLogin()
+                val loginMethod = profileDb?.profileDao()?.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login
                 else if(loginMethod?.and(2)==2) { // google login
                     if (isGoogleAuthChecked()) go2MainActivity()

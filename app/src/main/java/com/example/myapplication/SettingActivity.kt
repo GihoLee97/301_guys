@@ -16,7 +16,6 @@ class SettingActivity : AppCompatActivity() {
     val dautoplay: Int = 5
     val dthema: Int = 0
     private var settingDb : SettingDB? =null
-    private var setList = mutableListOf<Setting>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +39,6 @@ class SettingActivity : AppCompatActivity() {
         var money = findViewById<CheckBox>(R.id.money_btn)
         var complete = findViewById<Button>(R.id.complete_btn)
         var thema: Int = 0
-//        val startRunnable = Runnable {
-//            setList = settingDb?.settingDao()?.getAll()!!
-//        }
-//
-//        val startThread = Thread(startRunnable)
-//        startThread.start()
 
 
         //화면 초기 setting

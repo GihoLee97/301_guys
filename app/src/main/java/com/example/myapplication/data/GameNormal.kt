@@ -11,7 +11,7 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "purchase") var purchaseamount: Float,
 @ColumnInfo(name = "evaluation") var evaluation:Float,
 @ColumnInfo(name = "profit") var profit:Float,
-@ColumnInfo(name = "buyorsell") var buyorsell:Boolean,
+@ColumnInfo(name = "buyorsell") var buyorsell:String,
 @ColumnInfo(name = "volume") var volume: Float,
 @ColumnInfo(name = "fees") var fees:Float,
 @ColumnInfo(name = "item") var item:String,
@@ -20,5 +20,5 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "item3count")var item3count:Int
 )
 {
-    constructor() : this("", 0F,0F,0F,0F,0F,true,0F,0F, "",0,0,0)
+    constructor() : this("", 0F,0F,0F,0F,0F,"매매",0F,0F, "",0,0,0)
 }

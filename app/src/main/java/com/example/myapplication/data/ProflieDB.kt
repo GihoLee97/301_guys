@@ -22,7 +22,7 @@ abstract class ProflieDB: RoomDatabase() {
                 synchronized(ProflieDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         ProflieDB::class.java,
-                        "playlist.db")
+                        "profile.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()
                 }

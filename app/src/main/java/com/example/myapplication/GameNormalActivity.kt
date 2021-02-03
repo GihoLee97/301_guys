@@ -242,7 +242,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_buy = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,true,buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             dlg_buy.start(viewModel.cash().value!!)
@@ -263,7 +263,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_sell = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,false,sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             dlg_sell.start(viewModel.evaluation().value!!)
@@ -324,6 +324,9 @@ class GameNormalActivity : AppCompatActivity() {
             snpBeforeVal=snpNowVal
             nowdraw()
             viewModel.priceUpdate(snpNowVal, snpBeforeVal)
+
+
+
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
 

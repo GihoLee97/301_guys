@@ -3,8 +3,10 @@ package com.example.myapplication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.GameNormal
 import com.example.myapplication.data.GameNormalDB
+import kotlinx.coroutines.launch
 
 class GameNormalActivityVeiwModel: ViewModel() {
     //변수 선언
@@ -31,6 +33,12 @@ class GameNormalActivityVeiwModel: ViewModel() {
         _item2.value = startitem2
         _item3.value = startitem3
         _assets.value = _cash.value?.plus(_evaluation.value!!)
+    }
+
+    init {
+        viewModelScope.launch {
+
+        }
     }
 
     //현금 반환

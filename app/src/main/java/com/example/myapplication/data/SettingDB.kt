@@ -18,7 +18,7 @@ abstract class SettingDB: RoomDatabase() {
                 synchronized(SettingDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                         SettingDB::class.java,
-                        "playlist.db")
+                        "settting.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()
 
