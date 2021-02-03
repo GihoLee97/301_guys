@@ -131,6 +131,7 @@ class GameNormalActivity : AppCompatActivity() {
         //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
         val startcash: Float = 5000000F
+        val startpurchase: Float = 0F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
         var startitem1: Int = 0
@@ -138,6 +139,7 @@ class GameNormalActivity : AppCompatActivity() {
         var startitem3: Int = 0
         var uassets: Float = 0F
         var ucash: Float = 0F
+        var upurchase: Float = 0F
         var uevaluation: Float = 0F
         var uprofit: Float = 0F
         var uitem1count: Int = 0
@@ -146,6 +148,7 @@ class GameNormalActivity : AppCompatActivity() {
         var localDatatime: LocalDateTime = LocalDateTime.now()
         val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
+        val purchase = findViewById<TextView>(R.id.purchase)
         val evaluation = findViewById<TextView>(R.id.evaluation)
         val profit = findViewById<TextView>(R.id.profit)
         val item1 = findViewById<TextView>(R.id.item1)
@@ -169,9 +172,10 @@ class GameNormalActivity : AppCompatActivity() {
         ).also {
             //초기화
             if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
-                it.initialize(startcash, startevaluation, startprofit, startitem1, startitem2, startitem3)
+                it.initialize(startcash, startpurchase, startevaluation, startprofit, startitem1, startitem2, startitem3)
             }else{
                 it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
@@ -193,6 +197,10 @@ class GameNormalActivity : AppCompatActivity() {
         })
         viewModel.cash().observe(this, Observer {
             cash.text = "현금: " + it.toString() + "원"
+            ucash = it
+        })
+        viewModel.purchase().observe(this, Observer {
+            purchase.text = "매입금액: " + it.toString() + "원"
             ucash = it
         })
         viewModel.evaluation().observe(this, Observer {
@@ -225,7 +233,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_buy = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,uevaluation,uprofit,true,buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,true,buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             dlg_buy.start(viewModel.cash().value!!)
@@ -246,7 +254,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_sell = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,uevaluation,uprofit,false,sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,false,sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             dlg_sell.start(viewModel.evaluation().value!!)
