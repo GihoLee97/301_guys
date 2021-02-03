@@ -134,9 +134,9 @@ class GameNormalActivity : AppCompatActivity() {
         val startpurchase: Float = 0F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
-        var startitem1: Int = 0
-        var startitem2: Int = 0
-        var startitem3: Int = 0
+        val startitem1: Int = 0
+        val startitem2: Int = 0
+        val startitem3: Int = 0
         var uassets: Float = 0F
         var ucash: Float = 0F
         var upurchase: Float = 0F
@@ -201,7 +201,7 @@ class GameNormalActivity : AppCompatActivity() {
         })
         viewModel.purchase().observe(this, Observer {
             purchase.text = "매입금액: " + it.toString() + "원"
-            ucash = it
+            upurchase = it
         })
         viewModel.evaluation().observe(this, Observer {
             evaluation.text = "원화평가금액: " + it.toString() + "원"
