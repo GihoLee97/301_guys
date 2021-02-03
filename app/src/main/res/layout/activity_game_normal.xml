@@ -1,222 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".GameNormalActivity">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout_GameNormalActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="32"
-        tools:context=".GameNormalActivity">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="32">
 
 
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/cht_snp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scrollbars="none">
-
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toTopOf="@+id/cht_snp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_fund"
-                    android:layout_width="150dp"
-                    android:layout_height="120dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_bond"
-                    android:layout_width="150dp"
-                    android:layout_height="120dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_fund"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_indpro"
-                    android:layout_width="150dp"
-                    android:layout_height="120dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_bond"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_unem"
-                    android:layout_width="150dp"
-                    android:layout_height="120dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_indpro"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_inf"
-                    android:layout_width="150dp"
-                    android:layout_height="120dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_unem"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_inf"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </HorizontalScrollView>
+                </LinearLayout>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/cht_snp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="200dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            </HorizontalScrollView>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/cht_snp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_weight="2"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="News" />
-
-            <TextView
-                android:id="@+id/news"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="뉴스내용" />
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-
-                />
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="4">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/assets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="총자산:    "/>
+                android:layout_height="80dp"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/cash"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="현금:     "/>
+                    android:text="News" />
 
                 <TextView
-                    android:id="@+id/purchase"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="매입금액:     "/>
+                    android:id="@+id/news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="뉴스내용" />
 
-                <TextView
-                    android:id="@+id/evaluation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="원화평가금액:    " />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
 
-                <TextView
-                    android:id="@+id/profit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="수익률:  " />
-                <TextView
-                    android:id="@+id/item1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="아이템1:  " />
-                <TextView
-                    android:id="@+id/item2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="아이템2:  " />
-                <TextView
-                    android:id="@+id/item3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="아이템3:  " />
+                    />
+
             </LinearLayout>
-        </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/assets"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="총자산:    " />
+
+                        <TextView
+                            android:id="@+id/cash"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="현금:     " />
+
+                        <TextView
+                            android:id="@+id/purchase"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="매입금액:     " />
+
+                        <TextView
+                            android:id="@+id/evaluation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="원화평가금액:    " />
+
+                        <TextView
+                            android:id="@+id/profit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="수익률:  " />
+
+                        <TextView
+                            android:id="@+id/item1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="아이템1:  " />
+
+                        <TextView
+                            android:id="@+id/item2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="아이템2:  " />
+
+                        <TextView
+                            android:id="@+id/item3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="아이템3:  " />
+                    </LinearLayout>
+                </ScrollView>
+
+                <Button
+                    android:id="@+id/btn_myAssetStateDrawerOpen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/browser_actions_bg_grey"
+                    android:text="자세히" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/buy_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="매수"
+                    android:textColor="@android:color/holo_red_light"
+
+                    />
+
+                <Button
+                    android:id="@+id/sell_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="매도"
+                    android:textColor="@android:color/holo_blue_bright" />
+
+                <Button
+                    android:id="@+id/auto_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="자동"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/item_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="아이템"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/buy_dialog_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="3"
-            android:orientation="horizontal"
-            android:weightSum="4">
+            android:id="@+id/linearLayout_myAssetState"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@color/purple_200"
+            android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buy_btn"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_myAssetStateDrawerClose"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="매수"
-                android:textColor="@android:color/holo_red_light"
+                android:text=">" />
 
-                />
-
-            <Button
-                android:id="@+id/sell_btn"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="매도"
-                android:textColor="@android:color/holo_blue_bright" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/auto_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="자동"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/item_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="아이템"
-                android:textColor="@color/black"/>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="내 자산 현황"
+                    android:textSize="20dp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:id="@+id/buy_dialog_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+    </androidx.drawerlayout.widget.DrawerLayout>
 </FrameLayout>

@@ -4,11 +4,13 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.GameNormal
@@ -159,6 +161,13 @@ class GameNormalActivity : AppCompatActivity() {
         }
         val startThread = Thread(startRunnable)
         startThread.start()
+
+        // drawer variable declearation
+        val drawerLayout_GameNormalActivity = findViewById<DrawerLayout>(R.id.drawerLayout_GameNormalActivity)
+        val view_myAssetState = findViewById<View>(R.id.linearLayout_myAssetState)
+        val btn_myAssetStateDrawerOpen = findViewById<Button>(R.id.btn_myAssetStateDrawerOpen)
+        val btn_myAssetStateDrawerClose = findViewById<Button>(R.id.btn_myAssetStateDrawerClose)
+
 
         //Buy Dialog로 부터 결과를 받아오는 list
         lateinit var buy: List<Float>
@@ -315,6 +324,17 @@ class GameNormalActivity : AppCompatActivity() {
             viewModel.priceUpdate(snpNowVal, snpBeforeVal)
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
+
+        // DrawerLayout ////////////////////////////////////////////////////////////////////////////
+        drawerLayout_GameNormalActivity.closeDrawer(view_myAssetState)
+        btn_myAssetStateDrawerClose.setOnClickListener {
+            drawerLayout_GameNormalActivity.closeDrawer(view_myAssetState)
+        }
+
+        btn_myAssetStateDrawerOpen.setOnClickListener {
+            drawerLayout_GameNormalActivity.openDrawer(view_myAssetState)
+        }
+
     }
 
     // 데이터 가지고 오기

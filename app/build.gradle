@@ -96,6 +96,10 @@ dependencies {
     //viewmodel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
+    //Drawerlayout
+    implementation "androidx.drawerlayout:drawerlayout:1.1.1"
+
+
 }
 
 apply plugin: 'com.android.application'
