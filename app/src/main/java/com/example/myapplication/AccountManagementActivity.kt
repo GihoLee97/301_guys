@@ -36,8 +36,10 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var btn_kakaoAccountDelete : Button
     private lateinit var btn_kakaoAccountRevokeAccess : Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_account_management)
 
         layout_generalAccountManagement = findViewById(R.id.layout_generalAccountManagement)
@@ -62,7 +64,7 @@ class AccountManagementActivity : AppCompatActivity() {
         btn_kakaoAccountRevokeAccess = findViewById(R.id.btn_kakaoAccountRevokeAccess)
 
         // 현재 로그인된 계정만 띄우기
-        profileDb = ProflieDB?.getInstace(this)
+        profileDb = ProflieDB.getInstace(this)
         if(profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             Toast.makeText(this, "there is no profile in DB", Toast.LENGTH_SHORT).show()
             layout_generalAccountManagement.visibility = View.GONE
@@ -71,7 +73,11 @@ class AccountManagementActivity : AppCompatActivity() {
         }
         else{
             var loginMethod = profileDb?.profileDao()?.getLogin()
-            if(loginMethod?.and(1)==1) layout_generalAccountManagement.visibility = View.VISIBLE
+            if(loginMethod?.and(1)==1){
+                layout_generalAccountManagement.visibility = View.VISIBLE
+                textView_generalAcountID.text = profileDb?.profileDao()?.getLoginid()
+            }
+
             else layout_generalAccountManagement.visibility = View.GONE
             if(loginMethod?.and(2)==2) {
                 layout_googleAccountManagement.visibility = View.VISIBLE
@@ -132,14 +138,14 @@ class AccountManagementActivity : AppCompatActivity() {
             val intent = Intent(this,InitialActivity::class.java)
             startActivity(intent)
         }
+        // 일반 로그인 시 비밀번호 변경
+        btn_generalAccountPW.setOnClickListener{
+            val dlg_change_pw = Dialog_change_pw(this)
+            dlg_change_pw.start()
+        }
     }
 
     private fun updatelogOutInFo2DB(method : String){
-        var mask : Int = 0
-        if (method=="GENERAL") mask = 1
-        else if(method=="GOOGLE") mask = 2
-        else if(method=="KAKAO") mask = 4
-
         profileDb = ProflieDB?.getInstace(this)
         if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             val setRunnable = Runnable {
@@ -148,8 +154,10 @@ class AccountManagementActivity : AppCompatActivity() {
                 newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!-mask
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
             }
             var setThread = Thread(setRunnable)

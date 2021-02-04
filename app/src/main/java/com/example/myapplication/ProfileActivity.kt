@@ -29,7 +29,6 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         profileDb = ProflieDB.getInstace(this)
-
         nickname_textView = findViewById(R.id.nickName_text)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
@@ -43,7 +42,11 @@ class ProfileActivity : AppCompatActivity() {
             nickname_textView.text = it
         })
         val startRunnable = Runnable {
+            val newProfile = Profile()
+           // newProfile.login_id = "b"
+            profileDb?.profileDao()?.update(newProfile)
             profileList = profileDb?.profileDao()?.getAll()!!
+
         }
 
         if (profileDb?.profileDao()?.getNickname()=="#########first_login##########") { // PreSet the setting in the case of first running
@@ -54,6 +57,7 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.nicknameChange("닉네임을 정하세요.")
             val dlg_nick = Dialog_nick(this,true)
             profileDb = ProflieDB.getInstace(this)
+
             dlg_nick.start(profileDb)
             dlg_nick.setOnNicknameClickedListener { content->
                 changenick=content
@@ -63,11 +67,11 @@ class ProfileActivity : AppCompatActivity() {
         } else  { // recall database
             viewModel.initialize(profileDb?.profileDao()?.getNickname().toString())
 //            count=count+1
+
         }
 
         val startThread = Thread(startRunnable)
         startThread.start()
-
         nickname_btn.setOnClickListener {
             val dlg_nick = Dialog_nick(this,false)
             dlg_nick.start(profileDb)
@@ -78,6 +82,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         accountManagement_btn.setOnClickListener {
+            profileDb = ProflieDB.getInstace(this@ProfileActivity)
             val intent = Intent(this, AccountManagementActivity::class.java)
             startActivity(intent)
         }

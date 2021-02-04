@@ -41,6 +41,8 @@ class Dialog_nick(context : Context, first_login : Boolean) {
                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
             }
 

@@ -28,6 +28,12 @@ interface ProfileDao {
     @Query("SELECT login FROM Profile")
     fun getLogin(): Int
 
+    @Query("SELECT login_id FROM Profile")
+    fun getLoginid(): String
+
+    @Query("SELECT login_pw FROM Profile")
+    fun getLoginpw(): String
+
     @Insert
     fun insert(profile: Profile)
 

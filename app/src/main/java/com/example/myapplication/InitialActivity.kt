@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -41,6 +42,8 @@ import kotlin.experimental.and
 class InitialActivity : AppCompatActivity() {
     // profileDb
     private var profileDb : ProflieDB? = null
+    var saveid :String = ""
+    var savepw :String = ""
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -64,11 +67,11 @@ class InitialActivity : AppCompatActivity() {
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
 
-
         // 회원가입 & onClickListner
         btn_generalSignup.setOnClickListener{
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
+
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
@@ -84,6 +87,8 @@ class InitialActivity : AppCompatActivity() {
         btn_generalLogin.setOnClickListener{
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
+            saveid = id1.text.toString()
+            savepw = pw1.text.toString()
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
@@ -92,6 +97,7 @@ class InitialActivity : AppCompatActivity() {
             Log.d("Giho","ID is hashed to : "+loginID)
             Log.d("Giho","PW is hashed to : "+loginPW)
             val loginDate : String = formatted.toString().trim()
+
             generalLoginCheck(loginID, loginPW, loginDate)
         }
 
@@ -243,7 +249,10 @@ class InitialActivity : AppCompatActivity() {
         memorizeLogMethod(method)
         delLoadingDialog()
         if(profileDb?.profileDao()?.getNickname()=="#########first_login##########"){
+            saveidpw(saveid.trim(), savepw.trim())
+
             val intent = Intent(this, ProfileActivity::class.java)
+
             startActivity(intent)
         } else {
             val intent = Intent(this, MainActivity::class.java)
@@ -258,7 +267,8 @@ class InitialActivity : AppCompatActivity() {
         // if profile DB is empty insert dummy
         if(profileDb?.profileDao()?.getAll().isNullOrEmpty()){
             val setRunnable = Runnable {
-                val newProfile = Profile(1, "#########first_login##########", 0, "", 1, 0)
+
+                val newProfile = Profile(1, "#########first_login##########", 0, "", 1, 0,"a","")
                 profileDb?.profileDao()?.insert(newProfile)
             }
             var setThread = Thread(setRunnable)
@@ -279,6 +289,8 @@ class InitialActivity : AppCompatActivity() {
             newProfile.level = profileDb?.profileDao()?.getLevel()!!
             newProfile.login = temp!!
             newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.login_id =profileDb?.profileDao()?.getLoginid()!!
+            newProfile.login_pw =profileDb?.profileDao()?.getLoginpw()!!
             profileDb?.profileDao()?.update(newProfile)
         }
         var setThread = Thread(setRunnable)
@@ -337,10 +349,49 @@ class InitialActivity : AppCompatActivity() {
             dialog.finish()
         }
     }
-//    override fun onDestroy() {
-//        Log.d(TAG, "called onDestroy");
-//        delLoadingDialog()
-//        super.onDestroy();
+
+    fun saveidpw(id : String, pw: String){
+        profileDb = ProflieDB?.getInstace(this)
+        var tmp : String = id
+        val setRunnable = Runnable {
+            val newProfile = Profile()
+            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+            newProfile.history = profileDb?.profileDao()?.getHistory()!!
+            newProfile.level = profileDb?.profileDao()?.getLevel()!!
+            newProfile.login = profileDb?.profileDao()?.getLogin()!!
+            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.login_id = id
+            newProfile.login_pw = pw
+            tmp = newProfile.login_id
+
+            profileDb?.profileDao()?.update(newProfile)
+        }
+            var setThread = Thread(setRunnable)
+            setThread.start()
+    }
+
+
+//    private fun updatelogOutInFo2DB(method : String){
+//        var mask : Int = 0
+//        var tmp : Int = 0
+//
+//        profileDb = ProflieDB?.getInstace(this)
+//        if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
+//            val setRunnable = Runnable {
+//                val newProfile = Profile()
+//                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+//                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+//                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+//                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+//                newProfile.login = profileDb?.profileDao()?.getLogin()!!-mask
+//                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+//                tmp = newProfile.profit
+//            }
+//            Toast.makeText(this@InitialActivity, tmp, Toast.LENGTH_LONG).show()
+//            var setThread = Thread(setRunnable)
+//            setThread.start()
+//        }
 //    }
 }
 
