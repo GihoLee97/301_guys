@@ -52,7 +52,7 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.initialize("닉네임을 정하세요.")
             // update nickname
             viewModel.nicknameChange("닉네임을 정하세요.")
-            val dlg_nick = Dialog_nick(this)
+            val dlg_nick = Dialog_nick(this,true)
             profileDb = ProflieDB.getInstace(this)
             dlg_nick.start(profileDb)
             dlg_nick.setOnNicknameClickedListener { content->
@@ -69,7 +69,7 @@ class ProfileActivity : AppCompatActivity() {
         startThread.start()
 
         nickname_btn.setOnClickListener {
-            val dlg_nick = Dialog_nick(this)
+            val dlg_nick = Dialog_nick(this,false)
             dlg_nick.start(profileDb)
             dlg_nick.setOnNicknameClickedListener { content->
                 changenick=content

@@ -13,18 +13,20 @@ import com.example.myapplication.R
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 
-class Dialog_nick(context : Context) {
+class Dialog_nick(context : Context, first_login : Boolean) {
 
     private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감
     private lateinit var btn_ok : Button
     private lateinit var nickname_editText : EditText
     private lateinit var listenter: Dialog_nick.NicknameDialogClickedListener
+    private var first_login = first_login
 
 
     fun start(profileDb :ProflieDB?) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_nickname) //다이얼로그에 사용할 xml 파일을 불러옴
-        dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        if(first_login) dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        else dlg.setCancelable(true)
         //
         btn_ok = dlg.findViewById(R.id.nicknameokbtn)
         nickname_editText = dlg.findViewById(R.id.editNickName)
