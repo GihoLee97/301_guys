@@ -572,29 +572,32 @@ class GameNormalActivity : AppCompatActivity() {
                         println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
                         // 차트에 DataSet 리프레쉬 통보
-                        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                        runOnUiThread {
+                            findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
 
-                        snpD.notifyDataChanged()
-                        fundD.notifyDataChanged()
-                        bondD.notifyDataChanged()
-                        unemD.notifyDataChanged()
-                        infD.notifyDataChanged()
+                            snpD.notifyDataChanged()
+                            fundD.notifyDataChanged()
+                            bondD.notifyDataChanged()
+                            unemD.notifyDataChanged()
+                            infD.notifyDataChanged()
 
-                        // 차트 축 최대 범위 설정
-                        findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                            // 차트 축 최대 범위 설정
+                            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
 
-                        // 차트 축 이동
-                        findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                            // 차트 축 이동
+                            findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                        }
+
 
 
                         // 값 OutPut ///////////////////////////////////////////////////////////////
@@ -633,14 +636,15 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         asset = cash + evaluation // 총 자산
 
-                        findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+asset.toString()
-                        findViewById<TextView>(R.id.tv_cash).text = "현금 : "+ cash.toString()
-                        findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+ evaluation.toString()
-                        findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+ bought.toString()
-                        findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+ profit.toString()
-                        findViewById<TextView>(R.id. tv_profitrate).text = "수익률 : "+ profitrate.toString()+" %"
 
-
+                        runOnUiThread {
+                            findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+asset.toString()
+                            findViewById<TextView>(R.id.tv_cash).text = "현금 : "+ cash.toString()
+                            findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+ evaluation.toString()
+                            findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+ bought.toString()
+                            findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+ profit.toString()
+                            findViewById<TextView>(R.id. tv_profitrate).text = "수익률 : "+ profitrate.toString()+" %"
+                        }
 
 //                        val tvItem1 = findViewById<TextView>(R.id.tv_item1)
 //                        val tvItem2 = findViewById<TextView>(R.id.tv_item2)
