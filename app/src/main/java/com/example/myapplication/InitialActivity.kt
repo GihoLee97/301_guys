@@ -24,12 +24,15 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import okio.Utf8
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.MessageDigest
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.experimental.and
 
 
 class InitialActivity : AppCompatActivity() {
@@ -66,8 +69,10 @@ class InitialActivity : AppCompatActivity() {
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
-            val loginID: String = id1.text.toString().trim()
-            val loginPW: String = pw1.text.toString().trim()
+            val loginID = getHash(id1.text.toString().trim()).trim()
+            val loginPW = getHash(pw1.text.toString().trim()).trim()
+            Log.d("Giho","ID is hashed to : "+loginID)
+            Log.d("Giho","PW is hashed to : "+loginPW)
             val loginDate : String = formatted.toString().trim()
             generalSignup(loginID, loginPW, loginDate)
         }
@@ -79,8 +84,10 @@ class InitialActivity : AppCompatActivity() {
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
-            val loginID: String = id1.text.toString().trim()
-            val loginPW: String = pw1.text.toString().trim()
+            val loginID = getHash(id1.text.toString().trim()).trim()
+            val loginPW = getHash(pw1.text.toString().trim()).trim()
+            Log.d("Giho","ID is hashed to : "+loginID)
+            Log.d("Giho","PW is hashed to : "+loginPW)
             val loginDate : String = formatted.toString().trim()
             generalLoginCheck(loginID, loginPW, loginDate)
         }
@@ -120,6 +127,7 @@ class InitialActivity : AppCompatActivity() {
 
     // general signup
     fun generalSignup(u_id: String, u_pw: String, u_date : String) {
+
         var api_signup: Retrofitsignup? = null
         val url = "http://stockgame.dothome.co.kr/test/Signup.php/"
         var gson: Gson = GsonBuilder()
@@ -169,14 +177,18 @@ class InitialActivity : AppCompatActivity() {
         funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
         funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
+ //               Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     val okcode: String = response.body()!!
-                    if (okcode == "777"){
+                    if (okcode == "7774"){
                         Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
                         loginSuccess("GENERAL") // memorize login method and move to MainActivity
+                    }
+                    if (okcode == "4"){
+                        Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -267,6 +279,29 @@ class InitialActivity : AppCompatActivity() {
         }
         var setThread = Thread(setRunnable)
         setThread.start()
+    }
+
+    private fun getHash(input : String):String{
+        val salt1 = "We-are-301-guys"
+        val salt2 = "We-are-gonna-be-rich"
+        var adjusted_input_1 = input+salt1
+        var adjusted_input_2 = input+salt2
+        var messagedigest = MessageDigest.getInstance("SHA-256")
+        var result1 = String(messagedigest.digest(adjusted_input_1.hashCode().toString().toByteArray()))
+        var result2 = String(messagedigest.digest(adjusted_input_2.hashCode().toString().toByteArray()))
+        var adjusted_input_3 = result1+result2
+        var result3 = messagedigest.digest(adjusted_input_3.hashCode().toString().toByteArray())
+
+        var sb: StringBuilder = StringBuilder()
+
+        var i = 0
+        while (i < result3.count()) {
+            sb.append(((result3[i].and(0xff.toByte())) + 0x100).toString(16).substring(0, 1))
+            i++
+        }
+
+        var final_result = sb.toString()
+        return final_result
     }
 
     // 두번 누르면 종료되는 코드
