@@ -131,49 +131,55 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/assets"
+                            android:id="@+id/tv_asset"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="총자산:    " />
+                            android:text="총 자산:    " />
 
                         <TextView
-                            android:id="@+id/cash"
+                            android:id="@+id/tv_cash"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="현금:     " />
 
                         <TextView
-                            android:id="@+id/purchase"
+                            android:id="@+id/tv_bought"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="매입금액:     " />
 
                         <TextView
-                            android:id="@+id/evaluation"
+                            android:id="@+id/tv_evaluation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="원화평가금액:    " />
 
                         <TextView
-                            android:id="@+id/profit"
+                            android:id="@+id/tv_profit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="순손익:  " />
+
+                        <TextView
+                            android:id="@+id/tv_profitrate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="수익률:  " />
 
                         <TextView
-                            android:id="@+id/item1"
+                            android:id="@+id/tv_item1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="아이템1:  " />
 
                         <TextView
-                            android:id="@+id/item2"
+                            android:id="@+id/tv_item2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="아이템2:  " />
 
                         <TextView
-                            android:id="@+id/item3"
+                            android:id="@+id/tv_item3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="아이템3:  " />
@@ -197,7 +203,7 @@
                 android:weightSum="4">
 
                 <Button
-                    android:id="@+id/buy_btn"
+                    android:id="@+id/btn_buy"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -208,7 +214,7 @@
                     />
 
                 <Button
-                    android:id="@+id/sell_btn"
+                    android:id="@+id/btn_sell"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -217,7 +223,7 @@
                     android:textColor="@android:color/holo_blue_bright" />
 
                 <Button
-                    android:id="@+id/auto_btn"
+                    android:id="@+id/btn_auto"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -226,7 +232,7 @@
                     android:textColor="@color/black" />
 
                 <Button
-                    android:id="@+id/item_btn"
+                    android:id="@+id/btn_item"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -236,6 +242,11 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:id="@+id/buy_dialog_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/linearLayout_myAssetState"

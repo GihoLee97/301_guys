@@ -3,16 +3,10 @@ package com.example.myapplication
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.GameNormal
 import com.example.myapplication.data.GameNormalDB
 import com.github.mikephil.charting.charts.LineChart
@@ -27,13 +21,63 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// 버튼 클릭 판별자 생성
+// 자산 관련 변수들 생성
+var asset: Float = 0F // 총 자산
+var cash: Float = 5000000F // 보유 현금
+var bought: Float = 0F // 총 매수금액
+var sold: Float = 0F // 총 매도금액
+var evaluation: Float = 0F // 평가금액
+var profit: Float = 0F // 순손익
+var profitrate: Float = 0F // 수익률
+
+var quant1x: Float = 0F // 1x 보유 수량
+var quant3x: Float = 0F // 3x 보유 수량
+var quantinv1x: Float = 0F // -1x 보유 수량
+var quantinv3x: Float = 0F // -3x 보유 수량
+
+var buylim1x: Float = 0F // 1x 매수 한계 수량
+var buylim3x: Float = 0F // 3x 매수 한계 수량
+var buyliminv1x: Float = 0F // -1x 매수 한계 수량
+var buyliminv3x: Float = 0F // -3x 매수 한계 수량
+
+var price1x: Float = 100000F // 1x 현재가
+var price3x: Float = 100000F // 3x 현재가
+var priceinv1x: Float = 100000F // -1x 현재가
+var priceinv3x: Float = 100000F // -3x 현재가
+
+var val1x: Float = 0F // 1x 현재가치
+var val3x: Float = 0F // 3x 현재가치
+var valinv1x: Float = 0F // -1x 현재가치
+var valinv3x: Float = 0F // -3x 현재가치
+
+var tradecom: Float = 1.001F // 거래수수료(Trade Commission): 0.1% , 거래시 차감(곱하는 방식)
+var tradecomtot: Float = 0F // 거래수수료 총 합
+var feex1: Float = 0.00003F // 운용수수료(VOO: 0.03%), 년 단위로 매입금액에서 차감
+var feex3: Float = 0.0095F // 운용수수료(UPRO: 0.95%), 년 단위로 매입금액에서 차감
+var dividend: Float = 0.0153F // 배당금(VOO: 1.53%), 년 단위로 현금으로 입금
+var tax: Float = 0F // 세금
+// var currency: Float = 0F // 환율(현재 미반영)
+
+
+// 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 /////////////////////////////////////////////////////
+// 일시정지 시 현재 값 저장
+private var snpNowDate: String = "yyyy-mm-dd"
+private var snpNowdays: Int = 0
+private var snpNowVal: Float = 0F
+private var snpDiff: Float = 0F
+private var discrepancy: Float = 0.995F // 괴리율
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+// 버튼 클릭 판별자 생성 /////////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +98,9 @@ class GameNormalActivity : AppCompatActivity() {
     // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
     private val random = Random()
     private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
+
+    // 값 표준화: 시작일(sp)을 100으로
+    private val criteria: Float = 100/(snp_val[sp].toFloat())
 
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
@@ -95,7 +142,7 @@ class GameNormalActivity : AppCompatActivity() {
     private val ecoLineColor: String = "#1A237E" // 경제 지표 선 색깔
 
 
-    // Count 값들 //////////////////////////////////////////////////////////////////////////////////
+    // Count 값들 ///////////////////////////////////////////////////////////////////////////////////
     private var dayPlus: Int = 1 // sp(Starting Point) 이후 경과한 거래일 수
     private var fundCount: Int = 0
     private var bondCount: Int = 0
@@ -104,24 +151,18 @@ class GameNormalActivity : AppCompatActivity() {
     private var infCount: Int = 0
 
 
-    // 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 ///////////////////////////////////////////////
-
-    // 일시정지 시 현재 값 저장
-    private var snpNowDate: String = "yyyy-mm-dd"
-    private var snpNowdays: Int = 0
-    private var snpNowVal: Float = 0F
-    private var snpBeforeVal : Float = 0F
-
-
-    // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
+    // 시간관련 /////////////////////////////////////////////////////////////////////////////////////
     // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간
-    private val oneday: Long = 240 // 거래일 간 간격
+    private val oneday: Long = 240 // 거래일 간 간격 [ms]
     private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //Roomdata관련
+    // Roomdata관련 /////////////////////////////////////////////////////////////////////////////////
     private var gameNormalDb : GameNormalDB? = null
     private var gameHistory = listOf<GameNormal>()
+
+    //변수 선언 /////////////////////////////////////////////////////////////////////////////////////
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,216 +171,67 @@ class GameNormalActivity : AppCompatActivity() {
 
         gameNormalDb = GameNormalDB.getInstace(this)
 
-        //변수 선언
-        val buy_btn = findViewById<Button>(R.id.buy_btn)
-        val startcash: Float = 5000000F
-        val startpurchase: Float = 0F
-        val startevaluation: Float = 0F
-        val startprofit: Float = 0F
-        val startitem1: Int = 0
-        val startitem2: Int = 0
-        val startitem3: Int = 0
-        var uassets: Float = 0F
-        var ucash: Float = 0F
-        var upurchase: Float = 0F
-        var uevaluation: Float = 0F
-        var uprofit: Float = 0F
-        var uitem1count: Int = 0
-        var uitem2count: Int = 0
-        var uitem3count: Int = 0
-        var localDatatime: LocalDateTime = LocalDateTime.now()
-        val assets = findViewById<TextView>(R.id.assets)
-        val cash = findViewById<TextView>(R.id.cash)
-        val purchase = findViewById<TextView>(R.id.purchase)
-        val evaluation = findViewById<TextView>(R.id.evaluation)
-        val profit = findViewById<TextView>(R.id.profit)
-        val item1 = findViewById<TextView>(R.id.item1)
-        val item2 = findViewById<TextView>(R.id.item2)
-        val item3 = findViewById<TextView>(R.id.item3)
+
         val startRunnable = Runnable {
             gameHistory = gameNormalDb!!.gameNormalDao().getAll()
         }
         val startThread = Thread(startRunnable)
         startThread.start()
 
-        // drawer variable declearation
-        val drawerLayout_GameNormalActivity = findViewById<DrawerLayout>(R.id.drawerLayout_GameNormalActivity)
-        val view_myAssetState = findViewById<View>(R.id.linearLayout_myAssetState)
-        val btn_myAssetStateDrawerOpen = findViewById<Button>(R.id.btn_myAssetStateDrawerOpen)
-        val btn_myAssetStateDrawerClose = findViewById<Button>(R.id.btn_myAssetStateDrawerClose)
 
 
-        //Buy Dialog로 부터 결과를 받아오는 list
-        lateinit var buy: List<Float>
-        lateinit var sell: List<Float>
-        lateinit var item: List<Int>
-
-
-        //viewModel 객체
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
-            GameNormalActivityVeiwModel::class.java
-        ).also {
-            //초기화
-            if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
-                it.initialize(startcash, startpurchase, startevaluation, startprofit, startitem1, startitem2, startitem3)
-            }else{
-                it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item2count,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item3count)
-            }
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        // 차트 click, gameend 변수 초기화
-        click = false
-        gameend  = false
-
-        //실시간 data 반영
-        viewModel.assets().observe(this, Observer {
-            assets.text = "총자산: " + it.toString() + "원"
-            uassets = it
-        })
-        viewModel.cash().observe(this, Observer {
-            cash.text = "현금: " + it.toString() + "원"
-            ucash = it
-        })
-        viewModel.purchase().observe(this, Observer {
-            purchase.text = "매입금액: " + it.toString() + "원"
-            upurchase = it
-        })
-        viewModel.evaluation().observe(this, Observer {
-            evaluation.text = "원화평가금액: " + it.toString() + "원"
-            uevaluation = it
-        })
-        viewModel.profit().observe(this, Observer {
-            profit.text = "수익률" + it.toString() + "%"
-            uprofit = it
-        })
-        viewModel.item1().observe(this, Observer {
-            item1.text = "아이템1: " + it.toString() + "개"
-            uitem1count = it
-        })
-        viewModel.item2().observe(this, Observer {
-            item2.text = "아이템2: " + it.toString() + "개"
-            uitem2count = it
-        })
-        viewModel.item3().observe(this, Observer {
-            item3.text = "아이템3: " + it.toString() + "개"
-            uitem3count = it
-        })
 
         //Button 동작
 
         //매수
-        buy_btn.setOnClickListener {
-            val dlg_buy = Dialog_buy(this)
-            val layoutInflater_buy: LayoutInflater = getLayoutInflater()
-            val builder_buy = AlertDialog.Builder(this)
-            val addRunnable = Runnable {
-                localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
-                gameNormalDb?.gameNormalDao()?.insert(newhistory)
-            }
-            dlg_buy.start(viewModel.cash().value!!)
-            dlg_buy.setOnBuyClickedListener { content ->
-                buy = content
-                viewModel.buyStock(buy[0], buy[1])
-                if(buy[0]>0F){
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
-                }
-            }
+        findViewById<Button>(R.id.btn_buy).setOnClickListener {
+            val dlgBuy = Dialog_buy(this)
+            dlgBuy.start()
             click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
-        val sell_btn = findViewById<Button>(R.id.sell_btn)
-        sell_btn.setOnClickListener {
-            val dlg_sell = Dialog_sell(this)
-            val layoutInflater_sell: LayoutInflater = getLayoutInflater()
-            val builder_sell = AlertDialog.Builder(this)
-            val addRunnable = Runnable {
-                localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
-                gameNormalDb?.gameNormalDao()?.insert(newhistory)
-            }
-            dlg_sell.start(viewModel.evaluation().value!!)
-            dlg_sell.setOnSellClickedListener { content ->
-                sell = content
-                viewModel.sellStock(sell[0], sell[1])
-                if(sell[0]>0F){
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
-                }
-            }
+        findViewById<Button>(R.id.btn_sell).setOnClickListener {
+            val dlgSell = Dialog_sell(this)
+            dlgSell.start()
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
-        val auto_btn = findViewById<Button>(R.id.auto_btn)
-        auto_btn.setOnClickListener {
-            val layoutInflater: LayoutInflater = getLayoutInflater()
-            val builder = AlertDialog.Builder(this)
 
-            getRoomListDataHttp()
+        findViewById<Button>(R.id.btn_auto).setOnClickListener {
             click = !click /////////////////////////////////////////////////////////////////////////
-
         }
 
-        val item_btn = findViewById<Button>(R.id.item_btn)
-        item_btn.setOnClickListener {
-            val dlg_item = Dialog_item(this)
-            dlg_item.start(
-                viewModel.item1().value!!,
-                viewModel.item2().value!!,
-                viewModel.item3().value!!
-            )
-            dlg_item.setOnItemClickedListener { content ->
-                item = content
-                viewModel.setitem(item[0], item[1], item[2])
-            }
-//            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()
+
+        findViewById<Button>(R.id.btn_item).setOnClickListener {
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
 
         // 차트 ////////////////////////////////////////////////////////////////////////////////////
+        // 차트 click, gameend 변수 초기화
+        click = false
+        gameend  = false
+
         // 차트 코루틴 시작
         CoroutineScope(Dispatchers.Default).launch {
-            val chartdata = launch {
+            val job1 = launch {
                 chartdata()
             }
 
-            chartdata.join()
+            job1.join()
 
-            val inidraw = launch {
+            val job2 = launch {
                 inidraw()
             }
 
-            inidraw.join()
-            snpBeforeVal=snpNowVal
-            nowdraw()
-            viewModel.priceUpdate(snpNowVal, snpBeforeVal)
+            job2.join()
 
-
-
+            val job3 = launch {
+                nowdraw()
+            }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
-
-        // DrawerLayout ////////////////////////////////////////////////////////////////////////////
-        drawerLayout_GameNormalActivity.closeDrawer(view_myAssetState)
-        btn_myAssetStateDrawerClose.setOnClickListener {
-            drawerLayout_GameNormalActivity.closeDrawer(view_myAssetState)
-        }
-
-        btn_myAssetStateDrawerOpen.setOnClickListener {
-            drawerLayout_GameNormalActivity.openDrawer(view_myAssetState)
-        }
-
     }
 
     // 데이터 가지고 오기
@@ -389,7 +281,7 @@ class GameNormalActivity : AppCompatActivity() {
     // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
     private fun chartdata() {
         // Entry 배열 초기값 입력
-        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))
+        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()*criteria))
         fundEn.add(Entry(-1250F, fund_val[0].toFloat()))
         bondEn.add(Entry(-1250F, bond_val[0].toFloat()))
         indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))
@@ -436,7 +328,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()),
+                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()*criteria),
                 0
             )
 
@@ -573,19 +465,15 @@ class GameNormalActivity : AppCompatActivity() {
             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월
             findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
         }
-
     }
+
 
     // Real time 차트 생성 및 현재 데이터 저장
     private suspend fun nowdraw() {
-// 현재 데이터
         while (true) {
             if (!gameend) {
                 if (!click) {
                     if (dayPlus <= gl) {
-
-                        delay(oneday) // 게임상에서 1 거래일의 실제시간
-
 
                         var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
                         var snpDate = snp_date[sp + dayPlus]
@@ -608,8 +496,7 @@ class GameNormalActivity : AppCompatActivity() {
                         var unem_c = snpDate_sf.time - unemDate_sf.time
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
-
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()*criteria), 0)
 
                         while (fund_c > 0) {
                             fundIndex += 1
@@ -684,7 +571,7 @@ class GameNormalActivity : AppCompatActivity() {
 
                         println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
-                        //
+                        // 차트에 DataSet 리프레쉬 통보
                         findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
                         findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
                         findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
@@ -698,8 +585,10 @@ class GameNormalActivity : AppCompatActivity() {
                         unemD.notifyDataChanged()
                         infD.notifyDataChanged()
 
+                        // 차트 축 최대 범위 설정
                         findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
 
+                        // 차트 축 이동
                         findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
                         findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
                         findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
@@ -708,20 +597,63 @@ class GameNormalActivity : AppCompatActivity() {
                         findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
 
 
+                        // 값 OutPut ///////////////////////////////////////////////////////////////
                         // 현재 값 저장
                         snpNowDate = snp_date[sp + dayPlus]
                         snpNowdays = dayPlus
                         snpNowVal = snp_val[sp + dayPlus].toFloat()
-                        println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
+                        snpDiff = snp_val[sp + dayPlus].toFloat() / snp_val[sp + dayPlus - 1].toFloat() - 1F
+                        println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
+                        // 변동 및 괴리율 반영
+                        price1x *= (1F + snpDiff * discrepancy) //
+                        price3x *= (1F + 3*snpDiff * discrepancy) //
+                        priceinv1x *= (1F - snpDiff * discrepancy) //
+                        priceinv3x *= (1F - 3*snpDiff * discrepancy) //
+
+                        val1x = quant1x * price1x //
+                        val3x = quant3x * price3x //
+                        valinv1x = quantinv1x * priceinv1x //
+                        valinv3x = quantinv3x * priceinv3x //
+
+                        buylim1x = (cash / (price1x * tradecom)) //
+                        buylim3x = (cash / (price3x * tradecom)) //
+                        buyliminv1x = (cash / (priceinv1x * tradecom)) //
+                        buyliminv3x = (cash / (priceinv3x * tradecom)) //
+                        println("매수 한계 : $buylim1x | $buylim3x | $buyliminv1x | $buyliminv3x")
+
+                        evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
+                        profit = evaluation - bought + sold// 순손익
+                        // 수익률
+                        if (bought==0F) {
+                            profitrate = 0F // Inf 방지
+                        }
+                        else {
+                            profitrate = 100F * profit / bought
+                        }
+                        asset = cash + evaluation // 총 자산
+
+                        findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+asset.toString()
+                        findViewById<TextView>(R.id.tv_cash).text = "현금 : "+ cash.toString()
+                        findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+ evaluation.toString()
+                        findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+ bought.toString()
+                        findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+ profit.toString()
+                        findViewById<TextView>(R.id. tv_profitrate).text = "수익률 : "+ profitrate.toString()+" %"
+
+
+
+//                        val tvItem1 = findViewById<TextView>(R.id.tv_item1)
+//                        val tvItem2 = findViewById<TextView>(R.id.tv_item2)
+//                        val tvItem3 = findViewById<TextView>(R.id.tv_item3)
 
                         dayPlus += 1 // 시간 진행
+
+                        delay(oneday) // 게임상에서 1 거래일의 실제시간
                     } else {
                         println("게임 끝")
                         break
                     }
                 } else {
-                    delay(btnRefresh)
                 }
             } else {
                 break
