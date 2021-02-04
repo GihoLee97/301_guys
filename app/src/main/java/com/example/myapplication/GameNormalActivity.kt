@@ -2,6 +2,8 @@ package com.example.myapplication
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +45,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
-    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
+    private val gl = 200 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
 
     // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
@@ -284,10 +286,7 @@ class GameNormalActivity : AppCompatActivity() {
         auto_btn.setOnClickListener {
             val layoutInflater: LayoutInflater = getLayoutInflater()
             val builder = AlertDialog.Builder(this)
-//            val u_id = " "
-//            val u_pw = " "
-//            val u_date = " "
-//            getRoomListDataHttp(u_id, u_pw, u_date)
+
             getRoomListDataHttp()
             click = !click /////////////////////////////////////////////////////////////////////////
         }
@@ -718,16 +717,30 @@ class GameNormalActivity : AppCompatActivity() {
 
 
                         dayPlus += 1 // 시간 진행
+                        if(dayPlus == 10) {
+                            Handler(Looper.getMainLooper()).post{
+                                val dlg_result = Dialog_result(this@GameNormalActivity)
+                                dlg_result.start()
+                                //Toast.makeText(this, "aaa",Toast.LENGTH_LONG).show()
+                                click = !click //////////////////////////////////////////////////////////////////////////
+                            }
+                        }
                     } else {
                         println("게임 끝")
+
                         break
                     }
                 } else {
+
                     delay(btnRefresh)
                 }
             } else {
+                println("---2")
+
                 break
             }
+            println("---3")
+
             delay(btnRefresh)
         }
     }

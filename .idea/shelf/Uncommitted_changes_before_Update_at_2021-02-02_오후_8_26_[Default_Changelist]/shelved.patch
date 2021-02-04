@@ -1,0 +1,391 @@
+Index: app/src/main/res/layout/buy_dialog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:orientation=\"vertical\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#ffffff\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/title\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:gravity=\"center\"\r\n        android:textColor=\"@color/black\"\r\n        android:textSize=\"16dp\"\r\n        android:text=\"매수\"\r\n        android:background=\"@color/red\"/>\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\"\r\n        android:background=\"@color/white\"/>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:textColor=\"#000000\"\r\n        android:textSize=\"16dp\" >\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <Button\r\n            android:id=\"@+id/btn1\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"1x\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:background=\"@drawable/edgered\"/>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <Button\r\n            android:id=\"@+id/btn2\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"3x\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:background=\"@drawable/edge\"/>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <Button\r\n            android:id=\"@+id/btn3\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"-1x\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:background=\"@drawable/edge\"/>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <Button\r\n            android:id=\"@+id/btn4\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"-3x\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:background=\"@drawable/edge\"/>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n    </LinearLayout>\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\"\r\n        android:background=\"@color/white\"/>\r\n\r\n    <SeekBar\r\n        android:id=\"@+id/seekbar_buy\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"20dp\"\r\n        android:max = \"100\">\r\n    </SeekBar>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:orientation=\"horizontal\">\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <TextView\r\n            android:id=\"@+id/매수금액\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center_vertical\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"16dp\"\r\n            android:text=\"매수금액\"\r\n            android:background=\"@color/white\"/>\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <TextView\r\n            android:id=\"@+id/price\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center_vertical|right\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"16dp\"\r\n            android:text=\"0 원\"\r\n            android:background=\"@color/white\"/>\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n    </LinearLayout>\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:orientation=\"horizontal\">\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <TextView\r\n            android:id=\"@+id/수수료\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center_vertical\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"16dp\"\r\n            android:text=\"수수료 (0.1%)\"\r\n            android:background=\"@color/white\"/>\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <TextView\r\n            android:id=\"@+id/fees\"\r\n            android:layout_width=\"60dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center_vertical|right\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"16dp\"\r\n            android:text=\"0 원\"\r\n            android:background=\"@color/white\"/>\r\n        <View\r\n            android:layout_width=\"10dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <Button\r\n            android:id=\"@+id/okButton\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"매수\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:backgroundTint=\"@color/red\"/>\r\n\r\n        <View\r\n            android:layout_width=\"1dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/cancelButton\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"취소\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:backgroundTint=\"@color/white\"/>\r\n    </LinearLayout>\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:background=\"#000000\"/>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/buy_dialog.xml	(revision 581b2a4f2b8fcb6840df11e50893758eeda3caa9)
++++ app/src/main/res/layout/buy_dialog.xml	(date 1612263437124)
+@@ -4,7 +4,6 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="#ffffff">
+-
+     <TextView
+         android:id="@+id/title"
+         android:layout_width="match_parent"
+@@ -26,66 +25,74 @@
+         android:orientation="horizontal"
+         android:textColor="#000000"
+         android:textSize="16dp" >
+-        <View
+-            android:layout_width="5dp"
+-            android:layout_height="match_parent"
+-            android:background="@color/white"/>
+-        <Button
+-            android:id="@+id/btn1"
+-            android:layout_width="match_parent"
+-            android:layout_height="60dp"
+-            android:layout_weight="1"
+-            android:gravity="center"
+-            android:text="1x"
+-            android:textColor="#000000"
+-            android:textSize="16dp"
+-            android:background="@drawable/edgered"/>
+-        <View
+-            android:layout_width="5dp"
+-            android:layout_height="match_parent"
+-            android:background="@color/white"/>
+-        <Button
+-            android:id="@+id/btn2"
+-            android:layout_width="match_parent"
+-            android:layout_height="60dp"
+-            android:layout_weight="1"
+-            android:gravity="center"
+-            android:text="3x"
+-            android:textColor="#000000"
+-            android:textSize="16dp"
+-            android:background="@drawable/edge"/>
+-        <View
+-            android:layout_width="5dp"
+-            android:layout_height="match_parent"
+-            android:background="@color/white"/>
+-        <Button
+-            android:id="@+id/btn3"
+-            android:layout_width="match_parent"
+-            android:layout_height="60dp"
+-            android:layout_weight="1"
+-            android:gravity="center"
+-            android:text="-1x"
+-            android:textColor="#000000"
+-            android:textSize="16dp"
+-            android:background="@drawable/edge"/>
+-        <View
+-            android:layout_width="5dp"
+-            android:layout_height="match_parent"
+-            android:background="@color/white"/>
+-        <Button
+-            android:id="@+id/btn4"
+-            android:layout_width="match_parent"
+-            android:layout_height="60dp"
+-            android:layout_weight="1"
+-            android:gravity="center"
+-            android:text="-3x"
+-            android:textColor="#000000"
+-            android:textSize="16dp"
+-            android:background="@drawable/edge"/>
+-        <View
+-            android:layout_width="5dp"
+-            android:layout_height="match_parent"
+-            android:background="@color/white"/>
++        <RadioGroup
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:background="@color/gray"
++            android:orientation="horizontal">
++            <View
++                android:layout_width="5dp"
++                android:layout_height="match_parent"
++                android:background="@color/white"/>
++            <Button
++                android:id="@+id/btn1"
++                android:layout_width="match_parent"
++                android:layout_height="60dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:text="1x"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/edge"/>
++            <View
++                android:layout_width="5dp"
++                android:layout_height="match_parent"
++                android:background="@color/white"/>
++            <Button
++                android:id="@+id/btn2"
++                android:layout_width="match_parent"
++                android:layout_height="60dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:text="3x"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/edge"/>
++            <View
++                android:layout_width="5dp"
++                android:layout_height="match_parent"
++                android:background="@color/white"/>
++            <Button
++                android:id="@+id/btn3"
++                android:layout_width="match_parent"
++                android:layout_height="60dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:text="-1x"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/edge"/>
++            <View
++                android:layout_width="5dp"
++                android:layout_height="match_parent"
++                android:background="@color/white"/>
++            <Button
++                android:id="@+id/btn4"
++                android:layout_width="match_parent"
++                android:layout_height="60dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:text="-3x"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/edge"/>
++            <View
++                android:layout_width="5dp"
++                android:layout_height="match_parent"
++                android:background="@color/white"/>
++
++        </RadioGroup>
++
+     </LinearLayout>
+     <View
+         android:layout_width="match_parent"
+Index: app/src/main/java/com/example/myapplication/Dialog_buy.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.app.Dialog\r\nimport android.content.Context\r\nimport android.view.Window\r\nimport android.widget.Button\r\nimport android.widget.SeekBar\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\n\r\nclass Dialog_buy(context : Context) {\r\n    private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감\r\n    private lateinit var btnOK : Button\r\n    private lateinit var btnCancel : Button\r\n    private lateinit var seekBar: SeekBar\r\n    private lateinit var listenter: BuyDialogClickedListener\r\n\r\n    fun start(cash: Float) {\r\n        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거\r\n        dlg.setContentView(R.layout.buy_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴\r\n        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함\r\n        // 임시로 설정한 값\r\n        val money:Float = cash\r\n        //\r\n        val amount_buy: TextView = dlg.findViewById(R.id.price)\r\n        val tax : TextView = dlg.findViewById(R.id.fees)\r\n        //text = dlg.findViewById(R.id.매수금액_숫자)\r\n        var price: Float = 0F\r\n        var fees: Float = 0F\r\n        seekBar = dlg.findViewById(R.id.seekbar_buy)\r\n\r\n\r\n        seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{\r\n            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {\r\n\r\n                amount_buy.text = \"${Math.round(progress*0.01*money)} 원\"\r\n                price = Math.round(progress*0.01*money).toFloat()\r\n                // 수수료 0.1퍼센트\r\n                tax.text=\"${Math.round(progress*0.01*money*0.001)} 원\"\r\n                fees = Math.round(progress*0.01*money*0.001).toFloat()\r\n            }\r\n            override fun onStartTrackingTouch(seekBar: SeekBar?) {\r\n                amount_buy.text = \"${Math.round(seekBar!!.progress *0.01*money)} 원\"\r\n                tax.text = \"${Math.round(seekBar!!.progress *0.01*money*0.001)} 원\"\r\n            }\r\n            override fun onStopTrackingTouch(seekBar: SeekBar?) {\r\n                amount_buy.text = \"${Math.round(seekBar!!.progress*0.01*money)} 원\"\r\n                tax.text = \"${Math.round(seekBar!!.progress*0.01*money*0.001)} 원\"\r\n            }\r\n        })\r\n\r\n        btnOK = dlg.findViewById(R.id.okButton)\r\n        btnOK.setOnClickListener {\r\n            //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드\r\n            if(money>=(price+fees)){\r\n                var result: List<Float> = listOf(price, fees)\r\n                listenter.onBuyClicked(result)\r\n                dlg.dismiss()\r\n                click = !click /////////////////////////////////////////////////////////////////////\r\n            }\r\n            else{    Toast.makeText(dlg.context,\"현금이 부족하여 매수할 수 없습니다.\", Toast.LENGTH_LONG).show() }\r\n        }\r\n\r\n        btnCancel = dlg.findViewById(R.id.cancelButton)\r\n        btnCancel.setOnClickListener {\r\n            dlg.dismiss()\r\n            click = !click /////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        dlg.show()\r\n    }\r\n\r\n    fun setOnBuyClickedListener(listener: (List<Float>)->Unit){\r\n        this.listenter = object : BuyDialogClickedListener{\r\n            override fun onBuyClicked(content: List<Float>) {\r\n                listener(content)\r\n            }\r\n        }\r\n    }\r\n\r\n    interface BuyDialogClickedListener{\r\n        fun onBuyClicked(content: List<Float>)\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Dialog_buy.kt	(revision 581b2a4f2b8fcb6840df11e50893758eeda3caa9)
++++ app/src/main/java/com/example/myapplication/Dialog_buy.kt	(date 1612265208336)
+@@ -2,6 +2,8 @@
+ 
+ import android.app.Dialog
+ import android.content.Context
++import android.graphics.Color
++import android.view.View
+ import android.view.Window
+ import android.widget.Button
+ import android.widget.SeekBar
+@@ -9,11 +11,18 @@
+ import android.widget.Toast
+ 
+ class Dialog_buy(context : Context) {
++    var mContext: Context? = context
+     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
+     private lateinit var btnOK : Button
+     private lateinit var btnCancel : Button
+     private lateinit var seekBar: SeekBar
+     private lateinit var listenter: BuyDialogClickedListener
++    private lateinit var btnmultionep : Button
++    private lateinit var btnmultithreep : Button
++    private lateinit var btnmultionem : Button
++    private lateinit var btnmultithreem : Button
++
++
+ 
+     fun start(cash: Float) {
+         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
+@@ -28,7 +37,20 @@
+         var price: Float = 0F
+         var fees: Float = 0F
+         seekBar = dlg.findViewById(R.id.seekbar_buy)
++        btnOK = dlg.findViewById(R.id.okButton)
++        btnCancel = dlg.findViewById(R.id.cancelButton)
++        btnmultionep = dlg.findViewById(R.id.btn1)
++        btnmultithreep = dlg.findViewById(R.id.btn2)
++        btnmultionem = dlg.findViewById(R.id.btn3)
++        btnmultithreem = dlg.findViewById(R.id.btn4)
++
+ 
++        btnmultionep.setOnClickListener{
++            //red
++            btnmultionep.setBackgroundColor(Color.parseColor("#FFE77070"))
++
++
++        }
+ 
+         seekBar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+@@ -49,7 +71,6 @@
+             }
+         })
+ 
+-        btnOK = dlg.findViewById(R.id.okButton)
+         btnOK.setOnClickListener {
+             //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
+             if(money>=(price+fees)){
+@@ -61,7 +82,6 @@
+             else{    Toast.makeText(dlg.context,"현금이 부족하여 매수할 수 없습니다.", Toast.LENGTH_LONG).show() }
+         }
+ 
+-        btnCancel = dlg.findViewById(R.id.cancelButton)
+         btnCancel.setOnClickListener {
+             dlg.dismiss()
+             click = !click /////////////////////////////////////////////////////////////////////////
+Index: app/src/main/res/layout/prac.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/prac.xml	(date 1612262938663)
++++ app/src/main/res/layout/prac.xml	(date 1612262938663)
+@@ -0,0 +1,47 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#ffffff">
++    <RadioGroup
++        android:checkedButton="@+id/offer"
++        android:id="@+id/toggle"
++        android:layout_width="match_parent"
++        android:layout_height="30dp"
++        android:layout_marginBottom="30dp"
++        android:layout_marginLeft="50dp"
++        android:layout_marginRight="50dp"
++        android:layout_marginTop="30dp"
++        android:background="@color/gray"
++        android:orientation="horizontal">
++
++        <RadioButton
++            android:layout_marginTop="1dp"
++            android:layout_marginBottom="1dp"
++            android:layout_marginLeft="1dp"
++            android:id="@+id/search"
++            android:background="@color/blue"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight="1"
++            android:button="@null"
++            android:gravity="center"
++            android:text="Search"
++            android:textColor="@color/white" />
++
++        <RadioButton
++            android:layout_marginRight="1dp"
++            android:layout_marginTop="1dp"
++            android:layout_marginBottom="1dp"
++            android:id="@+id/offer"
++            android:layout_width="0dp"
++            android:layout_height="match_parent"
++            android:layout_weight="1"
++            android:background="@color/red"
++            android:button="@null"
++            android:gravity="center"
++            android:text="Offers"
++            android:textColor="@color/white" />
++    </RadioGroup>
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/item_pick_dialog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:orientation=\"vertical\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#ffffff\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"15dp\"\r\n        android:text=\"아이템\"\r\n        android:gravity=\"center\" />\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\"\r\n        android:background=\"@color/white\"/>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"240dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:textColor=\"#000000\"\r\n        android:textSize=\"16dp\" >\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            android:layout_weight=\"1\">\r\n            <Button\r\n                android:id=\"@+id/btn_item1\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"180dp\"\r\n                android:layout_weight=\"1\"\r\n                android:gravity=\"center\"\r\n                android:textColor=\"#000000\"\r\n                android:textSize=\"16dp\"\r\n                android:background=\"@drawable/sandclock\"/>\r\n            <TextView\r\n                android:id=\"@+id/item1_number\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"20dp\"\r\n                android:text=\"0\"/>\r\n            <LinearLayout\r\n\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"40dp\"\r\n                android:orientation=\"horizontal\"\r\n                android:layout_weight=\"1\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_item1_plus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:text=\"+\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n                <Button\r\n                    android:id=\"@+id/btn_item1_minus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"-\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            android:layout_weight=\"1\">\r\n            <Button\r\n                android:id=\"@+id/btn_item2\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"180dp\"\r\n                android:layout_weight=\"1\"\r\n                android:gravity=\"center\"\r\n                android:background=\"@drawable/newspaper\"\r\n                android:textColor=\"#000000\"\r\n                android:textSize=\"16dp\"/>\r\n            <TextView\r\n\r\n                android:id=\"@+id/item2_number\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"20dp\"\r\n                android:text=\"0\"/>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"40dp\"\r\n                android:orientation=\"horizontal\"\r\n                android:layout_weight=\"1\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_item2_plus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:text=\"+\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n                <Button\r\n                    android:id=\"@+id/btn_item2_minus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"-\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            android:layout_weight=\"1\">\r\n            <Button\r\n                android:id=\"@+id/btn_item3\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"180dp\"\r\n                android:layout_weight=\"1\"\r\n                android:gravity=\"center\"\r\n                android:text=\"아이템 3\"\r\n                android:textColor=\"#000000\"\r\n                android:textSize=\"16dp\"\r\n                android:background=\"@drawable/edge\"/>\r\n            <TextView\r\n                android:id=\"@+id/item3_number\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"20dp\"\r\n                android:text=\"0\"/>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"40dp\"\r\n                android:orientation=\"horizontal\"\r\n                android:layout_weight=\"1\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_item3_plus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:text=\"+\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n                <Button\r\n                    android:id=\"@+id/btn_item3_minus\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"-\"\r\n                    android:layout_weight=\"1\"\r\n                    android:gravity=\"center\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"#000000\"/>\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n        <View\r\n            android:layout_width=\"5dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n    </LinearLayout>\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\"\r\n        android:background=\"@color/white\"/>\r\n\r\n\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_ok\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"확인\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:backgroundTint=\"@color/gray\"/>\r\n\r\n        <View\r\n            android:layout_width=\"1dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"@color/white\"/>\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_cancel\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"1\"\r\n            android:gravity=\"center\"\r\n            android:text=\"취소\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"16dp\"\r\n            android:backgroundTint=\"@color/white\"/>\r\n    </LinearLayout>\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"1dp\"\r\n        android:background=\"#000000\"/>\r\n\r\n<!--    <androidx.recyclerview.widget.RecyclerView-->\r\n<!--        android:id=\"@+id/itemsRecylerView\"-->\r\n<!--        android:layout_width=\"0dp\"-->\r\n<!--        android:layout_height=\"0dp\"-->\r\n<!--        android:layout_marginStart=\"8dp\"-->\r\n<!--        android:layout_marginTop=\"8dp\"-->\r\n<!--        android:layout_marginEnd=\"8dp\"-->\r\n<!--        android:layout_marginBottom=\"16dp\"-->\r\n<!--        />-->\r\n\r\n</LinearLayout>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/item_pick_dialog.xml	(revision 581b2a4f2b8fcb6840df11e50893758eeda3caa9)
++++ app/src/main/res/layout/item_pick_dialog.xml	(date 1612258413207)
+@@ -23,7 +23,8 @@
+         android:layout_height="240dp"
+         android:orientation="horizontal"
+         android:textColor="#000000"
+-        android:textSize="16dp" >
++        android:textSize="16dp"
++        android:weightSum="3">
+         <View
+             android:layout_width="5dp"
+             android:layout_height="match_parent"
+@@ -37,12 +38,12 @@
+                 android:id="@+id/btn_item1"
+                 android:layout_width="match_parent"
+                 android:layout_height="180dp"
+-                android:layout_weight="1"
+                 android:gravity="center"
+                 android:textColor="#000000"
+                 android:textSize="16dp"
+                 android:background="@drawable/sandclock"/>
+             <TextView
++
+                 android:id="@+id/item1_number"
+                 android:layout_width="match_parent"
+                 android:layout_height="20dp"
+@@ -56,7 +57,7 @@
+ 
+                 <Button
+                     android:id="@+id/btn_item1_plus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:gravity="center"
+@@ -65,7 +66,7 @@
+                     android:textColor="#000000"/>
+                 <Button
+                     android:id="@+id/btn_item1_minus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:text="-"
+                     android:layout_weight="1"
+@@ -87,7 +88,6 @@
+                 android:id="@+id/btn_item2"
+                 android:layout_width="match_parent"
+                 android:layout_height="180dp"
+-                android:layout_weight="1"
+                 android:gravity="center"
+                 android:background="@drawable/newspaper"
+                 android:textColor="#000000"
+@@ -106,7 +106,7 @@
+ 
+                 <Button
+                     android:id="@+id/btn_item2_plus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:gravity="center"
+@@ -115,7 +115,7 @@
+                     android:textColor="#000000"/>
+                 <Button
+                     android:id="@+id/btn_item2_minus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:text="-"
+                     android:layout_weight="1"
+@@ -139,7 +139,6 @@
+                 android:id="@+id/btn_item3"
+                 android:layout_width="match_parent"
+                 android:layout_height="180dp"
+-                android:layout_weight="1"
+                 android:gravity="center"
+                 android:text="아이템 3"
+                 android:textColor="#000000"
+@@ -153,12 +152,11 @@
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="40dp"
+-                android:orientation="horizontal"
+-                android:layout_weight="1">
++                android:orientation="horizontal">
+ 
+                 <Button
+                     android:id="@+id/btn_item3_plus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:gravity="center"
+@@ -167,7 +165,7 @@
+                     android:textColor="#000000"/>
+                 <Button
+                     android:id="@+id/btn_item3_minus"
+-                    android:layout_width="match_parent"
++                    android:layout_width="20dp"
+                     android:layout_height="match_parent"
+                     android:text="-"
+                     android:layout_weight="1"

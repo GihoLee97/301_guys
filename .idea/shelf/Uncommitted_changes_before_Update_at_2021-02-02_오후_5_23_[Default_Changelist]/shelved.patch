@@ -1,0 +1,632 @@
+Index: app/src/main/res/layout/item_pick_dialog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"5dp\"\r\n        android:text=\"아이템\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/itemsRecylerView\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_marginStart=\"8dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"8dp\"\r\n        android:layout_marginBottom=\"16dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/textView\"\r\n        app:layout_constraintEnd_toStartOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/item_pick_dialog.xml	(revision 319bf22ccc5520ef516fe7334f8bab5821535adb)
++++ app/src/main/res/layout/item_pick_dialog.xml	(date 1612253103694)
+@@ -1,35 +1,250 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout
+-    xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
+-
++    android:layout_height="match_parent"
++    android:background="#ffffff">
+ 
+     <TextView
+         android:id="@+id/textView"
+-        android:layout_width="wrap_content"
++        android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="5dp"
++        android:layout_marginTop="15dp"
+         android:text="아이템"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++        android:gravity="center" />
++
++    <View
++        android:layout_width="match_parent"
++        android:layout_height="10dp"
++        android:background="@color/white"/>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="240dp"
++        android:orientation="horizontal"
++        android:textColor="#000000"
++        android:textSize="16dp" >
++        <View
++            android:layout_width="5dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:orientation="vertical"
++            android:layout_weight="1">
++            <Button
++                android:id="@+id/btn_item1"
++                android:layout_width="match_parent"
++                android:layout_height="180dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/sandclock"/>
++            <TextView
++
++                android:id="@+id/item1_number"
++                android:layout_width="match_parent"
++                android:layout_height="20dp"
++                android:text="0"/>
++            <LinearLayout
++
++                android:layout_width="match_parent"
++                android:layout_height="40dp"
++                android:orientation="horizontal"
++                android:layout_weight="1">
++
++                <Button
++                    android:id="@+id/btn_item1_plus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:text="+"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++                <Button
++                    android:id="@+id/btn_item1_minus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:text="-"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++            </LinearLayout>
++        </LinearLayout>
++        <View
++            android:layout_width="5dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:orientation="vertical"
++            android:layout_weight="1">
++            <Button
++                android:id="@+id/btn_item2"
++                android:layout_width="match_parent"
++                android:layout_height="180dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:background="@drawable/newspaper"
++                android:textColor="#000000"
++                android:textSize="16dp"/>
++            <TextView
++
++                android:id="@+id/item2_number"
++                android:layout_width="match_parent"
++                android:layout_height="20dp"
++                android:text="0"/>
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="40dp"
++                android:orientation="horizontal"
++                android:layout_weight="1">
++
++                <Button
++                    android:id="@+id/btn_item2_plus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:text="+"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++                <Button
++                    android:id="@+id/btn_item2_minus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:text="-"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++            </LinearLayout>
++        </LinearLayout>
++
++        <View
++            android:layout_width="5dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:orientation="vertical"
++            android:layout_weight="1">
++            <Button
++                android:id="@+id/btn_item3"
++                android:layout_width="match_parent"
++                android:layout_height="180dp"
++                android:layout_weight="1"
++                android:gravity="center"
++                android:text="아이템 3"
++                android:textColor="#000000"
++                android:textSize="16dp"
++                android:background="@drawable/edge"/>
++            <TextView
++                android:id="@+id/item3_number"
++                android:layout_width="match_parent"
++                android:layout_height="20dp"
++                android:text="0"/>
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="40dp"
++                android:orientation="horizontal"
++                android:layout_weight="1">
++
++                <Button
++                    android:id="@+id/btn_item3_plus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:text="+"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++                <Button
++                    android:id="@+id/btn_item3_minus"
++                    android:layout_width="20dp"
++                    android:layout_height="match_parent"
++                    android:text="-"
++                    android:layout_weight="1"
++                    android:gravity="center"
++                    android:textSize="15dp"
++                    android:textColor="#000000"/>
++            </LinearLayout>
++        </LinearLayout>
++        <View
++            android:layout_width="5dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++
++    </LinearLayout>
++    <View
++        android:layout_width="match_parent"
++        android:layout_height="10dp"
++        android:background="@color/white"/>
++
++
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:orientation="horizontal">
++
++        <Button
++            android:id="@+id/btn_ok"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="확인"
++            android:textColor="#000000"
++            android:textSize="16dp"
++            android:backgroundTint="@color/gray"/>
++
++        <View
++            android:layout_width="1dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
+ 
+-    <androidx.recyclerview.widget.RecyclerView
+-        android:id="@+id/itemsRecylerView"
+-        android:layout_width="0dp"
+-        android:layout_height="0dp"
+-        android:layout_marginStart="8dp"
+-        android:layout_marginTop="8dp"
+-        android:layout_marginEnd="8dp"
+-        android:layout_marginBottom="16dp"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/textView"
+-        app:layout_constraintEnd_toStartOf="parent"
+-        app:layout_constraintHorizontal_bias="0.0"
+-        />
++        <Button
++            android:id="@+id/btn_cancel"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="취소"
++            android:textColor="#000000"
++            android:textSize="16dp"
++            android:backgroundTint="@color/white"/>
++    </LinearLayout>
++
++    <View
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:background="#000000"/>
++
++<!--    <androidx.recyclerview.widget.RecyclerView-->
++<!--        android:id="@+id/itemsRecylerView"-->
++<!--        android:layout_width="0dp"-->
++<!--        android:layout_height="0dp"-->
++<!--        android:layout_marginStart="8dp"-->
++<!--        android:layout_marginTop="8dp"-->
++<!--        android:layout_marginEnd="8dp"-->
++<!--        android:layout_marginBottom="16dp"-->
++<!--        />-->
++
++</LinearLayout>
++
++
++
++
++
++
++
+ 
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"red\">#FFFF0000</color>\r\n    <color name=\"blue\">#FF0000FF</color>\r\n    <color name=\"gray\">#FF808080</color>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 319bf22ccc5520ef516fe7334f8bab5821535adb)
++++ app/src/main/res/values/colors.xml	(date 1612253103708)
+@@ -7,8 +7,9 @@
+     <color name="teal_700">#FF018786</color>
+     <color name="black">#FF000000</color>
+     <color name="white">#FFFFFFFF</color>
+-    <color name="red">#FFFF0000</color>
+-    <color name="blue">#FF0000FF</color>
++    <color name="red">#FFE77070</color>
++    <color name="blue">#FF7070E7</color>
++
+     <color name="gray">#FF808080</color>
+ 
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_game_normal.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\r\n<FrameLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n\r\n    <LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n        xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n        xmlns:tools=\"http://schemas.android.com/tools\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:weightSum=\"32\"\r\n        tools:context=\".GameNormalActivity\">\r\n\r\n\r\n        <HorizontalScrollView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintBottom_toTopOf=\"@+id/cht_snp\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            android:scrollbars=\"none\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"horizontal\"\r\n                app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n                <com.github.mikephil.charting.charts.LineChart\r\n                    android:id=\"@+id/cht_fund\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"120dp\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n                <com.github.mikephil.charting.charts.LineChart\r\n                    android:id=\"@+id/cht_bond\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"120dp\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n                <com.github.mikephil.charting.charts.LineChart\r\n                    android:id=\"@+id/cht_indpro\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"120dp\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n                <com.github.mikephil.charting.charts.LineChart\r\n                    android:id=\"@+id/cht_unem\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"120dp\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n                <com.github.mikephil.charting.charts.LineChart\r\n                    android:id=\"@+id/cht_inf\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"120dp\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            </LinearLayout>\r\n\r\n        </HorizontalScrollView>\r\n\r\n        <com.github.mikephil.charting.charts.LineChart\r\n            android:id=\"@+id/cht_snp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"250dp\"\r\n            android:layout_marginBottom=\"200dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_weight=\"2\"\r\n            android:orientation=\"horizontal\"\r\n            android:weightSum=\"1\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"News\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/news\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:text=\"뉴스내용\" />\r\n\r\n            <ImageView\r\n                android:layout_width=\"50dp\"\r\n                android:layout_height=\"match_parent\"\r\n\r\n                />\r\n\r\n        </LinearLayout>\r\n\r\n        <ScrollView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_weight=\"4\">\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"60dp\"\r\n                android:layout_weight=\"4\"\r\n                android:orientation=\"vertical\">\r\n                <TextView\r\n                    android:id=\"@+id/assets\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"총자산:    \"/>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/cash\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"현금:     \"/>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/evaluation\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"원화평가금액:    \" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/profit\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"수익률:  \" />\r\n\r\n            </LinearLayout>\r\n\r\n        </ScrollView>\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"60dp\"\r\n            android:layout_weight=\"3\"\r\n            android:orientation=\"horizontal\"\r\n            android:weightSum=\"4\">\r\n\r\n            <Button\r\n                android:id=\"@+id/buy_btn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:background=\"@color/white\"\r\n                android:text=\"매수\"\r\n                android:textColor=\"@android:color/holo_red_light\"\r\n\r\n                />\r\n\r\n            <Button\r\n                android:id=\"@+id/sell_btn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:background=\"@color/white\"\r\n                android:text=\"매도\"\r\n                android:textColor=\"@android:color/holo_blue_bright\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/auto_btn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:background=\"@color/white\"\r\n                android:text=\"자동\"\r\n                android:textColor=\"@color/black\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/item_btn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_weight=\"1\"\r\n                android:background=\"@color/white\"\r\n                android:text=\"아이템\"\r\n                android:textColor=\"@color/black\" />\r\n\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n\r\n    <View\r\n        android:id=\"@+id/buy_dialog_view\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        />\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_game_normal.xml	(revision 319bf22ccc5520ef516fe7334f8bab5821535adb)
++++ app/src/main/res/layout/activity_game_normal.xml	(date 1612254155064)
+@@ -77,7 +77,7 @@
+         <com.github.mikephil.charting.charts.LineChart
+             android:id="@+id/cht_snp"
+             android:layout_width="match_parent"
+-            android:layout_height="250dp"
++            android:layout_height="200dp"
+             android:layout_marginBottom="200dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+@@ -112,12 +112,12 @@
+ 
+         <ScrollView
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
++            android:layout_height="60dp"
+             android:layout_weight="4">
+             <LinearLayout
+                 android:layout_width="match_parent"
+-                android:layout_height="60dp"
+-                android:layout_weight="4"
++                android:layout_height="40dp"
++                android:layout_weight="1"
+                 android:orientation="vertical">
+                 <TextView
+                     android:id="@+id/assets"
+@@ -142,9 +142,22 @@
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="수익률:  " />
+-
++                <TextView
++                    android:id="@+id/item1"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:text="아이템1:  " />
++                <TextView
++                    android:id="@+id/item2"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:text="아이템2:  " />
++                <TextView
++                    android:id="@+id/item3"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:text="아이템3:  " />
+             </LinearLayout>
+-
+         </ScrollView>
+ 
+         <LinearLayout
+@@ -190,7 +203,7 @@
+                 android:layout_weight="1"
+                 android:background="@color/white"
+                 android:text="아이템"
+-                android:textColor="@color/black" />
++                android:textColor="@color/black"/>
+ 
+         </LinearLayout>
+     </LinearLayout>
+Index: app/src/main/java/com/example/myapplication/GameNormalActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.widget.Button\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.github.mikephil.charting.charts.LineChart\r\nimport com.github.mikephil.charting.data.Entry\r\nimport com.github.mikephil.charting.data.LineData\r\nimport com.github.mikephil.charting.data.LineDataSet\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport kotlinx.coroutines.*\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.text.SimpleDateFormat\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\nclass GameNormalActivity : AppCompatActivity(){\r\n\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)\r\n    private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년\r\n\r\n    // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////\r\n    // 5년은 대략 1250 거래일.\r\n    // 게임 시작 시점으로부터 5년 전, 10년 후의 데이터 확보가 가능해야함.\r\n    // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.\r\n    // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,\r\n    // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.\r\n    private val random = Random()\r\n    private val sp = random.nextInt((snp_date.size - gl - given)) + given // Starting Point\r\n\r\n\r\n    // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////\r\n    // Entry 배열 생성\r\n    private val snpEn: ArrayList<Entry> = ArrayList()\r\n    private val fundEn: ArrayList<Entry> = ArrayList()\r\n    private val bondEn: ArrayList<Entry> = ArrayList()\r\n    private val indproEn: ArrayList<Entry> = ArrayList()\r\n    private val unemEn: ArrayList<Entry> = ArrayList()\r\n    private val infEn: ArrayList<Entry> = ArrayList()\r\n\r\n    // 그래프 구현을 위한 LineDataSet 생성\r\n    private val snpDs: LineDataSet = LineDataSet(snpEn, \"S&P500 Index\")\r\n    private val fundDs: LineDataSet = LineDataSet(fundEn, \"Fund Rate\")\r\n    private val bondDs: LineDataSet = LineDataSet(bondEn, \"bond Rate\")\r\n    private val indproDs: LineDataSet = LineDataSet(indproEn, \"Ind Pro Rate\")\r\n    private val unemDs: LineDataSet = LineDataSet(unemEn, \"Un Em Rate\")\r\n    private val infDs: LineDataSet = LineDataSet(infEn, \"Infla Rate\")\r\n\r\n    // 그래프 data 생성 -> 최종 입력 데이터\r\n    private val snpD: LineData = LineData(snpDs)\r\n    private val fundD: LineData = LineData(fundDs)\r\n    private val bondD: LineData = LineData(bondDs)\r\n    private val indproD: LineData = LineData(indproDs)\r\n    private val unemD: LineData = LineData(unemDs)\r\n    private val infD: LineData = LineData(infDs)\r\n\r\n    // 차트 데이터 추가\r\n    private var fundIndex: Int = 0\r\n    private var bondIndex: Int = 0\r\n    private var indproIndex: Int = 0\r\n    private var unemIndex: Int = 0\r\n    private var infIndex: Int = 0\r\n\r\n    // 차트 설정\r\n    private val snpLineColor: String = \"#1A237E\" // S&P 선 색깔\r\n    private val snpFillColor: String = \"#1565C0\" // S&P 채움 색깔\r\n    private val snpHighColor: String = \"#B71C1C\" // S&P 하이라이트 색깔\r\n    private val ecoLineColor: String = \"#1A237E\" // 경제 지표 선 색깔\r\n\r\n\r\n    // Count 값들 //////////////////////////////////////////////////////////////////////////////////\r\n    private var dayPlus: Int = 1 // sp(Starting Point) 이후 경과한 거래일 수\r\n    private var fundCount: Int = 0\r\n    private var bondCount: Int = 0\r\n    private var indproCount: Int = 0\r\n    private var unemCount: Int = 0\r\n    private var infCount: Int = 0\r\n\r\n\r\n    // 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 ///////////////////////////////////////////////\r\n    // 버튼 클릭 판별\r\n    private var click: Boolean = false\r\n\r\n    // 일시정지 시 현재 값 저장\r\n    private var snpNowDate: String = \"yyyy-mm-dd\"\r\n    private var snpNowdays: Int = 0\r\n    private var snpNowVal: Float = 0F\r\n\r\n\r\n    // 시간관련 ////////////////////////////////////////////////////////////////////////////////////\r\n    // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간\r\n    private val oneday: Long = 240 // 거래일 간 간격\r\n    private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_game_normal)\r\n\r\n        //변수 선언\r\n        val buy_btn = findViewById<Button>(R.id.buy_btn)\r\n        val startcash: Float = 5000000F\r\n        val startevaluation: Float = 0F\r\n        val startprofit: Float = 0F\r\n        val assets = findViewById<TextView>(R.id.assets)\r\n        val cash = findViewById<TextView>(R.id.cash)\r\n        val evaluation = findViewById<TextView>(R.id.evaluation)\r\n        val profit = findViewById<TextView>(R.id.profit)\r\n        //Buy Dialog로 부터 결과를 받아오는 list\r\n        lateinit var buy: List<Float>\r\n        lateinit var sell: List<Float>\r\n        //viewModel 객체\r\n        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)\r\n\r\n\r\n        //초기화\r\n        viewModel.initialize(startcash, startevaluation, startprofit)//화면 전환시 data reset되는 문제 발생\r\n\r\n        //실시간 data 반영\r\n        viewModel.assets().observe(this, Observer {\r\n            assets.text =\"총자산: \"+it.toString()+\"원\"\r\n        })\r\n        viewModel.cash().observe(this, Observer {\r\n            cash.text = \"현금: \"+it.toString()+\"원\"\r\n        })\r\n        viewModel.evaluation().observe(this, Observer {\r\n            evaluation.text = \"원화평가금액: \"+it.toString()+\"원\"\r\n        })\r\n        viewModel.profit().observe(this, Observer {\r\n            profit.text = \"수익률\"+it.toString()+\"%\"\r\n        })\r\n\r\n\r\n\r\n        //Button 동작\r\n\r\n        //매수\r\n       buy_btn.setOnClickListener {\r\n            val dlg_buy = Dialog_buy(this)\r\n            val layoutInflater_buy: LayoutInflater = getLayoutInflater()\r\n            val builder_buy = AlertDialog.Builder(this)\r\n            dlg_buy.start(viewModel.cash().value!!)\r\n            dlg_buy.setOnBuyClickedListener { content->\r\n                buy=content\r\n                viewModel.buyStock(buy[0], buy[1])\r\n            }\r\n           click = !click //////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        //매도\r\n        val sell_btn = findViewById<Button>(R.id.sell_btn)\r\n        sell_btn.setOnClickListener {\r\n            val dlg_sell = Dialog_sell(this)\r\n            val layoutInflater_sell: LayoutInflater = getLayoutInflater()\r\n            val builder_sell = AlertDialog.Builder(this)\r\n            dlg_sell.start(viewModel.evaluation().value!!)\r\n            dlg_sell.setOnSellClickedListener { content->\r\n                sell=content\r\n                viewModel.sellStock(sell[0], sell[1])\r\n            }\r\n            click = !click //////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        val auto_btn = findViewById<Button>(R.id.auto_btn)\r\n        auto_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n//            val u_id = \" \"\r\n//            val u_pw = \" \"\r\n//            val u_date = \" \"\r\n//            getRoomListDataHttp(u_id, u_pw, u_date)\r\n            getRoomListDataHttp()\r\n        }\r\n\r\n        val item_btn = findViewById<Button>(R.id.item_btn)\r\n        item_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n            val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)\r\n            builder.setView(dialogview).show()\r\n            click = !click //////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n\r\n        // 차트 ////////////////////////////////////////////////////////////////////////////////////\r\n        CoroutineScope(Dispatchers.Default).launch {\r\n            val chartdata = launch {\r\n                chartdata()\r\n            }\r\n\r\n            chartdata.join()\r\n\r\n            val inidraw = launch {\r\n                inidraw()\r\n            }\r\n\r\n            inidraw.join()\r\n            nowdraw()\r\n        }\r\n        ////////////////////////////////////////////////////////////////////////////////////////////\r\n    }\r\n    // 데이터 가지고 오기\r\n    fun getRoomListDataHttp(){\r\n        val u_id = \"\"\r\n        val u_pw = \"\"\r\n        val u_date = \"\"\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/call.php/\"\r\n        Log.d(\"데이터 받기 \",\"받기시도 중\")\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n\r\n         //creating our api\r\n        var server = retrofit.create(RetrofitGet::class.java)\r\n        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n                //Log.d(\"data: \",data)\r\n            }\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n                if (response.isSuccessful && response.body() != null) {\r\n                    val getted_name: String = response.body()!!\r\n                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()\r\n                    Log.d(\"---:\",response.isSuccessful.toString())\r\n                   // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n        })\r\n    }\r\n    override fun onBackPressed() {\r\n        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)\r\n        dlg_exit.start()\r\n    }\r\n\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n    private fun chartdata() {\r\n        // Entry 배열 초기값 입력\r\n        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))\r\n        fundEn.add(Entry(-1250F, fund_val[0].toFloat()))\r\n        bondEn.add(Entry(-1250F, bond_val[0].toFloat()))\r\n        indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))\r\n        unemEn.add(Entry(-1250F, unem_val[0].toFloat()))\r\n        infEn.add(Entry(-1250F, inf_val[0].toFloat()))\r\n\r\n\r\n        // 차트 설정\r\n        snpDs.color = Color.parseColor(snpLineColor) // 차트 선\r\n        snpDs.setDrawCircles(false)\r\n        snpDs.setDrawValues(false) // 차트 지점마다 값 표시\r\n        snpDs.lineWidth = 1.5F\r\n        snpDs.fillAlpha = 80 // 차트 스커트\r\n        snpDs.fillColor = Color.parseColor(snpFillColor)\r\n        snpDs.setDrawFilled(true)\r\n        snpDs.highLightColor = Color.parseColor(snpHighColor) // 터치 시 하이라이트\r\n        snpDs.highlightLineWidth = 1F\r\n\r\n        fundDs.color = Color.parseColor(ecoLineColor)\r\n        fundDs.setDrawCircles(false) // 지점마다 원 표시\r\n        fundDs.setDrawValues(false) // 지점마다 값 표시\r\n        fundDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        bondDs.color = Color.parseColor(ecoLineColor)\r\n        bondDs.setDrawCircles(false) // 지점마다 원 표시\r\n        bondDs.setDrawValues(false) // 지점마다 값 표시\r\n        bondDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        indproDs.color = Color.parseColor(ecoLineColor)\r\n        indproDs.setDrawCircles(false) // 지점마다 원 표시\r\n        indproDs.setDrawValues(false) // 지점마다 값 표시\r\n        indproDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        unemDs.color = Color.parseColor(ecoLineColor)\r\n        unemDs.setDrawCircles(false) // 지점마다 원 표시\r\n        unemDs.setDrawValues(false) // 지점마다 값 표시\r\n        unemDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        infDs.color = Color.parseColor(ecoLineColor)\r\n        infDs.setDrawCircles(false) // 지점마다 원 표시\r\n        infDs.setDrawValues(false) // 지점마다 값 표시\r\n        infDs.lineWidth = 0.7F // 선 굵기\r\n\r\n\r\n        for (i in 0..(given - 1)) {\r\n            snpD.addEntry(Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()), 0)\r\n\r\n            var sf = SimpleDateFormat(\"yyyy-MM-dd\") // 날짜 형식\r\n            var snpDate = snp_date[sp - given + 1 + i]\r\n            var snpDateSf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)\r\n\r\n            var fundDate = fund_date[fundIndex]\r\n            var fundDateSf = sf.parse(fundDate)\r\n            var bondDate = bond_date[bondIndex]\r\n            var bondDateSf = sf.parse(bondDate)\r\n            var indproDate = indpro_date[indproIndex]\r\n            var indproDateSf = sf.parse(indproDate)\r\n            var unemDate = unem_date[unemIndex]\r\n            var unemDateSf = sf.parse(unemDate)\r\n            var infDate = inf_date[infIndex]\r\n            var infDateSf = sf.parse(infDate)\r\n\r\n            var fundC = snpDateSf.time - fundDateSf.time\r\n            var bondC = snpDateSf.time - bondDateSf.time\r\n            var indproC = snpDateSf.time - indproDateSf.time\r\n            var unemC = snpDateSf.time - unemDateSf.time\r\n            var infC = snpDateSf.time - infDateSf.time\r\n\r\n            while (fundC > 0) {\r\n                fundIndex += 1\r\n                fundDate = fund_date[fundIndex]\r\n                fundDateSf = sf.parse(fundDate)\r\n                fundC = snpDateSf.time - fundDateSf.time\r\n            }\r\n            fundCount += 1\r\n            fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)\r\n            println(\"fund date : $fundDate\")\r\n\r\n            while (bondC > 0) {\r\n                bondIndex += 1\r\n                bondDate = bond_date[bondIndex]\r\n                bondDateSf = sf.parse(bondDate)\r\n                bondC = snpDateSf.time - bondDateSf.time\r\n            }\r\n            bondCount += 1\r\n            bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)\r\n\r\n            while (indproC > 0) {\r\n                indproIndex += 1\r\n                indproDate = indpro_date[indproIndex]\r\n                indproDateSf = sf.parse(indproDate)\r\n                indproC = snpDateSf.time - indproDateSf.time\r\n            }\r\n            indproCount += 1\r\n            indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)\r\n\r\n            while (unemC > 0) {\r\n                unemIndex += 1\r\n                unemDate = unem_date[unemIndex]\r\n                unemDateSf = sf.parse(unemDate)\r\n                unemC = snpDateSf.time - indproDateSf.time\r\n            }\r\n            unemCount += 1\r\n            unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)\r\n\r\n            while (infC > 0) {\r\n                infIndex += 1\r\n                infDate = inf_date[infIndex]\r\n                infDateSf = sf.parse(infDate)\r\n                infC = snpDateSf.time - infDateSf.time\r\n            }\r\n            infCount += 1\r\n            infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)\r\n            println(\"인덱스 : $i\")\r\n        }\r\n        println(\"Fund count : $fundCount\")\r\n        println(\"랜덤넘버 COUNT : \" + sp.toString() + \" | \" + \"시작 날짜 : \" + snp_date[sp])\r\n        // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////\r\n\r\n\r\n        // layout 에 배치된 lineChart 에 데이터 연결\r\n        findViewById<LineChart>(R.id.cht_snp).data = snpD\r\n        findViewById<LineChart>(R.id.cht_fund).data = fundD\r\n        findViewById<LineChart>(R.id.cht_bond).data = bondD\r\n        findViewById<LineChart>(R.id.cht_indpro).data = indproD\r\n        findViewById<LineChart>(R.id.cht_unem).data = unemD\r\n        findViewById<LineChart>(R.id.cht_inf).data = infD\r\n\r\n\r\n        // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////\r\n        runOnUiThread {\r\n            // 차트 생성\r\n            findViewById<LineChart>(R.id.cht_snp).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_fund).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_fund).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)\r\n        }\r\n\r\n        // 추가분 반영\r\n        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()\r\n\r\n        snpD.notifyDataChanged()\r\n        fundD.notifyDataChanged()\r\n        bondD.notifyDataChanged()\r\n        unemD.notifyDataChanged()\r\n        infD.notifyDataChanged()\r\n    }\r\n    private suspend fun inidraw() {\r\n        for (i in 0..(given - 1)) {\r\n            delay(1)\r\n            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월\r\n            findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())\r\n        }\r\n    }\r\n    private suspend fun nowdraw() {\r\n// 현재 데이터\r\n        while (true) {\r\n            if (!click) {\r\n                if (dayPlus <= gl) {\r\n\r\n                    delay(250) // 게임상에서 1 거래일의 실제시간\r\n\r\n\r\n                    var sf = SimpleDateFormat(\"yyyy-MM-dd\") // 날짜 형식\r\n                    var snpDate = snp_date[sp + dayPlus]\r\n                    var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)\r\n\r\n                    var fundDate = fund_date[fundIndex]\r\n                    var fundDate_sf = sf.parse(fundDate)\r\n                    var bondDate = bond_date[bondIndex]\r\n                    var bondDate_sf = sf.parse(bondDate)\r\n                    var indproDate = indpro_date[indproIndex]\r\n                    var indproDate_sf = sf.parse(indproDate)\r\n                    var unemDate = unem_date[unemIndex]\r\n                    var unemDate_sf = sf.parse(unemDate)\r\n                    var infDate = inf_date[infIndex]\r\n                    var infDate_sf = sf.parse(infDate)\r\n\r\n                    var fund_c = snpDate_sf.time - fundDate_sf.time\r\n                    var bond_c = snpDate_sf.time - bondDate_sf.time\r\n                    var indpro_c = snpDate_sf.time - indproDate_sf.time\r\n                    var unem_c = snpDate_sf.time - unemDate_sf.time\r\n                    var inf_c = snpDate_sf.time - infDate_sf.time\r\n\r\n\r\n                    snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)\r\n\r\n                    while (fund_c > 0) {\r\n                        fundIndex += 1\r\n                        fundDate = fund_date[fundIndex]\r\n                        fundDate_sf = sf.parse(fundDate)\r\n                        fund_c = snpDate_sf.time - fundDate_sf.time\r\n                    }\r\n                    fundCount += 1\r\n                    fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)\r\n                    println(\"fund date : $fundDate\")\r\n\r\n                    while (bond_c > 0) {\r\n                        bondIndex += 1\r\n                        bondDate = bond_date[bondIndex]\r\n                        bondDate_sf = sf.parse(bondDate)\r\n                        bond_c = snpDate_sf.time - bondDate_sf.time\r\n                    }\r\n                    bondCount += 1\r\n                    bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)\r\n\r\n                    while (indpro_c > 0) {\r\n                        indproIndex += 1\r\n                        indproDate = indpro_date[indproIndex]\r\n                        indproDate_sf = sf.parse(indproDate)\r\n                        indpro_c = snpDate_sf.time - indproDate_sf.time\r\n                    }\r\n                    indproCount += 1\r\n                    indproD.addEntry(Entry((indproCount - 1250).toFloat(), indpro_val[indproIndex - 1].toFloat()), 0)\r\n\r\n                    while (unem_c > 0) {\r\n                        unemIndex += 1\r\n                        unemDate = unem_date[unemIndex]\r\n                        unemDate_sf = sf.parse(unemDate)\r\n                        unem_c = snpDate_sf.time - indproDate_sf.time\r\n                    }\r\n                    unemCount += 1\r\n                    unemD.addEntry(Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()), 0)\r\n\r\n                    while (inf_c > 0) {\r\n                        infIndex += 1\r\n                        infDate = inf_date[infIndex]\r\n                        infDate_sf = sf.parse(infDate)\r\n                        inf_c = snpDate_sf.time - infDate_sf.time\r\n                    }\r\n                    infCount += 1\r\n                    infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)\r\n\r\n                    println(\"S&P : \" + snp_date[sp + dayPlus] + \" | \" + \"Fund : \" + fund_date[fundIndex] + \" | \" + \"Bond : \" + bond_date[bondIndex] + \" | \" + \"IndPro : \" + indpro_date[indproIndex - 1] + \" | \" + \"UnEm : \" + unem_date[unemIndex - 1] + \" | \" + \"Inf : \" + inf_date[infIndex - 1])\r\n\r\n                    //\r\n                    findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()\r\n                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()\r\n                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()\r\n                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()\r\n                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()\r\n                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()\r\n\r\n                    snpD.notifyDataChanged()\r\n                    fundD.notifyDataChanged()\r\n                    bondD.notifyDataChanged()\r\n                    unemD.notifyDataChanged()\r\n                    infD.notifyDataChanged()\r\n\r\n                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)\r\n\r\n                    findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())\r\n                    findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())\r\n                    findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())\r\n                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())\r\n                    findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())\r\n                    findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())\r\n\r\n\r\n                    // 현재 값 저장\r\n                    snpNowDate = snp_date[sp + dayPlus]\r\n                    snpNowdays = dayPlus\r\n                    snpNowVal = snp_val[sp + dayPlus].toFloat()\r\n                    println(\"현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal\")\r\n\r\n\r\n                    dayPlus += 1 // 시간 진행\r\n                }\r\n\r\n                else {\r\n                    println(\"게임 끝\")\r\n                    break\r\n                }\r\n            }\r\n\r\n            else {\r\n                delay(btnRefresh)\r\n            }\r\n            delay(oneday)\r\n        }\r\n    }\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(revision 319bf22ccc5520ef516fe7334f8bab5821535adb)
++++ app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(date 1612253103745)
+@@ -117,19 +117,28 @@
+         val startcash: Float = 5000000F
+         val startevaluation: Float = 0F
+         val startprofit: Float = 0F
++        var startitem1 : Int = 0
++        var startitem2 : Int = 0
++        var startitem3 : Int = 0
+         val assets = findViewById<TextView>(R.id.assets)
+         val cash = findViewById<TextView>(R.id.cash)
+         val evaluation = findViewById<TextView>(R.id.evaluation)
+         val profit = findViewById<TextView>(R.id.profit)
++        val item1 = findViewById<TextView>(R.id.item1)
++        val item2 = findViewById<TextView>(R.id.item2)
++        val item3 = findViewById<TextView>(R.id.item3)
++
+         //Buy Dialog로 부터 결과를 받아오는 list
+         lateinit var buy: List<Float>
+         lateinit var sell: List<Float>
++        lateinit var item: List<Int>
++
+         //viewModel 객체
+         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)
+ 
+ 
+         //초기화
+-        viewModel.initialize(startcash, startevaluation, startprofit)//화면 전환시 data reset되는 문제 발생
++        viewModel.initialize(startcash, startevaluation, startprofit, startitem1, startitem2, startitem3)//화면 전환시 data reset되는 문제 발생
+ 
+         //실시간 data 반영
+         viewModel.assets().observe(this, Observer {
+@@ -144,8 +153,15 @@
+         viewModel.profit().observe(this, Observer {
+             profit.text = "수익률"+it.toString()+"%"
+         })
+-
+-
++        viewModel.item1().observe(this, Observer {
++            item1.text ="아이템1: "+it.toString()+"개"
++        })
++        viewModel.item2().observe(this, Observer {
++            item2.text ="아이템2: "+it.toString()+"개"
++        })
++        viewModel.item3().observe(this, Observer {
++            item3.text ="아이템3: "+it.toString()+"개"
++        })
+ 
+         //Button 동작
+ 
+@@ -189,10 +205,13 @@
+ 
+         val item_btn = findViewById<Button>(R.id.item_btn)
+         item_btn.setOnClickListener {
+-            val layoutInflater: LayoutInflater = getLayoutInflater()
+-            val builder = AlertDialog.Builder(this)
+-            val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)
+-            builder.setView(dialogview).show()
++            val dlg_item = Dialog_item(this)
++            dlg_item.start(viewModel.item1().value!!,viewModel.item2().value!!,viewModel.item3().value!!)
++            dlg_item.setOnItemClickedListener { content->
++                item = content
++                viewModel.setitem(item[0],item[1],item[2])
++            }
++//            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()
+             click = !click //////////////////////////////////////////////////////////////////////////
+         }
+ 
+@@ -428,6 +447,7 @@
+             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월
+             findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
+         }
++
+     }
+     private suspend fun nowdraw() {
+ // 현재 데이터
+Index: app/src/main/java/com/example/myapplication/Dialog_item.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Dialog_item.kt	(date 1612253103783)
++++ app/src/main/java/com/example/myapplication/Dialog_item.kt	(date 1612253103783)
+@@ -0,0 +1,110 @@
++package com.example.myapplication
++
++import android.app.Dialog
++import android.content.Context
++import android.view.View
++import android.view.Window
++import android.widget.Button
++import android.widget.SeekBar
++import android.widget.TextView
++import android.widget.Toast
++
++class Dialog_item(context : Context) {
++    var mContext: Context? = context
++    private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
++    private lateinit var btnok : Button
++    private lateinit var btncancel : Button
++    private lateinit var btn_item1_plus : Button
++    private lateinit var btn_item1_minus : Button
++    private lateinit var btn_item2_plus : Button
++    private lateinit var btn_item2_minus : Button
++    private lateinit var btn_item3_plus : Button
++    private lateinit var btn_item3_minus : Button
++    private lateinit var textitem1 : TextView
++    private lateinit var textitem2 : TextView
++    private lateinit var textitem3 : TextView
++    private lateinit var listenter: Dialog_item.ItemDialogClickedListener
++
++
++    fun start(item1 : Int, item2 : Int, item3 : Int){
++
++        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
++        dlg.setContentView(R.layout.item_pick_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
++        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
++        var item1_number : Int = item1 ; var item2_number : Int = item2 ;var item3_number : Int = item3
++        textitem1 = dlg.findViewById(R.id.item1_number)
++        textitem2 = dlg.findViewById(R.id.item2_number)
++        textitem3 = dlg.findViewById(R.id.item3_number)
++        btnok = dlg.findViewById(R.id.btn_ok)
++        btncancel = dlg.findViewById(R.id.btn_cancel)
++        btn_item1_plus = dlg.findViewById(R.id.btn_item1_plus)
++        btn_item1_minus = dlg.findViewById(R.id.btn_item1_minus)
++        btn_item2_plus = dlg.findViewById(R.id.btn_item2_plus)
++        btn_item2_minus = dlg.findViewById(R.id.btn_item2_minus)
++        btn_item3_plus = dlg.findViewById(R.id.btn_item3_plus)
++        btn_item3_minus = dlg.findViewById(R.id.btn_item3_minus)
++        textitem1.text="개수 : "+item1_number.toString()+"개"
++        textitem2.text="개수 : "+item2_number.toString()+"개"
++        textitem3.text="개수 : "+item3_number.toString()+"개"
++        btnok.setOnClickListener{
++
++            //인터페이스의 함수를 호출하여 변수에 저장된 값들을 Activity로 전달
++            var result: List<Int> = listOf(item1_number,item2_number,item3_number)
++            listenter.onItemClicked(result)
++
++            dlg.dismiss()
++        }
++        btncancel.setOnClickListener {
++            dlg.dismiss()
++        }
++        btn_item1_plus.setOnClickListener{
++            item1_number = item1_number.toInt() + 1
++            textitem1.text="개수 : "+item1_number.toString()+"개"
++
++        }
++        btn_item1_minus.setOnClickListener{
++            if(item1_number == 0){
++            }
++            else item1_number = item1_number.toInt() - 1
++
++            textitem1.text="개수 : "+item1_number.toString()+"개"
++        }
++        btn_item2_plus.setOnClickListener{
++
++            item2_number = item2_number.toInt() + 1
++            textitem2.text="개수 : "+item2_number.toString()+"개"
++        }
++        btn_item2_minus.setOnClickListener{
++            if(item2_number == 0){
++            }
++            else item2_number = item2_number.toInt() - 1
++
++            textitem2.text="개수 : "+item2_number.toString()+"개"
++        }
++        btn_item3_plus.setOnClickListener{
++            item3_number = item3_number.toInt() + 1
++            textitem3.text="개수 : "+item3_number.toString()+"개"
++        }
++        btn_item3_minus.setOnClickListener{
++            if(item3_number == 0){
++            }
++            else item3_number = item3_number.toInt() - 1
++
++            textitem3.text="개수 : "+item3_number.toString()+"개"
++        }
++
++        dlg.show()
++    }
++
++    fun setOnItemClickedListener(listener: (List<Int>)->Unit){
++        this.listenter = object : Dialog_item.ItemDialogClickedListener {
++            override fun onItemClicked(content: List<Int>) {
++                listener(content)
++            }
++        }
++    }
++    interface ItemDialogClickedListener{
++        fun onItemClicked(content: List<Int>)
++    }
++
++}
+Index: app/src/main/java/com/example/myapplication/GameNormalActivityVeiwModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\n\r\nclass GameNormalActivityVeiwModel: ViewModel() {\r\n    //변수 선언\r\n    val startassets: Float = 5000000F\r\n    var finished = MutableLiveData<Boolean>()\r\n    private var _cash = MutableLiveData<Float>()\r\n    private var _evaluation = MutableLiveData<Float>()\r\n    private var _profit = MutableLiveData<Float>()\r\n    private var _assets =MutableLiveData<Float>()\r\n\r\n    //게임 초기화\r\n    fun initialize(startcash:Float, startevaluation:Float, startprofit: Float){\r\n        _cash.value = startcash\r\n        _evaluation.value = startevaluation\r\n        _profit.value = startprofit\r\n        finished.value = true\r\n        _assets.value = _cash.value?.plus(_evaluation.value!!)\r\n    }\r\n\r\n    //현금 반환\r\n    fun cash(): LiveData<Float>{\r\n        return _cash\r\n    }\r\n    //원화평가금액 반환\r\n    fun evaluation(): LiveData<Float>{\r\n        return _evaluation\r\n    }\r\n    //수익률 반환\r\n    fun profit(): LiveData<Float>{\r\n        return _profit\r\n    }\r\n    //자산 반환\r\n    fun assets(): LiveData<Float>{\r\n        _assets.value = _cash.value?.plus(_evaluation.value!!)\r\n        return _assets\r\n    }\r\n    //게임 진행시 실시간 데이터 반영\r\n    //주식 등락 fluctuation: 등락율\r\n    fun fluctuate(fluctuation: Float){\r\n        _evaluation.value = _evaluation.value?.times(fluctuation)\r\n        update()\r\n    }\r\n    //매수\r\n    fun buyStock(price:Float, fees:Float){\r\n        _cash.value = (_cash.value?.minus(price) ?: 0F) -fees\r\n        _evaluation.value = _evaluation.value?.plus(price)\r\n        update()\r\n    }\r\n    //매도\r\n    fun sellStock(price:Float, fees:Float){\r\n        _cash.value = (_cash.value?.plus(price) ?: 0F) -fees\r\n        _evaluation.value = _evaluation.value?.minus(price)\r\n        update()\r\n    }\r\n    //세금 징수\r\n    fun payTax(tax:Float){\r\n        _cash.value = _cash.value?.minus(tax)\r\n        _assets.value = _cash.value?.plus(_evaluation.value!!)//세금 내는 방법 논의 필요(현금으로? 현금이 없을때는 주식으로?)\r\n        update()\r\n    }\r\n    //자산 수익률 업데이트\r\n    fun update(){\r\n        _assets.value = _cash.value?.plus(_evaluation.value!!)\r\n        _profit.value = (_assets.value?.minus(startassets))?.div(startassets)\r\n    }\r\n\r\n    override fun onCleared() {\r\n        super.onCleared()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/GameNormalActivityVeiwModel.kt	(revision 319bf22ccc5520ef516fe7334f8bab5821535adb)
++++ app/src/main/java/com/example/myapplication/GameNormalActivityVeiwModel.kt	(date 1612253103772)
+@@ -12,13 +12,18 @@
+     private var _evaluation = MutableLiveData<Float>()
+     private var _profit = MutableLiveData<Float>()
+     private var _assets =MutableLiveData<Float>()
+-
++    private var _item1 = MutableLiveData<Int>()
++    private var _item2 = MutableLiveData<Int>()
++    private var _item3 = MutableLiveData<Int>()
+     //게임 초기화
+-    fun initialize(startcash:Float, startevaluation:Float, startprofit: Float){
++    fun initialize(startcash:Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
+         _cash.value = startcash
+         _evaluation.value = startevaluation
+         _profit.value = startprofit
+         finished.value = true
++        _item1.value = startitem1
++        _item2.value = startitem2
++        _item3.value = startitem3
+         _assets.value = _cash.value?.plus(_evaluation.value!!)
+     }
+ 
+@@ -38,6 +43,24 @@
+     fun assets(): LiveData<Float>{
+         _assets.value = _cash.value?.plus(_evaluation.value!!)
+         return _assets
++    }
++    //아이템 반환
++    fun item1(): LiveData<Int>{
++        return _item1
++    }
++    fun item2(): LiveData<Int>{
++        return _item2
++    }
++    fun item3(): LiveData<Int>{
++        return _item3
++    }
++    // 아이템 값 입력
++
++    fun setitem(item1:Int, item2:Int, item3:Int){
++        _item1.value = item1
++        _item2.value = item2
++        _item3.value = item3
++
+     }
+     //게임 진행시 실시간 데이터 반영
+     //주식 등락 fluctuation: 등락율

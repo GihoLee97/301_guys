@@ -1,0 +1,251 @@
+Index: app/src/main/java/com/example/myapplication/SplashActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.kakao.sdk.common.KakaoSdk\r\n\r\nclass SplashActivity : AppCompatActivity() {\r\n    val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        Handler(Looper.getMainLooper()).postDelayed({ //delay를 위한 handler\r\n            var enterAccess = \"google\"\r\n\r\n            if(enterAccess==\"\"){ // No access authority\r\n                val intent = Intent(this, InitialActivity::class.java) //Initial으로 이동\r\n                startActivity(intent)\r\n            }\r\n            else{ // available access authority\r\n                val intent = Intent(this, MainActivity::class.java) //Main으로 이동\r\n                startActivity(intent)\r\n            }\r\n            finish()\r\n        }, SPLASH_VIEW_TIME)\r\n        KakaoSdk.init(this, \"0c9ac0ead6e3f965c35fa7c9d0973b7f\")\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/SplashActivity.kt	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/java/com/example/myapplication/SplashActivity.kt	(date 1612095096653)
+@@ -15,7 +15,7 @@
+         super.onCreate(savedInstanceState)
+ 
+         Handler(Looper.getMainLooper()).postDelayed({ //delay를 위한 handler
+-            var enterAccess = "google"
++            var enterAccess = ""
+ 
+             if(enterAccess==""){ // No access authority
+                 val intent = Intent(this, InitialActivity::class.java) //Initial으로 이동
+Index: app/src/main/java/com/example/myapplication/ProfileActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.widget.Button\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.example.myapplication.data.Profile\r\nimport com.example.myapplication.data.ProflieDB\r\n\r\nclass ProfileActivity : AppCompatActivity() {\r\n    //receive profile room data\r\n    private var profileDb : ProflieDB? = null\r\n    private var proflie = mutableListOf<Profile>()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_profile)\r\n\r\n        profileDb = ProflieDB.getInstace(this)\r\n\r\n\r\n        val nickname_btn = findViewById<Button>(R.id.nickname_btn)\r\n        nickname_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n            val dialogview = layoutInflater.inflate(R.layout.nickname_dialog,null)\r\n            builder.setView(dialogview).show()\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/ProfileActivity.kt	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/java/com/example/myapplication/ProfileActivity.kt	(date 1612099268049)
+@@ -5,6 +5,7 @@
+ import android.widget.Button
+ import androidx.appcompat.app.AlertDialog
+ import androidx.appcompat.app.AppCompatActivity
++import com.example.myapplication.data.Dialog_nick
+ import com.example.myapplication.data.Profile
+ import com.example.myapplication.data.ProflieDB
+ 
+@@ -22,10 +23,11 @@
+ 
+         val nickname_btn = findViewById<Button>(R.id.nickname_btn)
+         nickname_btn.setOnClickListener {
+-            val layoutInflater: LayoutInflater = getLayoutInflater()
+-            val builder = AlertDialog.Builder(this)
+-            val dialogview = layoutInflater.inflate(R.layout.nickname_dialog,null)
+-            builder.setView(dialogview).show()
++
++            val dlg_nick = Dialog_nick(this)
++            val layoutInflater_nick: LayoutInflater = getLayoutInflater()
++            val builder_nick = AlertDialog.Builder(this)
++            dlg_nick.start()
+         }
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/nickname_dialog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"wrap_content\"\r\n    android:layout_height=\"match_parent\"\r\n    android:layout_centerHorizontal=\"true\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:gravity=\"center\"\r\n        android:textColor=\"@color/black\"\r\n        android:textSize=\"16dp\"\r\n        android:text=\"닉네임 수정\"\r\n        android:background=\"@color/purple_200\"\r\n        />\r\n\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"40dp\"\r\n        android:orientation=\"horizontal\"\r\n        >\r\n        <EditText\r\n            android:id=\"@+id/editNickName\"\r\n            android:layout_width=\"280dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:ems=\"10\"\r\n            android:inputType=\"textPersonName\"\r\n            android:text=\"NickName\" />\r\n        <Button\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:gravity=\"center\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"16dp\"\r\n            android:text=\"확인\"\r\n            android:background=\"@color/white\"\r\n            />\r\n\r\n    </LinearLayout>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/nickname_dialog.xml	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/res/layout/nickname_dialog.xml	(date 1612099397112)
+@@ -1,11 +1,9 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="wrap_content"
++    android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:layout_centerHorizontal="true"
+-    android:orientation="vertical"
+-    >
++    android:orientation="vertical">
+ 
+     <TextView
+         android:layout_width="match_parent"
+@@ -25,18 +23,23 @@
+         >
+         <EditText
+             android:id="@+id/editNickName"
+-            android:layout_width="280dp"
++            android:layout_width="300dp"
+             android:layout_height="40dp"
+             android:ems="10"
++            android:layout_gravity="left"
+             android:inputType="textPersonName"
++            android:layout_weight="2"
+             android:text="NickName" />
+         <Button
+-            android:layout_width="80dp"
++            android:id="@+id/nicknameokbtn"
++            android:layout_width="100dp"
+             android:layout_height="40dp"
+             android:gravity="center"
+             android:textColor="@color/black"
+             android:textSize="16dp"
+             android:text="확인"
++            android:layout_weight="1"
++            android:layout_gravity="right"
+             android:background="@color/white"
+             />
+ 
+Index: app/src/main/res/values/style.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <!-- Base application theme. -->\r\n    <style name=\"AppTheme\" parent=\"Theme.AppCompat.Light.DarkActionBar\">\r\n        <!-- Customize your theme here. -->\r\n    </style>\r\n\r\n    <!--splash 화면에 사용될 테마-->\r\n    <style name=\"SplashTheme\" parent=\"Theme.AppCompat.NoActionBar\">\r\n        <item name=\"android:windowBackground\">@drawable/splash</item>\r\n    </style>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/style.xml	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/res/values/style.xml	(date 1612098297044)
+@@ -2,6 +2,7 @@
+     <!-- Base application theme. -->
+     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+         <!-- Customize your theme here. -->
++
+     </style>
+ 
+     <!--splash 화면에 사용될 테마-->
+Index: app/src/main/res/values/themes.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources xmlns:tools=\"http://schemas.android.com/tools\">\r\n    <!-- Base application theme. -->\r\n    <style name=\"Theme.MyApplication\" parent=\"Theme.AppCompat.Light.NoActionBar\">\r\n        <!-- Primary brand color. -->\r\n        <item name=\"colorPrimary\">@color/purple_500</item>\r\n        <item name=\"colorPrimaryVariant\">@color/purple_700</item>\r\n        <item name=\"colorOnPrimary\">@color/white</item>\r\n        <!-- Secondary brand color. -->\r\n        <item name=\"colorSecondary\">@color/teal_200</item>\r\n        <item name=\"colorSecondaryVariant\">@color/teal_700</item>\r\n        <item name=\"colorOnSecondary\">@color/black</item>\r\n        <!-- Status bar color. -->\r\n        <item name=\"android:statusBarColor\" tools:targetApi=\"l\">?attr/colorPrimaryVariant</item>\r\n        <!-- Customize your theme here. -->\r\n    </style>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/themes.xml	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/res/values/themes.xml	(date 1612098029839)
+@@ -2,9 +2,12 @@
+     <!-- Base application theme. -->
+     <style name="Theme.MyApplication" parent="Theme.AppCompat.Light.NoActionBar">
+         <!-- Primary brand color. -->
+-        <item name="colorPrimary">@color/purple_500</item>
+-        <item name="colorPrimaryVariant">@color/purple_700</item>
+-        <item name="colorOnPrimary">@color/white</item>
++        <item name="colorPrimary">@color/black</item>
++        <!-- 상태바 색상 변경       -->
++        <item name="colorPrimaryVariant">@color/white</item>
++        <item name="colorOnPrimary">@color/black</item>
++        <!-- 상태바 아이콘 색상 변경 (상태바 색상와 대치되게)   -->
++        <item name="android:windowLightStatusBar">@color/black</item>
+         <!-- Secondary brand color. -->
+         <item name="colorSecondary">@color/teal_200</item>
+         <item name="colorSecondaryVariant">@color/teal_700</item>
+Index: app/src/main/java/com/example/myapplication/data/Dialog_nick.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/data/Dialog_nick.kt	(date 1612099397101)
++++ app/src/main/java/com/example/myapplication/data/Dialog_nick.kt	(date 1612099397101)
+@@ -0,0 +1,29 @@
++package com.example.myapplication.data
++
++import android.app.Dialog
++import android.content.Context
++import android.view.Window
++import android.widget.Button
++import android.widget.SeekBar
++import android.widget.TextView
++import com.example.myapplication.R
++
++class Dialog_nick(context : Context) {
++    private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
++    private lateinit var btnOK : Button
++    fun start() {
++        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
++        dlg.setContentView(R.layout.nickname_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
++        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
++        //
++        btnOK = dlg.findViewById(R.id.nicknameokbtn)
++
++        btnOK.setOnClickListener {
++            //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
++            dlg.dismiss()
++        }
++
++
++        dlg.show()
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/InitialActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.ImageButton\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions\r\nimport com.google.android.gms.common.SignInButton\r\nimport com.google.android.gms.common.api.ApiException\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.GoogleAuthProvider\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport com.kakao.sdk.auth.LoginClient\r\nimport com.kakao.sdk.auth.model.OAuthToken\r\nimport com.kakao.sdk.common.KakaoSdk\r\nimport com.kakao.sdk.user.UserApiClient\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.time.LocalDateTime\r\nimport java.time.format.DateTimeFormatter\r\n\r\nclass InitialActivity : AppCompatActivity() {\r\n    // google signin\r\n    var auth: FirebaseAuth? = null\r\n    val GOOGLE_REQUEST_CODE = 99\r\n    val TAG = \"googleLogin\"\r\n    private lateinit var googleSignInClient: GoogleSignInClient\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_initial)\r\n\r\n        // KakaoSdk.init(this, \"0c9ac0ead6e3f965c35fa7c9d0973b7f\")\r\n\r\n        val btn_login = findViewById<Button>(R.id.btn_login)\r\n        btn_login.setOnClickListener{\r\n            val intent = Intent(this, MainActivity::class.java) //Main으로 이동\r\n            val url: String = \"http://stockgame.dothome.co.kr/test/testlogin.php\"\r\n            val id1: TextView = findViewById(R.id.et_id)\r\n            val pw1: TextView = findViewById(R.id.et_pw)\r\n\r\n            val time1: LocalDateTime = LocalDateTime.now()\r\n            val formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss\")\r\n            val formatted = time1.format(formatter)\r\n            val loginID: String = id1.text.toString().trim()\r\n            val loginPW: String = pw1.text.toString().trim()\r\n            val loginDate : String = formatted.toString().trim()\r\n            setidpw(loginID, loginPW, loginDate)\r\n            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()\r\n\r\n            startActivity(Intent(this, MainActivity::class.java))\r\n        }\r\n\r\n\r\n        auth = FirebaseAuth.getInstance()\r\n        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n            .requestIdToken(getString(R.string.default_web_client_id))\r\n            .requestEmail()\r\n            .build()\r\n        googleSignInClient = GoogleSignIn.getClient(this,gso)\r\n\r\n        val btn_googleSignIn = findViewById<SignInButton>(R.id.btn_googleSignIn)\r\n        btn_googleSignIn.setOnClickListener {\r\n            signIn()\r\n        }\r\n\r\n        val btn_kakaoLogin = findViewById<ImageButton>(R.id.btn_kakaoLogin)\r\n        btn_kakaoLogin.setOnClickListener(View.OnClickListener {\r\n\r\n            // 로그인 공통 callback 구성\r\n            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->\r\n                if (error != null) {\r\n                    Log.e(TAG, \"로그인 실패\", error)\r\n                }\r\n                else if (token != null) {\r\n                    Log.i(TAG, \"로그인 성공 ${token.accessToken}\")\r\n                    val intent = Intent(this, MainActivity::class.java) //Main으로 이동\r\n                    startActivity(intent)\r\n                }\r\n            }\r\n\r\n            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인\r\n            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {\r\n                LoginClient.instance.loginWithKakaoTalk(this, callback = callback)\r\n            } else {\r\n                LoginClient.instance.loginWithKakaoAccount(this, callback = callback)\r\n            }\r\n        })\r\n\r\n    }\r\n    fun setidpw(u_id: String, u_pw: String, u_date : String) {\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/testlogin.php/\"\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n//        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n        //creating our api\r\n        var server = retrofit.create(Retrofitservice::class.java)\r\n        server.post_setidpw(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n            }\r\n\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n            }\r\n        })\r\n    }\r\n\r\n    private fun signIn() {\r\n        val signInIntent = googleSignInClient.signInIntent\r\n        startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n\r\n        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);\r\n        if (requestCode == GOOGLE_REQUEST_CODE) {\r\n            val task = GoogleSignIn.getSignedInAccountFromIntent(data)\r\n            try {\r\n                // Google Sign In was successful, authenticate with Firebase\r\n                val account = task.getResult(ApiException::class.java)!!\r\n                Log.d(TAG, \"firebaseAuthWithGoogle:\" + account.id)\r\n                firebaseAuthWithGoogle(account.idToken!!)\r\n            } catch (e: ApiException) {\r\n                // Google Sign In failed, update UI appropriately\r\n                Log.w(TAG, \"Google sign in failed\", e)\r\n                Toast.makeText(this, \"로그인 실패\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n    private fun firebaseAuthWithGoogle(idToken: String) {\r\n        val credential = GoogleAuthProvider.getCredential(idToken, null)\r\n        auth?.signInWithCredential(credential)\r\n            ?.addOnCompleteListener(this) { task ->\r\n                if (task.isSuccessful) {\r\n                    // Sign in success, update UI with the signed-in user's information\r\n                    Log.d(TAG, \"로그인 성공\")\r\n                    val user = auth!!.currentUser\r\n                    loginSuccess()\r\n                } else {\r\n                    // If sign in fails, display a message to the user.\r\n                    Log.w(TAG, \"signInWithCredential:failure\", task.exception)\r\n                }\r\n            }\r\n    }\r\n    private fun loginSuccess(){\r\n        val intent = Intent(this,MainActivity::class.java)\r\n        startActivity(intent)\r\n        finish()\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/InitialActivity.kt	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/java/com/example/myapplication/InitialActivity.kt	(date 1612096389943)
+@@ -165,5 +165,21 @@
+         startActivity(intent)
+         finish()
+     }
++    // 두번 누르면 종료되는 코드
++    var time3: Long = 0
++    override fun onBackPressed() {
++        val time1 = System.currentTimeMillis()
++        val time2 = time1 - time3
++        if (time2 in 0..2000) {
++            // 이거 3줄 다 써야 안전하게 종료
++            moveTaskToBack(true)
++            finish()
++            android.os.Process.killProcess(android.os.Process.myPid())
++        }
++        else {
++            time3 = time1
++            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
++        }
++    }
+ }
+ 
+Index: app/src/main/res/layout/activity_initial.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"10dp\"\r\n    tools:context=\".InitialActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"60dp\"\r\n        android:text=\"앱이름\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/ll_ini\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/ll_ini\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_id\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:ems=\"10\"\r\n            android:hint=\"아이디를 입력하세요\"\r\n            android:inputType=\"textPersonName\"\r\n\r\n            />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_pw\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:ems=\"10\"\r\n            android:hint=\"비밀번호를 입력하세요\"\r\n            android:inputType=\"textPersonName\"\r\n\r\n            />\r\n\r\n    </LinearLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_login\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"60dp\"\r\n        android:text=\"로그인\"\r\n        app:backgroundTint=\"#0007C4\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ll_ini\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btn_login\">\r\n\r\n        <com.google.android.gms.common.SignInButton\r\n            android:id=\"@+id/btn_googleSignIn\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"50dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/btn_login\"></com.google.android.gms.common.SignInButton>\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/btn_kakaoLogin\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:src=\"@drawable/kakao_login_medium_wide\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/btn_googleSignIn\" />\r\n\r\n    </LinearLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_initial.xml	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/res/layout/activity_initial.xml	(date 1612097417598)
+@@ -7,6 +7,8 @@
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:padding="10dp"
++    android:backgroundTint="@color/white"
++    android:background="@color/white"
+     tools:context=".InitialActivity">
+ 
+     <TextView
+Index: app/src/main/java/com/example/myapplication/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.widget.Button\r\nimport androidx.appcompat.app.AppCompatActivity\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        val profile1_btn = findViewById<Button>(R.id.profile1_btn)\r\n        profile1_btn.setOnClickListener{\r\n            val intent = Intent(this,ProfileActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        val setting_btn = findViewById<Button>(R.id.setting_btn)\r\n        setting_btn.setOnClickListener {\r\n            val intent = Intent(this,SettingActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        val game_btn = findViewById<Button>(R.id.game_btn)\r\n        game_btn.setOnClickListener{\r\n            val intent = Intent(this,GameNormalActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/MainActivity.kt	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/java/com/example/myapplication/MainActivity.kt	(date 1612095704497)
+@@ -29,7 +29,10 @@
+             val intent = Intent(this,GameNormalActivity::class.java)
+             startActivity(intent)
+         }
+-
++    }
++    override fun onBackPressed() {
++        startActivity(Intent(this, InitialActivity::class.java))
++        finish()
+     }
+ 
+ }
