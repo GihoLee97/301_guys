@@ -24,7 +24,10 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
-import okio.Utf8
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -122,12 +125,12 @@ class InitialActivity : AppCompatActivity() {
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
+            showLoadingDialog()
         })
     }
 
     // general signup
     fun generalSignup(u_id: String, u_pw: String, u_date : String) {
-
         var api_signup: Retrofitsignup? = null
         val url = "http://stockgame.dothome.co.kr/test/Signup.php/"
         var gson: Gson = GsonBuilder()
@@ -177,8 +180,7 @@ class InitialActivity : AppCompatActivity() {
         funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
         funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
- //               Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -222,6 +224,7 @@ class InitialActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+        showLoadingDialog()
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -238,6 +241,7 @@ class InitialActivity : AppCompatActivity() {
 
     private fun loginSuccess(method: String){
         memorizeLogMethod(method)
+        delLoadingDialog()
         if(profileDb?.profileDao()?.getNickname()=="#########first_login##########"){
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
@@ -320,5 +324,23 @@ class InitialActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
         }
     }
+    // 로딩 창 띄우는 코드
+    private fun showLoadingDialog() {
+        val dialog = Dialog_loading(this@InitialActivity)
+        CoroutineScope(Main).launch {
+            dialog.start()
+        }
+    }
+    private fun delLoadingDialog() {
+        val dialog = Dialog_loading(this@InitialActivity)
+        CoroutineScope(Main).launch {
+            dialog.finish()
+        }
+    }
+//    override fun onDestroy() {
+//        Log.d(TAG, "called onDestroy");
+//        delLoadingDialog()
+//        super.onDestroy();
+//    }
 }
 

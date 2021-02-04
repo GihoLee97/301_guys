@@ -1,0 +1,299 @@
+Index: app/src/main/res/layout/activity_result_normal.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ResultNormalActivity\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"10dp\"\r\n    >\r\n\r\n    <ImageView\r\n        android:id=\"@+id/resultchart_image\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"400dp\"\r\n        />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        >\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"인플레이션 고려 실질자신가치\"\r\n            />\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"수익률:     (상위%)\"\r\n            />\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"제세금 내역:  \"\r\n            />\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"인공지능 예측 결과\"\r\n            />\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"경험치\"\r\n            />\r\n\r\n    </LinearLayout>\r\n\r\n\r\n    <Button\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:text=\"닫기\"\r\n        />\r\n\r\n</LinearLayout>
+===================================================================
+--- app/src/main/res/layout/activity_result_normal.xml	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
++++ app/src/main/res/layout/dialog_result_normal.xml	(date 1612412250493)
+@@ -1,60 +1,78 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout
+-    xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".ResultNormalActivity"
+-    android:orientation="vertical"
+-    android:padding="10dp"
+-    >
++    android:background="#ffffff">
++<!--    <ImageView-->
++<!--        android:id="@+id/resultchart_image"-->
++<!--        android:layout_width="match_parent"-->
++<!--        android:layout_height="200dp"-->
++<!--        />-->
+ 
+-    <ImageView
+-        android:id="@+id/resultchart_image"
++    <TextView
++        android:id="@+id/title"
+         android:layout_width="match_parent"
+-        android:layout_height="400dp"
+-        />
++        android:layout_height="60dp"
++        android:gravity="center"
++        android:textColor="@color/white"
++        android:textSize="25dp"
++        android:text="게임 결과창"
++        android:background="@color/black"/>
+ 
+-    <LinearLayout
++    <TextView
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        >
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:text="인플레이션 고려 실질자신가치"
+-            />
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:text="수익률:     (상위%)"
+-            />
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:text="제세금 내역:  "
+-            />
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:text="인공지능 예측 결과"
+-            />
+-        <TextView
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:text="경험치"
+-            />
++        android:layout_height="60dp"
++        android:gravity="center|left"
++        android:textColor="@color/black"
++        android:textSize="16dp"
++        android:text="경험치"
++        android:background="@color/white"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:gravity="center|left"
++        android:textColor="@color/black"
++        android:textSize="16dp"
++        android:text="인플레이션 고려 실질자신가치"
++        android:background="@color/white"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:gravity="center|left"
++        android:textColor="@color/black"
++        android:textSize="16dp"
++        android:text="수익률:     (상위%)"
++        android:background="@color/white"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:gravity="center|left"
++        android:textColor="@color/black"
++        android:textSize="16dp"
++        android:text="제세금 내역:  "
++        android:background="@color/white"/>
+ 
+-    </LinearLayout>
+-
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:orientation="horizontal">
+ 
+-    <Button
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="center"
+-        android:text="닫기"
+-        />
++        <Button
++            android:id="@+id/btn_cancel"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="닫기"
++            android:textColor="@color/white"
++            android:textSize="16dp"
++            android:backgroundTint="@color/blue"/>
+ 
++    </LinearLayout>
++
++    <View
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:background="#000000"/>
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/GameNormalActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.widget.Button\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.example.myapplication.data.GameNormal\r\nimport com.example.myapplication.data.GameNormalDB\r\nimport com.github.mikephil.charting.charts.LineChart\r\nimport com.github.mikephil.charting.data.Entry\r\nimport com.github.mikephil.charting.data.LineData\r\nimport com.github.mikephil.charting.data.LineDataSet\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport kotlinx.coroutines.*\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.text.SimpleDateFormat\r\nimport java.time.LocalDateTime\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\n\r\n////////////////////////////////////////////////////////////////////////////////////////////////////\r\n// 버튼 클릭 판별자 생성\r\nvar click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용\r\nvar gameend: Boolean = false // 게임 종료시 적용\r\n////////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n\r\nclass GameNormalActivity : AppCompatActivity() {\r\n\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n    // 차트 데이터 및 차트 설정 변수 생성\r\n    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)\r\n    private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년\r\n\r\n    // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////\r\n    // 5년은 대략 1250 거래일.\r\n    // 게임 시작 시점으로부터 5년 전, 10년 후의 데이터 확보가 가능해야함.\r\n    // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.\r\n    // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,\r\n    // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.\r\n    private val random = Random()\r\n    private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point\r\n\r\n\r\n    // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////\r\n    // Entry 배열 생성\r\n    private val snpEn: ArrayList<Entry> = ArrayList()\r\n    private val fundEn: ArrayList<Entry> = ArrayList()\r\n    private val bondEn: ArrayList<Entry> = ArrayList()\r\n    private val indproEn: ArrayList<Entry> = ArrayList()\r\n    private val unemEn: ArrayList<Entry> = ArrayList()\r\n    private val infEn: ArrayList<Entry> = ArrayList()\r\n\r\n    // 그래프 구현을 위한 LineDataSet 생성\r\n    private val snpDs: LineDataSet = LineDataSet(snpEn, \"S&P500 Index\")\r\n    private val fundDs: LineDataSet = LineDataSet(fundEn, \"Fund Rate\")\r\n    private val bondDs: LineDataSet = LineDataSet(bondEn, \"bond Rate\")\r\n    private val indproDs: LineDataSet = LineDataSet(indproEn, \"Ind Pro Rate\")\r\n    private val unemDs: LineDataSet = LineDataSet(unemEn, \"Un Em Rate\")\r\n    private val infDs: LineDataSet = LineDataSet(infEn, \"Infla Rate\")\r\n\r\n    // 그래프 data 생성 -> 최종 입력 데이터\r\n    private val snpD: LineData = LineData(snpDs)\r\n    private val fundD: LineData = LineData(fundDs)\r\n    private val bondD: LineData = LineData(bondDs)\r\n    private val indproD: LineData = LineData(indproDs)\r\n    private val unemD: LineData = LineData(unemDs)\r\n    private val infD: LineData = LineData(infDs)\r\n\r\n    // 차트 데이터 추가\r\n    private var fundIndex: Int = 0\r\n    private var bondIndex: Int = 0\r\n    private var indproIndex: Int = 0\r\n    private var unemIndex: Int = 0\r\n    private var infIndex: Int = 0\r\n\r\n    // 차트 설정\r\n    private val snpLineColor: String = \"#1A237E\" // S&P 선 색깔\r\n    private val snpFillColor: String = \"#1565C0\" // S&P 채움 색깔\r\n    private val snpHighColor: String = \"#B71C1C\" // S&P 하이라이트 색깔\r\n    private val ecoLineColor: String = \"#1A237E\" // 경제 지표 선 색깔\r\n\r\n\r\n    // Count 값들 //////////////////////////////////////////////////////////////////////////////////\r\n    private var dayPlus: Int = 1 // sp(Starting Point) 이후 경과한 거래일 수\r\n    private var fundCount: Int = 0\r\n    private var bondCount: Int = 0\r\n    private var indproCount: Int = 0\r\n    private var unemCount: Int = 0\r\n    private var infCount: Int = 0\r\n\r\n\r\n    // 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 ///////////////////////////////////////////////\r\n\r\n    // 일시정지 시 현재 값 저장\r\n    private var snpNowDate: String = \"yyyy-mm-dd\"\r\n    private var snpNowdays: Int = 0\r\n    private var snpNowVal: Float = 0F\r\n    private var snpBeforeVal : Float = 0F\r\n\r\n\r\n    // 시간관련 ////////////////////////////////////////////////////////////////////////////////////\r\n    // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간\r\n    private val oneday: Long = 240 // 거래일 간 간격\r\n    private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n    //Roomdata관련\r\n    private var gameNormalDb : GameNormalDB? = null\r\n    private var gameHistory = listOf<GameNormal>()\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_game_normal)\r\n\r\n        gameNormalDb = GameNormalDB.getInstace(this)\r\n\r\n        //변수 선언\r\n        val buy_btn = findViewById<Button>(R.id.buy_btn)\r\n        val startcash: Float = 5000000F\r\n        val startpurchase: Float = 0F\r\n        val startevaluation: Float = 0F\r\n        val startprofit: Float = 0F\r\n        val startitem1: Int = 0\r\n        val startitem2: Int = 0\r\n        val startitem3: Int = 0\r\n        var uassets: Float = 0F\r\n        var ucash: Float = 0F\r\n        var upurchase: Float = 0F\r\n        var uevaluation: Float = 0F\r\n        var uprofit: Float = 0F\r\n        var uitem1count: Int = 0\r\n        var uitem2count: Int = 0\r\n        var uitem3count: Int = 0\r\n        var localDatatime: LocalDateTime = LocalDateTime.now()\r\n        val assets = findViewById<TextView>(R.id.assets)\r\n        val cash = findViewById<TextView>(R.id.cash)\r\n        val purchase = findViewById<TextView>(R.id.purchase)\r\n        val evaluation = findViewById<TextView>(R.id.evaluation)\r\n        val profit = findViewById<TextView>(R.id.profit)\r\n        val item1 = findViewById<TextView>(R.id.item1)\r\n        val item2 = findViewById<TextView>(R.id.item2)\r\n        val item3 = findViewById<TextView>(R.id.item3)\r\n        val startRunnable = Runnable {\r\n            gameHistory = gameNormalDb!!.gameNormalDao().getAll()\r\n        }\r\n        val startThread = Thread(startRunnable)\r\n        startThread.start()\r\n\r\n        //Buy Dialog로 부터 결과를 받아오는 list\r\n        lateinit var buy: List<Float>\r\n        lateinit var sell: List<Float>\r\n        lateinit var item: List<Int>\r\n\r\n\r\n        //viewModel 객체\r\n        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(\r\n            GameNormalActivityVeiwModel::class.java\r\n        ).also {\r\n            //초기화\r\n            if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {\r\n                it.initialize(startcash, startpurchase, startevaluation, startprofit, startitem1, startitem2, startitem3)\r\n            }else{\r\n                it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item2count,\r\n                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item3count)\r\n            }\r\n\r\n        }//화면 전환시 data reset되는 문제 발생\r\n\r\n        ////////////////////////////////////////////////////////////////////////////////////////////\r\n        // 차트 click, gameend 변수 초기화\r\n        click = false\r\n        gameend  = false\r\n\r\n        //실시간 data 반영\r\n        viewModel.assets().observe(this, Observer {\r\n            assets.text = \"총자산: \" + it.toString() + \"원\"\r\n            uassets = it\r\n        })\r\n        viewModel.cash().observe(this, Observer {\r\n            cash.text = \"현금: \" + it.toString() + \"원\"\r\n            ucash = it\r\n        })\r\n        viewModel.purchase().observe(this, Observer {\r\n            purchase.text = \"매입금액: \" + it.toString() + \"원\"\r\n            upurchase = it\r\n        })\r\n        viewModel.evaluation().observe(this, Observer {\r\n            evaluation.text = \"원화평가금액: \" + it.toString() + \"원\"\r\n            uevaluation = it\r\n        })\r\n        viewModel.profit().observe(this, Observer {\r\n            profit.text = \"수익률\" + it.toString() + \"%\"\r\n            uprofit = it\r\n        })\r\n        viewModel.item1().observe(this, Observer {\r\n            item1.text = \"아이템1: \" + it.toString() + \"개\"\r\n            uitem1count = it\r\n        })\r\n        viewModel.item2().observe(this, Observer {\r\n            item2.text = \"아이템2: \" + it.toString() + \"개\"\r\n            uitem2count = it\r\n        })\r\n        viewModel.item3().observe(this, Observer {\r\n            item3.text = \"아이템3: \" + it.toString() + \"개\"\r\n            uitem3count = it\r\n        })\r\n\r\n        //Button 동작\r\n\r\n        //매수\r\n        buy_btn.setOnClickListener {\r\n            val dlg_buy = Dialog_buy(this)\r\n            val layoutInflater_buy: LayoutInflater = getLayoutInflater()\r\n            val builder_buy = AlertDialog.Builder(this)\r\n            val addRunnable = Runnable {\r\n                localDatatime = LocalDateTime.now()\r\n                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,true,buy[0],buy[1],\"\",uitem1count,uitem2count,uitem3count)\r\n                gameNormalDb?.gameNormalDao()?.insert(newhistory)\r\n            }\r\n            dlg_buy.start(viewModel.cash().value!!)\r\n            dlg_buy.setOnBuyClickedListener { content ->\r\n                buy = content\r\n                viewModel.buyStock(buy[0], buy[1])\r\n                val addThread = Thread(addRunnable)\r\n                addThread.start()\r\n            }\r\n            click = !click //////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        //매도\r\n        val sell_btn = findViewById<Button>(R.id.sell_btn)\r\n        sell_btn.setOnClickListener {\r\n            val dlg_sell = Dialog_sell(this)\r\n            val layoutInflater_sell: LayoutInflater = getLayoutInflater()\r\n            val builder_sell = AlertDialog.Builder(this)\r\n            val addRunnable = Runnable {\r\n                localDatatime = LocalDateTime.now()\r\n                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,false,sell[0],sell[1],\"\",uitem1count,uitem2count,uitem3count)\r\n                gameNormalDb?.gameNormalDao()?.insert(newhistory)\r\n            }\r\n            dlg_sell.start(viewModel.evaluation().value!!)\r\n            dlg_sell.setOnSellClickedListener { content ->\r\n                sell = content\r\n                viewModel.sellStock(sell[0], sell[1])\r\n                val addThread = Thread(addRunnable)\r\n                addThread.start()\r\n            }\r\n            click = !click /////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        val auto_btn = findViewById<Button>(R.id.auto_btn)\r\n        auto_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n//            val u_id = \" \"\r\n//            val u_pw = \" \"\r\n//            val u_date = \" \"\r\n//            getRoomListDataHttp(u_id, u_pw, u_date)\r\n            getRoomListDataHttp()\r\n            click = !click /////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n        val item_btn = findViewById<Button>(R.id.item_btn)\r\n        item_btn.setOnClickListener {\r\n            val dlg_item = Dialog_item(this)\r\n            dlg_item.start(\r\n                viewModel.item1().value!!,\r\n                viewModel.item2().value!!,\r\n                viewModel.item3().value!!\r\n            )\r\n            dlg_item.setOnItemClickedListener { content ->\r\n                item = content\r\n                viewModel.setitem(item[0], item[1], item[2])\r\n            }\r\n//            Toast.makeText(this, startitem1, Toast.LENGTH_LONG).show()\r\n            click = !click /////////////////////////////////////////////////////////////////////////\r\n        }\r\n\r\n\r\n        // 차트 ////////////////////////////////////////////////////////////////////////////////////\r\n        // 차트 코루틴 시작\r\n        CoroutineScope(Dispatchers.Default).launch {\r\n            val chartdata = launch {\r\n                chartdata()\r\n            }\r\n\r\n            chartdata.join()\r\n\r\n            val inidraw = launch {\r\n                inidraw()\r\n            }\r\n\r\n            inidraw.join()\r\n            snpBeforeVal=snpNowVal\r\n            nowdraw()\r\n            viewModel.priceUpdate(snpNowVal, snpBeforeVal)\r\n        }\r\n        ////////////////////////////////////////////////////////////////////////////////////////////\r\n    }\r\n\r\n    // 데이터 가지고 오기\r\n    fun getRoomListDataHttp() {\r\n        val u_id = \"\"\r\n        val u_pw = \"\"\r\n        val u_date = \"\"\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/call.php/\"\r\n        Log.d(\"데이터 받기 \", \"받기시도 중\")\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n\r\n        //creating our api\r\n        var server = retrofit.create(RetrofitGet::class.java)\r\n        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n                //Log.d(\"data: \",data)\r\n            }\r\n\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n                if (response.isSuccessful && response.body() != null) {\r\n                    val getted_name: String = response.body()!!\r\n                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()\r\n                    Log.d(\"---:\", response.isSuccessful.toString())\r\n                    // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n        })\r\n    }\r\n\r\n    override fun onBackPressed() {\r\n        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)\r\n        dlg_exit.start()\r\n        click = !click /////////////////////////////////////////////////////////////////////////////\r\n    }\r\n\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n    // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성\r\n    private fun chartdata() {\r\n        // Entry 배열 초기값 입력\r\n        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))\r\n        fundEn.add(Entry(-1250F, fund_val[0].toFloat()))\r\n        bondEn.add(Entry(-1250F, bond_val[0].toFloat()))\r\n        indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))\r\n        unemEn.add(Entry(-1250F, unem_val[0].toFloat()))\r\n        infEn.add(Entry(-1250F, inf_val[0].toFloat()))\r\n\r\n\r\n        // 차트 설정\r\n        snpDs.color = Color.parseColor(snpLineColor) // 차트 선\r\n        snpDs.setDrawCircles(false)\r\n        snpDs.setDrawValues(false) // 차트 지점마다 값 표시\r\n        snpDs.lineWidth = 1.5F\r\n        snpDs.fillAlpha = 80 // 차트 스커트\r\n        snpDs.fillColor = Color.parseColor(snpFillColor)\r\n        snpDs.setDrawFilled(true)\r\n        snpDs.highLightColor = Color.parseColor(snpHighColor) // 터치 시 하이라이트\r\n        snpDs.highlightLineWidth = 1F\r\n\r\n        fundDs.color = Color.parseColor(ecoLineColor)\r\n        fundDs.setDrawCircles(false) // 지점마다 원 표시\r\n        fundDs.setDrawValues(false) // 지점마다 값 표시\r\n        fundDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        bondDs.color = Color.parseColor(ecoLineColor)\r\n        bondDs.setDrawCircles(false) // 지점마다 원 표시\r\n        bondDs.setDrawValues(false) // 지점마다 값 표시\r\n        bondDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        indproDs.color = Color.parseColor(ecoLineColor)\r\n        indproDs.setDrawCircles(false) // 지점마다 원 표시\r\n        indproDs.setDrawValues(false) // 지점마다 값 표시\r\n        indproDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        unemDs.color = Color.parseColor(ecoLineColor)\r\n        unemDs.setDrawCircles(false) // 지점마다 원 표시\r\n        unemDs.setDrawValues(false) // 지점마다 값 표시\r\n        unemDs.lineWidth = 0.7F // 선 굵기\r\n\r\n        infDs.color = Color.parseColor(ecoLineColor)\r\n        infDs.setDrawCircles(false) // 지점마다 원 표시\r\n        infDs.setDrawValues(false) // 지점마다 값 표시\r\n        infDs.lineWidth = 0.7F // 선 굵기\r\n\r\n\r\n        for (i in 0..(given - 1)) {\r\n            snpD.addEntry(\r\n                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()),\r\n                0\r\n            )\r\n\r\n            var sf = SimpleDateFormat(\"yyyy-MM-dd\") // 날짜 형식\r\n            var snpDate = snp_date[sp - given + 1 + i]\r\n            var snpDateSf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)\r\n\r\n            var fundDate = fund_date[fundIndex]\r\n            var fundDateSf = sf.parse(fundDate)\r\n            var bondDate = bond_date[bondIndex]\r\n            var bondDateSf = sf.parse(bondDate)\r\n            var indproDate = indpro_date[indproIndex]\r\n            var indproDateSf = sf.parse(indproDate)\r\n            var unemDate = unem_date[unemIndex]\r\n            var unemDateSf = sf.parse(unemDate)\r\n            var infDate = inf_date[infIndex]\r\n            var infDateSf = sf.parse(infDate)\r\n\r\n            var fundC = snpDateSf.time - fundDateSf.time\r\n            var bondC = snpDateSf.time - bondDateSf.time\r\n            var indproC = snpDateSf.time - indproDateSf.time\r\n            var unemC = snpDateSf.time - unemDateSf.time\r\n            var infC = snpDateSf.time - infDateSf.time\r\n\r\n            while (fundC > 0) {\r\n                fundIndex += 1\r\n                fundDate = fund_date[fundIndex]\r\n                fundDateSf = sf.parse(fundDate)\r\n                fundC = snpDateSf.time - fundDateSf.time\r\n            }\r\n            fundCount += 1\r\n            fundD.addEntry(Entry((fundCount - 1250).toFloat(), fund_val[fundIndex].toFloat()), 0)\r\n            println(\"fund date : $fundDate\")\r\n\r\n            while (bondC > 0) {\r\n                bondIndex += 1\r\n                bondDate = bond_date[bondIndex]\r\n                bondDateSf = sf.parse(bondDate)\r\n                bondC = snpDateSf.time - bondDateSf.time\r\n            }\r\n            bondCount += 1\r\n            bondD.addEntry(Entry((bondCount - 1250).toFloat(), bond_val[bondIndex].toFloat()), 0)\r\n\r\n            while (indproC > 0) {\r\n                indproIndex += 1\r\n                indproDate = indpro_date[indproIndex]\r\n                indproDateSf = sf.parse(indproDate)\r\n                indproC = snpDateSf.time - indproDateSf.time\r\n            }\r\n            indproCount += 1\r\n            indproD.addEntry(\r\n                Entry(\r\n                    (indproCount - 1250).toFloat(),\r\n                    indpro_val[indproIndex - 1].toFloat()\r\n                ), 0\r\n            )\r\n\r\n            while (unemC > 0) {\r\n                unemIndex += 1\r\n                unemDate = unem_date[unemIndex]\r\n                unemDateSf = sf.parse(unemDate)\r\n                unemC = snpDateSf.time - indproDateSf.time\r\n            }\r\n            unemCount += 1\r\n            unemD.addEntry(\r\n                Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),\r\n                0\r\n            )\r\n\r\n            while (infC > 0) {\r\n                infIndex += 1\r\n                infDate = inf_date[infIndex]\r\n                infDateSf = sf.parse(infDate)\r\n                infC = snpDateSf.time - infDateSf.time\r\n            }\r\n            infCount += 1\r\n            infD.addEntry(Entry((infCount - 1250).toFloat(), inf_val[infIndex - 1].toFloat()), 0)\r\n            println(\"인덱스 : $i\")\r\n        }\r\n        println(\"Fund count : $fundCount\")\r\n        println(\"랜덤넘버 COUNT : \" + sp.toString() + \" | \" + \"시작 날짜 : \" + snp_date[sp])\r\n        // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////\r\n\r\n\r\n        // layout 에 배치된 lineChart 에 데이터 연결\r\n        findViewById<LineChart>(R.id.cht_snp).data = snpD\r\n        findViewById<LineChart>(R.id.cht_fund).data = fundD\r\n        findViewById<LineChart>(R.id.cht_bond).data = bondD\r\n        findViewById<LineChart>(R.id.cht_indpro).data = indproD\r\n        findViewById<LineChart>(R.id.cht_unem).data = unemD\r\n        findViewById<LineChart>(R.id.cht_inf).data = infD\r\n\r\n\r\n        // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////\r\n        runOnUiThread {\r\n            // 차트 생성\r\n            findViewById<LineChart>(R.id.cht_snp).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_fund).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)\r\n            findViewById<LineChart>(R.id.cht_fund).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)\r\n            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)\r\n            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)\r\n        }\r\n\r\n        // 추가분 반영\r\n        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()\r\n        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()\r\n\r\n        snpD.notifyDataChanged()\r\n        fundD.notifyDataChanged()\r\n        bondD.notifyDataChanged()\r\n        unemD.notifyDataChanged()\r\n        infD.notifyDataChanged()\r\n    }\r\n\r\n    // S&P500 과거 5년간의 차트 그리기\r\n    private suspend fun inidraw() {\r\n        for (i in 0..(given - 1)) {\r\n            delay(1)\r\n            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월\r\n            findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())\r\n        }\r\n\r\n    }\r\n\r\n    // Real time 차트 생성 및 현재 데이터 저장\r\n    private suspend fun nowdraw() {\r\n// 현재 데이터\r\n        while (true) {\r\n            if (!gameend) {\r\n                if (!click) {\r\n                    if (dayPlus <= gl) {\r\n\r\n                        delay(oneday) // 게임상에서 1 거래일의 실제시간\r\n\r\n\r\n                        var sf = SimpleDateFormat(\"yyyy-MM-dd\") // 날짜 형식\r\n                        var snpDate = snp_date[sp + dayPlus]\r\n                        var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)\r\n\r\n                        var fundDate = fund_date[fundIndex]\r\n                        var fundDate_sf = sf.parse(fundDate)\r\n                        var bondDate = bond_date[bondIndex]\r\n                        var bondDate_sf = sf.parse(bondDate)\r\n                        var indproDate = indpro_date[indproIndex]\r\n                        var indproDate_sf = sf.parse(indproDate)\r\n                        var unemDate = unem_date[unemIndex]\r\n                        var unemDate_sf = sf.parse(unemDate)\r\n                        var infDate = inf_date[infIndex]\r\n                        var infDate_sf = sf.parse(infDate)\r\n\r\n                        var fund_c = snpDate_sf.time - fundDate_sf.time\r\n                        var bond_c = snpDate_sf.time - bondDate_sf.time\r\n                        var indpro_c = snpDate_sf.time - indproDate_sf.time\r\n                        var unem_c = snpDate_sf.time - unemDate_sf.time\r\n                        var inf_c = snpDate_sf.time - infDate_sf.time\r\n\r\n\r\n                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)\r\n\r\n                        while (fund_c > 0) {\r\n                            fundIndex += 1\r\n                            fundDate = fund_date[fundIndex]\r\n                            fundDate_sf = sf.parse(fundDate)\r\n                            fund_c = snpDate_sf.time - fundDate_sf.time\r\n                        }\r\n                        fundCount += 1\r\n                        fundD.addEntry(\r\n                            Entry(\r\n                                (fundCount - 1250).toFloat(),\r\n                                fund_val[fundIndex].toFloat()\r\n                            ), 0\r\n                        )\r\n                        println(\"fund date : $fundDate\")\r\n\r\n                        while (bond_c > 0) {\r\n                            bondIndex += 1\r\n                            bondDate = bond_date[bondIndex]\r\n                            bondDate_sf = sf.parse(bondDate)\r\n                            bond_c = snpDate_sf.time - bondDate_sf.time\r\n                        }\r\n                        bondCount += 1\r\n                        bondD.addEntry(\r\n                            Entry(\r\n                                (bondCount - 1250).toFloat(),\r\n                                bond_val[bondIndex].toFloat()\r\n                            ), 0\r\n                        )\r\n\r\n                        while (indpro_c > 0) {\r\n                            indproIndex += 1\r\n                            indproDate = indpro_date[indproIndex]\r\n                            indproDate_sf = sf.parse(indproDate)\r\n                            indpro_c = snpDate_sf.time - indproDate_sf.time\r\n                        }\r\n                        indproCount += 1\r\n                        indproD.addEntry(\r\n                            Entry(\r\n                                (indproCount - 1250).toFloat(),\r\n                                indpro_val[indproIndex - 1].toFloat()\r\n                            ), 0\r\n                        )\r\n\r\n                        while (unem_c > 0) {\r\n                            unemIndex += 1\r\n                            unemDate = unem_date[unemIndex]\r\n                            unemDate_sf = sf.parse(unemDate)\r\n                            unem_c = snpDate_sf.time - indproDate_sf.time\r\n                        }\r\n                        unemCount += 1\r\n                        unemD.addEntry(\r\n                            Entry(\r\n                                (unemCount - 1250).toFloat(),\r\n                                unem_val[unemIndex - 1].toFloat()\r\n                            ), 0\r\n                        )\r\n\r\n                        while (inf_c > 0) {\r\n                            infIndex += 1\r\n                            infDate = inf_date[infIndex]\r\n                            infDate_sf = sf.parse(infDate)\r\n                            inf_c = snpDate_sf.time - infDate_sf.time\r\n                        }\r\n                        infCount += 1\r\n                        infD.addEntry(\r\n                            Entry(\r\n                                (infCount - 1250).toFloat(),\r\n                                inf_val[infIndex - 1].toFloat()\r\n                            ), 0\r\n                        )\r\n\r\n                        println(\"S&P : \" + snp_date[sp + dayPlus] + \" | \" + \"Fund : \" + fund_date[fundIndex] + \" | \" + \"Bond : \" + bond_date[bondIndex] + \" | \" + \"IndPro : \" + indpro_date[indproIndex - 1] + \" | \" + \"UnEm : \" + unem_date[unemIndex - 1] + \" | \" + \"Inf : \" + inf_date[infIndex - 1])\r\n\r\n                        //\r\n                        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()\r\n                        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()\r\n                        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()\r\n                        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()\r\n                        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()\r\n                        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()\r\n\r\n                        snpD.notifyDataChanged()\r\n                        fundD.notifyDataChanged()\r\n                        bondD.notifyDataChanged()\r\n                        unemD.notifyDataChanged()\r\n                        infD.notifyDataChanged()\r\n\r\n                        findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)\r\n\r\n                        findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())\r\n                        findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())\r\n                        findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())\r\n                        findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())\r\n                        findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())\r\n                        findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())\r\n\r\n\r\n                        // 현재 값 저장\r\n                        snpNowDate = snp_date[sp + dayPlus]\r\n                        snpNowdays = dayPlus\r\n                        snpNowVal = snp_val[sp + dayPlus].toFloat()\r\n                        println(\"현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal\")\r\n\r\n\r\n                        dayPlus += 1 // 시간 진행\r\n                    } else {\r\n                        println(\"게임 끝\")\r\n                        break\r\n                    }\r\n                } else {\r\n                    delay(btnRefresh)\r\n                }\r\n            } else {\r\n                break\r\n            }\r\n            delay(btnRefresh)\r\n        }\r\n    }\r\n    ////////////////////////////////////////////////////////////////////////////////////////////////\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
++++ app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(date 1612349105256)
+@@ -2,6 +2,8 @@
+ 
+ import android.graphics.Color
+ import android.os.Bundle
++import android.os.Handler
++import android.os.Looper
+ import android.util.Log
+ import android.view.LayoutInflater
+ import android.widget.Button
+@@ -41,7 +43,7 @@
+ 
+     ////////////////////////////////////////////////////////////////////////////////////////////////
+     // 차트 데이터 및 차트 설정 변수 생성
+-    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
++    private val gl = 200 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
+     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
+ 
+     // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
+@@ -271,10 +273,7 @@
+         auto_btn.setOnClickListener {
+             val layoutInflater: LayoutInflater = getLayoutInflater()
+             val builder = AlertDialog.Builder(this)
+-//            val u_id = " "
+-//            val u_pw = " "
+-//            val u_date = " "
+-//            getRoomListDataHttp(u_id, u_pw, u_date)
++
+             getRoomListDataHttp()
+             click = !click /////////////////////////////////////////////////////////////////////////
+         }
+@@ -691,16 +690,30 @@
+ 
+ 
+                         dayPlus += 1 // 시간 진행
++                        if(dayPlus == 10) {
++                            Handler(Looper.getMainLooper()).post{
++                                val dlg_result = Dialog_result(this@GameNormalActivity)
++                                dlg_result.start()
++                                //Toast.makeText(this, "aaa",Toast.LENGTH_LONG).show()
++                                click = !click //////////////////////////////////////////////////////////////////////////
++                            }
++                        }
+                     } else {
+                         println("게임 끝")
++
+                         break
+                     }
+                 } else {
++
+                     delay(btnRefresh)
+                 }
+             } else {
++                println("---2")
++
+                 break
+             }
++            println("---3")
++
+             delay(btnRefresh)
+         }
+     }
+Index: app/src/main/java/com/example/myapplication/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.widget.Button\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AppCompatActivity\r\n\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        val profile1_btn = findViewById<Button>(R.id.profile1_btn)\r\n        profile1_btn.setOnClickListener{\r\n            val intent = Intent(this,ProfileActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        val setting_btn = findViewById<Button>(R.id.setting_btn)\r\n        setting_btn.setOnClickListener {\r\n            val intent = Intent(this,SettingActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n\r\n        var game_btn =  findViewById<Button>(R.id.game_btn)\r\n        game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화\r\n\r\n        game_btn.setOnClickListener{\r\n            val intent = Intent(this,GameNormalActivity::class.java)\r\n            startActivity(intent)\r\n        }\r\n\r\n        while (true) {\r\n            if (loadcomp) {\r\n                game_btn.isEnabled = true\r\n                game_btn.text = \"게임 시작\"\r\n                break\r\n            }\r\n            Thread.sleep(50)\r\n        }\r\n\r\n    }\r\n\r\n    // 두번 누르면 종료되는 코드\r\n    var time3: Long = 0\r\n    override fun onBackPressed() {\r\n        val time1 = System.currentTimeMillis()\r\n        val time2 = time1 - time3\r\n        if (time2 in 0..2000) {\r\n            // 이거 3줄 다 써야 안전하게 종료\r\n            moveTaskToBack(true)\r\n            finish()\r\n            android.os.Process.killProcess(android.os.Process.myPid())\r\n        }\r\n        else {\r\n            time3 = time1\r\n            Toast.makeText(applicationContext, \"한번 더 누르시면 종료됩니다.\", Toast.LENGTH_SHORT).show()\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/MainActivity.kt	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
++++ app/src/main/java/com/example/myapplication/MainActivity.kt	(date 1612328890440)
+@@ -6,7 +6,6 @@
+ import android.widget.Toast
+ import androidx.appcompat.app.AppCompatActivity
+ 
+-
+ class MainActivity : AppCompatActivity() {
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+Index: app/src/main/java/com/example/myapplication/ResultNormalActivity.kt
+===================================================================
+--- app/src/main/java/com/example/myapplication/ResultNormalActivity.kt	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
++++ app/src/main/java/com/example/myapplication/ResultNormalActivity.kt	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
+@@ -1,11 +0,0 @@
+-package com.example.myapplication
+-
+-import androidx.appcompat.app.AppCompatActivity
+-import android.os.Bundle
+-
+-class ResultNormalActivity : AppCompatActivity() {
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_result_normal)
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.myapplication\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/splashimg\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.MyApplication\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".AccountManagementActivity\"></activity>\r\n        <!-- android:name 설정 -->\r\n        <!-- Splash Activity -->\r\n        <activity\r\n            android:name=\".SplashActivity\"\r\n            android:theme=\"@style/SplashTheme\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity> <!-- Splash Activity -->\r\n        <!-- <activity android:name=\".LoadnAutoauthonizeActivity\"></activity> -->\r\n        <!-- // kakao -->\r\n        <meta-data\r\n            android:name=\"com.kakao.sdk.AppKey\"\r\n            android:value=\"@string/kakao_app_key\" />\r\n\r\n        <activity android:name=\".InitialActivity\" />\r\n        <activity android:name=\".ResultNormalActivity\" />\r\n        <activity android:name=\".GameNormalActivity\" />\r\n        <activity android:name=\".SettingActivity\" />\r\n        <activity android:name=\".ProfileActivity\" />\r\n        <activity android:name=\".MainActivity\" /> <!-- kakao (2020-1-29) -->\r\n        <activity android:name=\"com.kakao.sdk.auth.AuthCodeHandlerActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.VIEW\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"android.intent.category.BROWSABLE\" />\r\n\r\n                <!-- Redirect URI: \"kakao{NATIVE_APP_KEY}://oauth“ -->\r\n                <data\r\n                    android:host=\"oauth\"\r\n                    android:scheme=\"kakao0c9ac0ead6e3f965c35fa7c9d0973b7f\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 10f7cb005ed7e9e4e244c7b7023849364b5f55bc)
++++ app/src/main/AndroidManifest.xml	(date 1612342938180)
+@@ -31,7 +31,6 @@
+             android:value="@string/kakao_app_key" />
+ 
+         <activity android:name=".InitialActivity" />
+-        <activity android:name=".ResultNormalActivity" />
+         <activity android:name=".GameNormalActivity" />
+         <activity android:name=".SettingActivity" />
+         <activity android:name=".ProfileActivity" />
+Index: app/src/main/java/com/example/myapplication/Dialog_result.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Dialog_result.kt	(date 1612330348191)
++++ app/src/main/java/com/example/myapplication/Dialog_result.kt	(date 1612330348191)
+@@ -0,0 +1,33 @@
++package com.example.myapplication
++
++import android.app.Activity
++import android.app.Dialog
++import android.content.Context
++import android.graphics.Color
++import android.view.Window
++import android.widget.Button
++import android.widget.SeekBar
++import android.widget.TextView
++import android.widget.Toast
++
++class Dialog_result(context : Context) {
++
++    var mContext: Context? = context
++    private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
++    private lateinit var btnCancel : Button
++
++    fun start() {
++        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
++        dlg.setContentView(R.layout.dialog_result_normal)     //다이얼로그에 사용할 xml 파일을 불러옴
++        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
++        btnCancel = dlg.findViewById(R.id.btn_cancel)
++
++        btnCancel.setOnClickListener {
++            dlg.dismiss()
++            (mContext as Activity).finish()
++        }
++
++        dlg.show()
++    }
++
++}
+\ No newline at end of file

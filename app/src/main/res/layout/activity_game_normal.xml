@@ -237,11 +237,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:id="@+id/buy_dialog_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:id="@+id/linearLayout_myAssetState"
             android:layout_width="320dp"

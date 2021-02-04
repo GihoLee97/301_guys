@@ -284,12 +284,10 @@ class GameNormalActivity : AppCompatActivity() {
         auto_btn.setOnClickListener {
             val layoutInflater: LayoutInflater = getLayoutInflater()
             val builder = AlertDialog.Builder(this)
-//            val u_id = " "
-//            val u_pw = " "
-//            val u_date = " "
-//            getRoomListDataHttp(u_id, u_pw, u_date)
+
             getRoomListDataHttp()
             click = !click /////////////////////////////////////////////////////////////////////////
+
         }
 
         val item_btn = findViewById<Button>(R.id.item_btn)
