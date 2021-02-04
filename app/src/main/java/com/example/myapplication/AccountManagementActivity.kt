@@ -9,6 +9,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.kakao.sdk.user.UserApiClient
 
@@ -30,9 +31,10 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var textView_googleAcountEmail : TextView
     private lateinit var textView_kakaoAcountEmail : TextView
     private lateinit var btn_generalAcountEmail : Button
-    private lateinit var btn_generalAcountPW : Button
-    private lateinit var btn_googleAcountSignOut : Button
-    private lateinit var btn_kakaoAcountDelete : Button
+    private lateinit var btn_generalAccountPW : Button
+    private lateinit var btn_googleAccountSignOut : Button
+    private lateinit var btn_kakaoAccountDelete : Button
+    private lateinit var btn_kakaoAccountRevokeAccess : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +46,20 @@ class AccountManagementActivity : AppCompatActivity() {
         btn_generalAcountID = findViewById(R.id.btn_generalAccountID)
         textView_generalAcountEmail = findViewById(R.id.editText_generalAcountEmail)
         btn_generalAcountEmail = findViewById(R.id.btn_generalAcountEmail)
-        btn_generalAcountPW = findViewById(R.id.btn_generalAccountPW)
+        btn_generalAccountPW = findViewById(R.id.btn_generalAccountPW)
 
         layout_googleAccountManagement = findViewById(R.id.layout_googleAccountManagement)
         imageView_googleAccountProfile = findViewById(R.id.imageView_googleAccountProfile)
         textView_googleAcountID = findViewById(R.id.editText_googleAcountID)
         textView_googleAcountEmail = findViewById(R.id.editText_googleAcountEmail)
-        btn_googleAcountSignOut = findViewById(R.id.btn_googleAccountSignOut)
+        btn_googleAccountSignOut = findViewById(R.id.btn_googleAccountSignOut)
 
         layout_kakaoAccountManagement = findViewById(R.id.layout_kakaoAccountManagement)
         imageView_kakaoAccountProfile = findViewById(R.id.imageView_kakaoAccountProfile)
         textView_kakaoAcountID = findViewById(R.id.editText_kakaoAcountID)
         textView_kakaoAcountEmail = findViewById(R.id.editText_kakaoAcountEmail)
-        btn_kakaoAcountDelete = findViewById(R.id.btn_kakaoAccountDelete)
+        btn_kakaoAccountDelete = findViewById(R.id.btn_kakaoAccountDelete)
+        btn_kakaoAccountRevokeAccess = findViewById(R.id.btn_kakaoAccountRevokeAccess)
 
         // 현재 로그인된 계정만 띄우기
         profileDb = ProflieDB?.getInstace(this)
@@ -94,7 +97,7 @@ class AccountManagementActivity : AppCompatActivity() {
             else layout_kakaoAccountManagement.visibility = View.GONE
         }
 
-        btn_googleAcountSignOut.setOnClickListener {
+        btn_googleAccountSignOut.setOnClickListener {
             googleAuth = FirebaseAuth.getInstance()
             googleAuth.signOut()
             updatelogOutInFo2DB("GOOGLE")
@@ -102,13 +105,27 @@ class AccountManagementActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btn_kakaoAcountDelete.setOnClickListener {
+        btn_kakaoAccountDelete.setOnClickListener {
             UserApiClient.instance.logout { error ->
                 if (error != null) {
                     Log.e("KAKAO LOGOUT", "로그아웃 실패. SDK에서 토큰 삭제됨", error)
                 }
                 else {
                     Log.i("KAKAO LOGOUT", "로그아웃 성공. SDK에서 토큰 삭제됨")
+                }
+            }
+            updatelogOutInFo2DB("KAKAO")
+            val intent = Intent(this,InitialActivity::class.java)
+            startActivity(intent)
+        }
+
+        btn_kakaoAccountRevokeAccess.setOnClickListener {
+            UserApiClient.instance.unlink { error ->
+                if (error != null) {
+                    Log.e("KAKAO REVOKE ACCESS", "연결 끊기 실패", error)
+                }
+                else {
+                    Log.i("KAKAO REVOKE ACCESS", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
                 }
             }
             updatelogOutInFo2DB("KAKAO")
