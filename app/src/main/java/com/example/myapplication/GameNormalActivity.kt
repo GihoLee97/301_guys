@@ -249,8 +249,10 @@ class GameNormalActivity : AppCompatActivity() {
             dlg_buy.setOnBuyClickedListener { content ->
                 buy = content
                 viewModel.buyStock(buy[0], buy[1])
-                val addThread = Thread(addRunnable)
-                addThread.start()
+                if(buy[0]>0F){
+                    val addThread = Thread(addRunnable)
+                    addThread.start()
+                }
             }
             click = !click //////////////////////////////////////////////////////////////////////////
         }

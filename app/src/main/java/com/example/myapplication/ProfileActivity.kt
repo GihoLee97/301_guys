@@ -32,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         nickname_textView = findViewById(R.id.nickName_text)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
+        val history_btn = findViewById<Button>(R.id.history_btn)
         val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProfileActivityViewModel::class.java)
         lateinit var changenick: String
         var count:Int = 0
@@ -77,6 +78,11 @@ class ProfileActivity : AppCompatActivity() {
 
         accountManagement_btn.setOnClickListener {
             val intent = Intent(this, AccountManagementActivity::class.java)
+            startActivity(intent)
+        }
+
+        history_btn.setOnClickListener{
+            val intent = Intent(this, GameHistoryActivity::class.java)
             startActivity(intent)
         }
     }
