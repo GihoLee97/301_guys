@@ -1,0 +1,306 @@
+Index: app/src/main/java/com/example/myapplication/RetrofitGet.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport retrofit2.Call\r\nimport retrofit2.http.Field\r\nimport retrofit2.http.FormUrlEncoded\r\nimport retrofit2.http.POST\r\n\r\ninterface RetrofitGet{\r\n    @FormUrlEncoded\r\n    @POST(\"test/call.php/\")\r\n    fun getdata(\r\n        @Field(\"u_id\") u_id: String,\r\n        @Field(\"u_pw\") u_pw: String,\r\n        @Field(\"u_date\") u_date: String)\r\n    : Call<String>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/RetrofitGet.kt	(revision 3a47d4f8c4ae066b8bf93f18e99dd66621af11e6)
++++ app/src/main/java/com/example/myapplication/RetrofitGet.kt	(date 1612158927409)
+@@ -7,7 +7,7 @@
+ 
+ interface RetrofitGet{
+     @FormUrlEncoded
+-    @POST("test/call.php/")
++    @POST("/test/call.php/")
+     fun getdata(
+         @Field("u_id") u_id: String,
+         @Field("u_pw") u_pw: String,
+Index: app/src/main/java/com/example/myapplication/Retrofitservice.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport retrofit2.Call\r\nimport retrofit2.http.Body\r\nimport retrofit2.http.Field\r\nimport retrofit2.http.FormUrlEncoded\r\nimport retrofit2.http.POST\r\n\r\ninterface Retrofitservice{\r\n    @FormUrlEncoded\r\n    @POST(\"test/testlogin.php/\")\r\n    fun post_setidpw(\r\n            @Field(\"u_id\") u_id : String,\r\n            @Field(\"u_pw\") u_pw : String,\r\n            @Field(\"u_date\") u_date : String): Call<String>\r\n}
+===================================================================
+--- app/src/main/java/com/example/myapplication/Retrofitservice.kt	(revision 3a47d4f8c4ae066b8bf93f18e99dd66621af11e6)
++++ app/src/main/java/com/example/myapplication/Retrofitsignup.kt	(date 1612167088192)
+@@ -1,16 +1,18 @@
+ package com.example.myapplication
+ 
++import okhttp3.ResponseBody
+ import retrofit2.Call
+-import retrofit2.http.Body
+ import retrofit2.http.Field
+ import retrofit2.http.FormUrlEncoded
+ import retrofit2.http.POST
+ 
+-interface Retrofitservice{
++interface Retrofitsignup{
+     @FormUrlEncoded
+-    @POST("test/testlogin.php/")
+-    fun post_setidpw(
+-            @Field("u_id") u_id : String,
+-            @Field("u_pw") u_pw : String,
+-            @Field("u_date") u_date : String): Call<String>
++    @POST("/test/Signup.php/")
++    fun retro_signup(
++        @Field("u_id") u_id: String,
++        @Field("u_pw") u_pw: String,
++        @Field("u_date") u_date: String)
++    : Call<String>
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/GameNormalActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.widget.Button\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\n\r\nclass GameNormalActivity : AppCompatActivity(){\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_game_normal)\r\n        val buy_btn = findViewById<Button>(R.id.buy_btn)\r\n        buy_btn.setOnClickListener {\r\n            val dlg_buy = Dialog_buy(this)\r\n            val layoutInflater_buy: LayoutInflater = getLayoutInflater()\r\n            val builder_buy = AlertDialog.Builder(this)\r\n            dlg_buy.start()\r\n        }\r\n\r\n        val sell_btn = findViewById<Button>(R.id.sell_btn)\r\n        sell_btn.setOnClickListener {\r\n            val dlg_sell = Dialog_sell(this)\r\n            val layoutInflater_sell: LayoutInflater = getLayoutInflater()\r\n            val builder_sell = AlertDialog.Builder(this)\r\n            dlg_sell.start()\r\n        }\r\n        val auto_btn = findViewById<Button>(R.id.auto_btn)\r\n        auto_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n//            val u_id = \" \"\r\n//            val u_pw = \" \"\r\n//            val u_date = \" \"\r\n//            getRoomListDataHttp(u_id, u_pw, u_date)\r\n            getRoomListDataHttp()\r\n        }\r\n\r\n        val item_btn = findViewById<Button>(R.id.item_btn)\r\n        item_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n            val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)\r\n            builder.setView(dialogview).show()\r\n        }\r\n    }\r\n    // 데이터 가지고 오기\r\n    fun getRoomListDataHttp(){\r\n        val u_id = \"\"\r\n        val u_pw = \"\"\r\n        val u_date = \"\"\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/call.php/\"\r\n        Log.d(\"데이터 받기 \",\"받기시도 중\")\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n         //creating our api\r\n        var server = retrofit.create(RetrofitGet::class.java)\r\n        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n        //server.getdata().enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n            }\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n                if (response.isSuccessful && response.body() != null) {\r\n                    val getted_name: String = response.body()!!\r\n                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n        })\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(revision 3a47d4f8c4ae066b8bf93f18e99dd66621af11e6)
++++ app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(date 1612155169700)
+@@ -71,15 +71,17 @@
+          //creating our api
+         var server = retrofit.create(RetrofitGet::class.java)
+         server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+-        //server.getdata().enqueue(object : Callback<String> {
+             override fun onFailure(call: Call<String>, t: Throwable) {
+                 //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
++                //Log.d("data: ",data)
+             }
+             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                 //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
+                 if (response.isSuccessful && response.body() != null) {
+                     val getted_name: String = response.body()!!
+                     Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()
++                    Log.d("---:",response.isSuccessful.toString())
++                   // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
+                 }
+             }
+         })
+Index: app/src/main/java/com/example/myapplication/InitialActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.ImageButton\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions\r\nimport com.google.android.gms.common.SignInButton\r\nimport com.google.android.gms.common.api.ApiException\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.GoogleAuthProvider\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport com.kakao.sdk.auth.LoginClient\r\nimport com.kakao.sdk.auth.model.OAuthToken\r\nimport com.kakao.sdk.common.KakaoSdk\r\nimport com.kakao.sdk.user.UserApiClient\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.time.LocalDateTime\r\nimport java.time.format.DateTimeFormatter\r\n\r\nclass InitialActivity : AppCompatActivity() {\r\n    // google signin\r\n    var auth: FirebaseAuth? = null\r\n    val GOOGLE_REQUEST_CODE = 99\r\n    val TAG = \"googleLogin\"\r\n    private lateinit var googleSignInClient: GoogleSignInClient\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_initial)\r\n\r\n        // KakaoSdk.init(this, \"0c9ac0ead6e3f965c35fa7c9d0973b7f\")\r\n\r\n        val btn_login = findViewById<Button>(R.id.btn_login)\r\n        btn_login.setOnClickListener{\r\n            val intent = Intent(this, MainActivity::class.java) //Main으로 이동\r\n            val url: String = \"http://stockgame.dothome.co.kr/test/testlogin.php\"\r\n            val id1: TextView = findViewById(R.id.et_id)\r\n            val pw1: TextView = findViewById(R.id.et_pw)\r\n\r\n            val time1: LocalDateTime = LocalDateTime.now()\r\n            val formatter = DateTimeFormatter.ofPattern(\"yyyy-MM-dd HH:mm:ss\")\r\n            val formatted = time1.format(formatter)\r\n            val loginID: String = id1.text.toString().trim()\r\n            val loginPW: String = pw1.text.toString().trim()\r\n            val loginDate : String = formatted.toString().trim()\r\n            setidpw(loginID, loginPW, loginDate)\r\n            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()\r\n\r\n            startActivity(Intent(this, MainActivity::class.java))\r\n        }\r\n\r\n\r\n        auth = FirebaseAuth.getInstance()\r\n        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n            .requestIdToken(getString(R.string.default_web_client_id))\r\n            .requestEmail()\r\n            .build()\r\n        googleSignInClient = GoogleSignIn.getClient(this,gso)\r\n\r\n        val btn_googleSignIn = findViewById<SignInButton>(R.id.btn_googleSignIn)\r\n        btn_googleSignIn.setOnClickListener {\r\n            signIn()\r\n        }\r\n\r\n        val btn_kakaoLogin = findViewById<ImageButton>(R.id.btn_kakaoLogin)\r\n        btn_kakaoLogin.setOnClickListener(View.OnClickListener {\r\n\r\n            // 로그인 공통 callback 구성\r\n            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->\r\n                if (error != null) {\r\n                    Log.e(TAG, \"로그인 실패\", error)\r\n                }\r\n                else if (token != null) {\r\n                    Log.i(TAG, \"로그인 성공 ${token.accessToken}\")\r\n                    val intent = Intent(this, MainActivity::class.java) //Main으로 이동\r\n                    startActivity(intent)\r\n                }\r\n            }\r\n\r\n            // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인\r\n            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {\r\n                LoginClient.instance.loginWithKakaoTalk(this, callback = callback)\r\n            } else {\r\n                LoginClient.instance.loginWithKakaoAccount(this, callback = callback)\r\n            }\r\n        })\r\n\r\n    }\r\n    fun setidpw(u_id: String, u_pw: String, u_date : String) {\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/testlogin.php/\"\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n//        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n        //creating our api\r\n        var server = retrofit.create(Retrofitservice::class.java)\r\n        server.post_setidpw(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n            }\r\n\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n            }\r\n        })\r\n    }\r\n\r\n    private fun signIn() {\r\n        val signInIntent = googleSignInClient.signInIntent\r\n        startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE)\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n\r\n        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);\r\n        if (requestCode == GOOGLE_REQUEST_CODE) {\r\n            val task = GoogleSignIn.getSignedInAccountFromIntent(data)\r\n            try {\r\n                // Google Sign In was successful, authenticate with Firebase\r\n                val account = task.getResult(ApiException::class.java)!!\r\n                Log.d(TAG, \"firebaseAuthWithGoogle:\" + account.id)\r\n                firebaseAuthWithGoogle(account.idToken!!)\r\n            } catch (e: ApiException) {\r\n                // Google Sign In failed, update UI appropriately\r\n                Log.w(TAG, \"Google sign in failed\", e)\r\n                Toast.makeText(this, \"로그인 실패\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n    private fun firebaseAuthWithGoogle(idToken: String) {\r\n        val credential = GoogleAuthProvider.getCredential(idToken, null)\r\n        auth?.signInWithCredential(credential)\r\n            ?.addOnCompleteListener(this) { task ->\r\n                if (task.isSuccessful) {\r\n                    // Sign in success, update UI with the signed-in user's information\r\n                    Log.d(TAG, \"로그인 성공\")\r\n                    val user = auth!!.currentUser\r\n                    loginSuccess()\r\n                } else {\r\n                    // If sign in fails, display a message to the user.\r\n                    Log.w(TAG, \"signInWithCredential:failure\", task.exception)\r\n                }\r\n            }\r\n    }\r\n    private fun loginSuccess(){\r\n        val intent = Intent(this,MainActivity::class.java)\r\n        startActivity(intent)\r\n        finish()\r\n    }\r\n    // 두번 누르면 종료되는 코드\r\n    var time3: Long = 0\r\n    override fun onBackPressed() {\r\n        val time1 = System.currentTimeMillis()\r\n        val time2 = time1 - time3\r\n        if (time2 in 0..2000) {\r\n            // 이거 3줄 다 써야 안전하게 종료\r\n            moveTaskToBack(true)\r\n            finish()\r\n            android.os.Process.killProcess(android.os.Process.myPid())\r\n        }\r\n        else {\r\n            time3 = time1\r\n            Toast.makeText(applicationContext, \"한번 더 누르시면 종료됩니다.\",Toast.LENGTH_SHORT).show()\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/InitialActivity.kt	(revision 3a47d4f8c4ae066b8bf93f18e99dd66621af11e6)
++++ app/src/main/java/com/example/myapplication/InitialActivity.kt	(date 1612176900929)
+@@ -28,6 +28,7 @@
+ import retrofit2.converter.gson.GsonConverterFactory
+ import java.time.LocalDateTime
+ import java.time.format.DateTimeFormatter
++import retrofit2.Converter
+ 
+ class InitialActivity : AppCompatActivity() {
+     // google signin
+@@ -41,24 +42,39 @@
+         setContentView(R.layout.activity_initial)
+ 
+         // KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
++        // 회원가입
++        val btn_signup = findViewById<Button>(R.id.btn_signup)
++        btn_signup.setOnClickListener{
++            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
++            val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
++            val id1: TextView = findViewById(R.id.et_id)
++            val pw1: TextView = findViewById(R.id.et_pw)
++            val time1: LocalDateTime = LocalDateTime.now()
++            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
++            val formatted = time1.format(formatter)
++            val loginID: String = id1.text.toString().trim()
++            val loginPW: String = pw1.text.toString().trim()
++            val loginDate : String = formatted.toString().trim()
++            signup(loginID, loginPW, loginDate)
++            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()
+ 
++            //startActivity(Intent(this, MainActivity::class.java))
++        }
++        // 로그인
+         val btn_login = findViewById<Button>(R.id.btn_login)
+         btn_login.setOnClickListener{
+-            val intent = Intent(this, MainActivity::class.java) //Main으로 이동
+-            val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php"
++            //val intent = Intent(this, MainActivity::class.java) //Main으로 이동
++            val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
+             val id1: TextView = findViewById(R.id.et_id)
+             val pw1: TextView = findViewById(R.id.et_pw)
+-
+             val time1: LocalDateTime = LocalDateTime.now()
+             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+             val formatted = time1.format(formatter)
+             val loginID: String = id1.text.toString().trim()
+             val loginPW: String = pw1.text.toString().trim()
+             val loginDate : String = formatted.toString().trim()
+-            setidpw(loginID, loginPW, loginDate)
+-            //Toast.makeText(this@InitialActivity, loginDate, Toast.LENGTH_LONG).show()
+-
+-            startActivity(Intent(this, MainActivity::class.java))
++            login_check(loginID, loginPW, loginDate)
++            //startActivity(Intent(this, MainActivity::class.java))
+         }
+ 
+ 
+@@ -98,8 +114,48 @@
+         })
+ 
+     }
+-    fun setidpw(u_id: String, u_pw: String, u_date : String) {
+-        val url: String = "http://stockgame.dothome.co.kr/test/testlogin.php/"
++    // 회원가입
++    fun signup(u_id: String, u_pw: String, u_date : String) {
++        var api_signup: Retrofitsignup? = null
++        val url: String = "http://stockgame.dothome.co.kr/test/Signup.php/"
++        var gson: Gson = GsonBuilder()
++            .setLenient()
++            .create()
++//        //creating retrofit object
++        var retrofit =
++            Retrofit.Builder()
++                .baseUrl(url)
++                .addConverterFactory(GsonConverterFactory.create(gson))
++                .build()
++        //creating our api
++        api_signup = retrofit.create(Retrofitsignup::class.java)
++        api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
++            override fun onFailure(call: Call<String>, t: Throwable) {
++//                Toast.makeText(this@InitialActivity, "회원가입 실패...", Toast.LENGTH_LONG).show()
++                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
++            }
++
++            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
++                val code: String = response.body()!!
++                if(code == "444"){
++                    Toast.makeText(this@InitialActivity, "공백 아이디는 불가합니다.", Toast.LENGTH_LONG).show()
++                }
++                if(code == "555"){
++                    Toast.makeText(this@InitialActivity, "이미 등록된 아이디입니다.", Toast.LENGTH_LONG).show()
++                }
++                if(code == "666"){
++                    Toast.makeText(this@InitialActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
++                }
++            }
++        })
++    }
++    //
++
++    //
++    ///로그인
++    fun login_check(u_id: String, u_pw: String, u_date: String) {
++        var funlogincheck: Retrofitlogincheck? = null
++        val url: String = "http://stockgame.dothome.co.kr/test/logincheck.php/"
+         var gson: Gson = GsonBuilder()
+             .setLenient()
+             .create()
+@@ -110,17 +166,28 @@
+                 .addConverterFactory(GsonConverterFactory.create(gson))
+                 .build()
+         //creating our api
+-        var server = retrofit.create(Retrofitservice::class.java)
+-        server.post_setidpw(u_id, u_pw, u_date).enqueue(object : Callback<String> {
++        funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
++        funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+             override fun onFailure(call: Call<String>, t: Throwable) {
+-                //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
++                Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
++                //Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
++
+             }
+ 
+             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+-                //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
++                if (response.isSuccessful && response.body() != null) {
++                    val okcode: String = response.body()!!
++                    if (okcode == "777"){
++                        Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
++                        val intent = Intent(this@InitialActivity ,MainActivity::class.java)
++                        startActivity(intent)
++                    }
++
++                }
+             }
+         })
+     }
++
+ 
+     private fun signIn() {
+         val signInIntent = googleSignInClient.signInIntent
+Index: app/src/main/res/layout/activity_initial.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"10dp\"\r\n    android:backgroundTint=\"@color/white\"\r\n    android:background=\"@color/white\"\r\n    tools:context=\".InitialActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"60dp\"\r\n        android:text=\"앱이름\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/ll_ini\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/ll_ini\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_id\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:ems=\"10\"\r\n            android:hint=\"아이디를 입력하세요\"\r\n            android:inputType=\"textPersonName\"\r\n\r\n            />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_pw\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:ems=\"10\"\r\n            android:hint=\"비밀번호를 입력하세요\"\r\n            android:inputType=\"textPersonName\"\r\n\r\n            />\r\n\r\n    </LinearLayout>\r\n\r\n    <Button\r\n        android:id=\"@+id/btn_login\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"60dp\"\r\n        android:text=\"로그인\"\r\n        app:backgroundTint=\"#0007C4\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/ll_ini\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/btn_login\">\r\n\r\n        <com.google.android.gms.common.SignInButton\r\n            android:id=\"@+id/btn_googleSignIn\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"50dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/btn_login\"></com.google.android.gms.common.SignInButton>\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/btn_kakaoLogin\"\r\n            android:layout_width=\"300dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:src=\"@drawable/kakao_login_medium_wide\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@+id/btn_googleSignIn\" />\r\n\r\n    </LinearLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_initial.xml	(revision 3a47d4f8c4ae066b8bf93f18e99dd66621af11e6)
++++ app/src/main/res/layout/activity_initial.xml	(date 1612165551025)
+@@ -54,6 +54,18 @@
+ 
+     </LinearLayout>
+ 
++    <Button
++        android:id="@+id/btn_signup"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginBottom="60dp"
++        android:text="회원가입"
++        app:backgroundTint="#0007C4"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/ll_ini" />
++
+     <Button
+         android:id="@+id/btn_login"
+         android:layout_width="wrap_content"
+@@ -64,7 +76,8 @@
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/ll_ini" />
++        app:layout_constraintTop_toBottomOf="@+id/ll_ini"
++        app:layout_constraintVertical_bias="0.164" />
+ 
+     <LinearLayout
+         android:layout_width="wrap_content"
+Index: app/src/main/java/com/example/myapplication/DATACLASS.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/DATACLASS.kt	(date 1612162876274)
++++ app/src/main/java/com/example/myapplication/DATACLASS.kt	(date 1612162876274)
+@@ -0,0 +1,5 @@
++package com.example.myapplication
++
++class DATACLASS(
++    val u_id: String, val u_pw: String, val u_date: String
++)
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/Retrofitlogincheck.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Retrofitlogincheck.kt	(date 1612164936599)
++++ app/src/main/java/com/example/myapplication/Retrofitlogincheck.kt	(date 1612164936599)
+@@ -0,0 +1,17 @@
++package com.example.myapplication
++
++import com.google.gson.annotations.SerializedName
++import retrofit2.Call
++import retrofit2.http.Field
++import retrofit2.http.FormUrlEncoded
++import retrofit2.http.POST
++
++interface Retrofitlogincheck {
++    @FormUrlEncoded
++    @POST("/test/logincheck.php/")
++    fun post_logincheck(
++        @Field("u_id") u_id : String,
++        @Field("u_pw") u_pw : String,
++        @Field("u_date") u_date : String
++    ): Call<String>
++}
+\ No newline at end of file

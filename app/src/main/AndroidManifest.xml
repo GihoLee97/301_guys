@@ -31,7 +31,6 @@
             android:value="@string/kakao_app_key" />
 
         <activity android:name=".InitialActivity" />
-        <activity android:name=".ResultNormalActivity" />
         <activity android:name=".GameNormalActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />

@@ -1,0 +1,69 @@
+Index: app/src/main/java/com/example/myapplication/SettingActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.widget.*\r\nimport com.example.myapplication.data.Setting\r\nimport com.example.myapplication.data.SettingDB\r\nimport kotlinx.coroutines.delay\r\nimport kotlinx.coroutines.launch\r\nimport kotlinx.coroutines.runBlocking\r\n\r\nclass SettingActivity : AppCompatActivity() {\r\n    //초기 설정값들\r\n    val dvolume: Boolean = true\r\n    val dpush: Boolean = false\r\n    val dautoplay: Int = 5\r\n    val dthema: Int = 0\r\n    var thema:Int = 0\r\n    private var settingDb : SettingDB? =null\r\n    private var setList = mutableListOf<Setting>()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_setting)\r\n\r\n        settingDb = SettingDB.getInstace(this)\r\n\r\n        //변수선언\r\n        var print = findViewById<TextView>(R.id.print)\r\n        var bgm_sw = findViewById<Switch>(R.id.bgm_sw)\r\n        var push_sw = findViewById<Switch>(R.id.push_sw)\r\n        var autoplay_bar = findViewById<SeekBar>(R.id.autoPlaySpeed_seekBar)\r\n        var thema_choose = findViewById<RadioGroup>(R.id.thema)\r\n        var light = findViewById<RadioButton>(R.id.light_btn)\r\n        var dark = findViewById<RadioButton>(R.id.dark_btn)\r\n        var themas:List<RadioButton> = listOf(light, dark)\r\n        var interest = findViewById<CheckBox>(R.id.interest_btn)\r\n        var exchange = findViewById<CheckBox>(R.id.exchange_btn)\r\n        var shortlonginterest = findViewById<CheckBox>(R.id.shortlonginterest_btn)\r\n        var gold = findViewById<CheckBox>(R.id.gold_btn)\r\n        var money = findViewById<CheckBox>(R.id.money_btn)\r\n        var complete = findViewById<Button>(R.id.complete_btn)\r\n        var thema: Int = 0\r\n        val startRunnable = Runnable {\r\n            setList = settingDb?.settingDao()?.getAll()!!\r\n        }\r\n        var id: List<Int> = settingDb?.settingDao()?.getId()!!\r\n\r\n\r\n        val startThread = Thread(startRunnable)\r\n        startThread.start()\r\n\r\n        if(settingDb==null){\r\n            bgm_sw.isChecked=dvolume\r\n            push_sw.isChecked=dpush\r\n            autoplay_bar.progress=dautoplay\r\n            thema_choose.check(themas[dthema].id)\r\n            print.text= \"SetList is Empty\"\r\n            var t = Toast.makeText(this,\"실행\", Toast.LENGTH_SHORT)\r\n            t.show()\r\n\r\n        } else{\r\n            bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]\r\n            push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]\r\n            autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!![0]\r\n            thema_choose.check(themas[settingDb?.settingDao()?.getThema()!![0]].id)\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n        //확인 버튼\r\n        complete.setOnClickListener {\r\n            val setRunnable = Runnable {\r\n                val newSetting = Setting()\r\n                newSetting.id = 1\r\n                newSetting.autospeed = autoplay_bar.progress\r\n                newSetting.volume = bgm_sw.isChecked\r\n                newSetting.push = push_sw.isChecked\r\n                if(light.isChecked){ thema = 0 }\r\n                else if(dark.isChecked){ thema = 1 }\r\n                newSetting.thema = thema//수정필요\r\n                newSetting.index = 10000*toInt(interest.isChecked)+1000*toInt(exchange.isChecked)+100*toInt(shortlonginterest.isChecked)+10*toInt(gold.isChecked)+toInt(money.isChecked)\r\n                settingDb?.settingDao()?.insert(newSetting)\r\n            }\r\n\r\n            var setThread = Thread(setRunnable)\r\n            setThread.start()\r\n\r\n            val intent = Intent(this,MainActivity::class.java)\r\n            startActivity(intent)\r\n\r\n        }\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n    fun toInt(bool: Boolean): Int{\r\n        if (bool==true)return 1\r\n        else return 0\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        SettingDB.destroyINSTACE()\r\n        super.onDestroy()\r\n    }\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/SettingActivity.kt	(revision 4b0e44cb758f9cdab3fd0e50caaf82731185e006)
++++ app/src/main/java/com/example/myapplication/SettingActivity.kt	(date 1612095971525)
+@@ -3,6 +3,7 @@
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import android.util.Log
+ import android.widget.*
+ import com.example.myapplication.data.Setting
+ import com.example.myapplication.data.SettingDB
+@@ -45,13 +46,12 @@
+         val startRunnable = Runnable {
+             setList = settingDb?.settingDao()?.getAll()!!
+         }
+-        var id: List<Int> = settingDb?.settingDao()?.getId()!!
+ 
+-
++        val TAG = "googleLogin"
+         val startThread = Thread(startRunnable)
+         startThread.start()
+ 
+-        if(settingDb==null){
++        if(settingDb?.settingDao()?.getId()?.isEmpty() != false){
+             bgm_sw.isChecked=dvolume
+             push_sw.isChecked=dpush
+             autoplay_bar.progress=dautoplay
+@@ -61,8 +61,9 @@
+             t.show()
+ 
+         } else{
+-            bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]
+-            push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]
++              Log.d(TAG, "로그인 성공")
++              bgm_sw.isChecked= settingDb?.settingDao()?.getVolume()!![0]
++              push_sw.isChecked= settingDb?.settingDao()?.getPush()!![0]
+             autoplay_bar.progress= settingDb?.settingDao()?.getAutoSpeed()!![0]
+             thema_choose.check(themas[settingDb?.settingDao()?.getThema()!![0]].id)
+         }
+@@ -88,16 +89,18 @@
+ 
+             var setThread = Thread(setRunnable)
+             setThread.start()
+-
+-            val intent = Intent(this,MainActivity::class.java)
+-            startActivity(intent)
++            onBackPressed()
++//            val intent = Intent(this,MainActivity::class.java)
++//            startActivity(intent)
+ 
+         }
+ 
+ 
+     }
+-
+-
++    override fun onBackPressed() {
++        startActivity(Intent(this, MainActivity::class.java))
++        finish()
++    }
+ 
+ 
+     fun toInt(bool: Boolean): Int{

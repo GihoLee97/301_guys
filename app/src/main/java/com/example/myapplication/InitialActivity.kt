@@ -33,6 +33,9 @@ import java.time.format.DateTimeFormatter
 
 
 class InitialActivity : AppCompatActivity() {
+    // profileDb
+    private var profileDb : ProflieDB? = null
+
     // google signin
     var auth: FirebaseAuth? = null
     val GOOGLE_REQUEST_CODE = 99
@@ -66,6 +69,8 @@ class InitialActivity : AppCompatActivity() {
             val loginID: String = id1.text.toString().trim()
             val loginPW: String = pw1.text.toString().trim()
             val loginDate : String = formatted.toString().trim()
+            val dlg_loading = Dialog_loading(this)
+            dlg_loading.start()
             generalSignup(loginID, loginPW, loginDate)
         }
 
@@ -223,18 +228,23 @@ class InitialActivity : AppCompatActivity() {
 
     private fun loginSuccess(method: String){
         memorizeLogMethod(method)
-        val intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
+        if(profileDb?.profileDao()?.getNickname()=="#########first_login##########"){
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 
     // remember which login method did user used with DB
     private fun memorizeLogMethod(method : String){
-        var profileDb = ProflieDB?.getInstace(this)
+        profileDb = ProflieDB?.getInstace(this)
         // if profile DB is empty insert dummy
         if(profileDb?.profileDao()?.getAll().isNullOrEmpty()){
             val setRunnable = Runnable {
-                val newProfile = Profile(1, "", 0, "", 1, 0)
+                val newProfile = Profile(1, "#########first_login##########", 0, "", 1, 0)
                 profileDb?.profileDao()?.insert(newProfile)
             }
             var setThread = Thread(setRunnable)

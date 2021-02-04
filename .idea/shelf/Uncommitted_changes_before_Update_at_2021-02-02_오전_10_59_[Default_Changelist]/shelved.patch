@@ -1,0 +1,275 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.myapplication\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/splashimg\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.MyApplication\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".AccountManagementActivity\"></activity>\r\n        <!-- android:name 설정 -->\r\n        <!-- Splash Activity -->\r\n        <activity\r\n            android:name=\".SplashActivity\"\r\n            android:theme=\"@style/SplashTheme\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity> <!-- Splash Activity -->\r\n        <!-- <activity android:name=\".LoadnAutoauthonizeActivity\"></activity> -->\r\n        <!-- // kakao -->\r\n        <meta-data\r\n            android:name=\"com.kakao.sdk.AppKey\"\r\n            android:value=\"@string/kakao_app_key\" />\r\n\r\n        <activity android:name=\".InitialActivity\" />\r\n        <activity android:name=\".ResultNormalActivity\" />\r\n        <activity android:name=\".GameNormalActivity\" />\r\n        <activity android:name=\".SettingActivity\" />\r\n        <activity android:name=\".ProfileActivity\" />\r\n        <activity android:name=\".MainActivity\" /> <!-- kakao (2020-1-29) -->\r\n        <activity android:name=\"com.kakao.sdk.auth.AuthCodeHandlerActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.VIEW\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"android.intent.category.BROWSABLE\" />\r\n\r\n                <!-- Redirect URI: \"kakao{NATIVE_APP_KEY}://oauth“ -->\r\n                <data\r\n                    android:host=\"oauth\"\r\n                    android:scheme=\"kakao0c9ac0ead6e3f965c35fa7c9d0973b7f\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 0a7e946719291db866534981f30f6f4c2d3694a6)
++++ app/src/main/AndroidManifest.xml	(date 1612184744484)
+@@ -32,6 +32,7 @@
+ 
+         <activity android:name=".InitialActivity" />
+         <activity android:name=".ResultNormalActivity" />
++        <activity android:name=".Dialog_game_exit"/>
+         <activity android:name=".GameNormalActivity" />
+         <activity android:name=".SettingActivity" />
+         <activity android:name=".ProfileActivity" />
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"red\">#FFFF0000</color>\r\n    <color name=\"blue\">#FF0000FF</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 0a7e946719291db866534981f30f6f4c2d3694a6)
++++ app/src/main/res/values/colors.xml	(date 1612182617449)
+@@ -9,4 +9,6 @@
+     <color name="white">#FFFFFFFF</color>
+     <color name="red">#FFFF0000</color>
+     <color name="blue">#FF0000FF</color>
++    <color name="gray">#FF808080</color>
++
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/GameNormalActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.widget.Button\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.AlertDialog\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport com.google.gson.Gson\r\nimport com.google.gson.GsonBuilder\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\n\r\nclass GameNormalActivity : AppCompatActivity(){\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_game_normal)\r\n        //변수 선언\r\n        val buy_btn = findViewById<Button>(R.id.buy_btn)\r\n        val startcash: Float = 5000000F\r\n        val startevaluation: Float = 0F\r\n        val startprofit: Float = 0F\r\n        val cash = findViewById<TextView>(R.id.cash)\r\n        val evaluation = findViewById<TextView>(R.id.evaluation)\r\n        val profit = findViewById<TextView>(R.id.profit)\r\n        //Buy Dialog로 부터 결과를 받아오는 list\r\n        lateinit var buy: List<Float>\r\n        lateinit var sell: List<Float>\r\n        //viewModel 객체\r\n        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(GameNormalActivityVeiwModel::class.java)\r\n\r\n        //초기화\r\n        viewModel.initialize(startcash, startevaluation, startprofit)\r\n        viewModel.cash().observe(this, Observer {\r\n            cash.text = \"현금: \"+it.toString()+\"원\"\r\n        })\r\n        viewModel.evaluation().observe(this, Observer {\r\n            evaluation.text = \"원화평가금액: \"+it.toString()+\"원\"\r\n        })\r\n        viewModel.profit().observe(this, Observer {\r\n            profit.text = \"수익률\"+it.toString()+\"%\"\r\n        })\r\n\r\n\r\n\r\n        //Button 동작\r\n\r\n        //매수\r\n       buy_btn.setOnClickListener {\r\n            val dlg_buy = Dialog_buy(this)\r\n            val layoutInflater_buy: LayoutInflater = getLayoutInflater()\r\n            val builder_buy = AlertDialog.Builder(this)\r\n            dlg_buy.start()\r\n            dlg_buy.setOnBuyClickedListener { content->\r\n                buy=content\r\n                viewModel.buyStock(buy[0], buy[1])\r\n            }\r\n        }\r\n\r\n        //매도\r\n        val sell_btn = findViewById<Button>(R.id.sell_btn)\r\n        sell_btn.setOnClickListener {\r\n            val dlg_sell = Dialog_sell(this)\r\n            val layoutInflater_sell: LayoutInflater = getLayoutInflater()\r\n            val builder_sell = AlertDialog.Builder(this)\r\n            dlg_sell.start()\r\n            dlg_sell.setOnSellClickedListener { content->\r\n                sell=content\r\n                viewModel.sellStock(sell[0], sell[1])\r\n            }\r\n        }\r\n\r\n        val auto_btn = findViewById<Button>(R.id.auto_btn)\r\n        auto_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n//            val u_id = \" \"\r\n//            val u_pw = \" \"\r\n//            val u_date = \" \"\r\n//            getRoomListDataHttp(u_id, u_pw, u_date)\r\n            getRoomListDataHttp()\r\n        }\r\n\r\n        val item_btn = findViewById<Button>(R.id.item_btn)\r\n        item_btn.setOnClickListener {\r\n            val layoutInflater: LayoutInflater = getLayoutInflater()\r\n            val builder = AlertDialog.Builder(this)\r\n            val dialogview = layoutInflater.inflate(R.layout.item_pick_dialog,null)\r\n            builder.setView(dialogview).show()\r\n        }\r\n    }\r\n    // 데이터 가지고 오기\r\n    fun getRoomListDataHttp(){\r\n        val u_id = \"\"\r\n        val u_pw = \"\"\r\n        val u_date = \"\"\r\n        val url: String = \"http://stockgame.dothome.co.kr/test/call.php/\"\r\n        Log.d(\"데이터 받기 \",\"받기시도 중\")\r\n        var gson: Gson = GsonBuilder()\r\n            .setLenient()\r\n            .create()\r\n        //creating retrofit object\r\n        var retrofit =\r\n            Retrofit.Builder()\r\n                .baseUrl(url)\r\n                .addConverterFactory(GsonConverterFactory.create(gson))\r\n                .build()\r\n         //creating our api\r\n        var server = retrofit.create(RetrofitGet::class.java)\r\n        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {\r\n            override fun onFailure(call: Call<String>, t: Throwable) {\r\n                //Toast.makeText(this@Initial, \" \", Toast.LENGTH_LONG).show()\r\n                //Log.d(\"data: \",data)\r\n            }\r\n            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {\r\n                //Toast.makeText(this@Initial, \"bbbbbbb\", Toast.LENGTH_LONG).show()\r\n                if (response.isSuccessful && response.body() != null) {\r\n                    val getted_name: String = response.body()!!\r\n                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()\r\n                    Log.d(\"---:\",response.isSuccessful.toString())\r\n                   // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()\r\n                }\r\n            }\r\n        })\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(revision 0a7e946719291db866534981f30f6f4c2d3694a6)
++++ app/src/main/java/com/example/myapplication/GameNormalActivity.kt	(date 1612185895517)
+@@ -1,5 +1,6 @@
+ package com.example.myapplication
+ 
++import android.content.Intent
+ import android.os.Bundle
+ import android.util.Log
+ import android.view.LayoutInflater
+@@ -111,6 +112,7 @@
+                 .baseUrl(url)
+                 .addConverterFactory(GsonConverterFactory.create(gson))
+                 .build()
++
+          //creating our api
+         var server = retrofit.create(RetrofitGet::class.java)
+         server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+@@ -129,5 +131,11 @@
+             }
+         })
+     }
++    override fun onBackPressed() {
++        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
++        dlg_exit.start()
++
++
++    }
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/Dialog_game_exit.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Dialog_game_exit.kt	(date 1612186796278)
++++ app/src/main/java/com/example/myapplication/Dialog_game_exit.kt	(date 1612186796278)
+@@ -0,0 +1,62 @@
++package com.example.myapplication
++
++import android.app.Activity
++import android.app.Dialog
++import android.content.Context
++import android.content.Intent
++import android.view.View
++import android.view.Window
++import android.widget.Button
++import android.widget.Toast
++
++class Dialog_game_exit (context : Context)  {
++    var mContext: Context? = context
++
++    val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
++    private lateinit var btnsave : Button
++    private lateinit var btncancel : Button
++    private lateinit var btnexit : Button
++    fun start() {
++        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
++        dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
++        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
++
++        btnsave = dlg.findViewById(R.id.btn_save)
++        btnsave.setOnClickListener{
++        }
++
++
++        btnsave.setOnClickListener {
++            dlg.dismiss()
++//            val intent = Intent(mContext, MainActivity::class.java)
++            (mContext as Activity).finish()
++          }
++
++        btnexit = dlg.findViewById(R.id.btn_exit)
++        btnexit.setOnClickListener {
++//            Toast.makeText(context, "메인 액티비티 종료", Toast.LENGTH_SHORT).show()
++//            dlg.dismiss()
++//            (context as GameNormalActivity).finish()
++            dlg.dismiss()
++            (mContext as Activity).finish()
++        }
++        btncancel = dlg.findViewById(R.id.btn_cancel)
++        btncancel.setOnClickListener {
++            dlg.dismiss()
++        }
++        dlg.show()
++    }
++
++//    fun setOnBuyClickedListener(listener: (List<Float>)->Unit){
++//        this.listenter = object : BuyDialogClickedListener{
++//            override fun onBuyClicked(content: List<Float>) {
++//                listener(content)
++//            }
++//        }
++//    }
++//
++//    interface BuyDialogClickedListener{
++//        fun onBuyClicked(content: List<Float>)
++//    }
++
++}
+Index: app/src/main/java/com/example/myapplication/Dialog_nick.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\npackage com.example.myapplication\r\n\r\nimport android.app.Dialog\r\nimport android.content.Context\r\nimport android.provider.ContactsContract\r\nimport android.view.Window\r\nimport android.widget.*\r\nimport com.example.myapplication.R\r\nimport com.example.myapplication.data.Profile\r\nimport com.example.myapplication.data.ProflieDB\r\n\r\nclass Dialog_nick(context : Context) {\r\n\r\n    private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감\r\n    private lateinit var btn_ok : Button\r\n    private lateinit var nickname_editText : EditText\r\n\r\n    fun start(profileDb :ProflieDB?) {\r\n        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거\r\n        dlg.setContentView(R.layout.nickname_dialog) //다이얼로그에 사용할 xml 파일을 불러옴\r\n        dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함\r\n        //\r\n        btn_ok = dlg.findViewById(R.id.nicknameokbtn)\r\n        nickname_editText = dlg.findViewById(R.id.editNickName)\r\n\r\n        btn_ok.setOnClickListener {\r\n            //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드\r\n\r\n            val setRunnable = Runnable {\r\n                val newProfile = Profile()\r\n                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()\r\n                newProfile.nickname = nickname_editText.text.toString()\r\n                newProfile.history = profileDb?.profileDao()?.getHistory()!!\r\n                newProfile.level = profileDb?.profileDao()?.getLevel()!!\r\n                newProfile.login = profileDb?.profileDao()?.getLogin()!!\r\n                newProfile.profit = profileDb?.profileDao()?.getProfit()!!\r\n                profileDb?.profileDao()?.update(newProfile)\r\n            }\r\n\r\n            var setThread = Thread(setRunnable)\r\n            setThread.start()\r\n\r\n            dlg.dismiss()\r\n        }\r\n\r\n\r\n\r\n        dlg.show()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/Dialog_nick.kt	(revision 0a7e946719291db866534981f30f6f4c2d3694a6)
++++ app/src/main/java/com/example/myapplication/Dialog_nick.kt	(date 1612180519257)
+@@ -1,11 +1,14 @@
+ 
+ package com.example.myapplication
+ 
++
+ import android.app.Dialog
+ import android.content.Context
++import android.content.Intent
+ import android.provider.ContactsContract
+ import android.view.Window
+ import android.widget.*
++import androidx.core.content.ContextCompat.startActivity
+ import com.example.myapplication.R
+ import com.example.myapplication.data.Profile
+ import com.example.myapplication.data.ProflieDB
+@@ -24,9 +27,8 @@
+         btn_ok = dlg.findViewById(R.id.nicknameokbtn)
+         nickname_editText = dlg.findViewById(R.id.editNickName)
+ 
++
+         btn_ok.setOnClickListener {
+-            //TODO: 부모 액티비티로 내용을 돌려주기 위해 작성할 코드
+-
+             val setRunnable = Runnable {
+                 val newProfile = Profile()
+                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+@@ -43,9 +45,6 @@
+ 
+             dlg.dismiss()
+         }
+-
+-
+-
+         dlg.show()
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/dialog_game_exit.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_game_exit.xml	(date 1612182717788)
++++ app/src/main/res/layout/dialog_game_exit.xml	(date 1612182717788)
+@@ -0,0 +1,79 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="#ffffff">
++
++    <TextView
++        android:id="@+id/title"
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:gravity="center"
++        android:textColor="@color/white"
++        android:textSize="25dp"
++        android:text="종료"
++        android:background="@color/black"/>
++
++    <TextView
++        android:id="@+id/매수금액"
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:gravity="center"
++        android:textColor="@color/black"
++        android:textSize="16dp"
++        android:text="종료하시겠습니까?"
++        android:background="@color/white"/>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="60dp"
++        android:orientation="horizontal">
++
++        <Button
++            android:id="@+id/btn_save"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="저장"
++            android:textColor="@color/white"
++            android:textSize="16dp"
++            android:backgroundTint="@color/blue"/>
++
++        <View
++            android:layout_width="1dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++
++        <Button
++            android:id="@+id/btn_exit"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="종료"
++            android:textColor="#000000"
++            android:textSize="16dp"
++            android:backgroundTint="@color/white"/>
++        <View
++            android:layout_width="1dp"
++            android:layout_height="match_parent"
++            android:background="@color/white"/>
++        <Button
++            android:id="@+id/btn_cancel"
++            android:layout_width="match_parent"
++            android:layout_height="60dp"
++            android:layout_weight="1"
++            android:gravity="center"
++            android:text="취소"
++            android:textColor="#000000"
++            android:textSize="16dp"
++            android:backgroundTint="@color/gray"/>
++    </LinearLayout>
++
++    <View
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:background="#000000"/>
++</LinearLayout>
+\ No newline at end of file

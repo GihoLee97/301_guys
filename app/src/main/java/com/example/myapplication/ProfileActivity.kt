@@ -45,12 +45,12 @@ class ProfileActivity : AppCompatActivity() {
             profileList = profileDb?.profileDao()?.getAll()!!
         }
 
-        if (profileDb?.profileDao()?.getNickname()=="") { // PreSet the setting in the case of first running
-            nickname_textView.text = "닉네임을 아직 정하지 않았습니다."
+        if (profileDb?.profileDao()?.getNickname()=="#########first_login##########") { // PreSet the setting in the case of first running
+            nickname_textView.text = "닉네임을 정하세요."
             // preinsert profile for call_dialog_nick which just update the database
-            viewModel.initialize("닉네임을 아직 정하지 않았습니다.")
+            viewModel.initialize("닉네임을 정하세요.")
             // update nickname
-            viewModel.nicknameChange("닉네임을 아직 정하지 않았습니다.")
+            viewModel.nicknameChange("닉네임을 정하세요.")
             val dlg_nick = Dialog_nick(this)
             profileDb = ProflieDB.getInstace(this)
             dlg_nick.start(profileDb)
