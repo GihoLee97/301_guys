@@ -20,14 +20,16 @@ class GameNormalActivityVeiwModel: ViewModel() {
     private var _item1 = MutableLiveData<Int>()
     private var _item2 = MutableLiveData<Int>()
     private var _item3 = MutableLiveData<Int>()
+    private var _priceBuy = MutableLiveData<Float>()
     private var _priceNow = MutableLiveData<Float>()
     private var _priceBefore = MutableLiveData<Float>()
     //게임 초기화
-    fun initialize(startcash:Float,startpurchase:Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
+    fun initialize(startcash:Float,startpurchase:Float,startprice: Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
         _cash.value = startcash
         _evaluation.value = startevaluation
         _purchase.value = startpurchase
         _profit.value = startprofit
+        _priceBuy.value = startprice
         finished.value = true
         _item1.value = startitem1
         _item2.value = startitem2
@@ -57,6 +59,10 @@ class GameNormalActivityVeiwModel: ViewModel() {
     fun assets(): LiveData<Float>{
         _assets.value = _cash.value?.plus(_evaluation.value!!)
         return _assets
+    }
+    //평단가 반환
+    fun priceBuy(): LiveData<Float>{
+        return _priceBuy
     }
     //매입금액 반환
     fun purchase(): LiveData<Float>{
@@ -89,28 +95,32 @@ class GameNormalActivityVeiwModel: ViewModel() {
     //게임 진행시 실시간 데이터 반영
     //주식 등락 fluctuation: 등락율
     fun fluctuate(fluctuation: Float){
-        _evaluation.value = _evaluation.value?.times(fluctuation)
+        _evaluation.value = _purchase.value?.times((1+fluctuation))
         update()
     }
     //시세 받아오기
     fun priceUpdate(priceNow: Float, priceBefore:Float){
         _priceBefore.value = priceBefore
         _priceNow.value = priceNow
-        val fluctuation = (_priceNow.value!! - _priceBefore.value!!)/ _priceBefore.value!!
+        var fluctuation = 0F
+        if(_priceBuy.value==0F){ }
+        else {fluctuation = (_priceNow.value!! - _priceBuy.value!!)/ _priceBuy.value!!}
         fluctuate(fluctuation)
     }
     //매수
-    fun buyStock(price:Float, fees:Float){
-        _cash.value = (_cash.value?.minus(price) ?: 0F) -fees
-        _evaluation.value = _evaluation.value?.plus(price)
-        _purchase.value = _purchase.value?.plus(price)
+    fun buyStock(volume:Float, fees:Float){
+        _cash.value = (_cash.value?.minus(volume) ?: 0F) -fees
+        _priceBuy.value = ((_priceBuy.value?.times(_evaluation.value!!) ?: 1F) + (_priceNow.value?.times(volume)
+                ?: 1F))/(_evaluation.value?.plus(volume)!!)
+        _evaluation.value = _evaluation.value?.plus(volume)
+        _purchase.value = _purchase.value?.plus(volume)
         update()
     }
     //매도
-    fun sellStock(price:Float, fees:Float){
-        _cash.value = (_cash.value?.plus(price) ?: 0F) -fees
-        _purchase.value = _purchase.value?.minus(price/(1F+((_evaluation.value?.minus(_purchase.value!!))?.div(_purchase.value!!)!!)))
-        _evaluation.value = _evaluation.value?.minus(price)
+    fun sellStock(volume:Float, fees:Float){
+        _cash.value = (_cash.value?.plus(volume) ?: 0F) -fees
+        _purchase.value = _purchase.value?.minus(volume/(1F+((_evaluation.value?.minus(_purchase.value!!))?.div(_purchase.value!!)!!)))
+        _evaluation.value = _evaluation.value?.minus(volume)
         update()
     }
     //세금 징수

@@ -5,6 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.Button
+import com.example.myapplication.data.GameNormal
+import com.example.myapplication.data.GameNormalDB
+import java.time.LocalDateTime
 
 class Dialog_game_exit (context : Context)  {
     var mContext: Context? = context
@@ -13,11 +16,13 @@ class Dialog_game_exit (context : Context)  {
     private lateinit var btnsave : Button
     private lateinit var btncancel : Button
     private lateinit var btnexit : Button
-    fun start() {
+    private var gameNormalDbe : GameNormalDB? = null
+    fun start(ep : Int, localDatatime: LocalDateTime,uassets: Float,ucash: Float,upurchase: Float,uprice: Float,uevaluation: Float,uprofit: Float,uitem1count: Int,uitem2count: Int,uitem3count: Int) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
 
+        gameNormalDbe = mContext?.let { GameNormalDB.getInstace(it) }
         btnsave = dlg.findViewById(R.id.btn_save)
         btnsave.setOnClickListener{
             gameend = !gameend /////////////////////////////////////////////////////////////////////
@@ -25,6 +30,13 @@ class Dialog_game_exit (context : Context)  {
 
 
         btnsave.setOnClickListener {
+
+            val addRunnable = kotlinx.coroutines.Runnable {
+                val newhistory = GameNormal(localDatatime.toString(), uassets, ucash, upurchase, uprice, uevaluation, uprofit, "저장", 0F, 0F, "", uitem1count, uitem2count, uitem3count, ep)
+                gameNormalDbe?.gameNormalDao()?.insert(newhistory)
+            }
+            val addThread = Thread(addRunnable)
+            addThread.start()
             dlg.dismiss()
 //            val intent = Intent(mContext, MainActivity::class.java)
             (mContext as Activity).finish()

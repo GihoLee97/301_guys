@@ -41,20 +41,22 @@ var gameend: Boolean = false // 게임 종료시 적용
 
 class GameNormalActivity : AppCompatActivity() {
 
+    ///차트 끝나는 지점, 업데이트 변수들
+    private var uassets: Float = 0F
+    private var ucash: Float = 0F
+    private var upurchase: Float = 0F
+    private var uprice: Float = 0F
+    private var uevaluation: Float = 0F
+    private var uprofit: Float = 0F
+    private var uitem1count: Int = 0
+    private var uitem2count: Int = 0
+    private var uitem3count: Int = 0
+    private lateinit var localDatatime: LocalDateTime
+    private var ep = 0
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
     private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
-
-    // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
-    // 5년은 대략 1250 거래일.
-    // 게임 시작 시점으로부터 5년 전, 10년 후의 데이터 확보가 가능해야함.
-    // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.
-    // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
-    // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
-    private val random = Random()
-    private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
-
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
     // Entry 배열 생성
@@ -109,13 +111,13 @@ class GameNormalActivity : AppCompatActivity() {
     // 일시정지 시 현재 값 저장
     private var snpNowDate: String = "yyyy-mm-dd"
     private var snpNowdays: Int = 0
-    private var snpNowVal: Float = 0F
-    private var snpBeforeVal : Float = 0F
+    private var snpNowVal: Float = 1000F
+    private var snpBeforeVal : Float = 1000F
 
 
     // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
     // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간
-    private val oneday: Long = 240 // 거래일 간 간격
+    private val oneday: Long = 2400 // 거래일 간 간격
     private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -130,27 +132,31 @@ class GameNormalActivity : AppCompatActivity() {
 
         gameNormalDb = GameNormalDB.getInstace(this)
 
+
+        // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
+        // 5년은 대략 1250 거래일.
+        // 게임 시작 시점으로부터 5년 전, 10년 후의 데이터 확보가 가능해야함.
+        // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.
+        // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
+        // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
+        val random = Random()
+        var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
+        if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() != true){ sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.endpoint }
         //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
         val startcash: Float = 5000000F
         val startpurchase: Float = 0F
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
+        val startprice: Float = 0F
         val startitem1: Int = 0
         val startitem2: Int = 0
         val startitem3: Int = 0
-        var uassets: Float = 0F
-        var ucash: Float = 0F
-        var upurchase: Float = 0F
-        var uevaluation: Float = 0F
-        var uprofit: Float = 0F
-        var uitem1count: Int = 0
-        var uitem2count: Int = 0
-        var uitem3count: Int = 0
-        var localDatatime: LocalDateTime = LocalDateTime.now()
+        localDatatime = LocalDateTime.now()
         val assets = findViewById<TextView>(R.id.assets)
         val cash = findViewById<TextView>(R.id.cash)
         val purchase = findViewById<TextView>(R.id.purchase)
+        val pricebuy = findViewById<TextView>(R.id.pricebuy)
         val evaluation = findViewById<TextView>(R.id.evaluation)
         val profit = findViewById<TextView>(R.id.profit)
         val item1 = findViewById<TextView>(R.id.item1)
@@ -181,10 +187,11 @@ class GameNormalActivity : AppCompatActivity() {
         ).also {
             //초기화
             if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
-                it.initialize(startcash, startpurchase, startevaluation, startprofit, startitem1, startitem2, startitem3)
+                it.initialize(startcash, startpurchase,startprice, startevaluation, startprofit, startitem1, startitem2, startitem3)
             }else{
                 it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.pricebuy,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
@@ -212,12 +219,16 @@ class GameNormalActivity : AppCompatActivity() {
             purchase.text = "매입금액: " + it.toString() + "원"
             upurchase = it
         })
+        viewModel.priceBuy().observe(this, Observer {
+            pricebuy.text = "매입가: " + it.toString() + "원"
+            uprice = it
+        })
         viewModel.evaluation().observe(this, Observer {
             evaluation.text = "원화평가금액: " + it.toString() + "원"
             uevaluation = it
         })
         viewModel.profit().observe(this, Observer {
-            profit.text = "수익률" + it.toString() + "%"
+            profit.text = "수익률: " + it.toString() + "%"
             uprofit = it
         })
         viewModel.item1().observe(this, Observer {
@@ -242,9 +253,10 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_buy = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
+            click = !click //////////////////////////////////////////////////////////////////////////
             dlg_buy.start(viewModel.cash().value!!)
             dlg_buy.setOnBuyClickedListener { content ->
                 buy = content
@@ -254,7 +266,6 @@ class GameNormalActivity : AppCompatActivity() {
                     addThread.start()
                 }
             }
-            click = !click //////////////////////////////////////////////////////////////////////////
         }
 
         //매도
@@ -265,9 +276,10 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_sell = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
+            click = !click /////////////////////////////////////////////////////////////////////////
             dlg_sell.start(viewModel.evaluation().value!!)
             dlg_sell.setOnSellClickedListener { content ->
                 sell = content
@@ -277,7 +289,6 @@ class GameNormalActivity : AppCompatActivity() {
                     addThread.start()
                 }
             }
-            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
         val auto_btn = findViewById<Button>(R.id.auto_btn)
@@ -311,9 +322,9 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 차트 ////////////////////////////////////////////////////////////////////////////////////
         // 차트 코루틴 시작
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val chartdata = launch {
-                chartdata()
+                chartdata(sp)
             }
 
             chartdata.join()
@@ -323,10 +334,7 @@ class GameNormalActivity : AppCompatActivity() {
             }
 
             inidraw.join()
-            snpBeforeVal=snpNowVal
-            nowdraw()
-            viewModel.priceUpdate(snpNowVal, snpBeforeVal)
-
+            nowdraw(viewModel,sp)
 
 
         }
@@ -383,15 +391,16 @@ class GameNormalActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
-        dlg_exit.start()
+        localDatatime = LocalDateTime.now()
+        dlg_exit.start(ep, localDatatime,uassets,ucash,upurchase,uprice,uevaluation,uprofit,uitem1count,uitem2count,uitem3count)
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
-    private fun chartdata() {
+    private fun chartdata(start: Int) {
         // Entry 배열 초기값 입력
-        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()))
+        snpEn.add(Entry(-1250F, snp_val[start - given].toFloat()))
         fundEn.add(Entry(-1250F, fund_val[0].toFloat()))
         bondEn.add(Entry(-1250F, bond_val[0].toFloat()))
         indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))
@@ -438,12 +447,12 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()),
+                Entry((i + 1 - given).toFloat(), snp_val[start - given + 1 + i].toFloat()),
                 0
             )
 
             var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
-            var snpDate = snp_date[sp - given + 1 + i]
+            var snpDate = snp_date[start - given + 1 + i]
             var snpDateSf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
             var fundDate = fund_date[fundIndex]
@@ -519,7 +528,7 @@ class GameNormalActivity : AppCompatActivity() {
             println("인덱스 : $i")
         }
         println("Fund count : $fundCount")
-        println("랜덤넘버 COUNT : " + sp.toString() + " | " + "시작 날짜 : " + snp_date[sp])
+        println("랜덤넘버 COUNT : " + start.toString() + " | " + "시작 날짜 : " + snp_date[start])
         // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////
 
 
@@ -579,7 +588,7 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
-    private suspend fun nowdraw() {
+    private suspend fun nowdraw(viewModel: GameNormalActivityVeiwModel, start: Int) {
 // 현재 데이터
         while (true) {
             if (!gameend) {
@@ -588,9 +597,9 @@ class GameNormalActivity : AppCompatActivity() {
 
                         delay(oneday) // 게임상에서 1 거래일의 실제시간
 
-
+                        var count:Int = 0
                         var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
-                        var snpDate = snp_date[sp + dayPlus]
+                        var snpDate = snp_date[start + dayPlus]
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
                         var fundDate = fund_date[fundIndex]
@@ -611,7 +620,7 @@ class GameNormalActivity : AppCompatActivity() {
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
 
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()), 0)
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[start + dayPlus].toFloat()), 0)
 
                         while (fund_c > 0) {
                             fundIndex += 1
@@ -684,7 +693,7 @@ class GameNormalActivity : AppCompatActivity() {
                             ), 0
                         )
 
-                        println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
+                        println("S&P : " + snp_date[start + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
                         //
                         findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
@@ -711,11 +720,15 @@ class GameNormalActivity : AppCompatActivity() {
 
 
                         // 현재 값 저장
-                        snpNowDate = snp_date[sp + dayPlus]
+                        snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
-                        snpNowVal = snp_val[sp + dayPlus].toFloat()
+                        if(count == 0) snpBeforeVal = snp_val[start].toFloat()
+                        else snpBeforeVal = snpNowVal
+                        snpNowVal = snp_val[start + dayPlus].toFloat()
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
-
+                        viewModel.priceUpdate(snpNowVal,snpBeforeVal)
+                        count = count + 1
+                        ep = start+dayPlus
 
                         dayPlus += 1 // 시간 진행
                     } else {
