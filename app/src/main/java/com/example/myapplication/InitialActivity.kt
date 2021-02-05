@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -335,13 +336,13 @@ class InitialActivity : AppCompatActivity() {
     // 로딩 창 띄우는 코드
     private fun showLoadingDialog() {
         val dialog = Dialog_loading(this@InitialActivity)
-        CoroutineScope(Main).launch {
+        CoroutineScope(Dispatchers.Unconfined).launch {
             dialog.start()
         }
     }
     private fun delLoadingDialog() {
         val dialog = Dialog_loading(this@InitialActivity)
-        CoroutineScope(Main).launch {
+        CoroutineScope(Dispatchers.Unconfined).launch {
             dialog.finish()
         }
     }
