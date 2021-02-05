@@ -41,11 +41,12 @@ var gameend: Boolean = false // 게임 종료시 적용
 
 class GameNormalActivity : AppCompatActivity() {
 
-    ///차트 끝나는 지점, 업데이트 변수들
+    ///차트 끝났던 지점, 업데이트 변수들
     private var uassets: Float = 0F
     private var ucash: Float = 0F
     private var upurchase: Float = 0F
     private var uprice: Float = 0F
+    private var uquantity: Int = 0
     private var uevaluation: Float = 0F
     private var uprofit: Float = 0F
     private var uitem1count: Int = 0
@@ -117,8 +118,8 @@ class GameNormalActivity : AppCompatActivity() {
 
     // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
     // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간
-    private val oneday: Long = 2400 // 거래일 간 간격
-    private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
+    private val oneday: Long = 2000 // 거래일 간 간격
+    private val btnRefresh: Long = 1000 // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Roomdata관련
@@ -146,6 +147,7 @@ class GameNormalActivity : AppCompatActivity() {
         val buy_btn = findViewById<Button>(R.id.buy_btn)
         val startcash: Float = 5000000F
         val startpurchase: Float = 0F
+        val startquantity: Int = 0
         val startevaluation: Float = 0F
         val startprofit: Float = 0F
         val startprice: Float = 0F
@@ -157,8 +159,10 @@ class GameNormalActivity : AppCompatActivity() {
         val cash = findViewById<TextView>(R.id.cash)
         val purchase = findViewById<TextView>(R.id.purchase)
         val pricebuy = findViewById<TextView>(R.id.pricebuy)
+        val quantity = findViewById<TextView>(R.id.quantity)
         val evaluation = findViewById<TextView>(R.id.evaluation)
         val profit = findViewById<TextView>(R.id.profit)
+        val pricenow = findViewById<TextView>(R.id.pricenow)
         val item1 = findViewById<TextView>(R.id.item1)
         val item2 = findViewById<TextView>(R.id.item2)
         val item3 = findViewById<TextView>(R.id.item3)
@@ -187,11 +191,12 @@ class GameNormalActivity : AppCompatActivity() {
         ).also {
             //초기화
             if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
-                it.initialize(startcash, startpurchase,startprice, startevaluation, startprofit, startitem1, startitem2, startitem3)
+                it.initialize(startcash, startpurchase,startprice,startquantity, startevaluation, startprofit, startitem1, startitem2, startitem3)
             }else{
                 it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.pricebuy,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.quantity,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
@@ -207,6 +212,9 @@ class GameNormalActivity : AppCompatActivity() {
         gameend  = false
 
         //실시간 data 반영
+        viewModel.priceNow().observe(this, Observer {
+            pricenow.text = "현재가: "+it.toString()+"원"
+        })
         viewModel.assets().observe(this, Observer {
             assets.text = "총자산: " + it.toString() + "원"
             uassets = it
@@ -222,6 +230,10 @@ class GameNormalActivity : AppCompatActivity() {
         viewModel.priceBuy().observe(this, Observer {
             pricebuy.text = "매입가: " + it.toString() + "원"
             uprice = it
+        })
+        viewModel.quantity().observe(this, Observer {
+            quantity.text = "보유수량: "+it.toString()+"주"
+            uquantity = it
         })
         viewModel.evaluation().observe(this, Observer {
             evaluation.text = "원화평가금액: " + it.toString() + "원"
@@ -253,15 +265,15 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_buy = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count, ep)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             click = !click //////////////////////////////////////////////////////////////////////////
-            dlg_buy.start(viewModel.cash().value!!)
+            dlg_buy.start(viewModel.cash().value!!, viewModel.priceNow().value!!)
             dlg_buy.setOnBuyClickedListener { content ->
                 buy = content
-                viewModel.buyStock(buy[0], buy[1])
-                if(buy[0]>0F){
+                viewModel.buyStock(buy[0], buy[1].toInt(), buy[2])
+                if(buy[1]>0){
                     val addThread = Thread(addRunnable)
                     addThread.start()
                 }
@@ -276,14 +288,14 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_sell = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count, ep)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             click = !click /////////////////////////////////////////////////////////////////////////
-            dlg_sell.start(viewModel.evaluation().value!!)
+            dlg_sell.start(viewModel.priceNow().value!!, viewModel.quantity().value!!)
             dlg_sell.setOnSellClickedListener { content ->
                 sell = content
-                viewModel.sellStock(sell[0], sell[1])
+                viewModel.sellStock(sell[0].toInt(), sell[1])
                 if(sell[0]>0F){
                     val addThread = Thread(addRunnable)
                     addThread.start()
@@ -392,7 +404,7 @@ class GameNormalActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         localDatatime = LocalDateTime.now()
-        dlg_exit.start(ep, localDatatime,uassets,ucash,upurchase,uprice,uevaluation,uprofit,uitem1count,uitem2count,uitem3count)
+        dlg_exit.start(ep, localDatatime,uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,uitem1count,uitem2count,uitem3count)
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
@@ -595,7 +607,6 @@ class GameNormalActivity : AppCompatActivity() {
                 if (!click) {
                     if (dayPlus <= gl) {
 
-                        delay(oneday) // 게임상에서 1 거래일의 실제시간
 
                         var count:Int = 0
                         var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
@@ -731,6 +742,8 @@ class GameNormalActivity : AppCompatActivity() {
                         ep = start+dayPlus
 
                         dayPlus += 1 // 시간 진행
+                        delay(oneday) // 게임상에서 1 거래일의 실제시간
+
                     } else {
                         println("게임 끝")
                         break

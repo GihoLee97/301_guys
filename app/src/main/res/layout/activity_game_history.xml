@@ -54,6 +54,13 @@
                     android:text="거래종류"
                     />
                 <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:text="거래수량"
+                    android:layout_gravity="center"
+                    />
+                <TextView
                     android:id="@+id/volume"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"

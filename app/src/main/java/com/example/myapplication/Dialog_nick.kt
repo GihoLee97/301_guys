@@ -31,23 +31,28 @@ class Dialog_nick(context : Context) {
 
 
         btn_ok.setOnClickListener {
-            val setRunnable = Runnable {
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = nickname_editText.text.toString()
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-                profileDb?.profileDao()?.update(newProfile)
+            if(nickname_editText.text.toString().isNullOrBlank()){
+                Toast.makeText(dlg.context,"닉네임을 입력해주세요",Toast.LENGTH_SHORT).show()
             }
+            else{
+                val setRunnable = Runnable {
+                    val newProfile = Profile()
+                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.nickname = nickname_editText.text.toString()
+                    newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                    newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                    newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                    profileDb?.profileDao()?.update(newProfile)
+                }
 
-            var setThread = Thread(setRunnable)
-            setThread.start()
+                var setThread = Thread(setRunnable)
+                setThread.start()
 
-            var result:String = nickname_editText.text.toString()
-            listenter.onNicknameClicked(result)
-            dlg.dismiss()
+                var result:String = nickname_editText.text.toString()
+                listenter.onNicknameClicked(result)
+                dlg.dismiss()
+            }
         }
         dlg.show()
     }

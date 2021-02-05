@@ -9,6 +9,9 @@ interface GameNormalDao {
     @Query("SELECT * FROM GameNormal ORDER BY id ASC")
     fun getAll(): List<GameNormal>
 
+    @Query("SELECT * FROM GameNormal WHERE buyorsell IS '매수' OR  buyorsell IS '매도' ORDER by id ASC")
+    fun getHistory(): List<GameNormal>
+
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(gameNormal: GameNormal)
 

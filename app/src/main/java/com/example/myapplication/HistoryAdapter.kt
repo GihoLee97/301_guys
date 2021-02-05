@@ -18,9 +18,11 @@ class HistoryAdapter(val context: Context, var history: List<GameNormal>): Recyc
         val volume = itemView.findViewById<TextView>(R.id.volume)
         val fees = itemView.findViewById<TextView>(R.id.fees)
         val cash = itemView.findViewById<TextView>(R.id.cash)
+        val quantity = itemView.findViewById<TextView>(R.id.quantity)
         fun bind(history: GameNormal){
             date.text =  history.id.slice(IntRange(0,9))+history.id.slice(IntRange(11,18))
             buyorsell.text = history.buyorsell
+            quantity.text = history.quantity.toString()+"주"
             volume.text = history.volume.toString()+"원"
             fees.text = history.fees.toString()+"원"
             cash.text = history.cash.toString()+"원"

@@ -15,6 +15,7 @@ class GameNormalActivityVeiwModel: ViewModel() {
     private var _assets =MutableLiveData<Float>()
     private var _purchase =MutableLiveData<Float>()
     private var _cash = MutableLiveData<Float>()
+    private var _quantity = MutableLiveData<Int>()
     private var _evaluation = MutableLiveData<Float>()
     private var _profit = MutableLiveData<Float>()
     private var _item1 = MutableLiveData<Int>()
@@ -24,10 +25,11 @@ class GameNormalActivityVeiwModel: ViewModel() {
     private var _priceNow = MutableLiveData<Float>()
     private var _priceBefore = MutableLiveData<Float>()
     //게임 초기화
-    fun initialize(startcash:Float,startpurchase:Float,startprice: Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
+    fun initialize(startcash:Float,startpurchase:Float,startprice: Float,startquantity:Int, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
         _cash.value = startcash
         _evaluation.value = startevaluation
         _purchase.value = startpurchase
+        _quantity.value = startquantity
         _profit.value = startprofit
         _priceBuy.value = startprice
         finished.value = true
@@ -37,11 +39,6 @@ class GameNormalActivityVeiwModel: ViewModel() {
         _assets.value = _cash.value?.plus(_evaluation.value!!)
     }
 
-    init {
-        viewModelScope.launch {
-
-        }
-    }
 
     //현금 반환
     fun cash(): LiveData<Float>{
@@ -63,6 +60,9 @@ class GameNormalActivityVeiwModel: ViewModel() {
     //평단가 반환
     fun priceBuy(): LiveData<Float>{
         return _priceBuy
+    }
+    fun quantity(): LiveData<Int>{
+        return _quantity
     }
     //매입금액 반환
     fun purchase(): LiveData<Float>{
@@ -108,19 +108,25 @@ class GameNormalActivityVeiwModel: ViewModel() {
         fluctuate(fluctuation)
     }
     //매수
-    fun buyStock(volume:Float, fees:Float){
+    fun buyStock(pricenow:Float, quantity:Int, fees:Float){
+        val volume: Float = pricenow*quantity
         _cash.value = (_cash.value?.minus(volume) ?: 0F) -fees
         _priceBuy.value = ((_priceBuy.value?.times(_evaluation.value!!) ?: 1F) + (_priceNow.value?.times(volume)
                 ?: 1F))/(_evaluation.value?.plus(volume)!!)
         _evaluation.value = _evaluation.value?.plus(volume)
         _purchase.value = _purchase.value?.plus(volume)
+        _quantity.value = _quantity.value?.plus(quantity)
         update()
     }
     //매도
-    fun sellStock(volume:Float, fees:Float){
-        _cash.value = (_cash.value?.plus(volume) ?: 0F) -fees
-        _purchase.value = _purchase.value?.minus(volume/(1F+((_evaluation.value?.minus(_purchase.value!!))?.div(_purchase.value!!)!!)))
-        _evaluation.value = _evaluation.value?.minus(volume)
+    fun sellStock(quantity: Int, fees:Float){
+        val volume = _priceNow.value?.times(quantity)
+        _cash.value = (volume?.let { _cash.value?.plus(it) } ?: 0F) -fees
+        _quantity.value = _quantity.value?.minus(quantity)
+        if (volume != null) {
+            _purchase.value = _purchase.value?.minus(volume/(1F+((_evaluation.value?.minus(_purchase.value!!))?.div(_purchase.value!!)!!)))
+        }
+        _evaluation.value = volume?.let { _evaluation.value?.minus(it) }
         update()
     }
     //세금 징수
@@ -132,7 +138,10 @@ class GameNormalActivityVeiwModel: ViewModel() {
     //총자산, 수익률(수수료를 제외한 수익) 업데이트
     fun update(){
         _assets.value = _cash.value?.plus(_evaluation.value!!)
-        if(_purchase.value == 0F){_profit.value=0F}
+        if(_purchase.value == 0F){
+            _profit.value=0F
+            _priceBuy.value=0F
+        }
         else{_profit.value = ((_evaluation.value?.times((1-fees).toFloat()) ?:0F ) - _purchase.value!!)?.div(_purchase.value!!)?.times(100)}
     }
     //게임 종료

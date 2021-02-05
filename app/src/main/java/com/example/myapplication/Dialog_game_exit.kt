@@ -17,7 +17,7 @@ class Dialog_game_exit (context : Context)  {
     private lateinit var btncancel : Button
     private lateinit var btnexit : Button
     private var gameNormalDbe : GameNormalDB? = null
-    fun start(ep : Int, localDatatime: LocalDateTime,uassets: Float,ucash: Float,upurchase: Float,uprice: Float,uevaluation: Float,uprofit: Float,uitem1count: Int,uitem2count: Int,uitem3count: Int) {
+    fun start(ep : Int, localDatatime: LocalDateTime,uassets: Float,ucash: Float,upurchase: Float,uprice: Float, uquantity: Int, uevaluation: Float,uprofit: Float,uitem1count: Int,uitem2count: Int,uitem3count: Int) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
@@ -32,7 +32,7 @@ class Dialog_game_exit (context : Context)  {
         btnsave.setOnClickListener {
 
             val addRunnable = kotlinx.coroutines.Runnable {
-                val newhistory = GameNormal(localDatatime.toString(), uassets, ucash, upurchase, uprice, uevaluation, uprofit, "저장", 0F, 0F, "", uitem1count, uitem2count, uitem3count, ep)
+                val newhistory = GameNormal(localDatatime.toString(), uassets, ucash, upurchase, uprice,uquantity, uevaluation, uprofit, "저장", 0F, 0F, "", uitem1count, uitem2count, uitem3count, ep)
                 gameNormalDbe?.gameNormalDao()?.insert(newhistory)
             }
             val addThread = Thread(addRunnable)

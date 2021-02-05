@@ -101,11 +101,11 @@
                     android:text="News" />
 
                 <TextView
-                    android:id="@+id/news"
+                    android:id="@+id/pricenow"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="뉴스내용" />
+                    android:text="현재가: " />
 
                 <ImageView
                     android:layout_width="50dp"
@@ -156,6 +156,11 @@
                             android:layout_height="wrap_content"
                             android:text="매입가:     " />
 
+                        <TextView
+                            android:id="@+id/quantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="보유수량:     " />
 
                         <TextView
                             android:id="@+id/evaluation"

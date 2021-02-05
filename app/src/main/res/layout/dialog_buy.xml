@@ -109,6 +109,106 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
+            android:id="@+id/예수금"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="예수금"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/cash"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="0 원"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/매주수량"
+           android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="매주 수량"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="6"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/minus"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="-"
+                android:textSize="30dp"/>
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:text="0 주"
+                android:layout_weight="4"
+                android:background="@color/white"/>
+            <Button
+                android:id="@+id/plus"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="+"
+                android:textSize="20dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
             android:id="@+id/매수금액"
             android:layout_width="60dp"
             android:layout_height="match_parent"
@@ -138,6 +238,8 @@
             android:background="@color/white"/>
 
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -176,6 +278,8 @@
             android:background="@color/white"/>
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
