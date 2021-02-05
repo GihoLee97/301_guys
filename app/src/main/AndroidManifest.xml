@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GameHistoryActivity"></activity>
+        <activity android:name=".GameSettingActivity"></activity>
+        <activity android:name=".GameHistoryActivity" />
         <activity android:name=".AccountManagementActivity" /> <!-- android:name 설정 -->
         <!-- Splash Activity -->
         <activity

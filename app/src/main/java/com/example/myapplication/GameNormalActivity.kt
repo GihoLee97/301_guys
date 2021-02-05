@@ -145,6 +145,7 @@ class GameNormalActivity : AppCompatActivity() {
         if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() != true){ sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.endpoint }
         //변수 선언
         val buy_btn = findViewById<Button>(R.id.buy_btn)
+        val startgamespeed = 0
         val startcash: Float = 5000000F
         val startpurchase: Float = 0F
         val startquantity: Int = 0
@@ -600,16 +601,43 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
-    private suspend fun nowdraw(viewModel: GameNormalActivityVeiwModel, start: Int) {
-// 현재 데이터
+    //viewmodel 추가: snpDiff, setGamespeed
+    private suspend fun nowdraw(viewModel: GameNormalActivityVeiwModel, start: Int, snpDiff: Float, setGamespeed: Int) {
+
+        // 게임 진행속도 설정
+        var oneday: Long = 0L
+        if (setGamespeed == 1) {
+            oneday = 990L // 1 day/sec
+        }
+        else if (setGamespeed == 2) {
+            oneday = 490L // 2 day/sec
+        }
+        else if (setGamespeed == 3) {
+            oneday = 1000L / 3L - 10L // 3 day/sec
+        }
+        else if (setGamespeed == 4) {
+            oneday = 240L // 4 day/sec
+        }
+        else if (setGamespeed == 5) {
+            oneday = 190L // 5 day/sec
+        }
+
+
+        var count: Int = 0
+        // 날짜
+        var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
+        val snpSP = snp_date[start] // 시작일
+        val snpSP_sf = sf.parse(snpSP)
+        var preMonth = snpSP_sf.month // 이전 달 저장
+        var preYear = snpSP_sf.year // 이전 년도 저장
+        var countMonth: Int = 0
+
+
         while (true) {
             if (!gameend) {
                 if (!click) {
                     if (dayPlus <= gl) {
 
-
-                        var count:Int = 0
-                        var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
                         var snpDate = snp_date[start + dayPlus]
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
@@ -629,9 +657,11 @@ class GameNormalActivity : AppCompatActivity() {
                         var indpro_c = snpDate_sf.time - indproDate_sf.time
                         var unem_c = snpDate_sf.time - unemDate_sf.time
                         var inf_c = snpDate_sf.time - infDate_sf.time
+                        ///값 표준화
+                        val criteria: Float = 100 / (snp_val[start].toFloat())
 
 
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[start + dayPlus].toFloat()), 0)
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[start + dayPlus].toFloat() * criteria), 0)
 
                         while (fund_c > 0) {
                             fundIndex += 1
@@ -706,50 +736,145 @@ class GameNormalActivity : AppCompatActivity() {
 
                         println("S&P : " + snp_date[start + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
-                        //
-                        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
 
-                        snpD.notifyDataChanged()
-                        fundD.notifyDataChanged()
-                        bondD.notifyDataChanged()
-                        unemD.notifyDataChanged()
-                        infD.notifyDataChanged()
+                        runOnUiThread {
+                            // 차트에 DataSet 리프레쉬 통보
+                            findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                            snpD.notifyDataChanged()
+                            fundD.notifyDataChanged()
+                            bondD.notifyDataChanged()
+                            unemD.notifyDataChanged()
+                            infD.notifyDataChanged()
 
-                        findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                            // 차트 축 최대 범위 설정
+                            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
 
-                        findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                        findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                            // 차트 축 이동
+                            findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                        }
 
 
+                        // 값 OutPut ///////////////////////////////////////////////////////////////
                         // 현재 값 저장
+                        //viewmodel함수 추가
                         snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
                         if(count == 0) snpBeforeVal = snp_val[start].toFloat()
                         else snpBeforeVal = snpNowVal
                         snpNowVal = snp_val[start + dayPlus].toFloat()
-                        println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal")
+                        snpDiff = snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
+                        println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
                         viewModel.priceUpdate(snpNowVal,snpBeforeVal)
                         count = count + 1
-                        ep = start+dayPlus
+
+                        // 월 바뀜 시
+                        if (snpDate_sf.month != preMonth) {
+
+                            cash += setMonthly // 월 투자금 현금으로 입금
+                            input += setMonthly // 총 input 최신화
+                            countMonth += 1
+                            preMonth = snpDate_sf.month
+
+                            // 설정한 게임 플레이 기간에 도달
+                            if (countMonth > (setGamelength * 12)) {
+                                break
+                            }
+                            else if (snpDate_sf.month==2 || snpDate_sf.month==5 || snpDate_sf.month==8 || snpDate_sf.month==11) {
+                                cash += val1x * dividendrate
+                                dividendtot += val1x * dividendrate
+                                runOnUiThread {
+                                    findViewById<TextView>(R.id.tv_notification).text = "배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+                                }
+                            }
+                            else if (snpDate_sf.month==1) {
+                                setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
+                                runOnUiThread {
+                                    findViewById<TextView>(R.id.tv_notification).text = "연봉 인상으로 월 투자금이 증가했습니다"
+                                }
+                            }
+
+                            if (tax > 1F) {
+                                if (cash >= tax) {
+                                    cash -= tax
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                    }
+                                    taxtot += tax
+                                    tax = 0F
+                                }
+                                else {
+                                    tax *= (1.05F)
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "미납 세금이 매달 가산됩니다"
+                                    }
+                                }
+                            }
+
+                            // 해가 바뀔 시
+                            if (snpDate_sf.year != preYear) {
+                                tax += (profityear - 2500000F) * 0.22F // 연간 수익금에서 250만원 공제 후 22% 부과
+                                profityear = 0F // 연 수익률 초기화
+                                if (cash >= tax && tax > 1F) {
+                                    cash -= tax
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                    }
+                                    taxtot += tax
+                                    tax = 0F
+                                } else if (cash < tax && tax > 1F) {
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "현금이 부족해 세금을 낼 수 없습니다"
+                                    }
+                                }
+                                preYear = snpDate_sf.year
+                            }
+                            println("월 바뀜!")
+                        }
+
+
+                        // 운용수수료 및 괴리율 반영
+                        // viewmodel 추가해야함
+                        price1x *= (feerate1x + snpDiff * dcp1x) //
+                        price3x *= (feerate3x + 3 * snpDiff * dcp3x) //
+                        priceinv1x *= (feerate1x - snpDiff * dcp1x) //
+                        priceinv3x *= (feerate3x - 3 * snpDiff * dcp3x) //
+
+                        val1x = quant1x * price1x //
+                        val3x = quant3x * price3x //
+                        valinv1x = quantinv1x * priceinv1x //
+                        valinv3x = quantinv3x * priceinv3x //
+
+                        buylim1x = (cash / (price1x * tradecomrate)) //
+                        buylim3x = (cash / (price3x * tradecomrate)) //
+                        buyliminv1x = (cash / (priceinv1x * tradecomrate)) //
+                        buyliminv3x = (cash / (priceinv3x * tradecomrate)) //
+                        println("매수 한계 : $buylim1x | $buylim3x | $buyliminv1x | $buyliminv3x")
+
+
+                        // 수익률
+                        evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
+                        profitrate = 100F * profit / input
+                        profit = evaluation + cash - input // input 대비 수익률
+                        asset = cash + evaluation // 총 자산
+
 
                         dayPlus += 1 // 시간 진행
-                        delay(oneday) // 게임상에서 1 거래일의 실제시간
-
+                        delay(oneday) // 게임 진행 속도 조절
                     } else {
                         println("게임 끝")
                         break
                     }
                 } else {
-                    delay(btnRefresh)
                 }
             } else {
                 break
