@@ -42,7 +42,7 @@ class Dialog_game_exit (context : Context)  {
         btncancel = dlg.findViewById(R.id.btn_cancel)
         btncancel.setOnClickListener {
             dlg.dismiss()
-            click = !click /////////////////////////////////////////////////////////////////////
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
         dlg.show()
     }

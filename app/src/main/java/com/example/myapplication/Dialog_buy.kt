@@ -15,6 +15,11 @@ class Dialog_buy(context: Context) {
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private var select: Int = 1 // 기본 선택상태 = 1x
 
+    private var price: Float = 0F
+    private var temptradecom: Float = 0F
+    private var quant: Int = 0
+
+
     private lateinit var listenter: BuyDialogClickedListener
     private lateinit var seekbarBuy: SeekBar
     private lateinit var btnBuyoK: Button
@@ -27,12 +32,9 @@ class Dialog_buy(context: Context) {
     private lateinit var tvBuyquant: TextView
     private lateinit var tvBuyprice: TextView
     private lateinit var tvBuytradecom: TextView
-    val colorOn: String = "#FFE77070" // 버튼 선택시 색깔 Red
-    val colorOff: String = "#FF808080" // 미선택 버튼 색깔 Gray
+    private val colorOn: String = "#FFE77070" // 버튼 선택시 색깔 Red
+    private val colorOff: String = "#FF808080" // 미선택 버튼 색깔 Gray
 
-    var price: Float = 0F
-    var temptradecom: Float = 0F
-    var quant: Int = 0
 
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   // 타이틀바 제거
@@ -51,8 +53,9 @@ class Dialog_buy(context: Context) {
         tvBuyprice= dlg.findViewById(R.id.tv_buyprice)
         tvBuytradecom = dlg.findViewById(R.id.tv_buytradecom)
 
+
         // 기본 선택상태 = 1x
-        tvBuycash.text = "$cash 원"
+        tvBuycash.text = dec.format(cash)+" 원"
         btnBuy1x.setBackgroundColor(Color.parseColor(colorOn))
         btnBuy3x.setBackgroundColor(Color.parseColor(colorOff))
         btnBuyinv1x.setBackgroundColor(Color.parseColor(colorOff))
@@ -103,11 +106,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price1x * quant
-                    temptradecom = price1x * (tradecom - 1F) * quant
+                    temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else if (select == 2) {
                     if (((progress * buylim3x / 100F) - (progress * buylim3x / 100F).roundToInt()) < 0F) {
@@ -117,11 +120,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price3x * quant
-                    temptradecom = price3x * (tradecom - 1F) * quant
+                    temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else if (select == 3) {
                     if (((progress * buyliminv1x / 100F) - (progress * buyliminv1x / 100F).roundToInt()) < 0F) {
@@ -131,11 +134,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv1x * quant
-                    temptradecom = priceinv1x * (tradecom - 1F) * quant
+                    temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else {
                     if (((progress * buyliminv3x / 100F) - (progress * buyliminv3x / 100F).roundToInt()) < 0F) {
@@ -145,11 +148,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv3x * quant
-                    temptradecom = priceinv3x * (tradecom - 1F) * quant
+                    temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 }
 
@@ -164,11 +167,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price1x * quant
-                    temptradecom = price1x * (tradecom - 1F) * quant
+                    temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else if (select == 2) {
                     if (((seekBar!!.progress * buylim3x / 100F) - (seekBar!!.progress * buylim3x / 100F).roundToInt()) < 0F) {
@@ -178,11 +181,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price3x * quant
-                    temptradecom = price3x * (tradecom - 1F) * quant
+                    temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else if (select == 3) {
                     if (((seekBar!!.progress * buyliminv1x / 100F) - (seekBar!!.progress * buyliminv1x / 100F).roundToInt()) < 0F) {
@@ -192,11 +195,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv1x * quant
-                    temptradecom = priceinv1x * (tradecom - 1F) * quant
+                    temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else {
                     if (((seekBar!!.progress * buyliminv3x / 100F) - (seekBar!!.progress * buyliminv3x / 100F).roundToInt()) < 0F) {
@@ -206,11 +209,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv3x * quant
-                    temptradecom = priceinv3x * (tradecom - 1F) * quant
+                    temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 }
             }
@@ -224,11 +227,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price1x* quant
-                    temptradecom = price1x * (tradecom - 1F) * quant
+                    temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 } else if (select == 2) {
                     if (((seekBar!!.progress * buylim3x / 100F) - (seekBar!!.progress * buylim3x / 100F).roundToInt()) < 0F) {
@@ -238,11 +241,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = price3x * quant
-                    temptradecom = price3x * (tradecom - 1F) * quant
+                    temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
 
                 } else if (select == 3) {
@@ -253,11 +256,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv1x * quant
-                    temptradecom = priceinv1x * (tradecom - 1F) * quant
+                    temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
 
                 } else {
@@ -268,11 +271,11 @@ class Dialog_buy(context: Context) {
                     }
 
                     price = priceinv3x * quant
-                    temptradecom = priceinv3x * (tradecom - 1F) * quant
+                    temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = "$quant 주"
-                    tvBuyprice.text = "$price 원"
-                    tvBuytradecom.text = "$temptradecom 원"
+                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyprice.text = dec.format(price)+" 원"
+                    tvBuytradecom.text = dec.format(temptradecom)+" 원"
 
                 }
 
@@ -287,18 +290,26 @@ class Dialog_buy(context: Context) {
 
                 if (select == 1) {
                     quant1x += quant
+                    bought1x += price * quant
+                    aver1x = bought1x / quant1x
                 } else if (select == 2) {
                     quant3x += quant
+                    bought3x += price * quant
+                    aver3x = bought3x / quant3x
                 } else if (select == 3) {
                     quantinv1x += quant
+                    boughtinv1x += price * quant
+                    averinv1x = boughtinv1x / quantinv1x
                 } else {
                     quantinv3x += quant
+                    boughtinv3x += price * quant
+                    averinv3x = boughtinv3x / quantinv3x
                 }
 
                 dlg.dismiss()
                 click = !click /////////////////////////////////////////////////////////////////////
             } else {
-                Toast.makeText(dlg.context, "매수 수량을 설정하세요", Toast.LENGTH_LONG).show()
+                Toast.makeText(dlg.context, "매수 수량을 설정하세요", Toast.LENGTH_SHORT).show()
             }
         }
 

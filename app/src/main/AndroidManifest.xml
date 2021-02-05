@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GameHistoryActivity"></activity>
+        <activity android:name=".GameHistoryActivity" />
         <activity android:name=".AccountManagementActivity" /> <!-- android:name 설정 -->
         <!-- Splash Activity -->
         <activity
@@ -32,6 +32,7 @@
 
         <activity android:name=".InitialActivity" />
         <activity android:name=".ResultNormalActivity" />
+        <activity android:name=".GameSettingActivity"/>
         <activity android:name=".GameNormalActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />

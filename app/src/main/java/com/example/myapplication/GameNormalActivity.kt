@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -24,21 +25,33 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 자산 관련 변수들 생성
 var asset: Float = 0F // 총 자산
-var cash: Float = 5000000F // 보유 현금
+var input: Float = 0F // 총 인풋
+var cash: Float = setCash // 보유 현금
 var bought: Float = 0F // 총 매수금액
 var sold: Float = 0F // 총 매도금액
 var evaluation: Float = 0F // 평가금액
 var profit: Float = 0F // 순손익
 var profitrate: Float = 0F // 수익률
+var profittot: Float = 0F // 실현 순손익
+var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
 var quant1x: Float = 0F // 1x 보유 수량
 var quant3x: Float = 0F // 3x 보유 수량
 var quantinv1x: Float = 0F // -1x 보유 수량
 var quantinv3x: Float = 0F // -3x 보유 수량
+
+var bought1x: Float = 0F
+var bought3x: Float = 0F
+var boughtinv1x: Float = 0F
+var boughtinv3x: Float = 0F
+
+var aver1x: Float = 0F // 1x 평균 단가
+var aver3x: Float = 0F // 3x 평균 단가
+var averinv1x: Float = 0F // inv1x 평균 단가
+var averinv3x: Float = 0F // inv3x 평균 단가
 
 var buylim1x: Float = 0F // 1x 매수 한계 수량
 var buylim3x: Float = 0F // 3x 매수 한계 수량
@@ -55,29 +68,33 @@ var val3x: Float = 0F // 3x 현재가치
 var valinv1x: Float = 0F // -1x 현재가치
 var valinv3x: Float = 0F // -3x 현재가치
 
-var tradecom: Float = 1.001F // 거래수수료(Trade Commission): 0.1% , 거래시 차감(곱하는 방식)
+var tradecomrate: Float = 1.001F // 거래수수료(Trade Commission): 0.1% , 거래시 차감(곱하는 방식)
 var tradecomtot: Float = 0F // 거래수수료 총 합
-var feex1: Float = 0.00003F // 운용수수료(VOO: 0.03%), 년 단위로 매입금액에서 차감
-var feex3: Float = 0.0095F // 운용수수료(UPRO: 0.95%), 년 단위로 매입금액에서 차감
-var dividend: Float = 0.0153F // 배당금(VOO: 1.53%), 년 단위로 현금으로 입금
+//var feex1: Float = 0.00003F // 운용수수료(VOO: 0.03%), 년 단위로 매입금액에서 차감
+//var feex3: Float = 0.0095F // 운용수수료(UPRO: 0.95%), 년 단위로 매입금액에서 차감
+
+var dividendrate: Float = 0.0153F / 4F // 배당금(VOO: 1.53% / year), 분기 단위로 현금으로 입금
+var dividendtot: Float = 0F // 총 배당금
+var countMonth: Int = 0 // 경과 개월 수 카운트
+var dividendCount: Int = 0 // 0, 1, 2, 3 배당금 지급 후 경과 개월 수 카운트: 3에 지급 후 0으로 초기화
+var yearCount: Int = 0 // 플레이 한 햇수 카운트
 var tax: Float = 0F // 세금
+var taxtot: Float = 0F // 총 세금
 // var currency: Float = 0F // 환율(현재 미반영)
 
-
-// 매수, 매도 외 기타 버튼 클릭 시 사용되는 변수 /////////////////////////////////////////////////////
 // 일시정지 시 현재 값 저장
 private var snpNowDate: String = "yyyy-mm-dd"
 private var snpNowdays: Int = 0
 private var snpNowVal: Float = 0F
 private var snpDiff: Float = 0F
-private var discrepancy: Float = 0.995F // 괴리율
+private var feerate1x: Float = 1F - 0.00003F / 365F // 운용수수료(VOO: 0.03%/year), 일 단위로 price decay
+private var feerate3x: Float = 1F - 0.0095F / 365F // 운용수수료(UPRO: 0.95%/year), 일 단위로 price decay
+private var dcp1x: Float = 0.995F // 괴리율(Discrepancy): 1x, inv1x
+private var dcp3x: Float = 0.99F // 괴리율(Discrepancy):  3x, inv3x
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-// 버튼 클릭 판별자 생성 /////////////////////////////////////////////////////////////////////////////
+// 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +104,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
-    private val gl = 2500 // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
+    private val gl = 250 * setGamelength // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
 
     // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
@@ -100,7 +117,7 @@ class GameNormalActivity : AppCompatActivity() {
     private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
     // 값 표준화: 시작일(sp)을 100으로
-    private val criteria: Float = 100/(snp_val[sp].toFloat())
+    private val criteria: Float = 100 / (snp_val[sp].toFloat())
 
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
@@ -142,7 +159,7 @@ class GameNormalActivity : AppCompatActivity() {
     private val ecoLineColor: String = "#1A237E" // 경제 지표 선 색깔
 
 
-    // Count 값들 ///////////////////////////////////////////////////////////////////////////////////
+    // Count 값들 //////////////////////////////////////////////////////////////////////////////////
     private var dayPlus: Int = 1 // sp(Starting Point) 이후 경과한 거래일 수
     private var fundCount: Int = 0
     private var bondCount: Int = 0
@@ -151,18 +168,16 @@ class GameNormalActivity : AppCompatActivity() {
     private var infCount: Int = 0
 
 
-    // 시간관련 /////////////////////////////////////////////////////////////////////////////////////
-    // oneday + btnRefresh = 게임상에서의 1 거래일의 실제 시간
-    private val oneday: Long = 240 // 거래일 간 간격 [ms]
+    // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
     private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Roomdata관련 /////////////////////////////////////////////////////////////////////////////////
-    private var gameNormalDb : GameNormalDB? = null
+
+    // Roomdata관련 ////////////////////////////////////////////////////////////////////////////////
+    private var gameNormalDb: GameNormalDB? = null
     private var gameHistory = listOf<GameNormal>()
 
-    //변수 선언 /////////////////////////////////////////////////////////////////////////////////////
-
+    //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,7 +186,6 @@ class GameNormalActivity : AppCompatActivity() {
 
         gameNormalDb = GameNormalDB.getInstace(this)
 
-
         val startRunnable = Runnable {
             gameHistory = gameNormalDb!!.gameNormalDao().getAll()
         }
@@ -179,11 +193,8 @@ class GameNormalActivity : AppCompatActivity() {
         startThread.start()
 
 
-
-
-        //Button 동작
-
-        //매수
+        // Button 동작
+        // 매수
         findViewById<Button>(R.id.btn_buy).setOnClickListener {
             val dlgBuy = Dialog_buy(this)
             dlgBuy.start()
@@ -197,21 +208,24 @@ class GameNormalActivity : AppCompatActivity() {
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
-
+        // 자동
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
-            click = !click /////////////////////////////////////////////////////////////////////////
+
+            //click = !click /////////////////////////////////////////////////////////////////////////
         }
 
-
+        // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
-            click = !click /////////////////////////////////////////////////////////////////////////
+
+            //click = !click /////////////////////////////////////////////////////////////////////////
         }
 
 
         // 차트 ////////////////////////////////////////////////////////////////////////////////////
         // 차트 click, gameend 변수 초기화
         click = false
-        gameend  = false
+        gameend = false
+        input = cash
 
         // 차트 코루틴 시작
         CoroutineScope(Dispatchers.Default).launch {
@@ -232,6 +246,8 @@ class GameNormalActivity : AppCompatActivity() {
             }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
+
+
     }
 
     // 데이터 가지고 오기
@@ -242,14 +258,14 @@ class GameNormalActivity : AppCompatActivity() {
         val url: String = "http://stockgame.dothome.co.kr/test/call.php/"
         Log.d("데이터 받기 ", "받기시도 중")
         var gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
+                .setLenient()
+                .create()
         //creating retrofit object
         var retrofit =
-            Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
 
         //creating our api
         var server = retrofit.create(RetrofitGet::class.java)
@@ -271,17 +287,27 @@ class GameNormalActivity : AppCompatActivity() {
         })
     }
 
+    // 뒤로가기 눌렀을 떄 게임 종료 다이얼로그 띄움
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
+    // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
+        dlg_exit.start()
+        click = !click /////////////////////////////////////////////////////////////////////////////
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
     private fun chartdata() {
         // Entry 배열 초기값 입력
-        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat()*criteria))
+        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat() * criteria))
         fundEn.add(Entry(-1250F, fund_val[0].toFloat()))
         bondEn.add(Entry(-1250F, bond_val[0].toFloat()))
         indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))
@@ -328,8 +354,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat()*criteria),
-                0
+                    Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat() * criteria),
+                    0
             )
 
             var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
@@ -380,10 +406,10 @@ class GameNormalActivity : AppCompatActivity() {
             }
             indproCount += 1
             indproD.addEntry(
-                Entry(
-                    (indproCount - 1250).toFloat(),
-                    indpro_val[indproIndex - 1].toFloat()
-                ), 0
+                    Entry(
+                            (indproCount - 1250).toFloat(),
+                            indpro_val[indproIndex - 1].toFloat()
+                    ), 0
             )
 
             while (unemC > 0) {
@@ -394,8 +420,8 @@ class GameNormalActivity : AppCompatActivity() {
             }
             unemCount += 1
             unemD.addEntry(
-                Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),
-                0
+                    Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),
+                    0
             )
 
             while (infC > 0) {
@@ -467,15 +493,45 @@ class GameNormalActivity : AppCompatActivity() {
         }
     }
 
-
     // Real time 차트 생성 및 현재 데이터 저장
     private suspend fun nowdraw() {
+
+        // 게임 진행속도 설정
+        var oneday: Long = 0L
+        if (setGamespeed == 1) {
+            oneday = 990L // 1 day/sec
+        }
+        else if (setGamespeed == 2) {
+            oneday = 490L // 2 day/sec
+        }
+        else if (setGamespeed == 3) {
+            oneday = 1000L / 3L - 10L // 3 day/sec
+        }
+        else if (setGamespeed == 4) {
+            oneday = 240L // 4 day/sec
+        }
+        else if (setGamespeed == 5) {
+            oneday = 190L // 5 day/sec
+        }
+
+
+        // 날짜
+        var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
+        val snpSP = snp_date[sp] // 시작일
+        val snpSP_sf = sf.parse(snpSP)
+        var preMonth = snpSP_sf.month // 이전 달 저장
+        var preYear = snpSP_sf.year // 이전 년도 저장
+
+//        var devidendDate = snp_date[sp] // 배당금 지급일 초기화
+//        var devidendDate_sf = sf.parse(devidendDate)
+//        var taxDate = snp_date[sp] // 세금 징수일 초기화
+//        var taxDate_sf = sf.parse(taxDate)
+
         while (true) {
             if (!gameend) {
                 if (!click) {
                     if (dayPlus <= gl) {
 
-                        var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
                         var snpDate = snp_date[sp + dayPlus]
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
@@ -496,7 +552,7 @@ class GameNormalActivity : AppCompatActivity() {
                         var unem_c = snpDate_sf.time - unemDate_sf.time
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat()*criteria), 0)
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat() * criteria), 0)
 
                         while (fund_c > 0) {
                             fundIndex += 1
@@ -506,10 +562,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         fundCount += 1
                         fundD.addEntry(
-                            Entry(
-                                (fundCount - 1250).toFloat(),
-                                fund_val[fundIndex].toFloat()
-                            ), 0
+                                Entry(
+                                        (fundCount - 1250).toFloat(),
+                                        fund_val[fundIndex].toFloat()
+                                ), 0
                         )
                         println("fund date : $fundDate")
 
@@ -521,10 +577,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         bondCount += 1
                         bondD.addEntry(
-                            Entry(
-                                (bondCount - 1250).toFloat(),
-                                bond_val[bondIndex].toFloat()
-                            ), 0
+                                Entry(
+                                        (bondCount - 1250).toFloat(),
+                                        bond_val[bondIndex].toFloat()
+                                ), 0
                         )
 
                         while (indpro_c > 0) {
@@ -535,10 +591,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         indproCount += 1
                         indproD.addEntry(
-                            Entry(
-                                (indproCount - 1250).toFloat(),
-                                indpro_val[indproIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (indproCount - 1250).toFloat(),
+                                        indpro_val[indproIndex - 1].toFloat()
+                                ), 0
                         )
 
                         while (unem_c > 0) {
@@ -549,10 +605,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         unemCount += 1
                         unemD.addEntry(
-                            Entry(
-                                (unemCount - 1250).toFloat(),
-                                unem_val[unemIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (unemCount - 1250).toFloat(),
+                                        unem_val[unemIndex - 1].toFloat()
+                                ), 0
                         )
 
                         while (inf_c > 0) {
@@ -563,23 +619,23 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         infCount += 1
                         infD.addEntry(
-                            Entry(
-                                (infCount - 1250).toFloat(),
-                                inf_val[infIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (infCount - 1250).toFloat(),
+                                        inf_val[infIndex - 1].toFloat()
+                                ), 0
                         )
 
                         println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
-                        // 차트에 DataSet 리프레쉬 통보
+
                         runOnUiThread {
+                            // 차트에 DataSet 리프레쉬 통보
                             findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
-
                             snpD.notifyDataChanged()
                             fundD.notifyDataChanged()
                             bondD.notifyDataChanged()
@@ -599,7 +655,6 @@ class GameNormalActivity : AppCompatActivity() {
                         }
 
 
-
                         // 값 OutPut ///////////////////////////////////////////////////////////////
                         // 현재 값 저장
                         snpNowDate = snp_date[sp + dayPlus]
@@ -608,42 +663,104 @@ class GameNormalActivity : AppCompatActivity() {
                         snpDiff = snp_val[sp + dayPlus].toFloat() / snp_val[sp + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
-                        // 변동 및 괴리율 반영
-                        price1x *= (1F + snpDiff * discrepancy) //
-                        price3x *= (1F + 3*snpDiff * discrepancy) //
-                        priceinv1x *= (1F - snpDiff * discrepancy) //
-                        priceinv3x *= (1F - 3*snpDiff * discrepancy) //
+
+                        // 월 바뀜 시
+                        if (snpDate_sf.month != preMonth) {
+
+                            cash += setMonthly // 월 투자금 현금으로 입금
+                            input += setMonthly // 총 input 최신화
+                            countMonth += 1
+                            preMonth = snpDate_sf.month
+
+                            // 설정한 게임 플레이 기간에 도달
+                            if (countMonth > (setGamelength * 12)) {
+                                break
+                            }
+                            else if (snpDate_sf.month==2 || snpDate_sf.month==5 || snpDate_sf.month==8 || snpDate_sf.month==11) {
+                                cash += val1x * dividendrate
+//                                runOnUiThread {
+//                                    Toast.makeText(this, "배당금 " + dec.format(cash) + " 원이 입금되었습니다", Toast.LENGTH_SHORT).show()
+//                                }
+                            }
+                            else if (snpDate_sf.month==1) {
+                                setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
+//                                runOnUiThread {
+//                                    Toast.makeText(this, "연봉 인상으로 월 투자금이 증가했습니다", Toast.LENGTH_SHORT).show()
+//                                }
+                            }
+
+                            if (tax != 0F) {
+                                if (cash >= tax) {
+                                    cash -= tax
+//                                    runOnUiThread {
+//                                        Toast.makeText(this, "세금 " + dec.format(tax) + " 원이 납부 되었습니다", Toast.LENGTH_SHORT).show()
+//                                    }
+                                    taxtot += tax
+                                    tax = 0F
+                                }
+                                else {
+                                    tax *= (1.05F)
+//                                    runOnUiThread {
+//                                        Toast.makeText(this, "미납 세금이 매달 가산됩니다", Toast.LENGTH_SHORT).show()
+//                                    }
+                                }
+                            }
+
+                            // 해가 바뀔 시
+                            if (snpDate_sf.year != preYear) {
+                                tax += (profityear - 2500000F) * 0.22F // 연간 수익금에서 250만원 공제 후 22% 부과
+                                profityear = 0F // 연 수익률 초기화
+                                if (cash >= tax) {
+                                    cash -= tax
+//                                    runOnUiThread {
+//                                        Toast.makeText(this@GameNormalActivity, "세금 " + dec.format(tax) + " 원이 납부 되었습니다", Toast.LENGTH_SHORT).show()
+//                                    }
+                                    taxtot += tax
+                                    tax = 0F
+                                } else {
+//                                    runOnUiThread {
+//                                        Toast.makeText(this@GameNormalActivity, "현금이 부족해 세금을 낼 수 없습니다", Toast.LENGTH_SHORT).show()
+//                                    }
+                                }
+                                preYear = snpDate_sf.year
+                            }
+                            println("월 바뀜!")
+                        }
+
+
+                        // 운용수수료 및 괴리율 반영
+                        price1x *= (feerate1x + snpDiff * dcp1x) //
+                        price3x *= (feerate3x + 3 * snpDiff * dcp3x) //
+                        priceinv1x *= (feerate1x - snpDiff * dcp1x) //
+                        priceinv3x *= (feerate3x - 3 * snpDiff * dcp3x) //
 
                         val1x = quant1x * price1x //
                         val3x = quant3x * price3x //
                         valinv1x = quantinv1x * priceinv1x //
                         valinv3x = quantinv3x * priceinv3x //
 
-                        buylim1x = (cash / (price1x * tradecom)) //
-                        buylim3x = (cash / (price3x * tradecom)) //
-                        buyliminv1x = (cash / (priceinv1x * tradecom)) //
-                        buyliminv3x = (cash / (priceinv3x * tradecom)) //
+                        buylim1x = (cash / (price1x * tradecomrate)) //
+                        buylim3x = (cash / (price3x * tradecomrate)) //
+                        buyliminv1x = (cash / (priceinv1x * tradecomrate)) //
+                        buyliminv3x = (cash / (priceinv3x * tradecomrate)) //
                         println("매수 한계 : $buylim1x | $buylim3x | $buyliminv1x | $buyliminv3x")
 
-                        evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
-                        profit = evaluation - bought + sold// 순손익
+
                         // 수익률
-                        if (bought==0F) {
-                            profitrate = 0F // Inf 방지
-                        }
-                        else {
-                            profitrate = 100F * profit / bought
-                        }
+                        evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
+                        profitrate = 100F * profit / input
+                        profit = evaluation + cash - input // input 대비 수익률
                         asset = cash + evaluation // 총 자산
 
 
                         runOnUiThread {
-                            findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+asset.toString()
-                            findViewById<TextView>(R.id.tv_cash).text = "현금 : "+ cash.toString()
-                            findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+ evaluation.toString()
-                            findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+ bought.toString()
-                            findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+ profit.toString()
-                            findViewById<TextView>(R.id. tv_profitrate).text = "수익률 : "+ profitrate.toString()+" %"
+                            // 자산 가치 관련 값들 최신화
+                            findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+dec.format(asset)+" 원"
+                            findViewById<TextView>(R.id.tv_cash).text = "현금 : "+dec.format(cash)+" 원"
+                            findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+dec.format(evaluation)+" 원"
+                            findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+dec.format(bought)+" 원"
+                            findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+dec.format(profit)+" 원"
+                            findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+profitrate.toString()+" %"
                         }
 
 //                        val tvItem1 = findViewById<TextView>(R.id.tv_item1)
@@ -651,8 +768,7 @@ class GameNormalActivity : AppCompatActivity() {
 //                        val tvItem3 = findViewById<TextView>(R.id.tv_item3)
 
                         dayPlus += 1 // 시간 진행
-
-                        delay(oneday) // 게임상에서 1 거래일의 실제시간
+                        delay(oneday) // 게임 진행 속도 조절
                     } else {
                         println("게임 끝")
                         break
