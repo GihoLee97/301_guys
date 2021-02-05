@@ -265,7 +265,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_buy = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매수",buy[0],buy[1],"",uitem1count,uitem2count,uitem3count, ep)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매수",buy[1]*buy[0],buy[2],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             click = !click //////////////////////////////////////////////////////////////////////////
@@ -288,7 +288,7 @@ class GameNormalActivity : AppCompatActivity() {
             val builder_sell = AlertDialog.Builder(this)
             val addRunnable = Runnable {
                 localDatatime = LocalDateTime.now()
-                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매도",sell[0],sell[1],"",uitem1count,uitem2count,uitem3count, ep)
+                val newhistory = GameNormal(localDatatime.toString(),uassets,ucash,upurchase,uprice,uquantity,uevaluation,uprofit,"매도",sell[0]* viewModel.priceNow().value!!,sell[1],"",uitem1count,uitem2count,uitem3count, ep)
                 gameNormalDb?.gameNormalDao()?.insert(newhistory)
             }
             click = !click /////////////////////////////////////////////////////////////////////////
