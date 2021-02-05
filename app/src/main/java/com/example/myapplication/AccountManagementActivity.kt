@@ -146,6 +146,10 @@ class AccountManagementActivity : AppCompatActivity() {
     }
 
     private fun updatelogOutInFo2DB(method : String){
+        var loginMethod = 0
+        if(method=="GENERAL") loginMethod = 1
+        else if(method=="GOOGLE") loginMethod = 2
+        else if(method=="KAKAO") loginMethod = 4
         profileDb = ProflieDB?.getInstace(this)
         if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             val setRunnable = Runnable {
@@ -154,7 +158,7 @@ class AccountManagementActivity : AppCompatActivity() {
                 newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!-loginMethod
                 newProfile.profit = profileDb?.profileDao()?.getProfit()!!
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
