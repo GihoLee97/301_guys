@@ -301,22 +301,30 @@ class Dialog_sell(context: Context) {
                     quant1x -= quant
                     bought1x -= aver1x * quant
                     aver1x = bought1x / quant1x
-                    profityear += (price - aver1x) * quant
+                    if (price - aver1x > 0) {
+                        profityear += (price - aver1x) * quant
+                    }
                 } else if (select == 2) {
                     quant3x -= quant
                     bought3x -= aver3x * quant
                     aver3x = bought3x / quant3x
-                    profityear += (price - aver3x) * quant
+                    if (price - aver3x > 0) {
+                        profityear += (price - aver3x) * quant
+                    }
                 } else if (select == 3) {
                     quantinv1x -= quant
                     boughtinv1x -= averinv1x * quant
                     averinv1x = boughtinv1x / quantinv1x
-                    profityear += (price - averinv1x) * quant
+                    if (price - averinv1x > 0) {
+                        profityear += (price - averinv1x) * quant
+                    }
                 } else {
                     quantinv3x -= quant
                     boughtinv3x -= averinv3x * quant
                     averinv3x = boughtinv3x / quantinv3x
-                    profityear += (price - averinv3x) * quant
+                    if (price - averinv3x > 0) {
+                        profityear += (price - averinv3x) * quant
+                    }
                 }
 
                 profittot += profityear // 순손익 최신화

@@ -25,7 +25,8 @@
                 android:scrollbars="none"
                 app:layout_constraintBottom_toTopOf="@+id/cht_snp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -81,52 +82,47 @@
                 android:id="@+id/cht_snp"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="200dp"
+                android:layout_marginTop="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="10"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginTop="130dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="News" />
-
-                <TextView
-                    android:id="@+id/news"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_notification"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="뉴스내용" />
+                    android:layout_gravity="right"
+                    android:text="알림: "
+                    android:textSize="18sp">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-
-                    />
+                </TextView>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_height="100dp"
+                android:layout_weight="15"
+                android:weightSum="10"
                 android:orientation="horizontal">
+
+
 
                 <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_weight="5">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -152,7 +148,7 @@
                             android:id="@+id/tv_evaluation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="원화평가금액:    " />
+                            android:text="평가금액:    " />
 
                         <TextView
                             android:id="@+id/tv_profit"
@@ -165,6 +161,31 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="수익률:  " />
+
+                        <TextView
+                            android:id="@+id/tv_dividend"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="배당금:  " />
+
+                        <TextView
+                            android:id="@+id/tv_profityear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="당해 실현수익:  " />
+
+                        <TextView
+                            android:id="@+id/tv_taxtot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="세금:  " />
+
+                        <TextView
+                            android:id="@+id/tv_tradecomtot"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="수수료:  " />
+
 
                         <TextView
                             android:id="@+id/tv_item1"
@@ -186,19 +207,24 @@
                     </LinearLayout>
                 </ScrollView>
 
-                <Button
-                    android:id="@+id/btn_myAssetStateDrawerOpen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/browser_actions_bg_grey"
-                    android:text="자세히" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:orientation="vertical">
+
+
+
+
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_weight="3"
+                android:layout_weight="10"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -242,11 +268,6 @@
 
             </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:id="@+id/buy_dialog_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/linearLayout_myAssetState"
@@ -393,6 +414,11 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:id="@+id/buy_dialog_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </FrameLayout>

@@ -3,7 +3,6 @@ package com.example.myapplication
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -678,31 +677,32 @@ class GameNormalActivity : AppCompatActivity() {
                             }
                             else if (snpDate_sf.month==2 || snpDate_sf.month==5 || snpDate_sf.month==8 || snpDate_sf.month==11) {
                                 cash += val1x * dividendrate
-//                                runOnUiThread {
-//                                    Toast.makeText(this, "배당금 " + dec.format(cash) + " 원이 입금되었습니다", Toast.LENGTH_SHORT).show()
-//                                }
+                                dividendtot += val1x * dividendrate
+                                runOnUiThread {
+                                    findViewById<TextView>(R.id.tv_notification).text = "배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+                                }
                             }
                             else if (snpDate_sf.month==1) {
                                 setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
-//                                runOnUiThread {
-//                                    Toast.makeText(this, "연봉 인상으로 월 투자금이 증가했습니다", Toast.LENGTH_SHORT).show()
-//                                }
+                                runOnUiThread {
+                                    findViewById<TextView>(R.id.tv_notification).text = "연봉 인상으로 월 투자금이 증가했습니다"
+                                }
                             }
 
-                            if (tax != 0F) {
+                            if (tax > 1F) {
                                 if (cash >= tax) {
                                     cash -= tax
-//                                    runOnUiThread {
-//                                        Toast.makeText(this, "세금 " + dec.format(tax) + " 원이 납부 되었습니다", Toast.LENGTH_SHORT).show()
-//                                    }
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                    }
                                     taxtot += tax
                                     tax = 0F
                                 }
                                 else {
                                     tax *= (1.05F)
-//                                    runOnUiThread {
-//                                        Toast.makeText(this, "미납 세금이 매달 가산됩니다", Toast.LENGTH_SHORT).show()
-//                                    }
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "미납 세금이 매달 가산됩니다"
+                                    }
                                 }
                             }
 
@@ -710,17 +710,17 @@ class GameNormalActivity : AppCompatActivity() {
                             if (snpDate_sf.year != preYear) {
                                 tax += (profityear - 2500000F) * 0.22F // 연간 수익금에서 250만원 공제 후 22% 부과
                                 profityear = 0F // 연 수익률 초기화
-                                if (cash >= tax) {
+                                if (cash >= tax && tax > 1F) {
                                     cash -= tax
-//                                    runOnUiThread {
-//                                        Toast.makeText(this@GameNormalActivity, "세금 " + dec.format(tax) + " 원이 납부 되었습니다", Toast.LENGTH_SHORT).show()
-//                                    }
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                    }
                                     taxtot += tax
                                     tax = 0F
-                                } else {
-//                                    runOnUiThread {
-//                                        Toast.makeText(this@GameNormalActivity, "현금이 부족해 세금을 낼 수 없습니다", Toast.LENGTH_SHORT).show()
-//                                    }
+                                } else if (cash < tax && tax > 1F) {
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "현금이 부족해 세금을 낼 수 없습니다"
+                                    }
                                 }
                                 preYear = snpDate_sf.year
                             }
@@ -761,6 +761,10 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+dec.format(bought)+" 원"
                             findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+dec.format(profit)+" 원"
                             findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+profitrate.toString()+" %"
+                            findViewById<TextView>(R.id.tv_dividend).text = "배당금 : "+dec.format(dividendtot)+" 원"
+                            findViewById<TextView>(R.id.tv_taxtot).text = "세금 : "+dec.format(taxtot)+" 원"
+                            findViewById<TextView>(R.id.tv_profityear).text = "당해 실현 수익 : "+dec.format(profityear)+" 원"
+                            findViewById<TextView>(R.id.tv_tradecomtot).text = "수수료 : "+dec.format(tradecomtot)+" 원"
                         }
 
 //                        val tvItem1 = findViewById<TextView>(R.id.tv_item1)
