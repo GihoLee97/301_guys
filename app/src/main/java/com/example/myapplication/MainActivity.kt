@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         if (time2 in 0..2000) {
             // 이거 3줄 다 써야 안전하게 종료
             moveTaskToBack(true)
-            finish()
+            finishAffinity()
             android.os.Process.killProcess(android.os.Process.myPid())
         }
         else {
