@@ -263,38 +263,34 @@ class InitialActivity : AppCompatActivity() {
 
     // remember which login method did user used with DB
     private fun memorizeLogMethod(method : String){
+        var temp = 0
         profileDb = ProflieDB?.getInstace(this)
         // if profile DB is empty insert dummy
-        if(profileDb?.profileDao()?.getAll().isNullOrEmpty()){
-            val setRunnable = Runnable {
-
-                val newProfile = Profile(1, "#########first_login##########", 0, "", 1, 0,"a","")
-                profileDb?.profileDao()?.insert(newProfile)
-            }
-            var setThread = Thread(setRunnable)
-            setThread.start()
-        }
-        // save which login method user have used
-        profileDb = ProflieDB?.getInstace(this)
-        var temp = profileDb?.profileDao()?.getLogin()
-        if(method=="GENERAL")   temp = temp?.or(1)
-        else if(method=="GOOGLE")   temp = temp?.or(2)
-        else if(method=="KAKAO")    temp = temp?.or(4)
-        // update the login method to DB
-        val setRunnable = Runnable {
+        if (profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
+            if (method == "GENERAL") temp = 1
+            else if (method == "GOOGLE") temp = 2
+            else if (method == "KAKAO") temp = 4
+            // save which login method user have used
+            val newProfile = Profile(1, "#########first_login##########", 0, "", 1, temp, "a", "")
+            profileDb?.profileDao()?.insert(newProfile)
+        } else {
+            profileDb = ProflieDB?.getInstace(this)
+            temp = profileDb?.profileDao()?.getLogin()!!
+            if (method == "GENERAL") temp = temp?.or(1)
+            else if (method == "GOOGLE") temp = temp?.or(2)
+            else if (method == "KAKAO") temp = temp?.or(4)
+            // update the login method to DB
             val newProfile = Profile()
             newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
             newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
             newProfile.history = profileDb?.profileDao()?.getHistory()!!
             newProfile.level = profileDb?.profileDao()?.getLevel()!!
-            newProfile.login = temp!!
+            newProfile.login = temp
             newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-            newProfile.login_id =profileDb?.profileDao()?.getLoginid()!!
-            newProfile.login_pw =profileDb?.profileDao()?.getLoginpw()!!
+            newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+            newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
             profileDb?.profileDao()?.update(newProfile)
         }
-        var setThread = Thread(setRunnable)
-        setThread.start()
     }
 
     private fun getHash(input : String):String{
