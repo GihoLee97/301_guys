@@ -252,7 +252,7 @@ class InitialActivity : AppCompatActivity() {
         if(profileDb?.profileDao()?.getNickname()=="#########first_login##########"){
             saveidpw(saveid.trim(), savepw.trim())
 
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, WelcomeActivity::class.java)
 
             startActivity(intent)
         } else {
