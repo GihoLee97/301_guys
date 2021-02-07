@@ -7,8 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.util.Log
 import android.view.GestureDetector
-import android.widget.FrameLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GestureDetectorCompat
@@ -20,13 +19,18 @@ import java.lang.invoke.ConstantCallSite
 class WelcomeActivity : AppCompatActivity() {
 
     private val welcomeViewModel: WelcomViewModel by viewModels()
+    private val profileActivityViewModel = ProfileActivityViewModel(this)
     private lateinit var mGestureDetector : GestureDetectorCompat
     private var click = 0
+    private var step = "Welcome"
 
     private lateinit var layout_welcome : ConstraintLayout
     private lateinit var layout_welcome1 : ConstraintLayout
     private lateinit var layout_welcome2 : ConstraintLayout
-    private lateinit var layout_welcome3 : ConstraintLayout
+    private lateinit var layout_welcome3 : LinearLayout
+    private lateinit var layout_welcome4 : LinearLayout
+    private lateinit var editText_nicknameWelcome : EditText
+    private lateinit var btn_nicknameOkWelcome : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,29 +42,50 @@ class WelcomeActivity : AppCompatActivity() {
         layout_welcome1 = findViewById(R.id.Layout_welcome1)
         layout_welcome2 = findViewById(R.id.Layout_welcome2)
         layout_welcome3 = findViewById(R.id.Layout_welcome3)
+        layout_welcome4 = findViewById(R.id.Layout_welcome4)
+        editText_nicknameWelcome = findViewById(R.id.editText_NicknameWelcome)
+        btn_nicknameOkWelcome = findViewById(R.id.btn_nicknameOkWelcome)
+
 
         layout_welcome.visibility = View.VISIBLE
         layout_welcome1.visibility = View.VISIBLE
-        layout_welcome2.visibility = View.INVISIBLE
-        layout_welcome3.visibility = View.INVISIBLE
+        layout_welcome2.visibility = View.GONE
+        layout_welcome3.visibility = View.GONE
+        layout_welcome4.visibility = View.GONE
 
         val clickObserver = Observer<Int> { click ->
             // Update the UI, in this case, a TextView.
-            if(click==0){
-                layout_welcome1.visibility = View.INVISIBLE
+            if(step == "Welcome"){
+                layout_welcome1.visibility = View.GONE
                 layout_welcome2.visibility = View.VISIBLE
-                layout_welcome3.visibility = View.INVISIBLE
-            } else if(click==1){
-                layout_welcome1.visibility = View.INVISIBLE
-                layout_welcome2.visibility = View.INVISIBLE
+                step = "Introduction"
+            } else if(step == "Introduction"){
+                layout_welcome2.visibility = View.GONE
                 layout_welcome3.visibility = View.VISIBLE
-            } else if(click==2){
+                step = "Nickname Setting"
+            } else if(step == "Nickname Setting Complished") {
+                layout_welcome3.visibility = View.GONE
+                layout_welcome4.visibility = View.VISIBLE
+                step = "Welcome complished"
+            } else if(step == "Welcome complished"){
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
         }
 
         welcomeViewModel.currClick.observe(this,clickObserver)
+
+        btn_nicknameOkWelcome.setOnClickListener {
+            var inputStr = editText_nicknameWelcome.text.toString()
+            if(inputStr=="") {
+                Toast.makeText(this, "닉네임을 입력하세요!", Toast.LENGTH_SHORT).show()
+            } else{
+                profileActivityViewModel.setnWriteNickname(inputStr)
+                step = "Nickname Setting Complished"
+                click += 1
+                welcomeViewModel.click(click)
+            }
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?) : Boolean{
@@ -73,26 +98,6 @@ class WelcomeActivity : AppCompatActivity() {
                 click()
                 true
             }
-//            MotionEvent.ACTION_MOVE -> {
-//                Log.d(DEBUG_TAG, "Action was MOVE")
-//                click()
-//                true
-//            }
-//            MotionEvent.ACTION_UP -> {
-//                Log.d(DEBUG_TAG, "Action was UP")
-//                click()
-//                true
-//            }
-//            MotionEvent.ACTION_CANCEL -> {
-//                Log.d(DEBUG_TAG, "Action was CANCEL")
-//                click()
-//                true
-//            }
-//            MotionEvent.ACTION_OUTSIDE -> {
-//                Log.d(DEBUG_TAG, "Movement occurred outside bounds of current screen element")
-//                click()
-//                true
-//            }
             else -> super.onTouchEvent(event)
         }
         return super.onTouchEvent(event)
@@ -154,6 +159,16 @@ class WelcomeActivity : AppCompatActivity() {
             Log.d("Giho","LongPress")
             super.onLongPress(e)
         }
+    }
+
+    override fun onRestart() {
+        profileActivityViewModel.refresh()
+        super.onRestart()
+    }
+
+    override fun onStop() {
+        profileActivityViewModel.write2database()
+        super.onStop()
     }
 }
 
