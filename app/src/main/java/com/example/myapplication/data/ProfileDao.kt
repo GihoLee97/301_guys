@@ -11,7 +11,7 @@ interface ProfileDao {
     fun getAll(): MutableList<Profile>
 
     @Query("SELECT id FROM Profile")
-    fun getId(): Int
+    fun getId(): Long
 
     @Query("SELECT nickname FROM Profile")
     fun getNickname(): String
@@ -24,6 +24,9 @@ interface ProfileDao {
 
     @Query("SELECT level FROM Profile")
     fun getLevel(): Int
+
+    @Query("SELECT rank FROM Profile")
+    fun getRank(): Int
 
     @Query("SELECT login FROM Profile")
     fun getLogin(): Int

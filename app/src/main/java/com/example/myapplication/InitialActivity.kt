@@ -271,8 +271,8 @@ class InitialActivity : AppCompatActivity() {
             if (method == "GENERAL") temp = 1
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
-            // save which login method user have used
-            val newProfile = Profile(1, "#########first_login##########", 0, "", 1, temp, "a", "")
+            // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            val newProfile = Profile(1, "#########first_login##########", 0, "", 1,0, temp, "a", "")
             profileDb?.profileDao()?.insert(newProfile)
         } else {
             profileDb = ProflieDB?.getInstace(this)
@@ -352,7 +352,7 @@ class InitialActivity : AppCompatActivity() {
         var tmp : String = id
         val setRunnable = Runnable {
             val newProfile = Profile()
-            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+            newProfile.id = profileDb?.profileDao()?.getId()!!
             newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
             newProfile.history = profileDb?.profileDao()?.getHistory()!!
             newProfile.level = profileDb?.profileDao()?.getLevel()!!

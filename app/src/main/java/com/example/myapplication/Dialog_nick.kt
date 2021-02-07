@@ -13,13 +13,14 @@ import com.example.myapplication.R
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 
-class Dialog_nick(context : Context, first_login : Boolean) {
+class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileActivityViewModel) {
 
     private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감
     private lateinit var btn_ok : Button
     private lateinit var nickname_editText : EditText
     private lateinit var listenter: Dialog_nick.NicknameDialogClickedListener
     private var first_login = first_login
+    private val viewModel = _viewModel
 
 
     fun start(profileDb :ProflieDB?) {
@@ -33,24 +34,25 @@ class Dialog_nick(context : Context, first_login : Boolean) {
 
 
         btn_ok.setOnClickListener {
-            val setRunnable = Runnable {
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = nickname_editText.text.toString()
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                profileDb?.profileDao()?.update(newProfile)
-            }
+            viewModel.setnWriteNickname(nickname_editText.text.toString())
+//            val setRunnable = Runnable {
+//                val newProfile = Profile()
+//                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+//                newProfile.nickname = nickname_editText.text.toString()
+//                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+//                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+//                newProfile.login = profileDb?.profileDao()?.getLogin()!!
+//                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+//                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+//                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+//                profileDb?.profileDao()?.update(newProfile)
+//            }
+//
+//            var setThread = Thread(setRunnable)
+//            setThread.start()
 
-            var setThread = Thread(setRunnable)
-            setThread.start()
-
-            var result:String = nickname_editText.text.toString()
-            listenter.onNicknameClicked(result)
+//            var result:String = nickname_editText.text.toString()
+//            listenter.onNicknameClicked(result)
             dlg.dismiss()
         }
         dlg.show()

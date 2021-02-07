@@ -3,16 +3,10 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.Dialog_nick
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
 
@@ -23,7 +17,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var nickname_textView: TextView
     private lateinit var accountManagement_btn: Button
     private lateinit var nickname_btn: Button
-
+    private val profileActivityViewModel = ProfileActivityViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +30,15 @@ class ProfileActivity : AppCompatActivity() {
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
         val history_btn = findViewById<Button>(R.id.history_btn)
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProfileActivityViewModel::class.java)
         lateinit var changenick: String
         var count:Int = 0
 
 
-        viewModel.nickname().observe(this, Observer {
+        profileActivityViewModel.getNickname().observe(this, Observer {
             nickname_textView.text = it
         })
         val startRunnable = Runnable {
             val newProfile = Profile()
-           // newProfile.login_id = "b"
             profileDb?.profileDao()?.update(newProfile)
             profileList = profileDb?.profileDao()?.getAll()!!
 
@@ -54,34 +46,18 @@ class ProfileActivity : AppCompatActivity() {
 
         if (profileDb?.profileDao()?.getNickname()=="#########first_login##########") { // PreSet the setting in the case of first running
             nickname_textView.text = "닉네임을 정하세요."
-            // preinsert profile for call_dialog_nick which just update the database
-            viewModel.initialize("닉네임을 정하세요.")
-            // update nickname
-            viewModel.nicknameChange("닉네임을 정하세요.")
-            val dlg_nick = Dialog_nick(this,true)
+
+            val dlg_nick = Dialog_nick(this,true,profileActivityViewModel)
             profileDb = ProflieDB.getInstace(this)
 
             dlg_nick.start(profileDb)
-            dlg_nick.setOnNicknameClickedListener { content->
-                changenick=content
-                viewModel.nicknameChange(changenick)
-            }
-//            count=count+1
-        } else  { // recall database
-            viewModel.initialize(profileDb?.profileDao()?.getNickname().toString())
-//            count=count+1
-
         }
 
         val startThread = Thread(startRunnable)
         startThread.start()
         nickname_btn.setOnClickListener {
-            val dlg_nick = Dialog_nick(this,false)
+            val dlg_nick = Dialog_nick(this,false, profileActivityViewModel)
             dlg_nick.start(profileDb)
-            dlg_nick.setOnNicknameClickedListener { content->
-                changenick=content
-                viewModel.nicknameChange(changenick)
-            }
         }
 
         accountManagement_btn.setOnClickListener {
@@ -94,6 +70,16 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, GameHistoryActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onPause() {
+        profileActivityViewModel.write2database()
+        super.onPause()
+    }
+
+    override fun onRestart() {
+        profileActivityViewModel.refresh()
+        super.onRestart()
     }
 
     override fun onBackPressed() {

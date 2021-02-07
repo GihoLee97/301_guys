@@ -10,9 +10,10 @@ data class Profile(@PrimaryKey(autoGenerate = true) var id: Long?,
                    @ColumnInfo(name = "profit") var profit: Int,
                    @ColumnInfo(name = "history") var history: String,
                    @ColumnInfo(name = "level") var level: Int,
+                   @ColumnInfo(name = "rank") var rank: Int,
                    @ColumnInfo(name = "login") var login: Int,
                    @ColumnInfo(name = "login_id") var login_id: String,
-                    @ColumnInfo(name = "login_pw") var login_pw: String
+                   @ColumnInfo(name = "login_pw") var login_pw: String
 ) {
-    constructor() : this(null, "nickname", 0, "no play", 1, 0, "","")
+    constructor() : this(null, "nickname", 0, "no play", 1,0, 0, "","")
 }
