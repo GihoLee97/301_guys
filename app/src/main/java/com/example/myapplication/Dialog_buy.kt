@@ -290,19 +290,19 @@ class Dialog_buy(context: Context) {
 
                 if (select == 1) {
                     quant1x += quant
-                    bought1x += price * quant
+                    bought1x += price1x * quant
                     aver1x = bought1x / quant1x
                 } else if (select == 2) {
                     quant3x += quant
-                    bought3x += price * quant
+                    bought3x += price3x * quant
                     aver3x = bought3x / quant3x
                 } else if (select == 3) {
                     quantinv1x += quant
-                    boughtinv1x += price * quant
+                    boughtinv1x += priceinv1x * quant
                     averinv1x = boughtinv1x / quantinv1x
                 } else {
                     quantinv3x += quant
-                    boughtinv3x += price * quant
+                    boughtinv3x += priceinv3x * quant
                     averinv3x = boughtinv3x / quantinv3x
                 }
 

@@ -14,7 +14,8 @@ var setMonthly: Float = 0F
 var setSalaryraise: Float = 0F
 var setGamelength: Int = 0
 var setGamespeed: Int = 0
-val dec = DecimalFormat("###,###")
+val dec = DecimalFormat("###,###") // 금액 표시형식
+val per = DecimalFormat("#,###.0") // % 표시형식
 
 
 class GameSettingActivity : AppCompatActivity() {

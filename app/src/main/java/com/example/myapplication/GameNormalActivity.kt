@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.GameNormal
 import com.example.myapplication.data.GameNormalDB
 import com.github.mikephil.charting.charts.LineChart
@@ -37,10 +38,10 @@ var profitrate: Float = 0F // 수익률
 var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
-var quant1x: Float = 0F // 1x 보유 수량
-var quant3x: Float = 0F // 3x 보유 수량
-var quantinv1x: Float = 0F // -1x 보유 수량
-var quantinv3x: Float = 0F // -3x 보유 수량
+var quant1x: Int = 0 // 1x 보유 수량
+var quant3x: Int = 0 // 3x 보유 수량
+var quantinv1x: Int = 0 // -1x 보유 수량
+var quantinv3x: Int = 0 // -3x 보유 수량
 
 var bought1x: Float = 0F
 var bought3x: Float = 0F
@@ -168,7 +169,7 @@ class GameNormalActivity : AppCompatActivity() {
 
 
     // 시간관련 ////////////////////////////////////////////////////////////////////////////////////
-    private val btnRefresh: Long = 10 // 버튼 Refresh 조회 간격 [ms]
+    private val btnRefresh: Long = 5L // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -192,12 +193,33 @@ class GameNormalActivity : AppCompatActivity() {
         startThread.start()
 
 
+        //viewModel 객체
+//        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+//                GameNormalViewModel::class.java
+//        ).also {
+////            //초기화
+////            if(gameNormalDb?.gameNormalDao()?.getId()?.isEmpty() == true) {
+////                it.initialize(startcash, startpurchase,startprice,startquantity, startevaluation, startprofit, startitem1, startitem2, startitem3)
+////            }else{
+////                it.initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.cash,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.purchaseamount,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.pricebuy,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.quantity,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.evaluation,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.profit,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item1count,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item2count,
+////                        gameNormalDb?.gameNormalDao()?.getAll()?.last()!!.item3count)
+////            }
+//
+//        }
+
         // Button 동작
         // 매수
         findViewById<Button>(R.id.btn_buy).setOnClickListener {
             val dlgBuy = Dialog_buy(this)
             dlgBuy.start()
-            click = !click //////////////////////////////////////////////////////////////////////////
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
         //매도
@@ -210,13 +232,13 @@ class GameNormalActivity : AppCompatActivity() {
         // 자동
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
 
-            //click = !click /////////////////////////////////////////////////////////////////////////
+            //click = !click ///////////////////////////////////////////////////////////////////////
         }
 
         // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
 
-            //click = !click /////////////////////////////////////////////////////////////////////////
+            //click = !click ///////////////////////////////////////////////////////////////////////
         }
 
 
@@ -299,6 +321,11 @@ class GameNormalActivity : AppCompatActivity() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         dlg_exit.start()
         click = !click /////////////////////////////////////////////////////////////////////////////
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
 
@@ -498,19 +525,19 @@ class GameNormalActivity : AppCompatActivity() {
         // 게임 진행속도 설정
         var oneday: Long = 0L
         if (setGamespeed == 1) {
-            oneday = 990L // 1 day/sec
+            oneday = 995L // 1 day/sec
         }
         else if (setGamespeed == 2) {
-            oneday = 490L // 2 day/sec
+            oneday = 495L // 2 day/sec
         }
         else if (setGamespeed == 3) {
-            oneday = 1000L / 3L - 10L // 3 day/sec
+            oneday = 1000L / 3L - 5L // 3 day/sec
         }
         else if (setGamespeed == 4) {
-            oneday = 240L // 4 day/sec
+            oneday = 245L // 4 day/sec
         }
         else if (setGamespeed == 5) {
-            oneday = 190L // 5 day/sec
+            oneday = 195L // 5 day/sec
         }
 
 
@@ -520,11 +547,8 @@ class GameNormalActivity : AppCompatActivity() {
         val snpSP_sf = sf.parse(snpSP)
         var preMonth = snpSP_sf.month // 이전 달 저장
         var preYear = snpSP_sf.year // 이전 년도 저장
+        var monthToggle = false
 
-//        var devidendDate = snp_date[sp] // 배당금 지급일 초기화
-//        var devidendDate_sf = sf.parse(devidendDate)
-//        var taxDate = snp_date[sp] // 세금 징수일 초기화
-//        var taxDate_sf = sf.parse(taxDate)
 
         while (true) {
             if (!gameend) {
@@ -663,11 +687,23 @@ class GameNormalActivity : AppCompatActivity() {
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
 
+
+                        // 월급 입금
+                        if (snpDate_sf.date >= 10 && !monthToggle) {
+                            cash += setMonthly // 월 투자금 현금으로 입금
+                            input += setMonthly // 총 input 최신화
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.tv_notification).text = "월 투자금 "+dec.format(setMonthly)+" 원이 입금되었습니다"
+                            }
+                            monthToggle = true
+                        }
+
+
                         // 월 바뀜 시
                         if (snpDate_sf.month != preMonth) {
 
-                            cash += setMonthly // 월 투자금 현금으로 입금
-                            input += setMonthly // 총 input 최신화
+                            monthToggle = false
+
                             countMonth += 1
                             preMonth = snpDate_sf.month
 
@@ -676,26 +712,29 @@ class GameNormalActivity : AppCompatActivity() {
                                 break
                             }
                             else if (snpDate_sf.month==2 || snpDate_sf.month==5 || snpDate_sf.month==8 || snpDate_sf.month==11) {
-                                cash += val1x * dividendrate
-                                dividendtot += val1x * dividendrate
-                                runOnUiThread {
-                                    findViewById<TextView>(R.id.tv_notification).text = "배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+                                if (val1x > 1F) {
+                                    cash += val1x * dividendrate * 0.78F // 세금 공제
+                                    dividendtot += val1x * dividendrate
+                                    runOnUiThread {
+                                        findViewById<TextView>(R.id.tv_notification).text = "배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+                                    }
                                 }
                             }
                             else if (snpDate_sf.month==1) {
                                 setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
                                 runOnUiThread {
-                                    findViewById<TextView>(R.id.tv_notification).text = "연봉 인상으로 월 투자금이 증가했습니다"
+                                    findViewById<TextView>(R.id.tv_notification).text = "연봉 "+per.format(setSalaryraise)+"% 인상으로 월 투자금이 "+dec.format(setMonthly)+" 원이 되었습니다"
                                 }
                             }
 
-                            if (tax > 1F) {
+                            if (tax > 0F && snpDate_sf.month != 0) {
                                 if (cash >= tax) {
                                     cash -= tax
                                     runOnUiThread {
                                         findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
                                     }
                                     taxtot += tax
+                                    delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
                                 }
                                 else {
@@ -710,14 +749,16 @@ class GameNormalActivity : AppCompatActivity() {
                             if (snpDate_sf.year != preYear) {
                                 tax += (profityear - 2500000F) * 0.22F // 연간 수익금에서 250만원 공제 후 22% 부과
                                 profityear = 0F // 연 수익률 초기화
-                                if (cash >= tax && tax > 1F) {
-                                    cash -= tax
+                                if (cash >= tax && tax > 0F) {
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                        findViewById<TextView>(R.id.tv_notification).text = "세금 " + dec.format(tax) + " 원이 납부됨"
                                     }
+                                    cash -= tax
                                     taxtot += tax
+                                    delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
-                                } else if (cash < tax && tax > 1F) {
+                                }
+                                else if (cash < tax && tax > 0F) {
                                     runOnUiThread {
                                         findViewById<TextView>(R.id.tv_notification).text = "현금이 부족해 세금을 낼 수 없습니다"
                                     }
@@ -760,16 +801,21 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+dec.format(evaluation)+" 원"
                             findViewById<TextView>(R.id.tv_bought).text = "매입금액 : "+dec.format(bought)+" 원"
                             findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+dec.format(profit)+" 원"
-                            findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+profitrate.toString()+" %"
+                            findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+per.format(profitrate)+" %"
                             findViewById<TextView>(R.id.tv_dividend).text = "배당금 : "+dec.format(dividendtot)+" 원"
                             findViewById<TextView>(R.id.tv_taxtot).text = "세금 : "+dec.format(taxtot)+" 원"
                             findViewById<TextView>(R.id.tv_profityear).text = "당해 실현 수익 : "+dec.format(profityear)+" 원"
                             findViewById<TextView>(R.id.tv_tradecomtot).text = "수수료 : "+dec.format(tradecomtot)+" 원"
-                        }
 
-//                        val tvItem1 = findViewById<TextView>(R.id.tv_item1)
-//                        val tvItem2 = findViewById<TextView>(R.id.tv_item2)
-//                        val tvItem3 = findViewById<TextView>(R.id.tv_item3)
+                            findViewById<TextView>(R.id.tv_quant1x).text = dec.format(quant1x)+" 주"
+                            findViewById<TextView>(R.id.tv_quant3x).text = dec.format(quant3x)+" 주"
+                            findViewById<TextView>(R.id.tv_quantinv1x).text = dec.format(quantinv1x)+" 주"
+                            findViewById<TextView>(R.id.tv_quantinv3x).text = dec.format(quantinv3x)+" 주"
+                            findViewById<TextView>(R.id.tv_aver1x).text = dec.format(aver1x)+" 원"
+                            findViewById<TextView>(R.id.tv_aver3x).text = dec.format(aver3x)+" 원"
+                            findViewById<TextView>(R.id.tv_averinv1x).text = dec.format(averinv1x)+" 원"
+                            findViewById<TextView>(R.id.tv_averinv3x).text = dec.format(averinv3x)+" 원"
+                        }
 
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절

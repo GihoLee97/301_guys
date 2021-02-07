@@ -298,32 +298,56 @@ class Dialog_sell(context: Context) {
                 tradecomtot += temptradecom // 총 수수로 최신화
 
                 if (select == 1) {
+                    if (price1x >= aver1x) {
+                        profityear += (price1x - aver1x) * quant
+                    }
                     quant1x -= quant
                     bought1x -= aver1x * quant
-                    aver1x = bought1x / quant1x
-                    if (price - aver1x > 0) {
-                        profityear += (price - aver1x) * quant
+                    if (quant1x != 0) {
+                        aver1x = bought1x / quant1x
                     }
+                    else {
+                        aver1x = 0F
+                    }
+
                 } else if (select == 2) {
+                    if (price3x >= aver3x) {
+                        profityear += (price3x - aver3x) * quant
+                    }
                     quant3x -= quant
                     bought3x -= aver3x * quant
-                    aver3x = bought3x / quant3x
-                    if (price - aver3x > 0) {
-                        profityear += (price - aver3x) * quant
+                    if (quant3x != 0) {
+                        aver3x = bought3x / quant3x
                     }
+                    else {
+                        aver3x = 0F
+                    }
+
                 } else if (select == 3) {
+                    if (priceinv1x >= averinv1x) {
+                        profityear += (priceinv1x - averinv1x) * quant
+                    }
                     quantinv1x -= quant
                     boughtinv1x -= averinv1x * quant
-                    averinv1x = boughtinv1x / quantinv1x
-                    if (price - averinv1x > 0) {
-                        profityear += (price - averinv1x) * quant
+                    if (quantinv1x != 0) {
+                        averinv1x = boughtinv1x / quantinv1x
                     }
+                    else {
+                        averinv1x = 0F
+                    }
+
                 } else {
+                    if (priceinv3x >= averinv3x) {
+                        profityear += (priceinv3x - averinv3x) * quant
+                    }
                     quantinv3x -= quant
                     boughtinv3x -= averinv3x * quant
-                    averinv3x = boughtinv3x / quantinv3x
-                    if (price - averinv3x > 0) {
-                        profityear += (price - averinv3x) * quant
+
+                    if (quantinv3x != 0) {
+                        averinv3x = boughtinv3x / quantinv3x
+                    }
+                    else {
+                        averinv3x = 0F
                     }
                 }
 
