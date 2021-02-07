@@ -38,6 +38,8 @@ class Dialog_game_exit (context : Context)  {
             dlg.dismiss()
             gameend = !gameend /////////////////////////////////////////////////////////////////////
             (mContext as Activity).finish()
+
+            android.os.Process.killProcess(android.os.Process.myPid())
         }
         btncancel = dlg.findViewById(R.id.btn_cancel)
         btncancel.setOnClickListener {

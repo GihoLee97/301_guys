@@ -30,12 +30,11 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var textView_generalAcountEmail : TextView
     private lateinit var textView_googleAcountEmail : TextView
     private lateinit var textView_kakaoAcountEmail : TextView
-    private lateinit var btn_generalAcountEmail : Button
+    private lateinit var btn_generalAcountLogout : Button
     private lateinit var btn_generalAccountPW : Button
     private lateinit var btn_googleAccountSignOut : Button
     private lateinit var btn_kakaoAccountDelete : Button
     private lateinit var btn_kakaoAccountRevokeAccess : Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class AccountManagementActivity : AppCompatActivity() {
         textView_generalAcountID = findViewById(R.id.editText_generalAcountID)
         btn_generalAcountID = findViewById(R.id.btn_generalAccountID)
         textView_generalAcountEmail = findViewById(R.id.editText_generalAcountEmail)
-        btn_generalAcountEmail = findViewById(R.id.btn_generalAcountEmail)
+        btn_generalAcountLogout = findViewById(R.id.btn_generalAcountLogout)
         btn_generalAccountPW = findViewById(R.id.btn_generalAccountPW)
 
         layout_googleAccountManagement = findViewById(R.id.layout_googleAccountManagement)
@@ -143,6 +142,13 @@ class AccountManagementActivity : AppCompatActivity() {
             val dlg_change_pw = Dialog_change_pw(this)
             dlg_change_pw.start()
         }
+        // 일반 로그인 시 로그아웃
+        btn_generalAcountLogout.setOnClickListener{
+            generallogout()
+            val intent = Intent(this,InitialActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun updatelogOutInFo2DB(method : String){
@@ -167,5 +173,19 @@ class AccountManagementActivity : AppCompatActivity() {
             var setThread = Thread(setRunnable)
             setThread.start()
         }
+    }
+    private fun generallogout(){
+        profileDb = ProflieDB?.getInstace(this)
+
+        val newProfile = Profile()
+        newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+        newProfile.history = profileDb?.profileDao()?.getHistory()!!
+        newProfile.level = profileDb?.profileDao()?.getLevel()!!
+        newProfile.login = profileDb?.profileDao()?.getLogin()!!
+        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+        profileDb?.profileDao()?.delete(newProfile)
     }
 }

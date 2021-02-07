@@ -29,7 +29,7 @@ class Dialog_change_pw(context: Context) {
     private var profileDb: ProflieDB? = null
     fun start(){
         profileDb = ProflieDB.getInstace(mContext)
-
+// 내가 입력한 것
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_change_pw) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
@@ -37,14 +37,18 @@ class Dialog_change_pw(context: Context) {
         btnCancel = dlg.findViewById(R.id.cancelButton)
         pw_present = dlg.findViewById(R.id.pw_present)
         pw_future = dlg.findViewById(R.id.pw_future)
-
-        val hashid =getHash(profileDb?.profileDao()?.getLoginid().toString().trim()).trim()
-        val hashpw =getHash(pw_present.text.toString().trim()).trim()
-        val hashnewpw =getHash(pw_future.text.toString().trim()).trim()
+        
+        // 앱 db에 있는 것
 
         btnOK.setOnClickListener {
             if(profileDb?.profileDao()?.getLoginpw().toString().trim() == pw_present.text.toString().trim())
             {
+                val hashid =getHash(profileDb?.profileDao()?.getLoginid().toString().trim()).trim()
+                val hashpw =getHash(pw_present.text.toString().trim()).trim()
+                val hashnewpw =getHash(pw_future.text.toString().trim()).trim()
+                println("---555"+hashpw)
+                println("---666"+hashnewpw)
+
                 changepw(hashid,hashpw, hashnewpw)
                 dlg.dismiss()
             }
@@ -90,28 +94,7 @@ class Dialog_change_pw(context: Context) {
             }
         })
     }
-    private fun getHash(input : String):String{
-        val salt1 = "We-are-301-guys"
-        val salt2 = "We-are-gonna-be-rich"
-        var adjusted_input_1 = input+salt1
-        var adjusted_input_2 = input+salt2
-        var messagedigest = MessageDigest.getInstance("SHA-256")
-        var result1 = String(messagedigest.digest(adjusted_input_1.hashCode().toString().toByteArray()))
-        var result2 = String(messagedigest.digest(adjusted_input_2.hashCode().toString().toByteArray()))
-        var adjusted_input_3 = result1+result2
-        var result3 = messagedigest.digest(adjusted_input_3.hashCode().toString().toByteArray())
 
-        var sb: StringBuilder = StringBuilder()
-
-        var i = 0
-        while (i < result3.count()) {
-            sb.append(((result3[i].and(0xff.toByte())) + 0x100).toString(16).substring(0, 1))
-            i++
-        }
-
-        var final_result = sb.toString()
-        return final_result
-    }
     private fun updateInFo(pw : String){
         profileDb = ProflieDB?.getInstace(mContext)
         val setRunnable = Runnable {

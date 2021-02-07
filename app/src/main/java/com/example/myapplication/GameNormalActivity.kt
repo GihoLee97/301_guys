@@ -284,8 +284,8 @@ class GameNormalActivity : AppCompatActivity() {
         auto_btn.setOnClickListener {
             val layoutInflater: LayoutInflater = getLayoutInflater()
             val builder = AlertDialog.Builder(this)
-
-            getRoomListDataHttp()
+//
+//            getRoomListDataHttp()
             click = !click /////////////////////////////////////////////////////////////////////////
 
         }
@@ -343,7 +343,7 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // 데이터 가지고 오기
-    fun getRoomListDataHttp() {
+/*    fun getRoomListDataHttp() {
         val u_id = ""
         val u_pw = ""
         val u_date = ""
@@ -377,7 +377,7 @@ class GameNormalActivity : AppCompatActivity() {
                 }
             }
         })
-    }
+    } */
 
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)

@@ -56,7 +56,13 @@ class SplashActivity : AppCompatActivity() {
             profileDb = ProflieDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
                 val loginMethod = profileDb?.profileDao()?.getLogin()
-                if(loginMethod?.and(1)==1) go2MainActivity() // general login
+                if(loginMethod?.and(1)==1) {
+//                    if(isGenerallogin()){
+//                        go2MainActivity()
+//                    }
+                    go2MainActivity()
+                    println("---zzz")
+                } // general login
                 else if(loginMethod?.and(2)==2) { // google login
                     if (isGoogleAuthChecked()) go2MainActivity()
                 }
@@ -365,6 +371,16 @@ class SplashActivity : AppCompatActivity() {
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
     }
+
+    private fun isGenerallogin(): Boolean{
+        profileDb = ProflieDB?.getInstace(this)
+        val id = profileDb?.profileDao()?.getLoginid().toString().trim()
+        if(id==""|| id==null){
+            return false
+        }
+        return true
+    }
+
 
     private fun go2MainActivity(){
         val intent = Intent(this, MainActivity::class.java) //Main으로 이동

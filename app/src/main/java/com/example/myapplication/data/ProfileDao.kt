@@ -1,9 +1,6 @@
 package com.example.myapplication.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface ProfileDao {
@@ -39,4 +36,7 @@ interface ProfileDao {
 
     @Update
     fun update(profile: Profile)
+
+    @Delete
+    fun delete(profile: Profile)
 }
