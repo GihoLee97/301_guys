@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -37,10 +39,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.security.MessageDigest
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.experimental.and
 
-
 class InitialActivity : AppCompatActivity() {
+    val mContext : Context = this
     // profileDb
     private var profileDb : ProflieDB? = null
     var saveid :String = ""
@@ -93,13 +97,9 @@ class InitialActivity : AppCompatActivity() {
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
-            val loginID = getHash(id1.text.toString().trim()).trim()
-            val loginPW = getHash(pw1.text.toString().trim()).trim()
-            Log.d("Giho","ID is hashed to : "+loginID)
-            Log.d("Giho","PW is hashed to : "+loginPW)
             val loginDate : String = formatted.toString().trim()
 
-            generalLoginCheck(loginID, loginPW, loginDate)
+            generalLoginCheck(saveid, savepw, loginDate)
         }
 
         // google Sign in & onClickListner
@@ -116,14 +116,23 @@ class InitialActivity : AppCompatActivity() {
 
         // kakao login & onClickListner
         btn_kakaoLogin.setOnClickListener(View.OnClickListener {
+            val dialog = Dialog_loading(this@InitialActivity)
+            dialog.show()
+            var id : String = ""; var pw: String = ""
             // 로그인 공통 callback 구성
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Log.e(TAG, "로그인 실패", error)
                 }
                 else if (token != null) {
+
+                    UserApiClient.instance.me { user, error ->
+                        id = user?.kakaoAccount?.email.toString()
+                        pw = user?.id.toString() + user?.kakaoAccount?.profile?.nickname.toString()
+                    }
+                    dialog.dismiss()
                     Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                    loginSuccess("KAKAO") // memorize login method and move to MainActivity
+                    loginSuccess("KAKAO", id, pw) // memorize login method and move to MainActivity
                 }
             }
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -132,7 +141,7 @@ class InitialActivity : AppCompatActivity() {
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
-            showLoadingDialog()
+
         })
     }
 
@@ -172,7 +181,13 @@ class InitialActivity : AppCompatActivity() {
 
     // general login
     fun generalLoginCheck(u_id: String, u_pw: String, u_date: String) {
+        val dialog = Dialog_loading(this@InitialActivity)
+        dialog.show()
+
         var funlogincheck: Retrofitlogincheck? = null
+        val loginID = getHash(saveid.trim()).trim()
+        val loginPW = getHash(savepw.trim()).trim()
+
         val url = "http://stockgame.dothome.co.kr/test/logincheck.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
@@ -185,19 +200,22 @@ class InitialActivity : AppCompatActivity() {
                 .build()
         //creating our api
         funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
-        funlogincheck.post_logincheck(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+        funlogincheck.post_logincheck(loginID, loginPW, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                dialog.dismiss()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     val okcode: String = response.body()!!
                     if (okcode == "7774"){
                         Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
-                        loginSuccess("GENERAL") // memorize login method and move to MainActivity
+                        dialog.dismiss()
+                        loginSuccess("GENERAL", u_id, u_pw) // memorize login method and move to MainActivity
                     }
                     if (okcode == "4"){
                         Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
                     }
                 }
             }
@@ -231,14 +249,19 @@ class InitialActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        showLoadingDialog()
+        val dialog = Dialog_loading(this@InitialActivity)
+        dialog.show()
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "로그인 성공")
+                    var googleAuth : FirebaseAuth
+                    googleAuth = FirebaseAuth.getInstance()
+                    val currUser = googleAuth.currentUser
                     val user = auth!!.currentUser
-                    loginSuccess("GOOGLE") // memorize login method and move to MainActivity
+                    Log.d(TAG, "로그인 성공")
+                    dialog.dismiss()
+                    loginSuccess("GOOGLE", currUser?.email.toString(), currUser?.uid.toString()) // memorize login method and move to MainActivity
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -246,20 +269,22 @@ class InitialActivity : AppCompatActivity() {
             }
     }
 
-    private fun loginSuccess(method: String){
+    private fun loginSuccess(method: String, id:String, pw:String){
         memorizeLogMethod(method)
-        delLoadingDialog()
-        if(profileDb?.profileDao()?.getNickname()=="#########first_login##########"){
-            saveidpw(saveid.trim(), savepw.trim())
+        getuserinformation(id, pw)
 
-            val intent = Intent(this, WelcomeActivity::class.java)
-
-            startActivity(intent)
-        } else {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        Timer().schedule(500) {
+            profileDb = ProflieDB.getInstace(this@InitialActivity)
+            println("----233" + profileDb?.profileDao()?.getNickname())
+            if (profileDb?.profileDao()?.getNickname() == "#########first_login##########") {
+                val intent = Intent(mContext, WelcomeActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(mContext, MainActivity::class.java)
+                startActivity(intent)
+            }
+            finish()
         }
-        finish()
     }
 
     // remember which login method did user used with DB
@@ -294,29 +319,6 @@ class InitialActivity : AppCompatActivity() {
         }
     }
 
-    private fun getHash(input : String):String{
-        val salt1 = "We-are-301-guys"
-        val salt2 = "We-are-gonna-be-rich"
-        var adjusted_input_1 = input+salt1
-        var adjusted_input_2 = input+salt2
-        var messagedigest = MessageDigest.getInstance("SHA-256")
-        var result1 = String(messagedigest.digest(adjusted_input_1.hashCode().toString().toByteArray()))
-        var result2 = String(messagedigest.digest(adjusted_input_2.hashCode().toString().toByteArray()))
-        var adjusted_input_3 = result1+result2
-        var result3 = messagedigest.digest(adjusted_input_3.hashCode().toString().toByteArray())
-
-        var sb: StringBuilder = StringBuilder()
-
-        var i = 0
-        while (i < result3.count()) {
-            sb.append(((result3[i].and(0xff.toByte())) + 0x100).toString(16).substring(0, 1))
-            i++
-        }
-
-        var final_result = sb.toString()
-        return final_result
-    }
-
     // 두번 누르면 종료되는 코드
     var time3: Long = 0
     override fun onBackPressed() {
@@ -333,62 +335,46 @@ class InitialActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
         }
     }
-    // 로딩 창 띄우는 코드
-    private fun showLoadingDialog() {
-        val dialog = Dialog_loading(this@InitialActivity)
-        CoroutineScope(Dispatchers.Unconfined).launch {
-            dialog.start()
-        }
+
+    fun getuserinformation(u_id: String, u_pw: String) {
+        var fungetuserinformation: RetrofitGet? = null
+        val url = "http://stockgame.dothome.co.kr/test/getall.php/"
+        var gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
+        //creating retrofit object
+        var retrofit =
+            Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        //creating our api
+        fungetuserinformation = retrofit.create(RetrofitGet::class.java)
+        fungetuserinformation.getall(
+            com.example.myapplication.getHash(u_id).trim(), com.example.myapplication.getHash(u_pw).trim()).enqueue(object : Callback<DATACLASS> {
+            override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
+//                println("---"+t.message)
+            }
+            override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
+                if (response.isSuccessful && response.body() != null) {
+                    var data: DATACLASS? = response.body()!!
+                    profileDb = ProflieDB?.getInstace(this@InitialActivity)
+                    val newProfile = Profile()
+                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.nickname = data?.NICKNAME!!
+                    newProfile.history = data?.HISTORY!!
+                    newProfile.level = data?.LEVEL!!
+                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                    newProfile.profit = data?.PROFIT!!
+                    newProfile.login_id = u_id
+                    newProfile.login_pw = u_pw
+                    profileDb?.profileDao()?.update(newProfile)
+                    profileDb = ProflieDB?.getInstace(this@InitialActivity)
+                    println("---2"+profileDb?.profileDao()?.getNickname())
+                }
+            }
+        })
     }
-    private fun delLoadingDialog() {
-        val dialog = Dialog_loading(this@InitialActivity)
-        CoroutineScope(Dispatchers.Unconfined).launch {
-            dialog.finish()
-        }
-    }
 
-    fun saveidpw(id : String, pw: String){
-        profileDb = ProflieDB?.getInstace(this)
-        var tmp : String = id
-        val setRunnable = Runnable {
-            val newProfile = Profile()
-            newProfile.id = profileDb?.profileDao()?.getId()!!
-            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-            newProfile.history = profileDb?.profileDao()?.getHistory()!!
-            newProfile.level = profileDb?.profileDao()?.getLevel()!!
-            newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-            newProfile.login_id = id
-            newProfile.login_pw = pw
-            tmp = newProfile.login_id
-
-            profileDb?.profileDao()?.update(newProfile)
-        }
-            var setThread = Thread(setRunnable)
-            setThread.start()
-    }
-
-
-//    private fun updatelogOutInFo2DB(method : String){
-//        var mask : Int = 0
-//        var tmp : Int = 0
-//
-//        profileDb = ProflieDB?.getInstace(this)
-//        if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
-//            val setRunnable = Runnable {
-//                val newProfile = Profile()
-//                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-//                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-//                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-//                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-//                newProfile.login = profileDb?.profileDao()?.getLogin()!!-mask
-//                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-//                tmp = newProfile.profit
-//            }
-//            Toast.makeText(this@InitialActivity, tmp, Toast.LENGTH_LONG).show()
-//            var setThread = Thread(setRunnable)
-//            setThread.start()
-//        }
-//    }
 }
 

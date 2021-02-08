@@ -285,7 +285,6 @@ class GameNormalActivity : AppCompatActivity() {
             val layoutInflater: LayoutInflater = getLayoutInflater()
             val builder = AlertDialog.Builder(this)
 
-            getRoomListDataHttp()
             click = !click /////////////////////////////////////////////////////////////////////////
 
         }
@@ -340,43 +339,6 @@ class GameNormalActivity : AppCompatActivity() {
             drawerLayout_GameNormalActivity.openDrawer(view_myAssetState)
         }
 
-    }
-
-    // 데이터 가지고 오기
-    fun getRoomListDataHttp() {
-        val u_id = ""
-        val u_pw = ""
-        val u_date = ""
-        val url: String = "http://stockgame.dothome.co.kr/test/call.php/"
-        Log.d("데이터 받기 ", "받기시도 중")
-        var gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
-        //creating retrofit object
-        var retrofit =
-            Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-
-        //creating our api
-        var server = retrofit.create(RetrofitGet::class.java)
-        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
-                //Log.d("data: ",data)
-            }
-
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
-                if (response.isSuccessful && response.body() != null) {
-                    val getted_name: String = response.body()!!
-                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()
-                    Log.d("---:", response.isSuccessful.toString())
-                    // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
-                }
-            }
-        })
     }
 
     override fun onBackPressed() {

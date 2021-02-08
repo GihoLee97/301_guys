@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,10 +15,18 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import com.example.myapplication.data.Profile
+import com.example.myapplication.data.ProflieDB
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.invoke.ConstantCallSite
 
 class WelcomeActivity : AppCompatActivity() {
-
+    var mContext: Context = this
     private val welcomeViewModel: WelcomViewModel by viewModels()
     private val profileActivityViewModel = ProfileActivityViewModel(this)
     private lateinit var mGestureDetector : GestureDetectorCompat
@@ -76,14 +85,75 @@ class WelcomeActivity : AppCompatActivity() {
         welcomeViewModel.currClick.observe(this,clickObserver)
 
         btn_nicknameOkWelcome.setOnClickListener {
+            var profileDb: ProflieDB? = null
+            profileDb = ProflieDB?.getInstace(this)
             var inputStr = editText_nicknameWelcome.text.toString()
-            if(inputStr=="") {
-                Toast.makeText(this, "닉네임을 입력하세요!", Toast.LENGTH_SHORT).show()
-            } else{
-                profileActivityViewModel.setnWriteNickname(inputStr)
-                step = "Nickname Setting Complished"
-                click += 1
-                welcomeViewModel.click(click)
+            //TODO
+            var login_id: String = profileDb?.profileDao()?.getLoginid()!!
+            var login_pw: String = profileDb?.profileDao()?.getLoginpw()!!
+            var nickname: String = inputStr.trim()
+            var history: String = profileDb?.profileDao()?.getHistory()!!
+            var level: Int = profileDb?.profileDao()?.getLevel()!!
+            var profit: Int = profileDb?.profileDao()?.getProfit()!!
+            var funnickcheck: RetrofitNickcheck? = null
+            val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
+
+            if (inputStr.trim() == "" || inputStr.toString().trim() == null) {
+                Toast.makeText(mContext, "닉네임을 입력하세요!", Toast.LENGTH_LONG).show()
+            }
+            else {
+                var gson: Gson = GsonBuilder()
+                    .setLenient()
+                    .create()
+                //creating retrofit object
+                var retrofit =
+                    Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+                //creating our api
+                funnickcheck = retrofit.create(RetrofitNickcheck::class.java)
+                funnickcheck.nickcheck(getHash(login_id), nickname).enqueue(object :
+                    Callback<String> {
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        println("---fail")
+                    }
+                    override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                        if (response.isSuccessful && response.body() != null) {
+                            val okcode = response.body()!!
+                            if (okcode == "444") {
+                                Toast.makeText(mContext, "사용중인 닉네임입니다.", Toast.LENGTH_LONG).show()
+                            }
+                            if (okcode == "555") {
+                                Toast.makeText(mContext, "닉네임이 변경되었습니다.", Toast.LENGTH_LONG).show()
+                                var profileDb: ProflieDB? = null
+                                profileDb = ProflieDB?.getInstace(mContext!!)
+                                val newProfile = Profile()
+                                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                                newProfile.nickname = inputStr.trim()
+                                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                                newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                                profileDb?.profileDao()?.update(newProfile)
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), 10, 4, 4, 4, nickname, profit, history, level)
+
+                                //
+                                profileActivityViewModel.setnWriteNickname(inputStr)
+                                step = "Nickname Setting Complished"
+                                click += 1
+                                welcomeViewModel.click(click)
+
+                            }
+                            if(okcode =="666"){
+                                // 입력한 닉네임이 현재 닉네임과 일치하는 경우
+                            }
+                        }
+                    }
+                })
+
             }
         }
     }

@@ -38,8 +38,6 @@ val inf_val: ArrayList<String> = ArrayList() // Inflation rate 값
 var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완료:1)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
     private var profileDb: ProflieDB? = null
