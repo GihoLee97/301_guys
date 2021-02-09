@@ -26,6 +26,7 @@ class Dialog_game_exit (context : Context)  {
         btnsave = dlg.findViewById(R.id.btn_save)
         btnsave.setOnClickListener{
             gameend = !gameend /////////////////////////////////////////////////////////////////////
+            
         }
 
 

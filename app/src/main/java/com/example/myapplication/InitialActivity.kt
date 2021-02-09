@@ -80,11 +80,12 @@ class InitialActivity : AppCompatActivity() {
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
+            val loginDate : String = formatted.toString().trim()
             val loginID = getHash(id1.text.toString().trim()).trim()
             val loginPW = getHash(pw1.text.toString().trim()).trim()
             Log.d("Giho","ID is hashed to : "+loginID)
             Log.d("Giho","PW is hashed to : "+loginPW)
-            val loginDate : String = formatted.toString().trim()
+
             generalSignup(loginID, loginPW, loginDate)
         }
 
@@ -118,21 +119,25 @@ class InitialActivity : AppCompatActivity() {
         btn_kakaoLogin.setOnClickListener(View.OnClickListener {
             val dialog = Dialog_loading(this@InitialActivity)
             dialog.show()
-            var id : String = ""; var pw: String = ""
             // 로그인 공통 callback 구성
+
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Log.e(TAG, "로그인 실패", error)
                 }
                 else if (token != null) {
-
                     UserApiClient.instance.me { user, error ->
+                        var id : String = ""
+                        var pw : String = ""
                         id = user?.kakaoAccount?.email.toString()
                         pw = user?.id.toString() + user?.kakaoAccount?.profile?.nickname.toString()
+                        dialog.dismiss()
+                        Log.i(TAG, "로그인 성공 ${token.accessToken}")
+                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
+                        println("---kakao"+id)
+                        println("---kakaopw"+pw)
+                        loginSuccess("KAKAO", id, pw) // memorize login method and move to MainActivity
                     }
-                    dialog.dismiss()
-                    Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                    loginSuccess("KAKAO", id, pw) // memorize login method and move to MainActivity
                 }
             }
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -218,6 +223,45 @@ class InitialActivity : AppCompatActivity() {
                         dialog.dismiss()
                     }
                 }
+
+            }
+        })
+    }
+
+    fun GoogleKakaoSignup(u_id: String, u_pw: String) {
+        var api_signup: Retrofitsignup? = null
+        val time1: LocalDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val formatted = time1.format(formatter)
+        val u_date : String = formatted.toString().trim()
+        val url = "http://stockgame.dothome.co.kr/test/Signup.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        api_signup = retrofit.create(Retrofitsignup::class.java)
+        api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
+            }
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                val code: String = response.body()!!
+                if(code == "444"){
+                    Toast.makeText(this@InitialActivity, "오류가 발생했습니다.\n잠시 후 다시 시도해주세요", Toast.LENGTH_LONG).show()
+                }
+                if(code == "555"){
+                    //첫번째 로그인 아님
+                }
+                if(code == "666"){
+                    //첫번째 로그인
+                    Toast.makeText(this@InitialActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
@@ -260,8 +304,11 @@ class InitialActivity : AppCompatActivity() {
                     val currUser = googleAuth.currentUser
                     val user = auth!!.currentUser
                     Log.d(TAG, "로그인 성공")
+                    val id = currUser?.email.toString()
+                    val pw =currUser?.uid.toString()
+                    GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
                     dialog.dismiss()
-                    loginSuccess("GOOGLE", currUser?.email.toString(), currUser?.uid.toString()) // memorize login method and move to MainActivity
+                    loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -275,7 +322,6 @@ class InitialActivity : AppCompatActivity() {
 
         Timer().schedule(500) {
             profileDb = ProflieDB.getInstace(this@InitialActivity)
-            println("----233" + profileDb?.profileDao()?.getNickname())
             if (profileDb?.profileDao()?.getNickname() == "#########first_login##########") {
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
