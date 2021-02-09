@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.LocaleList
@@ -104,7 +105,6 @@ var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그�
 var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,6 @@ class GameNormalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_normal)
 
         gameNormalDb = GameNormalDB.getInstace(this)
-
         val startRunnable = Runnable {
             gameHistory = gameNormalDb!!.gameNormalDao().getAll()
         }
@@ -217,6 +216,7 @@ class GameNormalActivity : AppCompatActivity() {
         // 자동
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
             //val dlgAuto = Dialog_auto(this)
+            gameend = !gameend
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
@@ -311,8 +311,10 @@ class GameNormalActivity : AppCompatActivity() {
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
-        dlg_exit.start()
+        if(!gameend){
+            val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
+            dlg_exit.start()
+        }
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
@@ -628,9 +630,11 @@ class GameNormalActivity : AppCompatActivity() {
         var preYear = snpSP_sf.year // 이전 년도 저장
         var monthToggle = false
 
-
         while (true) {
+            //dialog_result = Dialog_result(this)
+            println("---1gameend"+ gameend)
             if (!gameend) {
+                println("---1ok")
                 if (!click) {
                     if (dayPlus <= gl) {
 
@@ -955,6 +959,8 @@ class GameNormalActivity : AppCompatActivity() {
                 } else {
                 }
             } else {
+                val intent = Intent(this, ResultNormalActivity::class.java)
+                startActivity(intent)
                 break
             }
             delay(btnRefresh)
