@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.LocaleList
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -22,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,6 +39,7 @@ var profit: Float = 0F // 순손익
 var profitrate: Float = 0F // 수익률
 var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+var localdatatime: String = ""
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -632,6 +635,7 @@ class GameNormalActivity : AppCompatActivity() {
                     if (dayPlus <= gl) {
 
                         var snpDate = snp_date[sp + dayPlus]
+                        localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
                         var fundDate = fund_date[fundIndex]

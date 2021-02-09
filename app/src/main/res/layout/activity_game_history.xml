@@ -49,13 +49,41 @@
                     />
                 <TextView
                     android:id="@+id/buyorsell"
-                    android:layout_width="60dp"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:text="거래종류"
                     />
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="거래단가"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_centerInParent="true"
+                        android:background="#000000"/>
+                    <TextView
+                        android:id="@+id/quant"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="거래수량"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        />
+                </LinearLayout>
                 <TextView
                     android:id="@+id/volume"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:text="거래금액"
                     />
@@ -67,7 +95,7 @@
                     />
                 <TextView
                     android:id="@+id/cash"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:text="현금잔고"
                     />
