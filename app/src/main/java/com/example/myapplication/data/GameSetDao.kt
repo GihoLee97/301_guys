@@ -22,6 +22,9 @@ interface GameSetDao {
     @Query("SELECT setgamespeed FROM GameSet")
     fun getSetGameSpeed(): Int
 
+    @Query("DELETE from GameSet")
+    fun deleteAll()
+
     @Insert
     fun insert(gameSet: GameSet)
 

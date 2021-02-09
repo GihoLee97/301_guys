@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.data.GameNormal
 import com.example.myapplication.data.GameNormalDB
+import com.example.myapplication.data.GameSetDB
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -40,7 +41,8 @@ var profit: Float = 0F // 순손익
 var profitrate: Float = 0F // 수익률
 var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
-var localdatatime: String = ""
+var localdatatime: String = "0"
+var endpoint: Int = 0
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -118,8 +120,13 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
-    private val gl = 250 * setGamelength // Game Length: 10, 20년(휴일, 공휴일로 인해 1년은 대략 250 거래일)
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
+
+    // Roomdata관련 ////////////////////////////////////////////////////////////////////////////////
+    private var gameNormalDb: GameNormalDB? = null
+    private var gameHistory = listOf<GameNormal>()
+    private var gameSetDb: GameSetDB? = null
+
 
     // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
     // 5년은 대략 1250 거래일.
@@ -127,11 +134,8 @@ class GameNormalActivity : AppCompatActivity() {
     // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.
     // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
     // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
-    private val random = Random()
-    private val sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
-    // 값 표준화: 시작일(sp)을 100으로
-    private val criteria: Float = 100 / (snp_val[sp].toFloat())
+
 
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
@@ -262,16 +266,19 @@ class GameNormalActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // Roomdata관련 ////////////////////////////////////////////////////////////////////////////////
-    private var gameNormalDb: GameNormalDB? = null
-    private var gameHistory = listOf<GameNormal>()
-
     //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
+        val random = Random()
+        gameSetDb = GameSetDB.getInstace(this)
+        var gl = 250* gameSetDb?.gameSetDao()?.getSetGameLength()!!
+        var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
+
+        // 값 표준화: 시작일(sp)을 100으로
+        val criteria: Float = 100 / (snp_val[sp].toFloat())
 
 
         gameNormalDb = GameNormalDB.getInstace(this)
@@ -281,6 +288,35 @@ class GameNormalActivity : AppCompatActivity() {
         val startThread = Thread(startRunnable)
         startThread.start()
 
+        if(gameNormalDb?.gameNormalDao()?.getAll()?.isEmpty() != true){
+            sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()?.endpoint!!
+            // 차트 ////////////////////////////////////////////////////////////////////////////////////
+            // 차트 전역 변수 초기화
+            initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()?.assets!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.cash!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.sold!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profit!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profitrate!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profittot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profityear!!,gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!)
+        }
+        else{
+            val addRunnable = Runnable {
+                val newGameNormalDB = GameNormal()
+                newGameNormalDB.id = localdatatime
+                newGameNormalDB.buyorsell = "시작"
+                newGameNormalDB.endpoint = sp
+                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+            }
+            val addThread = Thread(addRunnable)
+            addThread.start()
+            // 차트 ////////////////////////////////////////////////////////////////////////////////////
+            // 차트 전역 변수 초기화
+            initialize(0F, setCash,0F,0F,0F,0F,0F,0F,0F,0,0,0,0,0F,
+                    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,
+                    0F,0F,0F,0F,0F,0F,0F, 0F)
+
+        }
 
 
         // Button 동작
@@ -313,14 +349,12 @@ class GameNormalActivity : AppCompatActivity() {
         }
 
 
-        // 차트 ////////////////////////////////////////////////////////////////////////////////////
-        // 차트 전역 변수 초기화
-        initialize()
+
 
         // 차트 코루틴 시작
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
-                chartdata()
+                chartdata(sp, criteria)
             }
 
             job1.join()
@@ -332,7 +366,7 @@ class GameNormalActivity : AppCompatActivity() {
             job2.join()
 
             val job3 = launch {
-                nowdraw()
+                nowdraw(sp, criteria, gl)
             }
 
             job3.join()
@@ -409,62 +443,65 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
-    private fun initialize() {
-        asset = 0F // 총 자산
-        cash = setCash // 보유 현금
+    private fun initialize(startasset: Float, startcash:Float, startbought:Float, startsold:Float, startevaluation:Float, startprofit:Float,startprofitrate:Float,startprofittot:Float,startprofityear:Float,
+    startquant1x:Int, startquant3x:Int, startquantinv1x:Int, startquantinv3x:Int,startbought1x:Float, startbought3x:Float, startboughtinv1x:Float, startboughtinv3x:Float, startaver1x:Float, startaver3x:Float,
+                           startaverinv1x:Float, startaverinv3x:Float, startbuylim1x:Float, startbuylim3x:Float, startbuyliminv1x:Float, startbuyliminv3x:Float, startval1x:Float, startval3x:Float, startvalinv1x:Float,
+    startvalinv3x:Float, startpr1x:Float, startpr3x:Float, startprinv1x:Float, startprinv3x:Float, starttradecomtot:Float, startdividendtot:Float, starttaxtot:Float) {
+        asset = startasset // 총 자산
+        cash = startcash // 보유 현금
         input= cash // 총 인풋
-        bought = 0F // 총 매수금액
-        sold = 0F // 총 매도금액
-        evaluation = 0F // 평가금액
-        profit = 0F // 순손익
-        profitrate = 0F // 수익률
-        profittot = 0F // 실현 순손익
-        profityear = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+        bought = startbought // 총 매수금액
+        sold = startsold // 총 매도금액
+        evaluation = startevaluation// 평가금액
+        profit = startprofit // 순손익
+        profitrate = startprofitrate // 수익률
+        profittot = startprofittot // 실현 순손익
+        profityear = startprofityear // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
-        quant1x = 0 // 1x 보유 수량
-        quant3x = 0 // 3x 보유 수량
-        quantinv1x = 0 // -1x 보유 수량
-        quantinv3x = 0 // -3x 보유 수량
+        quant1x = startquant1x // 1x 보유 수량
+        quant3x = startquant3x // 3x 보유 수량
+        quantinv1x = startquantinv1x // -1x 보유 수량
+        quantinv3x = startquantinv3x // -3x 보유 수량
 
-        bought1x = 0F
-        bought3x = 0F
-        boughtinv1x = 0F
-        boughtinv3x = 0F
+        bought1x = startbought1x
+        bought3x = startbought3x
+        boughtinv1x = startboughtinv1x
+        boughtinv3x = startboughtinv3x
 
-        aver1x = 0F // 1x 평균 단가
-        aver3x = 0F // 3x 평균 단가
-        averinv1x = 0F // inv1x 평균 단가
-        averinv3x = 0F // inv3x 평균 단가
+        aver1x = startaver1x // 1x 평균 단가
+        aver3x = startaver3x // 3x 평균 단가
+        averinv1x = startaverinv1x // inv1x 평균 단가
+        averinv3x = startaverinv3x // inv3x 평균 단가
 
-        buylim1x = 0F // 1x 매수 한계 수량
-        buylim3x = 0F // 3x 매수 한계 수량
-        buyliminv1x = 0F // -1x 매수 한계 수량
-        buyliminv3x = 0F // -3x 매수 한계 수량
+        buylim1x = startbuylim1x // 1x 매수 한계 수량
+        buylim3x = startbuylim3x // 3x 매수 한계 수량
+        buyliminv1x = startbuyliminv1x // -1x 매수 한계 수량
+        buyliminv3x = startbuyliminv3x // -3x 매수 한계 수량
 
         price1x = 100000F // 1x 현재가
         price3x = 100000F // 3x 현재가
         priceinv1x = 100000F // -1x 현재가
         priceinv3x = 100000F // -3x 현재가
 
-        val1x = 0F // 1x 현재가치
-        val3x = 0F // 3x 현재가치
-        valinv1x = 0F // -1x 현재가치
-        valinv3x = 0F // -3x 현재가치
+        val1x = startval1x // 1x 현재가치
+        val3x = startval3x // 3x 현재가치
+        valinv1x = startvalinv1x // -1x 현재가치
+        valinv3x = startvalinv3x // -3x 현재가치
 
-        pr1x = 0F // 1x 수익률
-        pr3x = 0F // 3x 수익률
-        prinv1x = 0F // inv1x 수익률
-        prinv3x = 0F // inv3x 수익률
+        pr1x = startpr1x // 1x 수익률
+        pr3x = startpr3x // 3x 수익률
+        prinv1x = startprinv1x // inv1x 수익률
+        prinv3x = startprinv3x // inv3x 수익률
 
         tradecomrate = 1.001F // 거래수수료(Trade Commission): 0.1% , 거래시 차감(곱하는 방식)
-        tradecomtot = 0F // 거래수수료 총 합
+        tradecomtot = starttradecomtot // 거래수수료 총 합
 
         dividendrate = 0.0153F / 4F // 배당금(VOO: 1.53% / year), 분기 단위로 현금으로 입금
-        dividendtot = 0F // 총 배당금
+        dividendtot = startdividendtot // 총 배당금
         countMonth= 0 // 경과 개월 수 카운트
         countYear= 0 // 플레이 한 햇수 카운트
         tax = 0F // 세금
-        taxtot = 0F // 총 세금
+        taxtot = starttaxtot // 총 세금
         // var currency: Float = 0F // 환율(현재 미반영)
 
         snpNowDate = "yyyy-mm-dd"
@@ -481,9 +518,9 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // 차트 Entry, LineData, LineDataSet 생성 및 입력, 경제지표 과거 5년 차트 생성
-    private fun chartdata() {
+    private fun chartdata(start: Int, criteria: Float) {
         // Entry 배열 초기값 입력
-        snpEn.add(Entry(-1250F, snp_val[sp - given].toFloat() * criteria))
+        snpEn.add(Entry(-1250F, snp_val[start - given].toFloat() * criteria))
         fundEn.add(Entry(-1250F, fund_val[0].toFloat()))
         bondEn.add(Entry(-1250F, bond_val[0].toFloat()))
         indproEn.add(Entry(-1250F, indpro_val[0].toFloat()))
@@ -530,12 +567,12 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry((i + 1 - given).toFloat(), snp_val[sp - given + 1 + i].toFloat() * criteria),
+                Entry((i + 1 - given).toFloat(), snp_val[start - given + 1 + i].toFloat() * criteria),
                 0
             )
 
             var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
-            var snpDate = snp_date[sp - given + 1 + i]
+            var snpDate = snp_date[start - given + 1 + i]
             var snpDateSf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
             var fundDate = fund_date[fundIndex]
@@ -611,7 +648,7 @@ class GameNormalActivity : AppCompatActivity() {
             println("인덱스 : $i")
         }
         println("Fund count : $fundCount")
-        println("랜덤넘버 COUNT : " + sp.toString() + " | " + "시작 날짜 : " + snp_date[sp])
+        println("랜덤넘버 COUNT : " + start.toString() + " | " + "시작 날짜 : " + snp_date[start])
         // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////
 
 
@@ -674,7 +711,7 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
-    private suspend fun nowdraw() {
+    private suspend fun nowdraw(start:Int, criteria: Float, gl:Int) {
         // 게임 진행속도 설정
         var oneday: Long = 0L
         if (setGamespeed == 1) {
@@ -766,7 +803,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 날짜
         var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
-        val snpSP = snp_date[sp] // 시작일
+        val snpSP = snp_date[start] // 시작일
         val snpSP_sf = sf.parse(snpSP)
         var preMonth = snpSP_sf.month // 이전 달 저장
         var preYear = snpSP_sf.year // 이전 년도 저장
@@ -780,7 +817,8 @@ class GameNormalActivity : AppCompatActivity() {
                 if (!click) {
                     if (dayPlus <= gl && !item1Active) {
 
-                        var snpDate = snp_date[sp + dayPlus]
+                        var snpDate = snp_date[start + dayPlus]
+                        endpoint = start+dayPlus
                         localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
@@ -801,7 +839,7 @@ class GameNormalActivity : AppCompatActivity() {
                         var unem_c = snpDate_sf.time - unemDate_sf.time
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[sp + dayPlus].toFloat() * criteria), 0)
+                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[start + dayPlus].toFloat() * criteria), 0)
 
 
                         while (fund_c > 0) {
@@ -875,7 +913,7 @@ class GameNormalActivity : AppCompatActivity() {
                             ), 0
                         )
 
-                        println("S&P : " + snp_date[sp + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
+                        println("S&P : " + snp_date[start + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
 
                         runOnUiThread {
@@ -907,10 +945,10 @@ class GameNormalActivity : AppCompatActivity() {
 
                         // 값 OutPut ///////////////////////////////////////////////////////////////
                         // 현재 값 저장
-                        snpNowDate = snp_date[sp + dayPlus]
+                        snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
-                        snpNowVal = snp_val[sp + dayPlus].toFloat()
-                        snpDiff = snp_val[sp + dayPlus].toFloat() / snp_val[sp + dayPlus - 1].toFloat() - 1F
+                        snpNowVal = snp_val[start + dayPlus].toFloat()
+                        snpDiff = snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
 

@@ -15,6 +15,12 @@ interface GameNormalDao {
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(gameNormal: GameNormal)
 
+    @Query("SELECT * FROM GameNormal WHERE buyorsell IS '매수' OR buyorsell IS '매도'")
+    fun getHistory(): List<GameNormal>
+
+    @Query("SELECT * FROM GameNormal WHERE buyorsell IS '종료'")
+    fun getLast(): List<GameNormal>
+
     @Update
     fun update(gameNormal: GameNormal)
 
