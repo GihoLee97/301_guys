@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.data.GameSetDB
 
 
 class MainActivity : AppCompatActivity() {
 
+    private var gameSetDb: GameSetDB? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        gameSetDb = GameSetDB.getInstace(this)
 
         val profile1_btn = findViewById<Button>(R.id.profile1_btn)
         profile1_btn.setOnClickListener{
@@ -30,8 +35,16 @@ class MainActivity : AppCompatActivity() {
         game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         game_btn.setOnClickListener{
+            val intentgame = Intent(this, GameNormalActivity::class.java)
             val intent = Intent(this,GameSettingActivity::class.java)
-            startActivity(intent)
+            if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)      startActivity(intent)
+            else {
+                setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
+                setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
+                setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
+                setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+                startActivity(intentgame)}
+
         }
 
         while (true) {

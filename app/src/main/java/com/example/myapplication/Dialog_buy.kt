@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myapplication.data.GameNormal
+import com.example.myapplication.data.GameNormalDB
 import kotlin.math.roundToInt
 
 class Dialog_buy(context: Context) {
@@ -19,6 +21,8 @@ class Dialog_buy(context: Context) {
     private var temptradecom: Float = 0F
     private var quant: Int = 0
 
+    //Roomdata관련
+    private var gameNormalDb: GameNormalDB? = null
 
     private lateinit var listenter: BuyDialogClickedListener
     private lateinit var seekbarBuy: SeekBar
@@ -41,6 +45,7 @@ class Dialog_buy(context: Context) {
         dlg.setContentView(R.layout.dialog_buy)     // 다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    // 다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
 
+        gameNormalDb = GameNormalDB.getInstace(dlg.context)
         seekbarBuy = dlg.findViewById(R.id.seekbar_buy)
         btnBuyoK = dlg.findViewById(R.id.btn_buyok)
         btnBuycancel = dlg.findViewById(R.id.btn_buycancel)
@@ -305,6 +310,22 @@ class Dialog_buy(context: Context) {
                     boughtinv3x += priceinv3x * quant
                     averinv3x = boughtinv3x / quantinv3x
                 }
+
+                val addRunnable = Runnable {
+                    val newGameNormalDB = GameNormal()
+                    newGameNormalDB.id = localdatatime
+                    newGameNormalDB.buyorsell = "매수"
+                    newGameNormalDB.select = select
+                    newGameNormalDB.price = price/quant
+                    newGameNormalDB.volume = price
+                    newGameNormalDB.quant = quant
+                    newGameNormalDB.tradecom = temptradecom
+                    newGameNormalDB.cash = cash
+                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+
 
                 dlg.dismiss()
                 click = !click /////////////////////////////////////////////////////////////////////

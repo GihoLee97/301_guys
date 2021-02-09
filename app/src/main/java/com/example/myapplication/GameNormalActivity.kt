@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.LocaleList
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -22,6 +24,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,6 +40,7 @@ var profit: Float = 0F // 순손익
 var profitrate: Float = 0F // 수익률
 var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+var localdatatime: String = ""
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -109,7 +113,6 @@ var item1length: Int = 30 // 되돌릴 거래일 수
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -272,7 +275,6 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         gameNormalDb = GameNormalDB.getInstace(this)
-
         val startRunnable = Runnable {
             gameHistory = gameNormalDb!!.gameNormalDao().getAll()
         }
@@ -299,6 +301,7 @@ class GameNormalActivity : AppCompatActivity() {
         // 자동
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
             //val dlgAuto = Dialog_auto(this)
+            gameend = !gameend
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
@@ -391,8 +394,10 @@ class GameNormalActivity : AppCompatActivity() {
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
-        dlg_exit.start()
+        if(!gameend){
+            val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
+            dlg_exit.start()
+        }
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
@@ -767,13 +772,16 @@ class GameNormalActivity : AppCompatActivity() {
         var preYear = snpSP_sf.year // 이전 년도 저장
         var monthToggle = false
 
-
         while (true) {
+            //dialog_result = Dialog_result(this)
+            println("---1gameend"+ gameend)
             if (!gameend) {
+                println("---1ok")
                 if (!click) {
                     if (dayPlus <= gl && !item1Active) {
 
                         var snpDate = snp_date[sp + dayPlus]
+                        localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
                         var fundDate = fund_date[fundIndex]
@@ -1385,6 +1393,8 @@ class GameNormalActivity : AppCompatActivity() {
                 } else {
                 }
             } else {
+                val intent = Intent(this, ResultNormalActivity::class.java)
+                startActivity(intent)
                 break
             }
             delay(btnRefresh)
