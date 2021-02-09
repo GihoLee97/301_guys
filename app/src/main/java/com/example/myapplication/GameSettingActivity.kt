@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myapplication.data.GameSet
+import com.example.myapplication.data.GameSetDB
 import java.text.DecimalFormat
 
 var setCash: Float = 0F
@@ -32,6 +34,7 @@ class GameSettingActivity : AppCompatActivity() {
     private lateinit var seekbarSetgamespeed: SeekBar
 
     private lateinit var btnGamestart: Button
+    private var gameSetDb: GameSetDB? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +54,7 @@ class GameSettingActivity : AppCompatActivity() {
         seekbarSetgamespeed = findViewById(R.id.seekbar_setgamespeed)
 
         btnGamestart = findViewById(R.id.btn_gamestart)
+        gameSetDb = GameSetDB.getInstace(this)
 
 
         // Seekbar Range: 0 ~ 1000
@@ -144,6 +148,18 @@ class GameSettingActivity : AppCompatActivity() {
                 Toast.makeText(this@GameSettingActivity, "초기 자본금을 설정하세요", Toast.LENGTH_SHORT).show()
             }
             else {
+                val addRunnable = Runnable {
+                    val newGameSetDB = GameSet()
+                    newGameSetDB.setcash = setCash
+                    newGameSetDB.setgamelength = setGamelength
+                    newGameSetDB.setgamespeed = setGamespeed
+                    newGameSetDB.setmonthly = setMonthly
+                    newGameSetDB.setsalaryraise = setMonthly
+                    gameSetDb?.gameSetDao()?.insert(newGameSetDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+
                 val intent = Intent(this,GameNormalActivity::class.java)
                 startActivity(intent)
             }
