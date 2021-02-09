@@ -28,7 +28,9 @@ class Dialog_item(context : Context) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_item_pick)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+
         var item1_number : Int = item1 ; var item2_number : Int = item2 ;var item3_number : Int = item3
+
         textitem1 = dlg.findViewById(R.id.item1_number)
         textitem2 = dlg.findViewById(R.id.item2_number)
         textitem3 = dlg.findViewById(R.id.item3_number)
@@ -45,9 +47,11 @@ class Dialog_item(context : Context) {
         textitem3.text="개수 : "+item3_number.toString()+"개"
         btnok.setOnClickListener{
 
+
             //인터페이스의 함수를 호출하여 변수에 저장된 값들을 Activity로 전달
             var result: List<Int> = listOf(item1_number,item2_number,item3_number)
-            listenter.onItemClicked(result)
+            //listenter.onItemClicked(result)
+            item1Active = true
 
             dlg.dismiss()
             click = !click //////////////////////////////////////////////////////////////////////////

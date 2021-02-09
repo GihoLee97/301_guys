@@ -26,12 +26,9 @@ abstract class GameNormalDB:RoomDatabase() {
             return INSTANCE
         }
 
-
-
         fun destroyINSTANCE(){
             INSTANCE = null
         }
-
     }
 
 }

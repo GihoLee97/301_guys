@@ -20,6 +20,4 @@ interface GameNormalDao {
 
     @Query("DELETE from GameNormal")
     fun deleteAll()
-
-
 }
