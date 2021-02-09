@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
-
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -26,12 +25,13 @@
         android:orientation="horizontal"
         android:textColor="#000000"
         android:textSize="16dp" >
+
         <View
             android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <Button
-            android:id="@+id/btn1"
+            android:id="@+id/btn_sell1x"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <Button
-            android:id="@+id/btn2"
+            android:id="@+id/btn_sell3x"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <Button
-            android:id="@+id/btn3"
+            android:id="@+id/btn_sellinv1x"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -73,7 +73,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <Button
-            android:id="@+id/btn4"
+            android:id="@+id/btn_sellinv3x"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -86,6 +86,7 @@
             android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@color/white"/>
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -95,34 +96,34 @@
     <SeekBar
         android:id="@+id/seekbar_sell"
         android:layout_width="match_parent"
-        android:layout_height="20dp">
-
+        android:layout_height="40dp"
+        android:max = "100">
     </SeekBar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <View
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
-            android:id="@+id/매도금액"
+            android:id="@+id/보유금액"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="16dp"
-            android:text="매도금액"
+            android:text="보유금액"
             android:background="@color/white"/>
         <View
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
-            android:id="@+id/매도금액_숫자"
+            android:id="@+id/tv_selleval"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -139,7 +140,121 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/보유수량"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="보유수량"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/tv_sellhave"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="0 주"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/매도수량"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="매도 수량"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/tv_sellquant"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="0 주"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/매도금액"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="매도 금액"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/tv_sellprice"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="0 원"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <View
             android:layout_width="10dp"
@@ -160,7 +275,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"/>
         <TextView
-            android:id="@+id/수수료_숫자"
+            android:id="@+id/tv_selltradecom"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -182,7 +297,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/okButton"
+            android:id="@+id/btn_sellok"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -198,7 +313,7 @@
             android:background="@color/white"/>
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/btn_sellcancel"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -206,7 +321,7 @@
             android:text="취소"
             android:textColor="#000000"
             android:textSize="16dp"
-            android:backgroundTint="@color/white" />
+            android:backgroundTint="@color/white"/>
     </LinearLayout>
 
     <View

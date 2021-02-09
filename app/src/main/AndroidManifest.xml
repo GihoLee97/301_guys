@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication" >
+    package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,15 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        android:usesCleartextTraffic="true" >
-        <activity android:name=".WelcomeActivity" >
-        </activity>
+        android:usesCleartextTraffic="true">
+        <activity android:name=".GameSettingActivity"></activity>
+        <activity android:name=".WelcomeActivity"></activity>
         <activity android:name=".GameHistoryActivity" />
         <activity android:name=".AccountManagementActivity" /> <!-- android:name 설정 -->
         <!-- Splash Activity -->
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MainActivity" /> <!-- kakao (2020-1-29) -->
-        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity" >
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

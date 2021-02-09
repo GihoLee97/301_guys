@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
         game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         game_btn.setOnClickListener{
-            val intent = Intent(this,GameNormalActivity::class.java)
+            val intent = Intent(this,GameSettingActivity::class.java)
             startActivity(intent)
         }
 
         while (true) {
             if (loadcomp) {
                 game_btn.isEnabled = true
-                game_btn.text = "게임 시작"
+                game_btn.text = "게임"
                 break
             }
             Thread.sleep(50)
