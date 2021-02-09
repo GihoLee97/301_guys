@@ -18,6 +18,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var profit = MutableLiveData<Int>()
     private var history = MutableLiveData<String>()
     private var level = MutableLiveData<Int>()
+    private var exp = MutableLiveData<Int>()
     private var rank = MutableLiveData<Int>()
     private var login = MutableLiveData<Int>()
     private var login_id = MutableLiveData<String>()
@@ -31,6 +32,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         profit.value = profileDb?.profileDao()?.getProfit()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
+        exp.value = profileDb?.profileDao()?.getExp()
         rank.value = profileDb?.profileDao()?.getRank()
         login.value = profileDb?.profileDao()?.getLogin()
         login_id.value = profileDb?.profileDao()?.getLoginid()
@@ -45,6 +47,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         profit.value = profileDb?.profileDao()?.getProfit()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
+        exp.value = profileDb?.profileDao()?.getExp()
         rank.value = profileDb?.profileDao()?.getRank()
         login.value = profileDb?.profileDao()?.getLogin()
         login_id.value = profileDb?.profileDao()?.getLoginid()
@@ -55,7 +58,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         var write = Runnable {
             profileDb = ProflieDB.getInstace(profileActivity)
             var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,profit.value!!,history.value!!,
-                    level.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
+                    level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
             profileDb?.profileDao()?.update(newProfile)
         }
         var writeThread = Thread(write)
@@ -69,6 +72,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setProfit(newProfit : Int){ profit.value = newProfit }
     fun setHistory(newHistory : String){ history.value = newHistory }
     fun setLevel(newLevel : Int){ level.value = newLevel }
+    fun setExp(newExp: Int){ exp.value = newExp }
     fun setRank(newRank : Int){ rank.value = profileDb?.profileDao()?.getRank() }
     fun setLogin(newLogin : Int){ login.value = newLogin }
     fun setLoginId(newLoginId : String){ login_id.value = newLoginId }
@@ -93,6 +97,9 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setnWriteLevel(newLevel : Int){
         level.value = newLevel
         write2database() }
+    fun setnWriteExp(newExp: Int){
+        exp.value = newExp
+        write2database() }
     fun setnWriteRank(newRank : Int){
         rank.value = profileDb?.profileDao()?.getRank()
         write2database() }
@@ -113,6 +120,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getProfit(): LiveData<Int> { return profit }
     fun getHistory(): LiveData<String> { return history }
     fun setLevel(): LiveData<Int> { return level }
+    fun setExp(): LiveData<Int> { return exp }
     fun getRank(): LiveData<Int> { return rank }
     fun getLogin(): LiveData<Int> { return login }
     fun getLoginId(): LiveData<String> { return login_id }

@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         var game_btn =  findViewById<Button>(R.id.game_btn)
         game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
                 setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
                 startActivity(intentgame)}
-
         }
 
         while (true) {

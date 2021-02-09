@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.w3c.dom.Text
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ProfileActivity : AppCompatActivity() {
     //receive profile room data
+    val mContext : Context = this
     private var profileDb: ProflieDB? = null
     private var profileList = mutableListOf<Profile>()
     private lateinit var nickname_textView: TextView

@@ -343,7 +343,7 @@ class InitialActivity : AppCompatActivity() {
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            val newProfile = Profile(1, "#########first_login##########",0, 0, "", 1,0, temp, "a", "")
+            val newProfile = Profile(1, "#########first_login##########",0, 0, "", 1,0,0, temp, "a", "")
             profileDb?.profileDao()?.insert(newProfile)
         } else {
             profileDb = ProflieDB?.getInstace(this)
@@ -357,7 +357,9 @@ class InitialActivity : AppCompatActivity() {
             newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
             newProfile.history = profileDb?.profileDao()?.getHistory()!!
             newProfile.level = profileDb?.profileDao()?.getLevel()!!
+            newProfile.exp = profileDb?.profileDao()?.getExp()!!
             newProfile.login = temp
+            newProfile.money = profileDb?.profileDao()?.getMoney()!!
             newProfile.profit = profileDb?.profileDao()?.getProfit()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
@@ -410,6 +412,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.nickname = data?.NICKNAME!!
                     newProfile.history = data?.HISTORY!!
                     newProfile.level = data?.LEVEL!!
+                    newProfile.exp = data?.EXP!!
                     newProfile.login = profileDb?.profileDao()?.getLogin()!!
                     newProfile.money = data?.MONEY!!
                     newProfile.profit = data?.PROFIT!!

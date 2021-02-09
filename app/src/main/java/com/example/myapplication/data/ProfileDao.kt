@@ -25,6 +25,9 @@ interface ProfileDao {
     @Query("SELECT level FROM Profile")
     fun getLevel(): Int
 
+    @Query("SELECT exp FROM Profile")
+    fun getExp(): Int
+
     @Query("SELECT rank FROM Profile")
     fun getRank(): Int
 

@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 class DATACLASS {
 
-
     @SerializedName("USERID")
     @Expose
     var USERID : String
@@ -50,7 +49,11 @@ class DATACLASS {
     @Expose
     var LEVEL : Int
 
-    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, ITEM1: Int, ITEM2: Int, ITEM3: Int, NICKNAME:String, PROFIT:Int, HISTORY:String, LEVEL : Int) {
+    @SerializedName("EXP")
+    @Expose
+    var EXP : Int
+
+    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, ITEM1: Int, ITEM2: Int, ITEM3: Int, NICKNAME:String, PROFIT:Int, HISTORY:String, LEVEL : Int, EXP:Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
         this.DATE = DATE
@@ -62,5 +65,6 @@ class DATACLASS {
         this.PROFIT = PROFIT
         this.HISTORY = HISTORY
         this.LEVEL = LEVEL
+        this.EXP = EXP
     }
 }

@@ -9,6 +9,9 @@ interface GameNormalDao {
     @Query("SELECT * FROM GameNormal ORDER BY id ASC")
     fun getAll(): List<GameNormal>
 
+    @Query("SELECT profittot FROM GameNormal")
+    fun getProfitTot(): Float
+
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(gameNormal: GameNormal)
 
