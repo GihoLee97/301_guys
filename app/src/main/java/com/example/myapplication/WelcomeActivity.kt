@@ -96,6 +96,7 @@ class WelcomeActivity : AppCompatActivity() {
             var nickname: String = inputStr.trim()
             var history: String = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
+            var money :Int = 1000000
             var profit: Int = profileDb?.profileDao()?.getProfit()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
@@ -127,12 +128,13 @@ class WelcomeActivity : AppCompatActivity() {
                                 Toast.makeText(mContext, "사용중인 닉네임입니다.", Toast.LENGTH_LONG).show()
                             }
                             if (okcode == "555") {
-                                Toast.makeText(mContext, "닉네임이 변경되었습니다.", Toast.LENGTH_LONG).show()
+                                Toast.makeText(mContext, "닉네임이 확정되었습니다.", Toast.LENGTH_LONG).show()
                                 var profileDb: ProflieDB? = null
                                 profileDb = ProflieDB?.getInstace(mContext!!)
                                 val newProfile = Profile()
                                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                                 newProfile.nickname = inputStr.trim()
+                                newProfile.money = money
                                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
@@ -140,7 +142,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
-                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), 10, 4, 4, 4, nickname, profit, history, level)
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, 5, 4, 4, nickname, profit, history, level)
 
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)

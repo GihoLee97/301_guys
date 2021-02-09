@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
+import org.w3c.dom.Text
 
 class ProfileActivity : AppCompatActivity() {
     //receive profile room data
     private var profileDb: ProflieDB? = null
     private var profileList = mutableListOf<Profile>()
     private lateinit var nickname_textView: TextView
+    private lateinit var level_textView: TextView
+    private lateinit var money_textView: TextView
     private lateinit var accountManagement_btn: Button
     private lateinit var nickname_btn: Button
     private val profileActivityViewModel = ProfileActivityViewModel(this)
@@ -27,13 +30,16 @@ class ProfileActivity : AppCompatActivity() {
 
         profileDb = ProflieDB.getInstace(this)
         nickname_textView = findViewById(R.id.nickName_text)
+        level_textView = findViewById(R.id.level)
+        money_textView = findViewById(R.id.money)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
         val history_btn = findViewById<Button>(R.id.history_btn)
         lateinit var changenick: String
         var count:Int = 0
 
-
+        level_textView.text = "레벨: "+profileDb?.profileDao()?.getLevel()!!
+        money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
         profileActivityViewModel.getNickname().observe(this, Observer {
             nickname_textView.text = it
         })

@@ -13,6 +13,9 @@ interface ProfileDao {
     @Query("SELECT nickname FROM Profile")
     fun getNickname(): String
 
+    @Query("SELECT money FROM Profile")
+    fun getMoney(): Int
+
     @Query("SELECT profit FROM Profile")
     fun getProfit(): Int
 
