@@ -19,7 +19,6 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // CSV to 차트 데이터 ArrayList 생성
 val snp_date: ArrayList<String> = ArrayList() // S&P500 날짜

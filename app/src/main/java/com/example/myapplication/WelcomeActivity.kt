@@ -77,6 +77,8 @@ class WelcomeActivity : AppCompatActivity() {
                 layout_welcome4.visibility = View.VISIBLE
                 step = "Welcome complished"
             } else if(step == "Welcome complished"){
+                //TODO
+                Toast.makeText(this, "최초 접속 기념 지급!\n현금: 100만원\n아이템1: 5개", Toast.LENGTH_LONG).show()
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
