@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/splashimg"
         android:label="@string/app_name"
@@ -55,6 +56,13 @@
                     android:scheme="kakao0c9ac0ead6e3f965c35fa7c9d0973b7f" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+<!--        ca-app-pub-3940256099942544/6300978111 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true" />
     </application>
 
 </manifest>

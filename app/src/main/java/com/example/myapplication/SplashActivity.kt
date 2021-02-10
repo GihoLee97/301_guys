@@ -6,6 +6,9 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.data.ProflieDB
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
@@ -40,7 +43,7 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
     private var profileDb: ProflieDB? = null
-
+    lateinit var mAdView : AdView
     private lateinit var mAuth : FirebaseAuth
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
 
@@ -48,6 +51,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
+
+        //광고
+        MobileAds.initialize(this){}
+
 
         Handler().postDelayed({ //delay를 위한 handler
             profileDb = ProflieDB?.getInstace(this)

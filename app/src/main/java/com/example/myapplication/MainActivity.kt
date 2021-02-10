@@ -6,6 +6,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.data.GameSetDB
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,12 +17,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_setting : Button
     private lateinit var btn_game : Button
     private lateinit var btn_market : Button
-
+    lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         gameSetDb = GameSetDB.getInstace(this)
+        // 광고 관련 코드
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         btn_profile = findViewById(R.id.btn_profile)
         btn_setting = findViewById(R.id.btn_setting)
