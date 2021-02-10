@@ -106,8 +106,11 @@ private val dcp3x: Float = 0.99F // 괴리율(Discrepancy):  3x, inv3x
 var item1Active: Boolean = false // 시간 되돌리기
 var item2Active: Boolean = false // 뉴스 제공량
 var item3Active: Boolean = false // 3x, -3x 레버리지 거래 오픈
+var item4Active: Boolean = false // 3x, -3x 레버리지 거래 오픈
 
-var item1length: Int = 30 // 되돌릴 거래일 수
+var item1Length: Int = 0 // 되돌릴 거래일 수
+var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
+
 
 
 
@@ -341,7 +344,7 @@ class GameNormalActivity : AppCompatActivity() {
         // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
             val dlgItem = Dialog_item(this)
-            dlgItem.start(2,2,2)
+            dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
@@ -679,28 +682,6 @@ class GameNormalActivity : AppCompatActivity() {
     private suspend fun nowdraw(start:Int, criteria: Float, gl:Int) {
         // 게임 진행속도 설정
         var oneday: Long = 0L
-        if (setGamespeed == 1) {
-            oneday = 995L // 1 day/sec
-        }
-        else if (setGamespeed == 2) {
-            oneday = 495L // 2 day/sec
-        }
-        else if (setGamespeed == 3) {
-            oneday = 1000L / 3L - 5L // 3 day/sec
-        }
-        else if (setGamespeed == 4) {
-            oneday = 245L // 4 day/sec
-        }
-        else if (setGamespeed == 5) {
-            oneday = 195L // 5 day/sec
-        }
-        else if (setGamespeed == 8) {
-            oneday = 115L // 8 day/sec
-        }
-        else if (setGamespeed == 10) {
-            oneday = 95L // 10 day/sec
-        }
-
 
         fundIndex1.add(0)
         bondIndex1.add(0)
@@ -1094,8 +1075,11 @@ class GameNormalActivity : AppCompatActivity() {
 
                         }
 
+                        ////////////////////////////////////////////////////////////////////////////
                         // 시간역행 아이템
                         println("현재 dayPlus: "+dayPlus.toString())
+
+                        item1Able = dayPlus - 2 // 시간 역행 가능한 범위
 
                         fundIndex1.add(fundIndex)
                         bondIndex1.add(bondIndex)
@@ -1162,6 +1146,33 @@ class GameNormalActivity : AppCompatActivity() {
                         countYear1.add(countYear)
                         tax1.add(tax)
                         taxtot1.add(taxtot)
+                        ////////////////////////////////////////////////////////////////////////////
+
+                        ////////////////////////////////////////////////////////////////////////////
+                        // 시간 진행 속도 조절 아이템
+                        if (setGamespeed == 0) {
+                            oneday = 1995L // 1 day/sec
+                        }
+                        else if (setGamespeed == 1) {
+                            oneday = 995L // 1 day/sec
+                        }
+                        else if (setGamespeed == 2) {
+                            oneday = 495L // 2 day/sec
+                        }
+                        else if (setGamespeed == 3) {
+                            oneday = 1000L / 3L - 5L // 3 day/sec
+                        }
+                        else if (setGamespeed == 4) {
+                            oneday = 245L // 4 day/sec
+                        }
+                        else if (setGamespeed == 5) {
+                            oneday = 195L // 5 day/sec
+                        }
+                        else if (setGamespeed == 6) {
+                            oneday = 115L // 8 day/sec
+                        }
+                        ////////////////////////////////////////////////////////////////////////////
+
 
 
                         dayPlus += 1 // 시간 진행
@@ -1174,7 +1185,7 @@ class GameNormalActivity : AppCompatActivity() {
                         var timeTrableStart = dayPlus
                         println("시간역행 시작 : "+dayPlus.toString())
 
-                        while (dayPlus >= (timeTrableStart - item1length)) {
+                        while (dayPlus >= (timeTrableStart - item1Length)) {
                             snpD.removeEntry(dayPlus.toFloat(), 0)
                             fundD.removeEntry(dayPlus.toFloat(), 0)
                             bondD.removeEntry(dayPlus.toFloat(), 0)
@@ -1379,9 +1390,9 @@ class GameNormalActivity : AppCompatActivity() {
                                 findViewById<TextView>(R.id.tv_profitinv1x).text = per.format(prinv1x)+" %"
                                 findViewById<TextView>(R.id.tv_profitinv3x).text = per.format(prinv3x)+" %"
 
-                                findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1length 거래일 전으로 돌아왔습니다"
+                                findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                             }
-                            delay(40L)
+                            delay(50L)
                         }
                         println("시간역행 끝 : "+dayPlus.toString())
                         item1Active = false //

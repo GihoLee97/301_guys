@@ -11,9 +11,8 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16dp"
-        android:text="비밀번호 변경"
-        android:background="@color/red"
-        />
+        android:text="회원탈퇴"
+        android:background="@color/red"/>
 
     <View
         android:layout_width="match_parent"
@@ -40,7 +39,8 @@
             android:layout_height="50dp"
             android:layout_gravity="left"
             android:layout_weight="2"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:password="true"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,30 +48,38 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="변경 비밀번호 : "
+            android:text="비밀번호 확인 : "
             android:gravity="center|left"
             android:layout_weight="3"/>
         <EditText
-            android:id="@+id/pw_future"
+            android:id="@+id/pw_check"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="left"
             android:layout_weight="2"
-            android:inputType="textPersonName"/>
+            android:inputType="textPersonName"
+            android:password="true"/>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text =
+            "회원탈퇴 시 계정의 모든 정보가 삭제됩니다.\n회원탈퇴가 이루어진 계정은 복구가 불가능합니다."
+        android:gravity="center"
+    />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/okButton"
+            android:id="@+id/btn_deleteok"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="확인"
+            android:text="탈퇴"
             android:textColor="#000000"
             android:textSize="16dp"
             android:backgroundTint="@color/red"/>
@@ -82,7 +90,7 @@
             android:background="@color/white"/>
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/btn_deletecancel"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"

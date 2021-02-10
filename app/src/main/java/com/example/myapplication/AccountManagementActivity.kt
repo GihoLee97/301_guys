@@ -26,8 +26,7 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var textView_generalAcountID : TextView
     private lateinit var textView_googleAcountID : TextView
     private lateinit var textView_kakaoAcountID : TextView
-    private lateinit var btn_generalAcountID : Button
-    private lateinit var textView_generalAcountEmail : TextView
+    private lateinit var btn_generalAccountDelete : Button
     private lateinit var textView_googleAcountEmail : TextView
     private lateinit var textView_kakaoAcountEmail : TextView
     private lateinit var btn_generalAcountSignout : Button
@@ -35,7 +34,6 @@ class AccountManagementActivity : AppCompatActivity() {
     private lateinit var btn_googleAccountSignOut : Button
     private lateinit var btn_kakaoAccountDelete : Button
     private lateinit var btn_kakaoAccountRevokeAccess : Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +43,9 @@ class AccountManagementActivity : AppCompatActivity() {
         layout_generalAccountManagement = findViewById(R.id.layout_generalAccountManagement)
         imageView_generalAccountProfile = findViewById(R.id.imageView_generalAccountProfile)
         textView_generalAcountID = findViewById(R.id.editText_generalAcountID)
-        btn_generalAcountID = findViewById(R.id.btn_generalAccountID)
-        textView_generalAcountEmail = findViewById(R.id.editText_generalAcountEmail)
+
+        btn_generalAccountDelete = findViewById(R.id.btn_generalAccountDelete)
+
         btn_generalAcountSignout = findViewById(R.id.btn_generalAcountEmail)
         btn_generalAccountPW = findViewById(R.id.btn_generalAccountPW)
 
@@ -147,6 +146,10 @@ class AccountManagementActivity : AppCompatActivity() {
             generallogout()
             val intent = Intent(this,InitialActivity::class.java)
             startActivity(intent)
+        }
+        btn_generalAccountDelete.setOnClickListener{
+            val dlg_delete = Dialog_DeleteAlert(this)
+            dlg_delete.start()
         }
     }
 
