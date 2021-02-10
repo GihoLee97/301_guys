@@ -301,15 +301,7 @@ class GameNormalActivity : AppCompatActivity() {
                     gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!)
         }
         else{
-            val addRunnable = Runnable {
-                val newGameNormalDB = GameNormal()
-                newGameNormalDB.id = localdatatime
-                newGameNormalDB.buyorsell = "시작"
-                newGameNormalDB.endpoint = sp
-                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-            }
-            val addThread = Thread(addRunnable)
-            addThread.start()
+
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
             initialize(0F, setCash,0F,0F,0F,0F,0F,0F,0F,0,0,0,0,0F,
@@ -355,12 +347,22 @@ class GameNormalActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 chartdata(sp, criteria)
+                val addRunnable = Runnable {
+                    val newGameNormalDB = GameNormal()
+                    newGameNormalDB.id = localdatatime
+                    newGameNormalDB.buyorsell = "시작"
+                    newGameNormalDB.endpoint = sp
+                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
             }
 
             job1.join()
 
             val job2 = launch {
                 inidraw()
+
             }
 
             job2.join()
@@ -649,6 +651,7 @@ class GameNormalActivity : AppCompatActivity() {
         }
         println("Fund count : $fundCount")
         println("랜덤넘버 COUNT : " + start.toString() + " | " + "시작 날짜 : " + snp_date[start])
+        localdatatime = snp_date[start]
         // 차트 데이터 생성 끝 /////////////////////////////////////////////////////////////
 
 
