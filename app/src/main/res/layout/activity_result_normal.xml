@@ -31,6 +31,7 @@
             android:text="인플레이션 고려 실질자신가치"
             />
         <TextView
+            android:id="@+id/ResultProfit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="수익률:     (상위%)"
@@ -44,11 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인공지능 예측 결과"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="경험치"
             />
 
     </LinearLayout>

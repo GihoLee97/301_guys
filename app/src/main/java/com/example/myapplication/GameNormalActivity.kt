@@ -118,7 +118,7 @@ var gameend: Boolean = false // 게임 종료시 적용
 var endsuccess:Boolean = false // gameend는 game_exit에서 저장, 종료에서 사용되기 때문에 구별함
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var islevelup : Boolean = false
-
+var profittotal : Float = 0F
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -1399,6 +1399,12 @@ class GameNormalActivity : AppCompatActivity() {
                     profileDb = ProflieDB.getInstace(this)
                     funlevelup(profileDb?.profileDao()?.getLoginid()!!, profileDb?.profileDao()?.getLoginpw()!!, 100)
                     endsuccess = false
+                    val deleteRunnable = Runnable {
+                        gameNormalDb?.gameNormalDao()?.deleteAll()
+                        gameSetDb?.gameSetDao()?.deleteAll()
+                    }
+                    val deleteThread = Thread(deleteRunnable)
+                    deleteThread.start()
                     val intent = Intent(this, ResultNormalActivity::class.java)
                     startActivity(intent)
                 }
