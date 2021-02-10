@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.data.GameSetDB
 
-
 class MainActivity : AppCompatActivity() {
 
     private var gameSetDb: GameSetDB? = null

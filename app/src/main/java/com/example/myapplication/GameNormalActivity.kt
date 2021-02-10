@@ -114,6 +114,8 @@ var item1length: Int = 30 // 되돌릴 거래일 수
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
+// 정상적인 게임 종료 시 경험치 지급을 위한 변수//////////////////////////////////////////////////
+var endsuccess:Boolean = false // gameend는 game_exit에서 저장, 종료에서 사용되기 때문에 구별함
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var islevelup : Boolean = false
 
@@ -332,6 +334,7 @@ class GameNormalActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
             //val dlgAuto = Dialog_auto(this)
             gameend = !gameend
+            endsuccess = !endsuccess
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
@@ -384,44 +387,6 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
 
-    // 데이터 가지고 오
-    // 기
-//    fun getRoomListDataHttp() {
-//        val u_id = ""
-//        val u_pw = ""
-//        val u_date = ""
-//        val url: String = "http://stockgame.dothome.co.kr/test/call.php/"
-//        Log.d("데이터 받기 ", "받기시도 중")
-//        var gson: Gson = GsonBuilder()
-//            .setLenient()
-//            .create()
-//        //creating retrofit object
-//        var retrofit =
-//            Retrofit.Builder()
-//                .baseUrl(url)
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .build()
-//
-//        //creating our api
-//        var server = retrofit.create(RetrofitGet::class.java)
-//        server.getdata(u_id, u_pw, u_date).enqueue(object : Callback<String> {
-//            override fun onFailure(call: Call<String>, t: Throwable) {
-//                //Toast.makeText(this@Initial, " ", Toast.LENGTH_LONG).show()
-//                //Log.d("data: ",data)
-//            }
-//
-//            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-//                //Toast.makeText(this@Initial, "bbbbbbb", Toast.LENGTH_LONG).show()
-//                if (response.isSuccessful && response.body() != null) {
-//                    val getted_name: String = response.body()!!
-//                    Toast.makeText(this@GameNormalActivity, getted_name, Toast.LENGTH_LONG).show()
-//                    Log.d("---:", response.isSuccessful.toString())
-//                    // Toast.makeText(this@GameNormalActivity, response.isSuccessful, Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        })
-//    }
-
     // 뒤로가기 눌렀을 떄 게임 종료 다이얼로그 띄움
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
@@ -438,12 +403,6 @@ class GameNormalActivity : AppCompatActivity() {
         }
         click = !click /////////////////////////////////////////////////////////////////////////////
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
@@ -518,6 +477,7 @@ class GameNormalActivity : AppCompatActivity() {
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
         click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
         gameend = false // 게임 종료시 적용
+        endsuccess = false
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -1434,11 +1394,14 @@ class GameNormalActivity : AppCompatActivity() {
                 } else {
                 }
             } else {
-                var profileDb : ProflieDB? = null
-                profileDb = ProflieDB.getInstace(this)
-                funlevelup(profileDb?.profileDao()?.getLoginid()!!, profileDb?.profileDao()?.getLoginpw()!!, 100)
-                val intent = Intent(this, ResultNormalActivity::class.java)
-                startActivity(intent)
+                if(endsuccess){
+                    var profileDb : ProflieDB? = null
+                    profileDb = ProflieDB.getInstace(this)
+                    funlevelup(profileDb?.profileDao()?.getLoginid()!!, profileDb?.profileDao()?.getLoginpw()!!, 100)
+                    endsuccess = false
+                    val intent = Intent(this, ResultNormalActivity::class.java)
+                    startActivity(intent)
+                }
                 break
             }
             delay(btnRefresh)
