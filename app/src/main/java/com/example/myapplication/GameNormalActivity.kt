@@ -1518,10 +1518,12 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_notification).text =
                                         "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
+                                delay(50L)
                             } catch (e: IndexOutOfBoundsException) {
                                 e.printStackTrace()
+                                gameend = true
+                                break
                             }
-                            delay(50L)
 
                         }
                         println("시간역행 끝 : " + dayPlus.toString())
