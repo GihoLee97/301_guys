@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,13 @@ import android.widget.Button
 import com.example.myapplication.data.GameNormalDB
 import com.example.myapplication.data.Profile
 import com.example.myapplication.data.ProflieDB
+import com.example.myapplication.retrofit.RetrofitLevelUp
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ResultNormalActivity : AppCompatActivity() {
     private var profileDb : ProflieDB? = null
@@ -23,8 +31,8 @@ class ResultNormalActivity : AppCompatActivity() {
 
     fun GotoMainactivity(){
         reflect()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        val dialog_level = Dialog_level(this)
+        dialog_level.start()
     }
 
     override fun onBackPressed() {

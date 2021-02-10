@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -10,9 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.data.GameNormal
-import com.example.myapplication.data.GameNormalDB
-import com.example.myapplication.data.GameSetDB
+import com.example.myapplication.data.*
+import com.example.myapplication.retrofit.RetrofitLevelUp
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -115,6 +115,8 @@ var item1length: Int = 30 // 되돌릴 거래일 수
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+var islevelup : Boolean = false
+
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -814,9 +816,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         while (true) {
             //dialog_result = Dialog_result(this)
-            println("---1gameend"+ gameend)
             if (!gameend) {
-                println("---1ok")
                 if (!click) {
                     if (dayPlus <= gl && !item1Active) {
 
@@ -1434,13 +1434,63 @@ class GameNormalActivity : AppCompatActivity() {
                 } else {
                 }
             } else {
+                var profileDb : ProflieDB? = null
+                profileDb = ProflieDB.getInstace(this)
+                funlevelup(profileDb?.profileDao()?.getLoginid()!!, profileDb?.profileDao()?.getLoginpw()!!, 100)
                 val intent = Intent(this, ResultNormalActivity::class.java)
                 startActivity(intent)
                 break
             }
             delay(btnRefresh)
         }
+
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    fun funlevelup(u_id : String, u_pw : String, u_exp:Int){
+        val mContext : Context = this
+        var profileDb : ProflieDB? = null
+        var funlevel_up: RetrofitLevelUp? = null
+        profileDb = ProflieDB.getInstace(mContext)
+        val url = "http://stockgame.dothome.co.kr/test/levelup.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funlevel_up = retrofit.create(RetrofitLevelUp::class.java)
 
+        funlevel_up.levelup(getHash(u_id).trim(), getHash(u_pw).trim(), u_exp).enqueue(object : Callback<DATACLASS> {
+            override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
+                println("---"+t.message)
+            }
+            override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
+                if (response.isSuccessful && response.body() != null) {
+                    var data : DATACLASS = response.body()!!
+                    profileDb = ProflieDB?.getInstace(mContext)
+                    if(profileDb?.profileDao()?.getLevel()!! != data?.LEVEL){
+                        islevelup = true
+                    }
+                    val newProfile = Profile()
+                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                    newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                    newProfile.level = data?.LEVEL!!
+                    newProfile.exp = data?.EXP!!
+                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                    newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                    newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                    newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                    newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                    profileDb?.profileDao()?.update(newProfile)
+                    profileDb = ProflieDB?.getInstace(mContext)
+                }
+            }
+        })
+
+    }
 }
