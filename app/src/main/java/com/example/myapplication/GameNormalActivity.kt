@@ -24,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.IndexOutOfBoundsException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -112,16 +113,16 @@ var item1Length: Int = 0 // 되돌릴 거래일 수
 var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
 
 
-
-
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
+
 // 정상적인 게임 종료 시 경험치 지급을 위한 변수//////////////////////////////////////////////////
-var endsuccess:Boolean = false // gameend는 game_exit에서 저장, 종료에서 사용되기 때문에 구별함
+var endsuccess: Boolean = false // gameend는 game_exit에서 저장, 종료에서 사용되기 때문에 구별함
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-var islevelup : Boolean = false
-var profittotal : Float = 0F
+var islevelup: Boolean = false
+var profittotal: Float = 0F
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -141,8 +142,6 @@ class GameNormalActivity : AppCompatActivity() {
     // 일부 데이터는 뒤에서 약 21번째 행까지 날짜는 존재하나 값들은 null 인 경우가 존재함 -> 범위에서 30만큼 빼줌.
     // 따라서 시작시점은 총 데이터 갯수로부터 15년에 해당하는 3750 + 30을 뺀 구간에서,
     // 랜덤으로 숫자를 산출한 뒤 다시 1250을 더해준 값임.
-
-
 
 
     // 차트 데이터 생성 ////////////////////////////////////////////////////////////////////////////
@@ -281,7 +280,7 @@ class GameNormalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_normal)
         val random = Random()
         gameSetDb = GameSetDB.getInstace(this)
-        var gl = 250* gameSetDb?.gameSetDao()?.getSetGameLength()!!
+        var gl = 250 * gameSetDb?.gameSetDao()?.getSetGameLength()!!
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
         // 값 표준화: 시작일(sp)을 100으로
@@ -295,25 +294,57 @@ class GameNormalActivity : AppCompatActivity() {
         val startThread = Thread(startRunnable)
         startThread.start()
 
-        if(gameNormalDb?.gameNormalDao()?.getAll()?.isEmpty() != true){
+        if (gameNormalDb?.gameNormalDao()?.getAll()?.isEmpty() != true) {
             sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()?.endpoint!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
-            initialize(gameNormalDb?.gameNormalDao()?.getAll()?.last()?.assets!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.cash!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.sold!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profit!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profitrate!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profittot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profityear!!,gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant1x!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver3x!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!!,
-                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!, gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!)
-        }
-        else{
+            initialize(
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.assets!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.cash!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.sold!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profit!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profitrate!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profittot!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profityear!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!,
+                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!
+            )
+        } else {
 
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
-            initialize(0F, setCash,0F,0F,0F,0F,0F,0F,0F,0,0,0,0,0F,
-                    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,
-                    0F,0F,0F,0F,0F,0F,0F, 0F)
+            initialize(
+                0F, setCash, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0, 0, 0, 0, 0F,
+                0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F,
+                0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F
+            )
 
         }
 
@@ -347,8 +378,6 @@ class GameNormalActivity : AppCompatActivity() {
             dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }
-
-
 
 
         // 차트 코루틴 시작
@@ -400,7 +429,7 @@ class GameNormalActivity : AppCompatActivity() {
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        if(!gameend){
+        if (!gameend) {
             val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
             dlg_exit.start()
         }
@@ -409,13 +438,47 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
-    private fun initialize(startasset: Float, startcash:Float, startbought:Float, startsold:Float, startevaluation:Float, startprofit:Float,startprofitrate:Float,startprofittot:Float,startprofityear:Float,
-    startquant1x:Int, startquant3x:Int, startquantinv1x:Int, startquantinv3x:Int,startbought1x:Float, startbought3x:Float, startboughtinv1x:Float, startboughtinv3x:Float, startaver1x:Float, startaver3x:Float,
-                           startaverinv1x:Float, startaverinv3x:Float, startbuylim1x:Float, startbuylim3x:Float, startbuyliminv1x:Float, startbuyliminv3x:Float, startval1x:Float, startval3x:Float, startvalinv1x:Float,
-    startvalinv3x:Float, startpr1x:Float, startpr3x:Float, startprinv1x:Float, startprinv3x:Float, starttradecomtot:Float, startdividendtot:Float, starttaxtot:Float) {
+    private fun initialize(
+        startasset: Float,
+        startcash: Float,
+        startbought: Float,
+        startsold: Float,
+        startevaluation: Float,
+        startprofit: Float,
+        startprofitrate: Float,
+        startprofittot: Float,
+        startprofityear: Float,
+        startquant1x: Int,
+        startquant3x: Int,
+        startquantinv1x: Int,
+        startquantinv3x: Int,
+        startbought1x: Float,
+        startbought3x: Float,
+        startboughtinv1x: Float,
+        startboughtinv3x: Float,
+        startaver1x: Float,
+        startaver3x: Float,
+        startaverinv1x: Float,
+        startaverinv3x: Float,
+        startbuylim1x: Float,
+        startbuylim3x: Float,
+        startbuyliminv1x: Float,
+        startbuyliminv3x: Float,
+        startval1x: Float,
+        startval3x: Float,
+        startvalinv1x: Float,
+        startvalinv3x: Float,
+        startpr1x: Float,
+        startpr3x: Float,
+        startprinv1x: Float,
+        startprinv3x: Float,
+        starttradecomtot: Float,
+        startdividendtot: Float,
+        starttaxtot: Float
+    ) {
         asset = startasset // 총 자산
         cash = startcash // 보유 현금
-        input= cash // 총 인풋
+        input = cash // 총 인풋
         bought = startbought // 총 매수금액
         sold = startsold // 총 매도금액
         evaluation = startevaluation// 평가금액
@@ -464,8 +527,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         dividendrate = 0.0153F / 4F // 배당금(VOO: 1.53% / year), 분기 단위로 현금으로 입금
         dividendtot = startdividendtot // 총 배당금
-        countMonth= 0 // 경과 개월 수 카운트
-        countYear= 0 // 플레이 한 햇수 카운트
+        countMonth = 0 // 경과 개월 수 카운트
+        countYear = 0 // 플레이 한 햇수 카운트
         tax = 0F // 세금
         taxtot = starttaxtot // 총 세금
         // var currency: Float = 0F // 환율(현재 미반영)
@@ -534,7 +597,10 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry((i + 1 - given).toFloat(), snp_val[start - given + 1 + i].toFloat() * criteria),
+                Entry(
+                    (i + 1 - given).toFloat(),
+                    snp_val[start - given + 1 + i].toFloat() * criteria
+                ),
                 0
             )
 
@@ -679,7 +745,7 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
-    private suspend fun nowdraw(start:Int, criteria: Float, gl:Int) {
+    private suspend fun nowdraw(start: Int, criteria: Float, gl: Int) {
         // 게임 진행속도 설정
         var oneday: Long = 0L
 
@@ -762,7 +828,7 @@ class GameNormalActivity : AppCompatActivity() {
                     if (dayPlus <= gl && !item1Active) {
 
                         var snpDate = snp_date[start + dayPlus]
-                        endpoint = start+dayPlus
+                        endpoint = start + dayPlus
                         localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
@@ -783,7 +849,12 @@ class GameNormalActivity : AppCompatActivity() {
                         var unem_c = snpDate_sf.time - unemDate_sf.time
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
-                        snpD.addEntry(Entry(dayPlus.toFloat(), snp_val[start + dayPlus].toFloat() * criteria), 0)
+                        snpD.addEntry(
+                            Entry(
+                                dayPlus.toFloat(),
+                                snp_val[start + dayPlus].toFloat() * criteria
+                            ), 0
+                        )
 
 
                         while (fund_c > 0) {
@@ -799,7 +870,7 @@ class GameNormalActivity : AppCompatActivity() {
                                 fund_val[fundIndex].toFloat()
                             ), 0
                         )
-                        println("fund date : $fundDate")
+                        println("SNP x값 : " + dayPlus.toString() + "|" + "Fund x값 : " + (fundCount - 1250).toString())
 
                         while (bond_c > 0) {
                             bondIndex += 1
@@ -892,9 +963,9 @@ class GameNormalActivity : AppCompatActivity() {
                         snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
                         snpNowVal = snp_val[start + dayPlus].toFloat()
-                        snpDiff = snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
+                        snpDiff =
+                            snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
-
 
 
                         // 월급 입금
@@ -902,7 +973,8 @@ class GameNormalActivity : AppCompatActivity() {
                             cash += setMonthly // 월 투자금 현금으로 입금
                             input += setMonthly // 총 input 최신화
                             runOnUiThread {
-                                findViewById<TextView>(R.id.tv_notification).text = "알림: 월 투자금 "+dec.format(setMonthly)+" 원이 입금되었습니다"
+                                findViewById<TextView>(R.id.tv_notification).text =
+                                    "알림: 월 투자금 " + dec.format(setMonthly) + " 원이 입금되었습니다"
                             }
                             monthToggle = true
                         }
@@ -915,8 +987,7 @@ class GameNormalActivity : AppCompatActivity() {
 
                             if (countMonth < 12) {
                                 countMonth += 1
-                            }
-                            else {
+                            } else {
                                 countYear += 1
                                 countMonth = 1
                             }
@@ -926,21 +997,23 @@ class GameNormalActivity : AppCompatActivity() {
                             // 설정한 게임 플레이 기간에 도달
                             if (countYear > setGamelength) {
                                 break
-                            }
-                            else if (snpDate_sf.month==2 || snpDate_sf.month==5 || snpDate_sf.month==8 || snpDate_sf.month==11) {
+                            } else if (snpDate_sf.month == 2 || snpDate_sf.month == 5 || snpDate_sf.month == 8 || snpDate_sf.month == 11) {
                                 if (val1x > 1F) {
                                     cash += val1x * dividendrate * 0.846F // 15.4% 세금 공제
                                     dividendtot += val1x * dividendrate
                                     taxtot += val1x * dividendrate * 0.154F // 세금 납부 내역 최신화
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+                                        findViewById<TextView>(R.id.tv_notification).text =
+                                            "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
                                     }
                                 }
-                            }
-                            else if (snpDate_sf.month==1) {
+                            } else if (snpDate_sf.month == 1) {
                                 setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
                                 runOnUiThread {
-                                    findViewById<TextView>(R.id.tv_notification).text = "알림: 연봉 "+per.format(setSalaryraise)+"% 인상으로 월 투자금이 "+dec.format(setMonthly)+" 원이 되었습니다"
+                                    findViewById<TextView>(R.id.tv_notification).text =
+                                        "알림: 연봉 " + per.format(setSalaryraise) + "% 인상으로 월 투자금이 " + dec.format(
+                                            setMonthly
+                                        ) + " 원이 되었습니다"
                                 }
                             }
 
@@ -948,16 +1021,17 @@ class GameNormalActivity : AppCompatActivity() {
                                 if (cash >= tax) {
                                     cash -= tax
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "알림: 세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+                                        findViewById<TextView>(R.id.tv_notification).text =
+                                            "알림: 세금 " + dec.format(tax) + " 원이 납부 되었습니다"
                                     }
                                     taxtot += tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
-                                }
-                                else {
+                                } else {
                                     tax *= (1.05F)
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "알림: 미납 세금이 매달 가산됩니다"
+                                        findViewById<TextView>(R.id.tv_notification).text =
+                                            "알림: 미납 세금이 매달 가산됩니다"
                                     }
                                 }
                             }
@@ -968,16 +1042,17 @@ class GameNormalActivity : AppCompatActivity() {
                                 profityear = 0F // 연 수익률 초기화
                                 if (cash >= tax && tax > 0F) {
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "알림: 세금 " + dec.format(tax) + " 원이 납부됨"
+                                        findViewById<TextView>(R.id.tv_notification).text =
+                                            "알림: 세금 " + dec.format(tax) + " 원이 납부됨"
                                     }
                                     cash -= tax
                                     taxtot += tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
-                                }
-                                else if (cash < tax && tax > 0F) {
+                                } else if (cash < tax && tax > 0F) {
                                     runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text = "알림: 현금이 부족해 세금을 낼 수 없습니다"
+                                        findViewById<TextView>(R.id.tv_notification).text =
+                                            "알림: 현금이 부족해 세금을 낼 수 없습니다"
                                     }
                                 }
                                 preYear = snpDate_sf.year
@@ -1006,24 +1081,28 @@ class GameNormalActivity : AppCompatActivity() {
 
                         // 수익률
                         if (aver1x != 0F) {
-                            pr1x = 100F * (price1x-aver1x) / aver1x
+                            pr1x = 100F * (price1x - aver1x) / aver1x
+                        } else {
+                            pr1x = 0F
                         }
-                        else {pr1x = 0F}
 
                         if (aver3x != 0F) {
-                            pr3x = 100F *(price3x-aver3x) / aver3x
+                            pr3x = 100F * (price3x - aver3x) / aver3x
+                        } else {
+                            pr3x = 0F
                         }
-                        else {pr3x = 0F}
 
                         if (averinv1x != 0F) {
-                            prinv1x = 100F *(priceinv1x-averinv1x) / averinv1x
+                            prinv1x = 100F * (priceinv1x - averinv1x) / averinv1x
+                        } else {
+                            prinv1x = 0F
                         }
-                        else {prinv1x = 0F}
 
                         if (averinv3x != 0F) {
-                            prinv3x = 100F *(priceinv3x-averinv3x) / averinv3x
+                            prinv3x = 100F * (priceinv3x - averinv3x) / averinv3x
+                        } else {
+                            prinv3x = 0F
                         }
-                        else {prinv3x = 0F}
 
 
                         evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
@@ -1038,48 +1117,71 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
 
                             // 자산 가치 관련 값들 최신화
-                            findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+dec.format(asset)+" 원"
-                            findViewById<TextView>(R.id.tv_cash).text = "현금 : "+dec.format(cash)+" 원"
-                            findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+dec.format(evaluation)+" 원"
-                            findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+dec.format(profit)+" 원"
-                            findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+per.format(profitrate)+" %"
-                            findViewById<TextView>(R.id.tv_dividend).text = "배당금 : "+dec.format(dividendtot)+" 원"
-                            findViewById<TextView>(R.id.tv_taxtot).text = "세금 : "+dec.format(taxtot)+" 원"
-                            findViewById<TextView>(R.id.tv_profityear).text = "당해 실현 수익 : "+dec.format(profityear)+" 원"
-                            findViewById<TextView>(R.id.tv_tradecomtot).text = "수수료 : "+dec.format(tradecomtot)+" 원"
+                            findViewById<TextView>(R.id.tv_asset).text =
+                                "총 자산 : " + dec.format(asset) + " 원"
+                            findViewById<TextView>(R.id.tv_cash).text =
+                                "현금 : " + dec.format(cash) + " 원"
+                            findViewById<TextView>(R.id.tv_evaluation).text =
+                                "평가금액 : " + dec.format(evaluation) + " 원"
+                            findViewById<TextView>(R.id.tv_profit).text =
+                                "순손익 : " + dec.format(profit) + " 원"
+                            findViewById<TextView>(R.id.tv_profitrate).text =
+                                "수익률 : " + per.format(profitrate) + " %"
+                            findViewById<TextView>(R.id.tv_dividend).text =
+                                "배당금 : " + dec.format(dividendtot) + " 원"
+                            findViewById<TextView>(R.id.tv_taxtot).text =
+                                "세금 : " + dec.format(taxtot) + " 원"
+                            findViewById<TextView>(R.id.tv_profityear).text =
+                                "당해 실현 수익 : " + dec.format(profityear) + " 원"
+                            findViewById<TextView>(R.id.tv_tradecomtot).text =
+                                "수수료 : " + dec.format(tradecomtot) + " 원"
 
-                            findViewById<TextView>(R.id.tv_price1x).text = dec.format(price1x)+" 원"
-                            findViewById<TextView>(R.id.tv_price3x).text = dec.format(price3x)+" 원"
-                            findViewById<TextView>(R.id.tv_priceinv1x).text = dec.format(priceinv1x)+" 원"
-                            findViewById<TextView>(R.id.tv_priceinv3x).text = dec.format(priceinv3x)+" 원"
+                            findViewById<TextView>(R.id.tv_price1x).text =
+                                dec.format(price1x) + " 원"
+                            findViewById<TextView>(R.id.tv_price3x).text =
+                                dec.format(price3x) + " 원"
+                            findViewById<TextView>(R.id.tv_priceinv1x).text =
+                                dec.format(priceinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_priceinv3x).text =
+                                dec.format(priceinv3x) + " 원"
 
-                            findViewById<TextView>(R.id.tv_aver1x).text = dec.format(aver1x)+" 원"
-                            findViewById<TextView>(R.id.tv_aver3x).text = dec.format(aver3x)+" 원"
-                            findViewById<TextView>(R.id.tv_averinv1x).text = dec.format(averinv1x)+" 원"
-                            findViewById<TextView>(R.id.tv_averinv3x).text = dec.format(averinv3x)+" 원"
+                            findViewById<TextView>(R.id.tv_aver1x).text = dec.format(aver1x) + " 원"
+                            findViewById<TextView>(R.id.tv_aver3x).text = dec.format(aver3x) + " 원"
+                            findViewById<TextView>(R.id.tv_averinv1x).text =
+                                dec.format(averinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_averinv3x).text =
+                                dec.format(averinv3x) + " 원"
 
-                            findViewById<TextView>(R.id.tv_quant1x).text = dec.format(quant1x)+" 주"
-                            findViewById<TextView>(R.id.tv_quant3x).text = dec.format(quant3x)+" 주"
-                            findViewById<TextView>(R.id.tv_quantinv1x).text = dec.format(quantinv1x)+" 주"
-                            findViewById<TextView>(R.id.tv_quantinv3x).text = dec.format(quantinv3x)+" 주"
+                            findViewById<TextView>(R.id.tv_quant1x).text =
+                                dec.format(quant1x) + " 주"
+                            findViewById<TextView>(R.id.tv_quant3x).text =
+                                dec.format(quant3x) + " 주"
+                            findViewById<TextView>(R.id.tv_quantinv1x).text =
+                                dec.format(quantinv1x) + " 주"
+                            findViewById<TextView>(R.id.tv_quantinv3x).text =
+                                dec.format(quantinv3x) + " 주"
 
-                            findViewById<TextView>(R.id.tv_val1x).text = dec.format(val1x)+" 원"
-                            findViewById<TextView>(R.id.tv_val3x).text = dec.format(val3x)+" 원"
-                            findViewById<TextView>(R.id.tv_valinv1x).text = dec.format(valinv1x)+" 원"
-                            findViewById<TextView>(R.id.tv_valinv3x).text = dec.format(valinv3x)+" 원"
+                            findViewById<TextView>(R.id.tv_val1x).text = dec.format(val1x) + " 원"
+                            findViewById<TextView>(R.id.tv_val3x).text = dec.format(val3x) + " 원"
+                            findViewById<TextView>(R.id.tv_valinv1x).text =
+                                dec.format(valinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_valinv3x).text =
+                                dec.format(valinv3x) + " 원"
 
-                            findViewById<TextView>(R.id.tv_profit1x).text = per.format(pr1x)+" %"
-                            findViewById<TextView>(R.id.tv_profit3x).text = per.format(pr3x)+" %"
-                            findViewById<TextView>(R.id.tv_profitinv1x).text = per.format(prinv1x)+" %"
-                            findViewById<TextView>(R.id.tv_profitinv3x).text = per.format(prinv3x)+" %"
+                            findViewById<TextView>(R.id.tv_profit1x).text = per.format(pr1x) + " %"
+                            findViewById<TextView>(R.id.tv_profit3x).text = per.format(pr3x) + " %"
+                            findViewById<TextView>(R.id.tv_profitinv1x).text =
+                                per.format(prinv1x) + " %"
+                            findViewById<TextView>(R.id.tv_profitinv3x).text =
+                                per.format(prinv3x) + " %"
 
                         }
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간역행 아이템
-                        println("현재 dayPlus: "+dayPlus.toString())
+                        println("현재 dayPlus: " + dayPlus.toString())
 
-                        item1Able = dayPlus - 2 // 시간 역행 가능한 범위
+                        item1Able = dayPlus - 1 // 시간 역행 가능한 범위
 
                         fundIndex1.add(fundIndex)
                         bondIndex1.add(bondIndex)
@@ -1087,7 +1189,7 @@ class GameNormalActivity : AppCompatActivity() {
                         unemIndex1.add(unemIndex)
                         infIndex1.add(infIndex)
 
-                        println("현재 fundIndex Size: "+fundIndex1.size.toString())
+                        println("현재 fundIndex Size: " + fundIndex1.size.toString())
 
                         fundCount1.add(fundCount)
                         bondCount1.add(bondCount)
@@ -1152,263 +1254,294 @@ class GameNormalActivity : AppCompatActivity() {
                         // 시간 진행 속도 조절 아이템
                         if (setGamespeed == 0) {
                             oneday = 1995L // 1 day/sec
-                        }
-                        else if (setGamespeed == 1) {
+                        } else if (setGamespeed == 1) {
                             oneday = 995L // 1 day/sec
-                        }
-                        else if (setGamespeed == 2) {
+                        } else if (setGamespeed == 2) {
                             oneday = 495L // 2 day/sec
-                        }
-                        else if (setGamespeed == 3) {
+                        } else if (setGamespeed == 3) {
                             oneday = 1000L / 3L - 5L // 3 day/sec
-                        }
-                        else if (setGamespeed == 4) {
+                        } else if (setGamespeed == 4) {
                             oneday = 245L // 4 day/sec
-                        }
-                        else if (setGamespeed == 5) {
+                        } else if (setGamespeed == 5) {
                             oneday = 195L // 5 day/sec
-                        }
-                        else if (setGamespeed == 6) {
+                        } else if (setGamespeed == 6) {
                             oneday = 115L // 8 day/sec
                         }
                         ////////////////////////////////////////////////////////////////////////////
 
 
-
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절
-                    }
-
-
-                    else if (item1Active) {
+                    } else if (item1Active) {
                         dayPlus -= 1
                         var timeTrableStart = dayPlus
-                        println("시간역행 시작 : "+dayPlus.toString())
+                        println("시간역행 시작 : " + dayPlus.toString())
 
-                        while (dayPlus >= (timeTrableStart - item1Length)) {
-                            snpD.removeEntry(dayPlus.toFloat(), 0)
-                            fundD.removeEntry(dayPlus.toFloat(), 0)
-                            bondD.removeEntry(dayPlus.toFloat(), 0)
-                            indproD.removeEntry(dayPlus.toFloat(), 0)
-                            unemD.removeEntry(dayPlus.toFloat(), 0)
-                            infD.removeEntry(dayPlus.toFloat(), 0)
+                        while (dayPlus > (timeTrableStart - item1Length)) {
+                            try {
+                                snpD.removeEntry(dayPlus.toFloat(), 0)
+                                fundD.removeEntry(dayPlus.toFloat(), 0)
+                                bondD.removeEntry(dayPlus.toFloat(), 0)
+                                indproD.removeEntry(dayPlus.toFloat(), 0)
+                                unemD.removeEntry(dayPlus.toFloat(), 0)
+                                infD.removeEntry(dayPlus.toFloat(), 0)
 
-                            fundIndex1.removeAt(dayPlus)
-                            bondIndex1.removeAt(dayPlus)
-                            indproIndex1.removeAt(dayPlus)
-                            unemIndex1.removeAt(dayPlus)
-                            infIndex1.removeAt(dayPlus)
+                                fundIndex1.removeAt(dayPlus)
+                                bondIndex1.removeAt(dayPlus)
+                                indproIndex1.removeAt(dayPlus)
+                                unemIndex1.removeAt(dayPlus)
+                                infIndex1.removeAt(dayPlus)
 
-                            fundCount1.removeAt(dayPlus)
-                            bondCount1.removeAt(dayPlus)
-                            indproCount1.removeAt(dayPlus)
-                            unemCount1.removeAt(dayPlus)
-                            infCount1.removeAt(dayPlus)
+                                fundCount1.removeAt(dayPlus)
+                                bondCount1.removeAt(dayPlus)
+                                indproCount1.removeAt(dayPlus)
+                                unemCount1.removeAt(dayPlus)
+                                infCount1.removeAt(dayPlus)
 
-                            asset1.removeAt(dayPlus)
-                            cash1.removeAt(dayPlus)
-                            input1.removeAt(dayPlus)
-                            bought1.removeAt(dayPlus)
-                            sold1.removeAt(dayPlus)
-                            evaluation1.removeAt(dayPlus)
-                            profit1.removeAt(dayPlus)
-                            profitrate1.removeAt(dayPlus)
-                            profittot1.removeAt(dayPlus)
-                            profityear1.removeAt(dayPlus)
+                                asset1.removeAt(dayPlus)
+                                cash1.removeAt(dayPlus)
+                                input1.removeAt(dayPlus)
+                                bought1.removeAt(dayPlus)
+                                sold1.removeAt(dayPlus)
+                                evaluation1.removeAt(dayPlus)
+                                profit1.removeAt(dayPlus)
+                                profitrate1.removeAt(dayPlus)
+                                profittot1.removeAt(dayPlus)
+                                profityear1.removeAt(dayPlus)
 
-                            quant1x1.removeAt(dayPlus)
-                            quant3x1.removeAt(dayPlus)
-                            quantinv1x1.removeAt(dayPlus)
-                            quantinv3x1.removeAt(dayPlus)
+                                quant1x1.removeAt(dayPlus)
+                                quant3x1.removeAt(dayPlus)
+                                quantinv1x1.removeAt(dayPlus)
+                                quantinv3x1.removeAt(dayPlus)
 
-                            bought1x1.removeAt(dayPlus)
-                            bought3x1.removeAt(dayPlus)
-                            boughtinv1x1.removeAt(dayPlus)
-                            boughtinv3x1.removeAt(dayPlus)
-                            aver1x1.removeAt(dayPlus)
-                            aver3x1.removeAt(dayPlus)
-                            averinv1x1.removeAt(dayPlus)
-                            averinv3x1.removeAt(dayPlus)
+                                bought1x1.removeAt(dayPlus)
+                                bought3x1.removeAt(dayPlus)
+                                boughtinv1x1.removeAt(dayPlus)
+                                boughtinv3x1.removeAt(dayPlus)
+                                aver1x1.removeAt(dayPlus)
+                                aver3x1.removeAt(dayPlus)
+                                averinv1x1.removeAt(dayPlus)
+                                averinv3x1.removeAt(dayPlus)
 
-                            buylim1x1.removeAt(dayPlus)
-                            buylim3x1.removeAt(dayPlus)
-                            buyliminv1x1.removeAt(dayPlus)
-                            buyliminv3x1.removeAt(dayPlus)
+                                buylim1x1.removeAt(dayPlus)
+                                buylim3x1.removeAt(dayPlus)
+                                buyliminv1x1.removeAt(dayPlus)
+                                buyliminv3x1.removeAt(dayPlus)
 
-                            price1x1.removeAt(dayPlus)
-                            price3x1.removeAt(dayPlus)
-                            priceinv1x1.removeAt(dayPlus)
-                            priceinv3x1.removeAt(dayPlus)
+                                price1x1.removeAt(dayPlus)
+                                price3x1.removeAt(dayPlus)
+                                priceinv1x1.removeAt(dayPlus)
+                                priceinv3x1.removeAt(dayPlus)
 
-                            val1x1.removeAt(dayPlus)
-                            val3x1.removeAt(dayPlus)
-                            valinv1x1.removeAt(dayPlus)
-                            valinv3x1.removeAt(dayPlus)
+                                val1x1.removeAt(dayPlus)
+                                val3x1.removeAt(dayPlus)
+                                valinv1x1.removeAt(dayPlus)
+                                valinv3x1.removeAt(dayPlus)
 
-                            pr1x1.removeAt(dayPlus)
-                            pr3x1.removeAt(dayPlus)
-                            prinv1x1.removeAt(dayPlus)
-                            prinv3x1.removeAt(dayPlus)
+                                pr1x1.removeAt(dayPlus)
+                                pr3x1.removeAt(dayPlus)
+                                prinv1x1.removeAt(dayPlus)
+                                prinv3x1.removeAt(dayPlus)
 
-                            tradecomtot1.removeAt(dayPlus)
-                            dividendtot1.removeAt(dayPlus)
-                            countMonth1.removeAt(dayPlus)
-                            countYear1.removeAt(dayPlus)
-                            tax1.removeAt(dayPlus)
-                            taxtot1.removeAt(dayPlus)
+                                tradecomtot1.removeAt(dayPlus)
+                                dividendtot1.removeAt(dayPlus)
+                                countMonth1.removeAt(dayPlus)
+                                countYear1.removeAt(dayPlus)
+                                tax1.removeAt(dayPlus)
+                                taxtot1.removeAt(dayPlus)
 
-                            println("시간역행 중 : "+dayPlus.toString())
+                                println("시간역행 중 : " + dayPlus.toString())
 
-                            dayPlus -= 1
+                                dayPlus -= 1
 
-                            fundIndex = fundIndex1[dayPlus]
-                            bondIndex = bondIndex1[dayPlus]
-                            indproIndex = indproIndex1[dayPlus]
-                            unemIndex = unemIndex1[dayPlus]
-                            infIndex = infIndex1[dayPlus]
+                                fundIndex = fundIndex1[dayPlus]
+                                bondIndex = bondIndex1[dayPlus]
+                                indproIndex = indproIndex1[dayPlus]
+                                unemIndex = unemIndex1[dayPlus]
+                                infIndex = infIndex1[dayPlus]
 
-                            fundCount = fundCount1[dayPlus]
-                            bondCount = bondCount1[dayPlus]
-                            indproCount = indproCount1[dayPlus]
-                            unemCount = unemCount1[dayPlus]
-                            infCount = infCount1[dayPlus]
+                                fundCount = fundCount1[dayPlus]
+                                bondCount = bondCount1[dayPlus]
+                                indproCount = indproCount1[dayPlus]
+                                unemCount = unemCount1[dayPlus]
+                                infCount = infCount1[dayPlus]
 
-                            asset = asset1[dayPlus] // 총 자산
-                            cash = cash1[dayPlus] // 보유 현금
-                            input = input1[dayPlus] // 총 인풋
-                            bought = bought1[dayPlus] // 총 매수금액
-                            sold= sold1[dayPlus]// 총 매도금액
-                            evaluation = evaluation1[dayPlus] // 평가금액
-                            profit = profit1[dayPlus] // 순손익
-                            profitrate = profitrate1[dayPlus] // 수익률
-                            profittot = profittot1[dayPlus] // 실현 순손익
-                            profityear= profityear1[dayPlus] // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+                                asset = asset1[dayPlus] // 총 자산
+                                cash = cash1[dayPlus] // 보유 현금
+                                input = input1[dayPlus] // 총 인풋
+                                bought = bought1[dayPlus] // 총 매수금액
+                                sold = sold1[dayPlus]// 총 매도금액
+                                evaluation = evaluation1[dayPlus] // 평가금액
+                                profit = profit1[dayPlus] // 순손익
+                                profitrate = profitrate1[dayPlus] // 수익률
+                                profittot = profittot1[dayPlus] // 실현 순손익
+                                profityear = profityear1[dayPlus] // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
-                            quant1x = quant1x1[dayPlus] // 1x 보유 수량
-                            quant3x = quant3x1[dayPlus] // 3x 보유 수량
-                            quantinv1x = quantinv1x1[dayPlus] // -1x 보유 수량
-                            quantinv3x = quantinv3x1[dayPlus] // -3x 보유 수량
+                                quant1x = quant1x1[dayPlus] // 1x 보유 수량
+                                quant3x = quant3x1[dayPlus] // 3x 보유 수량
+                                quantinv1x = quantinv1x1[dayPlus] // -1x 보유 수량
+                                quantinv3x = quantinv3x1[dayPlus] // -3x 보유 수량
 
-                            bought1x = bought1x1[dayPlus]
-                            bought3x = bought3x1[dayPlus]
-                            boughtinv1x = boughtinv1x1[dayPlus]
-                            boughtinv3x = boughtinv3x1[dayPlus]
-                            aver1x = aver1x1[dayPlus] // 1x 평균 단가
-                            aver3x = aver3x1[dayPlus] // 3x 평균 단가
-                            averinv1x = averinv1x1[dayPlus] // inv1x 평균 단가
-                            averinv3x = averinv3x1[dayPlus] // inv3x 평균 단가
+                                bought1x = bought1x1[dayPlus]
+                                bought3x = bought3x1[dayPlus]
+                                boughtinv1x = boughtinv1x1[dayPlus]
+                                boughtinv3x = boughtinv3x1[dayPlus]
+                                aver1x = aver1x1[dayPlus] // 1x 평균 단가
+                                aver3x = aver3x1[dayPlus] // 3x 평균 단가
+                                averinv1x = averinv1x1[dayPlus] // inv1x 평균 단가
+                                averinv3x = averinv3x1[dayPlus] // inv3x 평균 단가
 
-                            buylim1x = buylim1x1[dayPlus] // 1x 매수 한계 수량
-                            buylim3x = buylim3x1[dayPlus] // 3x 매수 한계 수량
-                            buyliminv1x = buyliminv1x1[dayPlus] // -1x 매수 한계 수량
-                            buyliminv3x = buyliminv3x1[dayPlus] // -3x 매수 한계 수량
+                                buylim1x = buylim1x1[dayPlus] // 1x 매수 한계 수량
+                                buylim3x = buylim3x1[dayPlus] // 3x 매수 한계 수량
+                                buyliminv1x = buyliminv1x1[dayPlus] // -1x 매수 한계 수량
+                                buyliminv3x = buyliminv3x1[dayPlus] // -3x 매수 한계 수량
 
-                            price1x = price1x1[dayPlus] // 1x 현재가
-                            price3x = price3x1[dayPlus] // 3x 현재가
-                            priceinv1x = priceinv1x1[dayPlus] // -1x 현재가
-                            priceinv3x = priceinv3x1[dayPlus] // -3x 현재가
+                                price1x = price1x1[dayPlus] // 1x 현재가
+                                price3x = price3x1[dayPlus] // 3x 현재가
+                                priceinv1x = priceinv1x1[dayPlus] // -1x 현재가
+                                priceinv3x = priceinv3x1[dayPlus] // -3x 현재가
 
-                            val1x = val1x1[dayPlus] // 1x 현재가치
-                            val3x = val3x1[dayPlus] // 3x 현재가치
-                            valinv1x = valinv1x1[dayPlus] // -1x 현재가치
-                            valinv3x = valinv3x1[dayPlus]// -3x 현재가치
+                                val1x = val1x1[dayPlus] // 1x 현재가치
+                                val3x = val3x1[dayPlus] // 3x 현재가치
+                                valinv1x = valinv1x1[dayPlus] // -1x 현재가치
+                                valinv3x = valinv3x1[dayPlus]// -3x 현재가치
 
-                            pr1x = pr1x1[dayPlus] // 1x 수익률
-                            pr3x = pr3x1[dayPlus] // 3x 수익률
-                            prinv1x = prinv1x1[dayPlus] // inv1x 수익률
-                            prinv3x = prinv3x1[dayPlus] // inv3x 수익률
+                                pr1x = pr1x1[dayPlus] // 1x 수익률
+                                pr3x = pr3x1[dayPlus] // 3x 수익률
+                                prinv1x = prinv1x1[dayPlus] // inv1x 수익률
+                                prinv3x = prinv3x1[dayPlus] // inv3x 수익률
 
-                            tradecomtot = tradecomtot1[dayPlus] // 거래수수료 총 합
-                            dividendtot = dividendtot1[dayPlus] // 총 배당금
-                            countMonth = countMonth1[dayPlus] // 경과 개월 수 카운트
-                            countYear = countYear1[dayPlus] // 플레이 한 햇수 카운트
-                            tax = tax1[dayPlus] // 세금
-                            taxtot = taxtot1[dayPlus] // 총 세금
+                                tradecomtot = tradecomtot1[dayPlus] // 거래수수료 총 합
+                                dividendtot = dividendtot1[dayPlus] // 총 배당금
+                                countMonth = countMonth1[dayPlus] // 경과 개월 수 카운트
+                                countYear = countYear1[dayPlus] // 플레이 한 햇수 카운트
+                                tax = tax1[dayPlus] // 세금
+                                taxtot = taxtot1[dayPlus] // 총 세금
 
-                            runOnUiThread {
-                                // 차트에 DataSet 리프레쉬 통보
-                                findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                                findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                                findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                                findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                                findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                                findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
-                                snpD.notifyDataChanged()
-                                fundD.notifyDataChanged()
-                                bondD.notifyDataChanged()
-                                unemD.notifyDataChanged()
-                                infD.notifyDataChanged()
 
-                                // 차트 축 최대 범위 설정
-                                findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                                runOnUiThread {
+                                    // 차트에 DataSet 리프레쉬 통보
+                                    findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                                    snpD.notifyDataChanged()
+                                    fundD.notifyDataChanged()
+                                    bondD.notifyDataChanged()
+                                    unemD.notifyDataChanged()
+                                    infD.notifyDataChanged()
 
-                                // 차트 축 이동
-                                findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                                findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                                findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                                findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                                findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                                findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                                    // 차트 축 최대 범위 설정
+                                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(
+                                        125F
+                                    ) // X축 범위: 125 거래일(~6개월)
 
-                                // 경과 기간 최신화
-                                findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
-                                findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
+                                    // 차트 축 이동
+                                    findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
 
-                                // 자산 가치 관련 값들 최신화
-                                findViewById<TextView>(R.id.tv_asset).text = "총 자산 : "+dec.format(asset)+" 원"
-                                findViewById<TextView>(R.id.tv_cash).text = "현금 : "+dec.format(cash)+" 원"
-                                findViewById<TextView>(R.id.tv_evaluation).text = "평가금액 : "+dec.format(evaluation)+" 원"
-                                findViewById<TextView>(R.id.tv_profit).text = "순손익 : "+dec.format(profit)+" 원"
-                                findViewById<TextView>(R.id.tv_profitrate).text = "수익률 : "+per.format(profitrate)+" %"
-                                findViewById<TextView>(R.id.tv_dividend).text = "배당금 : "+dec.format(dividendtot)+" 원"
-                                findViewById<TextView>(R.id.tv_taxtot).text = "세금 : "+dec.format(taxtot)+" 원"
-                                findViewById<TextView>(R.id.tv_profityear).text = "당해 실현 수익 : "+dec.format(profityear)+" 원"
-                                findViewById<TextView>(R.id.tv_tradecomtot).text = "수수료 : "+dec.format(tradecomtot)+" 원"
+                                    // 경과 기간 최신화
+                                    findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
+                                    findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
 
-                                findViewById<TextView>(R.id.tv_price1x).text = dec.format(price1x)+" 원"
-                                findViewById<TextView>(R.id.tv_price3x).text = dec.format(price3x)+" 원"
-                                findViewById<TextView>(R.id.tv_priceinv1x).text = dec.format(priceinv1x)+" 원"
-                                findViewById<TextView>(R.id.tv_priceinv3x).text = dec.format(priceinv3x)+" 원"
+                                    // 자산 가치 관련 값들 최신화
+                                    findViewById<TextView>(R.id.tv_asset).text =
+                                        "총 자산 : " + dec.format(asset) + " 원"
+                                    findViewById<TextView>(R.id.tv_cash).text =
+                                        "현금 : " + dec.format(cash) + " 원"
+                                    findViewById<TextView>(R.id.tv_evaluation).text =
+                                        "평가금액 : " + dec.format(evaluation) + " 원"
+                                    findViewById<TextView>(R.id.tv_profit).text =
+                                        "순손익 : " + dec.format(profit) + " 원"
+                                    findViewById<TextView>(R.id.tv_profitrate).text =
+                                        "수익률 : " + per.format(profitrate) + " %"
+                                    findViewById<TextView>(R.id.tv_dividend).text =
+                                        "배당금 : " + dec.format(dividendtot) + " 원"
+                                    findViewById<TextView>(R.id.tv_taxtot).text =
+                                        "세금 : " + dec.format(taxtot) + " 원"
+                                    findViewById<TextView>(R.id.tv_profityear).text =
+                                        "당해 실현 수익 : " + dec.format(profityear) + " 원"
+                                    findViewById<TextView>(R.id.tv_tradecomtot).text =
+                                        "수수료 : " + dec.format(tradecomtot) + " 원"
 
-                                findViewById<TextView>(R.id.tv_aver1x).text = dec.format(aver1x)+" 원"
-                                findViewById<TextView>(R.id.tv_aver3x).text = dec.format(aver3x)+" 원"
-                                findViewById<TextView>(R.id.tv_averinv1x).text = dec.format(averinv1x)+" 원"
-                                findViewById<TextView>(R.id.tv_averinv3x).text = dec.format(averinv3x)+" 원"
+                                    findViewById<TextView>(R.id.tv_price1x).text =
+                                        dec.format(price1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_price3x).text =
+                                        dec.format(price3x) + " 원"
+                                    findViewById<TextView>(R.id.tv_priceinv1x).text =
+                                        dec.format(priceinv1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_priceinv3x).text =
+                                        dec.format(priceinv3x) + " 원"
 
-                                findViewById<TextView>(R.id.tv_quant1x).text = dec.format(quant1x)+" 주"
-                                findViewById<TextView>(R.id.tv_quant3x).text = dec.format(quant3x)+" 주"
-                                findViewById<TextView>(R.id.tv_quantinv1x).text = dec.format(quantinv1x)+" 주"
-                                findViewById<TextView>(R.id.tv_quantinv3x).text = dec.format(quantinv3x)+" 주"
+                                    findViewById<TextView>(R.id.tv_aver1x).text =
+                                        dec.format(aver1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_aver3x).text =
+                                        dec.format(aver3x) + " 원"
+                                    findViewById<TextView>(R.id.tv_averinv1x).text =
+                                        dec.format(averinv1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_averinv3x).text =
+                                        dec.format(averinv3x) + " 원"
 
-                                findViewById<TextView>(R.id.tv_val1x).text = dec.format(val1x)+" 원"
-                                findViewById<TextView>(R.id.tv_val3x).text = dec.format(val3x)+" 원"
-                                findViewById<TextView>(R.id.tv_valinv1x).text = dec.format(valinv1x)+" 원"
-                                findViewById<TextView>(R.id.tv_valinv3x).text = dec.format(valinv3x)+" 원"
+                                    findViewById<TextView>(R.id.tv_quant1x).text =
+                                        dec.format(quant1x) + " 주"
+                                    findViewById<TextView>(R.id.tv_quant3x).text =
+                                        dec.format(quant3x) + " 주"
+                                    findViewById<TextView>(R.id.tv_quantinv1x).text =
+                                        dec.format(quantinv1x) + " 주"
+                                    findViewById<TextView>(R.id.tv_quantinv3x).text =
+                                        dec.format(quantinv3x) + " 주"
 
-                                findViewById<TextView>(R.id.tv_profit1x).text = per.format(pr1x)+" %"
-                                findViewById<TextView>(R.id.tv_profit3x).text = per.format(pr3x)+" %"
-                                findViewById<TextView>(R.id.tv_profitinv1x).text = per.format(prinv1x)+" %"
-                                findViewById<TextView>(R.id.tv_profitinv3x).text = per.format(prinv3x)+" %"
+                                    findViewById<TextView>(R.id.tv_val1x).text =
+                                        dec.format(val1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_val3x).text =
+                                        dec.format(val3x) + " 원"
+                                    findViewById<TextView>(R.id.tv_valinv1x).text =
+                                        dec.format(valinv1x) + " 원"
+                                    findViewById<TextView>(R.id.tv_valinv3x).text =
+                                        dec.format(valinv3x) + " 원"
 
-                                findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
+                                    findViewById<TextView>(R.id.tv_profit1x).text =
+                                        per.format(pr1x) + " %"
+                                    findViewById<TextView>(R.id.tv_profit3x).text =
+                                        per.format(pr3x) + " %"
+                                    findViewById<TextView>(R.id.tv_profitinv1x).text =
+                                        per.format(prinv1x) + " %"
+                                    findViewById<TextView>(R.id.tv_profitinv3x).text =
+                                        per.format(prinv3x) + " %"
+
+                                    findViewById<TextView>(R.id.tv_notification).text =
+                                        "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
+                                }
+                            } catch (e: IndexOutOfBoundsException) {
+                                e.printStackTrace()
                             }
                             delay(50L)
-                        }
-                        println("시간역행 끝 : "+dayPlus.toString())
-                        item1Active = false //
-                    }
 
-                    else {
+                        }
+                        println("시간역행 끝 : " + dayPlus.toString())
+                        item1Length = 0
+                        item1Active = false //
+                    } else {
                         println("게임 끝")
                         break
                     }
                 } else {
                 }
             } else {
-                if(endsuccess){
-                    var profileDb : ProflieDB? = null
+                if (endsuccess) {
+                    var profileDb: ProflieDB? = null
                     profileDb = ProflieDB.getInstace(this)
-                    funlevelup(profileDb?.profileDao()?.getLoginid()!!, profileDb?.profileDao()?.getLoginpw()!!, 100)
+                    funlevelup(
+                        profileDb?.profileDao()?.getLoginid()!!,
+                        profileDb?.profileDao()?.getLoginpw()!!,
+                        100
+                    )
                     endsuccess = false
                     val deleteRunnable = Runnable {
                         gameNormalDb?.gameNormalDao()?.deleteAll()
@@ -1425,52 +1558,58 @@ class GameNormalActivity : AppCompatActivity() {
         }
 
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    fun funlevelup(u_id : String, u_pw : String, u_exp:Int){
-        val mContext : Context = this
-        var profileDb : ProflieDB? = null
+    fun funlevelup(u_id: String, u_pw: String, u_exp: Int) {
+        val mContext: Context = this
+        var profileDb: ProflieDB? = null
         var funlevel_up: RetrofitLevelUp? = null
         profileDb = ProflieDB.getInstace(mContext)
         val url = "http://stockgame.dothome.co.kr/test/levelup.php/"
         var gson: Gson = GsonBuilder()
-                .setLenient()
-                .create()
+            .setLenient()
+            .create()
         //creating retrofit object
         var retrofit =
-                Retrofit.Builder()
-                        .baseUrl(url)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build()
+            Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
         //creating our api
         funlevel_up = retrofit.create(RetrofitLevelUp::class.java)
 
-        funlevel_up.levelup(getHash(u_id).trim(), getHash(u_pw).trim(), u_exp).enqueue(object : Callback<DATACLASS> {
-            override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
-                println("---"+t.message)
-            }
-            override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
-                if (response.isSuccessful && response.body() != null) {
-                    var data : DATACLASS = response.body()!!
-                    profileDb = ProflieDB?.getInstace(mContext)
-                    if(profileDb?.profileDao()?.getLevel()!! != data?.LEVEL){
-                        islevelup = true
-                    }
-                    val newProfile = Profile()
-                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                    newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                    newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                    newProfile.level = data?.LEVEL!!
-                    newProfile.exp = data?.EXP!!
-                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                    newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                    newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-                    newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                    newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                    profileDb?.profileDao()?.update(newProfile)
-                    profileDb = ProflieDB?.getInstace(mContext)
+        funlevel_up.levelup(getHash(u_id).trim(), getHash(u_pw).trim(), u_exp)
+            .enqueue(object : Callback<DATACLASS> {
+                override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
+                    println("---" + t.message)
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<DATACLASS>,
+                    response: retrofit2.Response<DATACLASS>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        var data: DATACLASS = response.body()!!
+                        profileDb = ProflieDB?.getInstace(mContext)
+                        if (profileDb?.profileDao()?.getLevel()!! != data?.LEVEL) {
+                            islevelup = true
+                        }
+                        val newProfile = Profile()
+                        newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                        newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                        newProfile.level = data?.LEVEL!!
+                        newProfile.exp = data?.EXP!!
+                        newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                        newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                        profileDb?.profileDao()?.update(newProfile)
+                        profileDb = ProflieDB?.getInstace(mContext)
+                    }
+                }
+            })
 
     }
 }
