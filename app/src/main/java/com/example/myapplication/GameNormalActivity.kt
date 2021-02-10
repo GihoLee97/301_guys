@@ -1277,8 +1277,9 @@ class GameNormalActivity : AppCompatActivity() {
                         var timeTrableStart = dayPlus
                         println("시간역행 시작 : " + dayPlus.toString())
 
-                        while (dayPlus > (timeTrableStart - item1Length)) {
-                            try {
+                        try {
+                            while (dayPlus > (timeTrableStart - item1Length)) {
+
                                 snpD.removeEntry(dayPlus.toFloat(), 0)
                                 fundD.removeEntry(dayPlus.toFloat(), 0)
                                 bondD.removeEntry(dayPlus.toFloat(), 0)
@@ -1422,16 +1423,7 @@ class GameNormalActivity : AppCompatActivity() {
                                 runOnUiThread {
                                     // 차트에 DataSet 리프레쉬 통보
                                     findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
                                     snpD.notifyDataChanged()
-                                    fundD.notifyDataChanged()
-                                    bondD.notifyDataChanged()
-                                    unemD.notifyDataChanged()
-                                    infD.notifyDataChanged()
 
                                     // 차트 축 최대 범위 설정
                                     findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(
@@ -1440,11 +1432,7 @@ class GameNormalActivity : AppCompatActivity() {
 
                                     // 차트 축 이동
                                     findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+
 
                                     // 경과 기간 최신화
                                     findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
@@ -1519,13 +1507,31 @@ class GameNormalActivity : AppCompatActivity() {
                                         "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
                                 delay(50L)
-                            } catch (e: IndexOutOfBoundsException) {
-                                e.printStackTrace()
-                                gameend = true
-                                break
                             }
-
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
+                            gameend = true
+                            endsuccess = true
+                            break
                         }
+
+                        runOnUiThread {
+                            findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                            fundD.notifyDataChanged()
+                            bondD.notifyDataChanged()
+                            unemD.notifyDataChanged()
+                            infD.notifyDataChanged()
+                            findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                        }
+
                         println("시간역행 끝 : " + dayPlus.toString())
                         item1Length = 0
                         item1Active = false //
