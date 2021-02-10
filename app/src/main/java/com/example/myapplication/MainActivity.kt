@@ -10,6 +10,10 @@ import com.example.myapplication.data.GameSetDB
 class MainActivity : AppCompatActivity() {
 
     private var gameSetDb: GameSetDB? = null
+    private lateinit var btn_profile : Button
+    private lateinit var btn_setting : Button
+    private lateinit var btn_game : Button
+    private lateinit var btn_market : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -17,22 +21,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         gameSetDb = GameSetDB.getInstace(this)
 
-        val profile1_btn = findViewById<Button>(R.id.profile1_btn)
-        profile1_btn.setOnClickListener{
+        btn_profile = findViewById(R.id.btn_profile)
+        btn_setting = findViewById(R.id.btn_setting)
+        btn_game =  findViewById(R.id.btn_game)
+        btn_market = findViewById(R.id.btn_market)
+
+        btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
+
+        btn_profile.setOnClickListener{
             val intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        val setting_btn = findViewById<Button>(R.id.setting_btn)
-        setting_btn.setOnClickListener {
+        btn_setting.setOnClickListener {
             val intent = Intent(this,SettingActivity::class.java)
             startActivity(intent)
         }
 
-        var game_btn =  findViewById<Button>(R.id.game_btn)
-        game_btn.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
-
-        game_btn.setOnClickListener{
+        btn_game.setOnClickListener{
             val intentgame = Intent(this, GameNormalActivity::class.java)
             val intent = Intent(this,GameSettingActivity::class.java)
             if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)      startActivity(intent)
@@ -44,10 +50,15 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intentgame)}
         }
 
+        btn_market.setOnClickListener {
+            val intent = Intent(this,MarketActivity::class.java)
+            startActivity(intent)
+        }
+
         while (true) {
             if (loadcomp) {
-                game_btn.isEnabled = true
-                game_btn.text = "게임"
+                btn_game.isEnabled = true
+                btn_game.text = "게임"
                 break
             }
             Thread.sleep(50)

@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GameSettingActivity"></activity>
-        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".MarketActivity"></activity>
+        <activity android:name=".GameSettingActivity" />
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".GameHistoryActivity" />
         <activity android:name=".AccountManagementActivity" /> <!-- android:name 설정 -->
         <!-- Splash Activity -->
@@ -31,6 +32,9 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
 
         <activity android:name=".InitialActivity" />
         <activity android:name=".ResultNormalActivity" />

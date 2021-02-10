@@ -47,7 +47,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.room:room-runtime:2.2.6'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:28.0.0'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -108,6 +110,13 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     // Testing Fragments in Isolation
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
+    //in app purchase
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:24.1.1'
+    implementation 'com.google.android.gms:play-services-wallet:18.1.2'
+    def billing_version = "3.0.0"
+    implementation "com.android.billingclient:billing-ktx:$billing_version"
 }
 
 apply plugin: 'com.android.application'
