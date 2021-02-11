@@ -299,54 +299,62 @@ class GameNormalActivity : AppCompatActivity() {
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
             initialize(
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.assets!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.cash!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.sold!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profit!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profitrate!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profittot!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profityear!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.countyear!!,
-                gameNormalDb?.gameNormalDao()?.getAll()?.last()?.countmonth!!
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.assets!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.cash!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.input!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.sold!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profit!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profitrate!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profittot!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.profityear!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quant3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.aver3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.val3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.pr3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.taxtot!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.countyear!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.countmonth!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item1active!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item1length!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item1able!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item2active!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item3active!!,
+                    gameNormalDb?.gameNormalDao()?.getAll()?.last()?.item4active!!
             )
         } else {
 
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
             initialize(
-                0F, setCash, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0, 0, 0, 0, 0F,
+                setCash, setCash, setCash,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0, 0, 0, 0, 0F,
                 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F,
-                0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F,0,0
+                0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F,0,0,false,0,0,false,false, false
             )
+
 
         }
 
@@ -441,48 +449,55 @@ class GameNormalActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
     private fun initialize(
-        startasset: Float,
-        startcash: Float,
-        startbought: Float,
-        startsold: Float,
-        startevaluation: Float,
-        startprofit: Float,
-        startprofitrate: Float,
-        startprofittot: Float,
-        startprofityear: Float,
-        startquant1x: Int,
-        startquant3x: Int,
-        startquantinv1x: Int,
-        startquantinv3x: Int,
-        startbought1x: Float,
-        startbought3x: Float,
-        startboughtinv1x: Float,
-        startboughtinv3x: Float,
-        startaver1x: Float,
-        startaver3x: Float,
-        startaverinv1x: Float,
-        startaverinv3x: Float,
-        startbuylim1x: Float,
-        startbuylim3x: Float,
-        startbuyliminv1x: Float,
-        startbuyliminv3x: Float,
-        startval1x: Float,
-        startval3x: Float,
-        startvalinv1x: Float,
-        startvalinv3x: Float,
-        startpr1x: Float,
-        startpr3x: Float,
-        startprinv1x: Float,
-        startprinv3x: Float,
-        starttradecomtot: Float,
-        startdividendtot: Float,
-        starttaxtot: Float,
-        startyear: Int,
-        startmonth: Int
-        ) {
+            startasset: Float,
+            startcash: Float,
+            startinput: Float,
+            startbought: Float,
+            startsold: Float,
+            startevaluation: Float,
+            startprofit: Float,
+            startprofitrate: Float,
+            startprofittot: Float,
+            startprofityear: Float,
+            startquant1x: Int,
+            startquant3x: Int,
+            startquantinv1x: Int,
+            startquantinv3x: Int,
+            startbought1x: Float,
+            startbought3x: Float,
+            startboughtinv1x: Float,
+            startboughtinv3x: Float,
+            startaver1x: Float,
+            startaver3x: Float,
+            startaverinv1x: Float,
+            startaverinv3x: Float,
+            startbuylim1x: Float,
+            startbuylim3x: Float,
+            startbuyliminv1x: Float,
+            startbuyliminv3x: Float,
+            startval1x: Float,
+            startval3x: Float,
+            startvalinv1x: Float,
+            startvalinv3x: Float,
+            startpr1x: Float,
+            startpr3x: Float,
+            startprinv1x: Float,
+            startprinv3x: Float,
+            starttradecomtot: Float,
+            startdividendtot: Float,
+            starttaxtot: Float,
+            startyear: Int,
+            startmonth: Int,
+            startitem1active: Boolean,
+            startitem1length: Int,
+            startitem1able: Int,
+            startitem2active: Boolean,
+            startitem3active: Boolean,
+            startitem4active: Boolean
+    ) {
         asset = startasset // 총 자산
         cash = startcash // 보유 현금
-        input = cash // 총 인풋
+        input = startinput // 총 인풋
         bought = startbought // 총 매수금액
         sold = startsold // 총 매도금액
         evaluation = startevaluation// 평가금액
@@ -541,6 +556,12 @@ class GameNormalActivity : AppCompatActivity() {
         snpNowdays = 0
         snpNowVal = 0F
         snpDiff = 0F
+        item1Active = startitem1active
+        item2Active = startitem2active
+        item3Active = startitem3active
+        item4Active = startitem4active
+        item1Length = startitem1length
+        item1Able = startitem1able
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

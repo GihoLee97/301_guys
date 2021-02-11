@@ -50,9 +50,12 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "dividendtot") var dividendtot: Float,
 @ColumnInfo(name = "taxtot") var taxtot: Float,
 @ColumnInfo(name = "item") var item:String,
-@ColumnInfo(name = "item1count")var item1count: Int,
-@ColumnInfo(name = "item2count")var item2count: Int,
-@ColumnInfo(name = "item3count")var item3count:Int,
+@ColumnInfo(name = "item1active")var item1active: Boolean,
+                       @ColumnInfo(name = "item1length")var item1length: Int,
+                       @ColumnInfo(name = "item1able") var item1able: Int,
+@ColumnInfo(name = "item2active")var item2active: Boolean,
+@ColumnInfo(name = "item3active")var item3active:Boolean,
+                       @ColumnInfo(name = "item4active")var item4active: Boolean,
 @ColumnInfo(name = "endpoint")var endpoint: Int,
 @ColumnInfo(name = "countyear")var countyear: Int,
                        @ColumnInfo(name = "countmonth") var countmonth:Int
@@ -60,5 +63,5 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
     0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"nothing",
-    0,0,0,0,0,0)
+    false,0,0,false,false,false,0,0,0)
 }
