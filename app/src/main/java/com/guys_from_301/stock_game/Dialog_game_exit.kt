@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.guys_from_301.stock_game
 
 import android.app.Activity
 import android.app.Dialog
@@ -6,10 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.Window
 import android.widget.Button
-import androidx.core.content.ContextCompat.startActivity
-import com.example.myapplication.data.GameNormal
-import com.example.myapplication.data.GameNormalDB
-import com.example.myapplication.data.GameSetDB
+//import androidx.core.content.ContextCompat.startActivity
 import android.widget.Toast
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
@@ -58,16 +55,6 @@ class Dialog_game_exit (context : Context)  {
 //            val intent = Intent(mContext, MainActivity::class.java)
                 (mContext as Activity).finish()
             }
-                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-            }
-            val addThread = Thread(addRunnable)
-            addThread.start()
-            dlg.dismiss()
-            gameend = !gameend /////////////////////////////////////////////////////////////////////
-            val intent = Intent(mContext as Activity, MainActivity::class.java)
-//            (mContext as Activity).finish()
-            (mContext as Activity).startActivity(intent)
-          }
 
           }
 

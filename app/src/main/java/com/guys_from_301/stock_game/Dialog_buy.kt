@@ -5,8 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Window
 import android.widget.*
-import com.example.myapplication.data.GameNormal
-import com.example.myapplication.data.GameNormalDB
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
