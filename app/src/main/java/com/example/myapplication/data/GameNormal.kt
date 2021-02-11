@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "assets") var assets: Float,
 @ColumnInfo(name = "cash") var cash : Float,
+                       @ColumnInfo(name = "input") var input: Float,
 @ColumnInfo(name = "bought") var bought: Float,
                        @ColumnInfo(name = "sold") var sold:Float,
 @ColumnInfo(name = "evaluation") var evaluation:Float,
@@ -52,10 +53,12 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "item1count")var item1count: Int,
 @ColumnInfo(name = "item2count")var item2count: Int,
 @ColumnInfo(name = "item3count")var item3count:Int,
-@ColumnInfo(name = "endpoint")var endpoint: Int
+@ColumnInfo(name = "endpoint")var endpoint: Int,
+@ColumnInfo(name = "countyear")var countyear: Int,
+                       @ColumnInfo(name = "countmonth") var countmonth:Int
 )
 {
-    constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
+    constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
     0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"nothing",
-    0,0,0,0)
+    0,0,0,0,0,0)
 }
