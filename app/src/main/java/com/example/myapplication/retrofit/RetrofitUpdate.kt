@@ -20,9 +20,6 @@ interface RetrofitUpdate {
         @Field("u_id") u_id: String,
         @Field("u_pw") u_pw: String,
         @Field("u_money") u_money: Int,
-        @Field("u_item1") u_item1: Int,
-        @Field("u_item2") u_item2: Int,
-        @Field("u_item3") u_item3: Int,
         @Field("u_nickname") u_nickname: String,
         @Field("u_profit") u_profit: Int,
         @Field("u_history") u_history: String,
@@ -31,7 +28,7 @@ interface RetrofitUpdate {
 }
 
 // update
-fun update(u_id: String, u_pw: String,u_money : Int, u_item1:Int,u_item2:Int,u_item3:Int, u_nickname:String, u_profit:Int, u_history:String, u_level:Int) {
+fun update(u_id: String, u_pw: String,u_money : Int, u_nickname:String, u_profit:Int, u_history:String, u_level:Int) {
     var funupdate: RetrofitUpdate? = null
     val url = "http://stockgame.dothome.co.kr/test/update.php/"
     var gson: Gson = GsonBuilder()
@@ -45,7 +42,7 @@ fun update(u_id: String, u_pw: String,u_money : Int, u_item1:Int,u_item2:Int,u_i
             .build()
     //creating our api
     funupdate= retrofit.create(RetrofitUpdate::class.java)
-    funupdate.update(u_id, u_pw, u_money, u_item1,u_item2,u_item3, u_nickname, u_profit, u_history, u_level).enqueue(object : Callback<String> {
+    funupdate.update(u_id, u_pw, u_money, u_nickname, u_profit, u_history, u_level).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>, t: Throwable) {
             //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
         }

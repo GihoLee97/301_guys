@@ -82,11 +82,11 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
 
                                 update(getHash(profileDb?.profileDao()?.getLoginid()).trim(),
                                 getHash(profileDb?.profileDao()?.getLoginpw()).trim(),
-                                    10, 4, 4, 4,
-                                    profileDb?.profileDao()?.getNickname(),
-                                    profileDb?.profileDao()?.getProfit(),
-                                    profileDb?.profileDao()?.getHistory(),
-                                    profileDb?.profileDao()?.getLevel())
+                                    profileDb?.profileDao()?.getMoney()!!,
+                                    profileDb?.profileDao()?.getNickname()!!,
+                                    profileDb?.profileDao()?.getProfit()!!,
+                                    profileDb?.profileDao()?.getHistory()!!,
+                                    profileDb?.profileDao()?.getLevel()!!)
                                 dlg.dismiss()
                             }
                             if(okcode =="666"){

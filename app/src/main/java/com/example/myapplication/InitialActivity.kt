@@ -420,7 +420,6 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.login_pw = u_pw
                     profileDb?.profileDao()?.update(newProfile)
                     profileDb = ProflieDB?.getInstace(this@InitialActivity)
-                    println("---2"+profileDb?.profileDao()?.getNickname())
                 }
             }
         })

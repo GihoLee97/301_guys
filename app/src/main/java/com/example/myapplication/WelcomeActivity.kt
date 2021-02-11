@@ -78,7 +78,7 @@ class WelcomeActivity : AppCompatActivity() {
                 step = "Welcome complished"
             } else if(step == "Welcome complished"){
                 //TODO
-                Toast.makeText(this, "최초 접속 기념 지급!\n현금: 100만원\n아이템1: 5개", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "최초 접속 기념 지급!\n현금: 100만원", Toast.LENGTH_LONG).show()
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
@@ -142,7 +142,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
-                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, 5, 4, 4, nickname, profit, history, level)
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, nickname, profit, history, level)
 
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)

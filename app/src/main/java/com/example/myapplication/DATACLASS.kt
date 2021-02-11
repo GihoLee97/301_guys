@@ -21,18 +21,6 @@ class DATACLASS {
     @Expose
     var MONEY : Int
 
-    @SerializedName("ITEM1")
-    @Expose
-    var ITEM1 : Int
-
-    @SerializedName("ITEM2")
-    @Expose
-    var ITEM2 : Int
-
-    @SerializedName("ITEM3")
-    @Expose
-    var ITEM3 : Int
-
     @SerializedName("NICKNAME")
     @Expose
     var NICKNAME : String
@@ -53,14 +41,11 @@ class DATACLASS {
     @Expose
     var EXP : Int
 
-    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, ITEM1: Int, ITEM2: Int, ITEM3: Int, NICKNAME:String, PROFIT:Int, HISTORY:String, LEVEL : Int, EXP:Int) {
+    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, NICKNAME:String, PROFIT:Int, HISTORY:String, LEVEL : Int, EXP:Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
         this.DATE = DATE
         this.MONEY = MONEY
-        this.ITEM1 = ITEM1
-        this.ITEM2 = ITEM2
-        this.ITEM3 = ITEM3
         this.NICKNAME = NICKNAME
         this.PROFIT = PROFIT
         this.HISTORY = HISTORY

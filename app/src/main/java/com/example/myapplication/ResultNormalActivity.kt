@@ -70,7 +70,6 @@ class ResultNormalActivity : AppCompatActivity() {
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                 getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
                 profileDb?.profileDao()?.getMoney()!!,
-                5,5,5,
                 profileDb?.profileDao()?.getNickname()!!,
                 profileDb?.profileDao()?.getProfit()!!,
                 profileDb?.profileDao()?.getHistory()!!,

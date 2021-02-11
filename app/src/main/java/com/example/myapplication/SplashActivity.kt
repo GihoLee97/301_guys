@@ -56,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
         MobileAds.initialize(this){}
 
 
+
         Handler().postDelayed({ //delay를 위한 handler
             profileDb = ProflieDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){

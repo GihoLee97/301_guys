@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_market.setOnClickListener {
+//            val intent = Intent(this,MarketActivity::class.java)
+//            startActivity(intent)
             val intent = Intent(this,MarketActivity::class.java)
             startActivity(intent)
         }
