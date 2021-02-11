@@ -111,9 +111,8 @@ var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
+var endsuccess: Boolean = false // 게임 정상종료
 
-// 정상적인 게임 종료 시 경험치 지급을 위한 변수//////////////////////////////////////////////////
-var endsuccess: Boolean = false // gameend는 game_exit에서 저장, 종료에서 사용되기 때문에 구별함
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var islevelup: Boolean = false
@@ -373,7 +372,6 @@ class GameNormalActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
             //val dlgAuto = Dialog_auto(this)
             gameend = !gameend
-            endsuccess = !endsuccess
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
@@ -415,11 +413,14 @@ class GameNormalActivity : AppCompatActivity() {
 
             job3.join()
 
-//            val job4 = launch {
-//                chartend()
-//            }
+            val job4 = launch {
+                endgame()
+            }
+
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
     }
 
@@ -434,7 +435,7 @@ class GameNormalActivity : AppCompatActivity() {
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        if (!gameend) {
+        if (!gameend && !endsuccess) {
             val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
             dlg_exit.start()
         }
@@ -563,7 +564,6 @@ class GameNormalActivity : AppCompatActivity() {
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
         click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
         gameend = false // 게임 종료시 적용
-        endsuccess = false
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
@@ -1021,6 +1021,11 @@ class GameNormalActivity : AppCompatActivity() {
 
                             // 설정한 게임 플레이 기간에 도달
                             if (countYear > setGamelength) {
+                                gameend = true
+                                endsuccess = true
+                                break
+                                break
+                                break
                                 break
                             } else if (snpDate_sf.month == 2 || snpDate_sf.month == 5 || snpDate_sf.month == 8 || snpDate_sf.month == 11) {
                                 if (val1x > 1F) {
@@ -1299,7 +1304,7 @@ class GameNormalActivity : AppCompatActivity() {
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절
                     }
-                    else if (item1Active) {
+                    else if (dayPlus <= gl && item1Active) {
                         runOnUiThread {
                             findViewById<Button>(R.id.btn_buy).isEnabled = false
                             findViewById<Button>(R.id.btn_sell).isEnabled = false
@@ -1561,7 +1566,9 @@ class GameNormalActivity : AppCompatActivity() {
                         } catch (e: IndexOutOfBoundsException) {
                             e.printStackTrace()
                             gameend = true
-                            endsuccess = true
+                            break
+                            break
+                            break
                             break
                         }
 
@@ -1819,39 +1826,45 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<Button>(R.id.btn_auto).isEnabled = true
                             findViewById<Button>(R.id.btn_item).isEnabled = true
                         }
-                    } else {
+                    }
+                    else {
                         println("게임 끝")
+                        endsuccess = true
+                        break
+                        break
                         break
                     }
-                } else {
                 }
-            } else {
-                if (endsuccess) {
-                    var profileDb: ProflieDB? = null
-                    profileDb = ProflieDB.getInstace(this)
-                    funlevelup(
-                        profileDb?.profileDao()?.getLoginid()!!,
-                        profileDb?.profileDao()?.getLoginpw()!!,
-                        100
-                    )
-                    endsuccess = false
-                    val deleteRunnable = Runnable {
-                        gameNormalDb?.gameNormalDao()?.deleteAll()
-                        gameSetDb?.gameSetDao()?.deleteAll()
-                    }
-                    val deleteThread = Thread(deleteRunnable)
-                    deleteThread.start()
-                    val intent = Intent(this, ResultNormalActivity::class.java)
-                    startActivity(intent)
-                }
+            }
+            else {
+                println("게임 끝")
                 break
             }
             delay(btnRefresh)
         }
-
     }
 
+    // 게임 종료 시 결과창으로 이동
+    private fun endgame() {
+        var profileDb: ProflieDB? = null
+        profileDb = ProflieDB.getInstace(this@GameNormalActivity)
+        funlevelup(
+            profileDb?.profileDao()?.getLoginid()!!,
+            profileDb?.profileDao()?.getLoginpw()!!,
+            100
+        )
+        val deleteRunnable = Runnable {
+            gameNormalDb?.gameNormalDao()?.deleteAll()
+            gameSetDb?.gameSetDao()?.deleteAll()
+        }
+        val deleteThread = Thread(deleteRunnable)
+        deleteThread.start()
+        val intent = Intent(this@GameNormalActivity, ResultNormalActivity::class.java)
+        startActivity(intent)
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     fun funlevelup(u_id: String, u_pw: String, u_exp: Int) {
         val mContext: Context = this
         var profileDb: ProflieDB? = null

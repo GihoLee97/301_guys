@@ -16,6 +16,10 @@ class ResultNormalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_normal)
+
+        gameend = false // 게임 전역번수 초기화
+        endsuccess = false // 게임 전역번수 초기화
+
         textprofit = findViewById(R.id.ResultProfit)
         btnok = findViewById(R.id.btn_resultOk)
 
