@@ -1448,13 +1448,34 @@ class GameNormalActivity : AppCompatActivity() {
                                 runOnUiThread {
                                     // 차트에 DataSet 리프레쉬 통보
                                     findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+                                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+
                                     snpD.notifyDataChanged()
+                                    fundD.notifyDataChanged()
+                                    bondD.notifyDataChanged()
+                                    indproD.notifyDataChanged()
+                                    unemD.notifyDataChanged()
+                                    infD.notifyDataChanged()
 
                                     // 차트 축 최대 범위 설정
                                     findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                                    findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
+                                    findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+                                    findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+                                    findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+                                    findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
 
                                     // 차트 축 이동
                                     findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
+                                    findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus).toFloat())
+                                    findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus).toFloat())
+                                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus).toFloat())
+                                    findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus).toFloat())
+                                    findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus).toFloat())
 
                                     // 경과 기간 최신화
                                     findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
@@ -1528,7 +1549,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_notification).text =
                                         "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
-                                delay(60L)
+                                delay(66L)
                                 dayPlus -= 1
                             }
                         } catch (e: IndexOutOfBoundsException) {
@@ -1539,72 +1560,6 @@ class GameNormalActivity : AppCompatActivity() {
                         }
 
                         ////////////////////////////////////////////////////////////////////////////
-                        fundIndex1.removeAt(dayPlus)
-                        bondIndex1.removeAt(dayPlus)
-                        indproIndex1.removeAt(dayPlus)
-                        unemIndex1.removeAt(dayPlus)
-                        infIndex1.removeAt(dayPlus)
-
-                        fundCount1.removeAt(dayPlus)
-                        bondCount1.removeAt(dayPlus)
-                        indproCount1.removeAt(dayPlus)
-                        unemCount1.removeAt(dayPlus)
-                        infCount1.removeAt(dayPlus)
-
-                        asset1.removeAt(dayPlus)
-                        cash1.removeAt(dayPlus)
-                        input1.removeAt(dayPlus)
-                        bought1.removeAt(dayPlus)
-                        sold1.removeAt(dayPlus)
-                        evaluation1.removeAt(dayPlus)
-                        profit1.removeAt(dayPlus)
-                        profitrate1.removeAt(dayPlus)
-                        profittot1.removeAt(dayPlus)
-                        profityear1.removeAt(dayPlus)
-
-                        quant1x1.removeAt(dayPlus)
-                        quant3x1.removeAt(dayPlus)
-                        quantinv1x1.removeAt(dayPlus)
-                        quantinv3x1.removeAt(dayPlus)
-
-                        bought1x1.removeAt(dayPlus)
-                        bought3x1.removeAt(dayPlus)
-                        boughtinv1x1.removeAt(dayPlus)
-                        boughtinv3x1.removeAt(dayPlus)
-                        aver1x1.removeAt(dayPlus)
-                        aver3x1.removeAt(dayPlus)
-                        averinv1x1.removeAt(dayPlus)
-                        averinv3x1.removeAt(dayPlus)
-
-                        buylim1x1.removeAt(dayPlus)
-                        buylim3x1.removeAt(dayPlus)
-                        buyliminv1x1.removeAt(dayPlus)
-                        buyliminv3x1.removeAt(dayPlus)
-
-                        price1x1.removeAt(dayPlus)
-                        price3x1.removeAt(dayPlus)
-                        priceinv1x1.removeAt(dayPlus)
-                        priceinv3x1.removeAt(dayPlus)
-
-                        val1x1.removeAt(dayPlus)
-                        val3x1.removeAt(dayPlus)
-                        valinv1x1.removeAt(dayPlus)
-                        valinv3x1.removeAt(dayPlus)
-
-                        pr1x1.removeAt(dayPlus)
-                        pr3x1.removeAt(dayPlus)
-                        prinv1x1.removeAt(dayPlus)
-                        prinv3x1.removeAt(dayPlus)
-
-                        tradecomtot1.removeAt(dayPlus)
-                        dividendtot1.removeAt(dayPlus)
-                        countMonth1.removeAt(dayPlus)
-                        countYear1.removeAt(dayPlus)
-                        tax1.removeAt(dayPlus)
-                        taxtot1.removeAt(dayPlus)
-
-
-
                         fundIndex = fundIndex1[dayPlus - 1]
                         bondIndex = bondIndex1[dayPlus - 1]
                         indproIndex = indproIndex1[dayPlus - 1]
@@ -1669,37 +1624,112 @@ class GameNormalActivity : AppCompatActivity() {
                         tax = tax1[dayPlus - 1] // 세금
                         taxtot = taxtot1[dayPlus - 1] // 총 세금
 
+                        snpD.removeEntry(dayPlus.toFloat(), 0)
+                        fundD.removeEntry(dayPlus.toFloat(), 0)
+                        bondD.removeEntry(dayPlus.toFloat(), 0)
+                        indproD.removeEntry(dayPlus.toFloat(), 0)
+                        unemD.removeEntry(dayPlus.toFloat(), 0)
+                        infD.removeEntry(dayPlus.toFloat(), 0)
+
+                        fundIndex1.removeAt(dayPlus)
+                        bondIndex1.removeAt(dayPlus)
+                        indproIndex1.removeAt(dayPlus)
+                        unemIndex1.removeAt(dayPlus)
+                        infIndex1.removeAt(dayPlus)
+
+                        fundCount1.removeAt(dayPlus)
+                        bondCount1.removeAt(dayPlus)
+                        indproCount1.removeAt(dayPlus)
+                        unemCount1.removeAt(dayPlus)
+                        infCount1.removeAt(dayPlus)
+
+                        asset1.removeAt(dayPlus)
+                        cash1.removeAt(dayPlus)
+                        input1.removeAt(dayPlus)
+                        bought1.removeAt(dayPlus)
+                        sold1.removeAt(dayPlus)
+                        evaluation1.removeAt(dayPlus)
+                        profit1.removeAt(dayPlus)
+                        profitrate1.removeAt(dayPlus)
+                        profittot1.removeAt(dayPlus)
+                        profityear1.removeAt(dayPlus)
+
+                        quant1x1.removeAt(dayPlus)
+                        quant3x1.removeAt(dayPlus)
+                        quantinv1x1.removeAt(dayPlus)
+                        quantinv3x1.removeAt(dayPlus)
+
+                        bought1x1.removeAt(dayPlus)
+                        bought3x1.removeAt(dayPlus)
+                        boughtinv1x1.removeAt(dayPlus)
+                        boughtinv3x1.removeAt(dayPlus)
+                        aver1x1.removeAt(dayPlus)
+                        aver3x1.removeAt(dayPlus)
+                        averinv1x1.removeAt(dayPlus)
+                        averinv3x1.removeAt(dayPlus)
+
+                        buylim1x1.removeAt(dayPlus)
+                        buylim3x1.removeAt(dayPlus)
+                        buyliminv1x1.removeAt(dayPlus)
+                        buyliminv3x1.removeAt(dayPlus)
+
+                        price1x1.removeAt(dayPlus)
+                        price3x1.removeAt(dayPlus)
+                        priceinv1x1.removeAt(dayPlus)
+                        priceinv3x1.removeAt(dayPlus)
+
+                        val1x1.removeAt(dayPlus)
+                        val3x1.removeAt(dayPlus)
+                        valinv1x1.removeAt(dayPlus)
+                        valinv3x1.removeAt(dayPlus)
+
+                        pr1x1.removeAt(dayPlus)
+                        pr3x1.removeAt(dayPlus)
+                        prinv1x1.removeAt(dayPlus)
+                        prinv3x1.removeAt(dayPlus)
+
+                        tradecomtot1.removeAt(dayPlus)
+                        dividendtot1.removeAt(dayPlus)
+                        countMonth1.removeAt(dayPlus)
+                        countYear1.removeAt(dayPlus)
+                        tax1.removeAt(dayPlus)
+                        taxtot1.removeAt(dayPlus)
+
                         println("시간역행 중 : " + dayPlus.toString())
                         ////////////////////////////////////////////////////////////////////////////
 
 
                         runOnUiThread {
+                            findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
 
+                            snpD.notifyDataChanged()
                             fundD.notifyDataChanged()
                             bondD.notifyDataChanged()
                             indproD.notifyDataChanged()
                             unemD.notifyDataChanged()
                             infD.notifyDataChanged()
 
+                            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F)
                             findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
                             findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
                             findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
                             findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
                             findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
 
-                            findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus).toFloat())
-                            findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus).toFloat())
-                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus).toFloat())
-                            findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus).toFloat())
-                            findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus).toFloat())
+                            findViewById<LineChart>(R.id.cht_snp).moveViewToX((dayPlus - 1).toFloat())
+                            findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus - 1).toFloat())
+                            findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus - 1).toFloat())
+                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus - 1).toFloat())
+                            findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus - 1).toFloat())
+                            findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus - 1).toFloat())
                         }
 
-                        delay(500L)
+                        delay(100L)
 
                         println("시간역행 끝 : " + dayPlus.toString())
                         item1Length = 0
