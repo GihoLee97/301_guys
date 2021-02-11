@@ -1735,6 +1735,75 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus - 1).toFloat())
                             findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus - 1).toFloat())
 
+                            // 경과 기간 최신화
+                            findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
+                            findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
+
+                            // 자산 가치 관련 값들 최신화
+                            findViewById<TextView>(R.id.tv_asset).text =
+                                "총 자산 : " + dec.format(asset) + " 원"
+                            findViewById<TextView>(R.id.tv_cash).text =
+                                "현금 : " + dec.format(cash) + " 원"
+                            findViewById<TextView>(R.id.tv_evaluation).text =
+                                "평가금액 : " + dec.format(evaluation) + " 원"
+                            findViewById<TextView>(R.id.tv_profit).text =
+                                "순손익 : " + dec.format(profit) + " 원"
+                            findViewById<TextView>(R.id.tv_profitrate).text =
+                                "수익률 : " + per.format(profitrate) + " %"
+                            findViewById<TextView>(R.id.tv_dividend).text =
+                                "배당금 : " + dec.format(dividendtot) + " 원"
+                            findViewById<TextView>(R.id.tv_taxtot).text =
+                                "세금 : " + dec.format(taxtot) + " 원"
+                            findViewById<TextView>(R.id.tv_profityear).text =
+                                "당해 실현 수익 : " + dec.format(profityear) + " 원"
+                            findViewById<TextView>(R.id.tv_tradecomtot).text =
+                                "수수료 : " + dec.format(tradecomtot) + " 원"
+
+                            findViewById<TextView>(R.id.tv_price1x).text =
+                                dec.format(price1x) + " 원"
+                            findViewById<TextView>(R.id.tv_price3x).text =
+                                dec.format(price3x) + " 원"
+                            findViewById<TextView>(R.id.tv_priceinv1x).text =
+                                dec.format(priceinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_priceinv3x).text =
+                                dec.format(priceinv3x) + " 원"
+
+                            findViewById<TextView>(R.id.tv_aver1x).text =
+                                dec.format(aver1x) + " 원"
+                            findViewById<TextView>(R.id.tv_aver3x).text =
+                                dec.format(aver3x) + " 원"
+                            findViewById<TextView>(R.id.tv_averinv1x).text =
+                                dec.format(averinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_averinv3x).text =
+                                dec.format(averinv3x) + " 원"
+
+                            findViewById<TextView>(R.id.tv_quant1x).text =
+                                dec.format(quant1x) + " 주"
+                            findViewById<TextView>(R.id.tv_quant3x).text =
+                                dec.format(quant3x) + " 주"
+                            findViewById<TextView>(R.id.tv_quantinv1x).text =
+                                dec.format(quantinv1x) + " 주"
+                            findViewById<TextView>(R.id.tv_quantinv3x).text =
+                                dec.format(quantinv3x) + " 주"
+
+                            findViewById<TextView>(R.id.tv_val1x).text =
+                                dec.format(val1x) + " 원"
+                            findViewById<TextView>(R.id.tv_val3x).text =
+                                dec.format(val3x) + " 원"
+                            findViewById<TextView>(R.id.tv_valinv1x).text =
+                                dec.format(valinv1x) + " 원"
+                            findViewById<TextView>(R.id.tv_valinv3x).text =
+                                dec.format(valinv3x) + " 원"
+
+                            findViewById<TextView>(R.id.tv_profit1x).text =
+                                per.format(pr1x) + " %"
+                            findViewById<TextView>(R.id.tv_profit3x).text =
+                                per.format(pr3x) + " %"
+                            findViewById<TextView>(R.id.tv_profitinv1x).text =
+                                per.format(prinv1x) + " %"
+                            findViewById<TextView>(R.id.tv_profitinv3x).text =
+                                per.format(prinv3x) + " %"
+
                             findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다..!"
                         }
 
