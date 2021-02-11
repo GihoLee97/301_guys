@@ -1300,12 +1300,17 @@ class GameNormalActivity : AppCompatActivity() {
                         delay(oneday) // 게임 진행 속도 조절
                     }
                     else if (item1Active) {
+                        runOnUiThread {
+                            findViewById<Button>(R.id.btn_buy).isEnabled = false
+                            findViewById<Button>(R.id.btn_sell).isEnabled = false
+                            findViewById<Button>(R.id.btn_auto).isEnabled = false
+                            findViewById<Button>(R.id.btn_item).isEnabled = false
+                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아가는 중..."
+                        }
                         dayPlus -= 1
                         var timeTrableStart = dayPlus
                         println("시간역행 시작 : " + dayPlus.toString())
-                        runOnUiThread {
-                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아가는 중..."
-                        }
+
 
                         try {
                             while (dayPlus > (timeTrableStart - item1Length)) {
@@ -1625,6 +1630,7 @@ class GameNormalActivity : AppCompatActivity() {
                         tax = tax1[dayPlus - 1] // 세금
                         taxtot = taxtot1[dayPlus - 1] // 총 세금
 
+
                         snpD.removeEntry(dayPlus.toFloat(), 0)
                         fundD.removeEntry(dayPlus.toFloat(), 0)
                         bondD.removeEntry(dayPlus.toFloat(), 0)
@@ -1737,6 +1743,13 @@ class GameNormalActivity : AppCompatActivity() {
                         println("시간역행 끝 : " + dayPlus.toString())
                         item1Length = 0
                         item1Active = false //
+
+                        runOnUiThread {
+                            findViewById<Button>(R.id.btn_buy).isEnabled = true
+                            findViewById<Button>(R.id.btn_sell).isEnabled = true
+                            findViewById<Button>(R.id.btn_auto).isEnabled = true
+                            findViewById<Button>(R.id.btn_item).isEnabled = true
+                        }
                     } else {
                         println("게임 끝")
                         break
