@@ -32,6 +32,8 @@ class Dialog_sell(context: Context) {
     private lateinit var btnSell3x: Button
     private lateinit var btnSellinv1x: Button
     private lateinit var btnSellinv3x: Button
+    private lateinit var btnplus: Button
+    private lateinit var btnminus: Button
     private lateinit var tvSelleval: TextView
     private lateinit var tvSellhave: TextView
     private lateinit var tvSellquant: TextView
@@ -54,6 +56,8 @@ class Dialog_sell(context: Context) {
         btnSell3x = dlg.findViewById(R.id.btn_sell3x)
         btnSellinv1x = dlg.findViewById(R.id.btn_sellinv1x)
         btnSellinv3x = dlg.findViewById(R.id.btn_sellinv3x)
+        btnplus = dlg.findViewById(R.id.btn_plus)
+        btnminus = dlg.findViewById(R.id.btn_minus)
         tvSelleval = dlg.findViewById(R.id.tv_selleval)
         tvSellhave = dlg.findViewById(R.id.tv_sellhave)
         tvSellquant = dlg.findViewById(R.id.tv_sellquant)
@@ -67,6 +71,89 @@ class Dialog_sell(context: Context) {
         btnSell3x.setBackgroundColor(Color.parseColor(colorOff))
         btnSellinv1x.setBackgroundColor(Color.parseColor(colorOff))
         btnSellinv3x.setBackgroundColor(Color.parseColor(colorOff))
+
+        btnplus.setOnClickListener {
+            if (select == 1) {
+                if(quant+1<= quant1x) quant = quant+1
+                price = price1x * quant
+                temptradecom = price1x * (tradecomrate - 1F) * quant
+
+                tvSellquant.text = dec.format(quant)
+                tvSellprice.text = dec.format(price)+" 원"
+                tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+            } else if (select == 2) {
+                if(quant+1<= quant3x) quant = quant+1
+                price = price3x * quant
+                temptradecom = price3x * (tradecomrate - 1F) * quant
+
+                tvSellquant.text = dec.format(quant)
+                tvSellprice.text = dec.format(price)+" 원"
+                tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+            } else if (select == 3) {
+                if(quant+1<= quantinv1x) quant = quant+1
+                price = priceinv1x * quant
+                temptradecom = priceinv1x * (tradecomrate - 1F) * quant
+
+                tvSellquant.text = dec.format(quant)
+                tvSellprice.text = dec.format(price)+" 원"
+                tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+            } else {
+                if(quant+1<= quantinv3x) quant = quant+1
+                price = priceinv3x * quant
+                temptradecom = priceinv3x * (tradecomrate - 1F) * quant
+
+                tvSellquant.text = dec.format(quant)
+                tvSellprice.text = dec.format(price)+" 원"
+                tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+            }
+
+        }
+        btnminus.setOnClickListener {
+            if(quant>0){
+                if (select == 1) {
+                    quant = quant-1
+                    price = price1x * quant
+                    temptradecom = price1x * (tradecomrate - 1F) * quant
+
+                    tvSellquant.text = dec.format(quant)
+                    tvSellprice.text = dec.format(price)+" 원"
+                    tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+                } else if (select == 2) {
+                    quant = quant-1
+                    price = price3x * quant
+                    temptradecom = price3x * (tradecomrate - 1F) * quant
+
+                    tvSellquant.text = dec.format(quant)
+                    tvSellprice.text = dec.format(price)+" 원"
+                    tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+                } else if (select == 3) {
+                    quant = quant-1
+                    price = priceinv1x * quant
+                    temptradecom = priceinv1x * (tradecomrate - 1F) * quant
+
+                    tvSellquant.text = dec.format(quant)
+                    tvSellprice.text = dec.format(price)+" 원"
+                    tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+                } else {
+                    quant = quant-1
+                    price = priceinv3x * quant
+                    temptradecom = priceinv3x * (tradecomrate - 1F) * quant
+
+                    tvSellquant.text = dec.format(quant)
+                    tvSellprice.text = dec.format(price)+" 원"
+                    tvSelltradecom.text = dec.format(temptradecom)+" 원"
+
+                }
+            }
+        }
+
 
 
         btnSell1x.setOnClickListener {
@@ -123,7 +210,7 @@ class Dialog_sell(context: Context) {
                     price = price1x * quant
                     temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -137,7 +224,7 @@ class Dialog_sell(context: Context) {
                     price = price3x * quant
                     temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -151,7 +238,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv1x * quant
                     temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -165,7 +252,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv3x * quant
                     temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -184,7 +271,7 @@ class Dialog_sell(context: Context) {
                     price = price1x * quant
                     temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -198,7 +285,7 @@ class Dialog_sell(context: Context) {
                     price = price3x * quant
                     temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -212,7 +299,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv1x * quant
                     temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -226,7 +313,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv3x * quant
                     temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -244,7 +331,7 @@ class Dialog_sell(context: Context) {
                     price = price1x * quant
                     temptradecom = price1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -258,7 +345,7 @@ class Dialog_sell(context: Context) {
                     price = price3x * quant
                     temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -273,7 +360,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv1x * quant
                     temptradecom = priceinv1x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 
@@ -288,7 +375,7 @@ class Dialog_sell(context: Context) {
                     price = priceinv3x * quant
                     temptradecom = priceinv3x * (tradecomrate - 1F) * quant
 
-                    tvSellquant.text = dec.format(quant)+" 주"
+                    tvSellquant.text = dec.format(quant)
                     tvSellprice.text = dec.format(price)+" 원"
                     tvSelltradecom.text = dec.format(temptradecom)+" 원"
 

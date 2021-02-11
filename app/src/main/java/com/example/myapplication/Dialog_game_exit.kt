@@ -3,8 +3,10 @@ package com.example.myapplication
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.view.Window
 import android.widget.Button
+import androidx.core.content.ContextCompat.startActivity
 import com.example.myapplication.data.GameNormal
 import com.example.myapplication.data.GameNormalDB
 import com.example.myapplication.data.GameSetDB
@@ -46,8 +48,9 @@ class Dialog_game_exit (context : Context)  {
             addThread.start()
             dlg.dismiss()
             gameend = !gameend /////////////////////////////////////////////////////////////////////
-//            val intent = Intent(mContext, MainActivity::class.java)
-            (mContext as Activity).finish()
+            val intent = Intent(mContext as Activity, MainActivity::class.java)
+//            (mContext as Activity).finish()
+            (mContext as Activity).startActivity(intent)
           }
 
         btnexit = dlg.findViewById(R.id.btn_exit)

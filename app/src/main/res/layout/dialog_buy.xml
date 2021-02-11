@@ -118,10 +118,12 @@
             android:textSize="16dp"
             android:text="예수금"
             android:background="@color/white"/>
+
         <View
             android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:background="@color/white"/>
+            android:background="@color/white" />
+
         <TextView
             android:id="@+id/tv_buycash"
             android:layout_width="60dp"
@@ -154,22 +156,50 @@
             android:gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="16dp"
-            android:text="매수 수량"
+            android:text="매수 수량 (1주)"
             android:background="@color/white"/>
         <View
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="@color/white"/>
-        <TextView
-            android:id="@+id/tv_buyquant"
+        <LinearLayout
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="0 주"
-            android:background="@color/white"/>
+            android:layout_weight="0.8"
+            android:weightSum="8"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_minus"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:text="-"
+                android:textSize="15dp"/>
+
+
+            <TextView
+                android:id="@+id/tv_buyquant"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical|right"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:text="0"
+                android:background="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_plus"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="+"
+                android:gravity="center"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
         <View
             android:layout_width="10dp"
             android:layout_height="match_parent"
