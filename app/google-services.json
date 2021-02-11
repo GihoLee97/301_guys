@@ -7,22 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:736423790876:android:41bb4e0139fb09ebe952d9",
+        "mobilesdk_app_id": "1:736423790876:android:02e169b1b01e4b00e952d9",
         "android_client_info": {
           "package_name": "com.guys_from_301.stock_game"
         }
       },
       "oauth_client": [
         {
-          "client_id": "736423790876-0hcdlcdkisiebni515p2mj13sj8undo0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.guys_from_301.stock_game",
-            "certificate_hash": "0cd27057f839182e83bfdb35990fa59dc1ab34c1"
-          }
-        },
-        {
-          "client_id": "736423790876-1aioo53l9plce2o52r29meqetb9t23b5.apps.googleusercontent.com",
+          "client_id": "736423790876-ifbc2d68nfhrd28lmssaav3la02rc54b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.guys_from_301.stock_game",
@@ -30,19 +22,27 @@
           }
         },
         {
-          "client_id": "736423790876-1g9lrfehavmal18p3ds2aou2h2jm4ecf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.guys_from_301.stock_game",
-            "certificate_hash": "21ba9e88d359cb8dff0e6ddb0b44f712f562ef05"
-          }
-        },
-        {
-          "client_id": "736423790876-3ej90hjo1d5vq88jh8her9t81e5ku1qr.apps.googleusercontent.com",
+          "client_id": "736423790876-j2a4cimbauq5l33bllvhhfne15uirhfr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.guys_from_301.stock_game",
             "certificate_hash": "7cfc249d4165e89afd7902e9ab8083db26f69a16"
+          }
+        },
+        {
+          "client_id": "736423790876-jbgjbrdl0edaa8jek7b0ibq32ivgjhi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guys_from_301.stock_game",
+            "certificate_hash": "0cd27057f839182e83bfdb35990fa59dc1ab34c1"
+          }
+        },
+        {
+          "client_id": "736423790876-jffvp5966frpotkf19rlln47491q4q9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guys_from_301.stock_game",
+            "certificate_hash": "21ba9e88d359cb8dff0e6ddb0b44f712f562ef05"
           }
         },
         {
@@ -52,7 +52,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDdENQs_UcnoYcLh6ov0pRaCWxyuc8Hlzw"
+          "current_key": "AIzaSyD7FT7OkJLJtkwsk2Iz1ih8ZbkveM6NLA4"
         }
       ],
       "services": {
