@@ -8,6 +8,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 class Dialog_item(context: Context) {
     var mContext: Context? = context
@@ -39,7 +40,7 @@ class Dialog_item(context: Context) {
     private lateinit var listenter: ItemDialogClickedListener
 
 
-    fun start(i: Int, i1: Int, i2: Int) {
+    fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_item_pick)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
