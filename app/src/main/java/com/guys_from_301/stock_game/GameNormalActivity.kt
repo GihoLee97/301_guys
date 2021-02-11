@@ -1303,6 +1303,9 @@ class GameNormalActivity : AppCompatActivity() {
                         dayPlus -= 1
                         var timeTrableStart = dayPlus
                         println("시간역행 시작 : " + dayPlus.toString())
+                        runOnUiThread {
+                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아가는 중..."
+                        }
 
                         try {
                             while (dayPlus > (timeTrableStart - item1Length)) {
@@ -1546,8 +1549,6 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_profitinv3x).text =
                                         per.format(prinv3x) + " %"
 
-                                    findViewById<TextView>(R.id.tv_notification).text =
-                                        "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
                                 delay(70L) // UI 쓰레드 동작 시간 확보
                                 dayPlus -= 1
@@ -1727,6 +1728,8 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus - 1).toFloat())
                             findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus - 1).toFloat())
                             findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus - 1).toFloat())
+
+                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다..!"
                         }
 
                         delay(100L) // UI 쓰레드 동작 시간 확보
