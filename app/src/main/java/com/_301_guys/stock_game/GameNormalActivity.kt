@@ -1,7 +1,5 @@
 package com._301_guys.stock_game
 
-import com.example.myapplication.DATACLASS
-import com.example.myapplication.getHash
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
