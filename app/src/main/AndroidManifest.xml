@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com._301_guys.stock_game">
+    package="com.guys_from_301.stock_game">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name="com._301_guys.stock_game.MarketActivity"></activity>
-        <activity android:name="com._301_guys.stock_game.GameSettingActivity" />
-        <activity android:name="com._301_guys.stock_game.WelcomeActivity" />
-        <activity android:name="com._301_guys.stock_game.GameHistoryActivity" />
-        <activity android:name="com._301_guys.stock_game.AccountManagementActivity" /> <!-- android:name 설정 -->
+        <activity android:name="com.guys_from_301.stock_game.MarketActivity"></activity>
+        <activity android:name="com.guys_from_301.stock_game.GameSettingActivity" />
+        <activity android:name="com.guys_from_301.stock_game.WelcomeActivity" />
+        <activity android:name="com.guys_from_301.stock_game.GameHistoryActivity" />
+        <activity android:name="com.guys_from_301.stock_game.AccountManagementActivity" /> <!-- android:name 설정 -->
         <!-- Splash Activity -->
         <activity
-            android:name="com._301_guys.stock_game.SplashActivity"
+            android:name="com.guys_from_301.stock_game.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,12 +37,12 @@
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />
 
-        <activity android:name="com._301_guys.stock_game.InitialActivity" />
-        <activity android:name="com._301_guys.stock_game.ResultNormalActivity" />
-        <activity android:name="com._301_guys.stock_game.GameNormalActivity" />
-        <activity android:name="com._301_guys.stock_game.SettingActivity" />
-        <activity android:name="com._301_guys.stock_game.ProfileActivity" />
-        <activity android:name="com._301_guys.stock_game.MainActivity" /> <!-- kakao (2020-1-29) -->
+        <activity android:name="com.guys_from_301.stock_game.InitialActivity" />
+        <activity android:name="com.guys_from_301.stock_game.ResultNormalActivity" />
+        <activity android:name="com.guys_from_301.stock_game.GameNormalActivity" />
+        <activity android:name="com.guys_from_301.stock_game.SettingActivity" />
+        <activity android:name="com.guys_from_301.stock_game.ProfileActivity" />
+        <activity android:name="com.guys_from_301.stock_game.MainActivity" /> <!-- kakao (2020-1-29) -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
