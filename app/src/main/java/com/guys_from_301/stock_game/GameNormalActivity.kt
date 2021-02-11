@@ -1549,7 +1549,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_notification).text =
                                         "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
-                                delay(66L)
+                                delay(70L) // UI 쓰레드 동작 시간 확보
                                 dayPlus -= 1
                             }
                         } catch (e: IndexOutOfBoundsException) {
@@ -1729,7 +1729,7 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus - 1).toFloat())
                         }
 
-                        delay(100L)
+                        delay(100L) // UI 쓰레드 동작 시간 확보
 
                         println("시간역행 끝 : " + dayPlus.toString())
                         item1Length = 0
