@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.Button
+import android.widget.Toast
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.GameSetDB
@@ -34,20 +35,25 @@ class Dialog_game_exit (context : Context)  {
 
 
         btnsave.setOnClickListener {
-
-            val addRunnable = Runnable {
-                bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
-                val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
+            if (item1Active) {
+                Toast.makeText(dlg.context, "시간 역행 중에는 게임을 저장할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val addRunnable = Runnable {
+                    bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
+                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
                         bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, val1x, val3x, valinv1x, valinv3x,
                         pr1x, pr3x, prinv1x, prinv3x, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, endpoint, countYear, countMonth)
-                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-            }
-            val addThread = Thread(addRunnable)
-            addThread.start()
-            dlg.dismiss()
-            gameend = !gameend /////////////////////////////////////////////////////////////////////
+                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+                dlg.dismiss()
+                gameend = !gameend /////////////////////////////////////////////////////////////////////
 //            val intent = Intent(mContext, MainActivity::class.java)
-            (mContext as Activity).finish()
+                (mContext as Activity).finish()
+            }
+
           }
 
         btnexit = dlg.findViewById(R.id.btn_exit)
