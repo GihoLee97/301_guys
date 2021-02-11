@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.guys_from_301.stock_game.MarketActivity"></activity>
+        <activity android:name="com.guys_from_301.stock_game.MarketActivity"/>
         <activity android:name="com.guys_from_301.stock_game.GameSettingActivity" />
+        <activity android:name="com.guys_from_301.stock_game.RankingActivity"/>
         <activity android:name="com.guys_from_301.stock_game.WelcomeActivity" />
         <activity android:name="com.guys_from_301.stock_game.GameHistoryActivity" />
         <activity android:name="com.guys_from_301.stock_game.AccountManagementActivity" /> <!-- android:name 설정 -->

@@ -63,6 +63,12 @@
             android:layout_height="100dp"
             android:text="상점" />
 
+        <Button
+            android:id="@+id/btn_ranking"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="랭킹" />
+
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
