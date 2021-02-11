@@ -379,7 +379,11 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
-            val dlgItem = Dialog_item(this)
+            var profileDb: ProflieDB? = null
+            profileDb = ProflieDB.getInstace(this)
+
+            val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!)
+//            val dlgItem = Dialog_item(this)
             dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }

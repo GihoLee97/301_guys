@@ -7,14 +7,16 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.data.ProflieDB
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class Dialog_item(context: Context) {
+class Dialog_item(context: Context, _nowstack :Int) {
     var mContext: Context? = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감\
 
-    private var nowstack: Int = 10000 // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
+    private var nowstack: Int = _nowstack // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
     private var item1ConsumeTemp: Int = 0 // 아이템1 소모 스택
     private var item2ConsumeTemp: Int = 0 // 아이템2 소모 스택
     private var itemConsumeStacks: Int = 0 // 총 소모스택
@@ -44,7 +46,6 @@ class Dialog_item(context: Context) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_item_pick)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
-
 
         tvItemstack = dlg.findViewById(R.id.tv_itemstack)
         tvItem1 = dlg.findViewById(R.id.tv_item1)
@@ -215,7 +216,33 @@ class Dialog_item(context: Context) {
         }
 
         btnItemok.setOnClickListener {
+
             // DB에 스택 변동사항 저장
+            var profileDb : ProflieDB? = null
+            profileDb = ProflieDB?.getInstace(mContext!!)
+            // 서버에 올리는 코드
+            update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
+                    getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+                    nowstack, profileDb?.profileDao()?.getNickname()!!,
+                    profileDb?.profileDao()?.getProfit()!!,
+                    profileDb?.profileDao()?.getHistory()!!,
+                    profileDb?.profileDao()?.getLevel()!!)
+                    // update money to DB
+            val newProfile = Profile()
+            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+            newProfile.history = profileDb?.profileDao()?.getHistory()!!
+            newProfile.level = profileDb?.profileDao()?.getLevel()!!
+            newProfile.exp = profileDb?.profileDao()?.getExp()!!
+            newProfile.rank = profileDb?.profileDao()?.getRank()!!
+            newProfile.login = profileDb?.profileDao()?.getLogin()!!
+            newProfile.money = nowstack
+            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+            newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+            profileDb?.profileDao()?.update(newProfile)
+
+            //
             dlg.dismiss()
             click =
                 !click //////////////////////////////////////////////////////////////////////////

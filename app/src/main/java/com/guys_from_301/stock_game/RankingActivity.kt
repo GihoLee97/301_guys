@@ -30,10 +30,8 @@ class RankingActivity : AppCompatActivity() {
     private lateinit var user10_nick: TextView; private lateinit var user10_money: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranking)
-
         btn_goback = findViewById(R.id.btn_goback)
         user1_nick = findViewById(R.id.user1_nickname); user1_money = findViewById(R.id.user1_money)
         user2_nick = findViewById(R.id.user2_nickname); user2_money = findViewById(R.id.user2_money)
@@ -45,7 +43,6 @@ class RankingActivity : AppCompatActivity() {
         user8_nick = findViewById(R.id.user8_nickname); user8_money = findViewById(R.id.user8_money)
         user9_nick = findViewById(R.id.user9_nickname); user9_money = findViewById(R.id.user9_money)
         user10_nick = findViewById(R.id.user10_nickname); user10_money = findViewById(R.id.user10_money)
-
         user1_nick.text = rank1_nick; user1_money.text = rank1_money
         user2_nick.text = rank2_nick; user2_money.text = rank2_money
         user3_nick.text = rank3_nick; user3_money.text = rank3_money
@@ -57,7 +54,6 @@ class RankingActivity : AppCompatActivity() {
         user9_nick.text = rank9_nick; user9_money.text = rank9_money
         user9_nick.text = rank9_nick; user9_money.text = rank9_money
         user10_nick.text = rank10_nick; user10_money.text = rank10_money
-
 
         btn_goback.setOnClickListener{
             onBackPressed()
