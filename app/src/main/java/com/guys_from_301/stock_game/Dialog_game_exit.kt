@@ -52,6 +52,7 @@ class Dialog_game_exit (context : Context)  {
                 addThread.start()
                 dlg.dismiss()
                 gameend = !gameend /////////////////////////////////////////////////////////////////////
+                endsuccess = false
 //            val intent = Intent(mContext, MainActivity::class.java)
                 (mContext as Activity).finish()
             }
@@ -71,6 +72,7 @@ class Dialog_game_exit (context : Context)  {
             deleteThread.start()
             dlg.dismiss()
             gameend = !gameend /////////////////////////////////////////////////////////////////////
+            endsuccess = true
             (mContext as Activity).finish()
         }
         btncancel = dlg.findViewById(R.id.btn_cancel)

@@ -1850,21 +1850,27 @@ class GameNormalActivity : AppCompatActivity() {
 
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
-        var profileDb: ProflieDB? = null
-        profileDb = ProflieDB.getInstace(this@GameNormalActivity)
-        funlevelup(
-            profileDb?.profileDao()?.getLoginid()!!,
-            profileDb?.profileDao()?.getLoginpw()!!,
-            100
-        )
-        val deleteRunnable = Runnable {
-            gameNormalDb?.gameNormalDao()?.deleteAll()
-            gameSetDb?.gameSetDao()?.deleteAll()
+        if (gameend && endsuccess) {
+            var profileDb: ProflieDB? = null
+            profileDb = ProflieDB.getInstace(this@GameNormalActivity)
+            funlevelup(
+                profileDb?.profileDao()?.getLoginid()!!,
+                profileDb?.profileDao()?.getLoginpw()!!,
+                100
+            )
+            val deleteRunnable = Runnable {
+                gameNormalDb?.gameNormalDao()?.deleteAll()
+                gameSetDb?.gameSetDao()?.deleteAll()
+            }
+            val deleteThread = Thread(deleteRunnable)
+            deleteThread.start()
+            val intent = Intent(this@GameNormalActivity, ResultNormalActivity::class.java)
+            startActivity(intent)
         }
-        val deleteThread = Thread(deleteRunnable)
-        deleteThread.start()
-        val intent = Intent(this@GameNormalActivity, ResultNormalActivity::class.java)
-        startActivity(intent)
+        else {
+            val intent = Intent(this@GameNormalActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
