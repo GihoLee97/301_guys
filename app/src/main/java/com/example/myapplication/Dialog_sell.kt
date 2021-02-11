@@ -80,14 +80,18 @@ class Dialog_sell(context: Context) {
             btnSellinv3x.setBackgroundColor(Color.parseColor(colorOff))
         }
         btnSell3x.setOnClickListener {
-            select = 2
-            seekbarSell!!.progress = 0
-            tvSelleval.text = dec.format(val3x)+" 원"
-            tvSellhave.text = dec.format(quant3x)+" 원"
-            btnSell1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnSell3x.setBackgroundColor(Color.parseColor(colorOn))
-            btnSellinv1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnSellinv3x.setBackgroundColor(Color.parseColor(colorOff))
+            if (!item4Active) {
+                Toast.makeText(dlg.context, "아이템을 이용하여 레버리지 ETF 거래를 언락해야합니다", Toast.LENGTH_SHORT).show()
+            } else {
+                select = 2
+                seekbarSell!!.progress = 0
+                tvSelleval.text = dec.format(val3x) + " 원"
+                tvSellhave.text = dec.format(quant3x) + " 원"
+                btnSell1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnSell3x.setBackgroundColor(Color.parseColor(colorOn))
+                btnSellinv1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnSellinv3x.setBackgroundColor(Color.parseColor(colorOff))
+            }
         }
         btnSellinv1x.setOnClickListener {
             select = 3
@@ -100,14 +104,18 @@ class Dialog_sell(context: Context) {
             btnSellinv3x.setBackgroundColor(Color.parseColor(colorOff))
         }
         btnSellinv3x.setOnClickListener {
-            select = 4
-            seekbarSell!!.progress = 0
-            tvSelleval.text = dec.format(valinv3x)+" 원"
-            tvSellhave.text = dec.format(quantinv3x)+" 원"
-            btnSell1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnSell3x.setBackgroundColor(Color.parseColor(colorOff))
-            btnSellinv1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnSellinv3x.setBackgroundColor(Color.parseColor(colorOn))
+            if (!item4Active) {
+                Toast.makeText(dlg.context, "아이템을 이용하여 레버리지 ETF 거래를 언락해야합니다", Toast.LENGTH_SHORT).show()
+            } else {
+                select = 4
+                seekbarSell!!.progress = 0
+                tvSelleval.text = dec.format(valinv3x) + " 원"
+                tvSellhave.text = dec.format(quantinv3x) + " 원"
+                btnSell1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnSell3x.setBackgroundColor(Color.parseColor(colorOff))
+                btnSellinv1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnSellinv3x.setBackgroundColor(Color.parseColor(colorOn))
+            }
         }
 
 

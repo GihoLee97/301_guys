@@ -67,6 +67,7 @@ class Dialog_buy(context: Context) {
         btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOff))
 
 
+
         btnBuy1x.setOnClickListener {
             select = 1
             seekbarBuy!!.progress = 0
@@ -76,12 +77,17 @@ class Dialog_buy(context: Context) {
             btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOff))
         }
         btnBuy3x.setOnClickListener {
-            select = 2
-            seekbarBuy!!.progress = 0
-            btnBuy1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnBuy3x.setBackgroundColor(Color.parseColor(colorOn))
-            btnBuyinv1x.setBackgroundColor(Color.parseColor(colorOff))
-            btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOff))
+            if (!item4Active) {
+                Toast.makeText(dlg.context, "아이템을 이용하여 레버리지 ETF 거래를 언락해야합니다", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                select = 2
+                seekbarBuy!!.progress = 0
+                btnBuy1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnBuy3x.setBackgroundColor(Color.parseColor(colorOn))
+                btnBuyinv1x.setBackgroundColor(Color.parseColor(colorOff))
+                btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOff))
+            }
         }
         btnBuyinv1x.setOnClickListener {
             select = 3
@@ -92,12 +98,17 @@ class Dialog_buy(context: Context) {
             btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOff))
         }
         btnBuyinv3x.setOnClickListener {
+            if (!item4Active) {
+                Toast.makeText(dlg.context, "아이템을 이용하여 레버리지 ETF 거래를 언락해야합니다", Toast.LENGTH_SHORT).show()
+            }
+            else {
             select = 4
             seekbarBuy!!.progress = 0
             btnBuy1x.setBackgroundColor(Color.parseColor(colorOff))
             btnBuy3x.setBackgroundColor(Color.parseColor(colorOff))
             btnBuyinv1x.setBackgroundColor(Color.parseColor(colorOff))
             btnBuyinv3x.setBackgroundColor(Color.parseColor(colorOn))
+            }
         }
 
 

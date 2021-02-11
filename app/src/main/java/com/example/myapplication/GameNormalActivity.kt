@@ -972,6 +972,11 @@ class GameNormalActivity : AppCompatActivity() {
 
                             // 차트 축 최대 범위 설정
                             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
 
                             // 차트 축 이동
                             findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
@@ -1206,15 +1211,14 @@ class GameNormalActivity : AppCompatActivity() {
                         // 시간역행 아이템
                         println("현재 dayPlus: " + dayPlus.toString())
 
-                        item1Able = dayPlus - 1 // 시간 역행 가능한 범위
+                        item1Able = dayPlus - 2 // 시간 역행 가능한 범위
 
                         fundIndex1.add(fundIndex)
                         bondIndex1.add(bondIndex)
                         indproIndex1.add(indproIndex)
                         unemIndex1.add(unemIndex)
                         infIndex1.add(infIndex)
-
-                        println("현재 fundIndex Size: " + fundIndex1.size.toString())
+                        println("현재 fundIndex Size: " + fundIndex1.size.toString()+" | 현재 asset1 Size: " + asset1.size.toString())
 
                         fundCount1.add(fundCount)
                         bondCount1.add(bondCount)
@@ -1273,6 +1277,8 @@ class GameNormalActivity : AppCompatActivity() {
                         countYear1.add(countYear)
                         tax1.add(tax)
                         taxtot1.add(taxtot)
+
+                        println("현재 fundIndex Size: " + fundIndex1.size.toString()+" | 현재 asset1 Size: " + asset1.size.toString())
                         ////////////////////////////////////////////////////////////////////////////
 
                         ////////////////////////////////////////////////////////////////////////////
@@ -1297,7 +1303,8 @@ class GameNormalActivity : AppCompatActivity() {
 
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절
-                    } else if (item1Active) {
+                    }
+                    else if (item1Active) {
                         dayPlus -= 1
                         var timeTrableStart = dayPlus
                         println("시간역행 시작 : " + dayPlus.toString())
@@ -1378,71 +1385,69 @@ class GameNormalActivity : AppCompatActivity() {
 
                                 println("시간역행 중 : " + dayPlus.toString())
 
-                                dayPlus -= 1
+                                fundIndex = fundIndex1[dayPlus - 1]
+                                bondIndex = bondIndex1[dayPlus - 1]
+                                indproIndex = indproIndex1[dayPlus - 1]
+                                unemIndex = unemIndex1[dayPlus - 1]
+                                infIndex = infIndex1[dayPlus - 1]
 
-                                fundIndex = fundIndex1[dayPlus]
-                                bondIndex = bondIndex1[dayPlus]
-                                indproIndex = indproIndex1[dayPlus]
-                                unemIndex = unemIndex1[dayPlus]
-                                infIndex = infIndex1[dayPlus]
+                                fundCount = fundCount1[dayPlus - 1]
+                                bondCount = bondCount1[dayPlus - 1]
+                                indproCount = indproCount1[dayPlus - 1]
+                                unemCount = unemCount1[dayPlus - 1]
+                                infCount = infCount1[dayPlus - 1]
 
-                                fundCount = fundCount1[dayPlus]
-                                bondCount = bondCount1[dayPlus]
-                                indproCount = indproCount1[dayPlus]
-                                unemCount = unemCount1[dayPlus]
-                                infCount = infCount1[dayPlus]
+                                asset = asset1[dayPlus - 1] // 총 자산
+                                cash = cash1[dayPlus - 1]// 보유 현금
+                                input = input1[dayPlus - 1] // 총 인풋
+                                bought = bought1[dayPlus - 1] // 총 매수금액
+                                sold = sold1[dayPlus - 1]// 총 매도금액
+                                evaluation = evaluation1[dayPlus - 1] // 평가금액
+                                profit = profit1[dayPlus - 1] // 순손익
+                                profitrate = profitrate1[dayPlus - 1] // 수익률
+                                profittot = profittot1[dayPlus - 1] // 실현 순손익
+                                profityear = profityear1[dayPlus - 1] // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
-                                asset = asset1[dayPlus] // 총 자산
-                                cash = cash1[dayPlus] // 보유 현금
-                                input = input1[dayPlus] // 총 인풋
-                                bought = bought1[dayPlus] // 총 매수금액
-                                sold = sold1[dayPlus]// 총 매도금액
-                                evaluation = evaluation1[dayPlus] // 평가금액
-                                profit = profit1[dayPlus] // 순손익
-                                profitrate = profitrate1[dayPlus] // 수익률
-                                profittot = profittot1[dayPlus] // 실현 순손익
-                                profityear = profityear1[dayPlus] // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+                                quant1x = quant1x1[dayPlus - 1] // 1x 보유 수량
+                                quant3x = quant3x1[dayPlus - 1] // 3x 보유 수량
+                                quantinv1x = quantinv1x1[dayPlus - 1] // -1x 보유 수량
+                                quantinv3x = quantinv3x1[dayPlus - 1] // -3x 보유 수량
 
-                                quant1x = quant1x1[dayPlus] // 1x 보유 수량
-                                quant3x = quant3x1[dayPlus] // 3x 보유 수량
-                                quantinv1x = quantinv1x1[dayPlus] // -1x 보유 수량
-                                quantinv3x = quantinv3x1[dayPlus] // -3x 보유 수량
+                                bought1x = bought1x1[dayPlus - 1]
+                                bought3x = bought3x1[dayPlus - 1]
+                                boughtinv1x = boughtinv1x1[dayPlus - 1]
+                                boughtinv3x = boughtinv3x1[dayPlus - 1]
+                                aver1x = aver1x1[dayPlus - 1] // 1x 평균 단가
+                                aver3x = aver3x1[dayPlus - 1] // 3x 평균 단가
+                                averinv1x = averinv1x1[dayPlus - 1] // inv1x 평균 단가
+                                averinv3x = averinv3x1[dayPlus - 1] // inv3x 평균 단가
 
-                                bought1x = bought1x1[dayPlus]
-                                bought3x = bought3x1[dayPlus]
-                                boughtinv1x = boughtinv1x1[dayPlus]
-                                boughtinv3x = boughtinv3x1[dayPlus]
-                                aver1x = aver1x1[dayPlus] // 1x 평균 단가
-                                aver3x = aver3x1[dayPlus] // 3x 평균 단가
-                                averinv1x = averinv1x1[dayPlus] // inv1x 평균 단가
-                                averinv3x = averinv3x1[dayPlus] // inv3x 평균 단가
+                                buylim1x = buylim1x1[dayPlus - 1] // 1x 매수 한계 수량
+                                buylim3x = buylim3x1[dayPlus - 1] // 3x 매수 한계 수량
+                                buyliminv1x = buyliminv1x1[dayPlus - 1] // -1x 매수 한계 수량
+                                buyliminv3x = buyliminv3x1[dayPlus - 1] // -3x 매수 한계 수량
 
-                                buylim1x = buylim1x1[dayPlus] // 1x 매수 한계 수량
-                                buylim3x = buylim3x1[dayPlus] // 3x 매수 한계 수량
-                                buyliminv1x = buyliminv1x1[dayPlus] // -1x 매수 한계 수량
-                                buyliminv3x = buyliminv3x1[dayPlus] // -3x 매수 한계 수량
+                                price1x = price1x1[dayPlus - 1] // 1x 현재가
+                                price3x = price3x1[dayPlus - 1] // 3x 현재가
+                                priceinv1x = priceinv1x1[dayPlus - 1] // -1x 현재가
+                                priceinv3x = priceinv3x1[dayPlus - 1] // -3x 현재가
 
-                                price1x = price1x1[dayPlus] // 1x 현재가
-                                price3x = price3x1[dayPlus] // 3x 현재가
-                                priceinv1x = priceinv1x1[dayPlus] // -1x 현재가
-                                priceinv3x = priceinv3x1[dayPlus] // -3x 현재가
+                                val1x = val1x1[dayPlus - 1] // 1x 현재가치
+                                val3x = val3x1[dayPlus - 1] // 3x 현재가치
+                                valinv1x = valinv1x1[dayPlus - 1] // -1x 현재가치
+                                valinv3x = valinv3x1[dayPlus - 1]// -3x 현재가치
 
-                                val1x = val1x1[dayPlus] // 1x 현재가치
-                                val3x = val3x1[dayPlus] // 3x 현재가치
-                                valinv1x = valinv1x1[dayPlus] // -1x 현재가치
-                                valinv3x = valinv3x1[dayPlus]// -3x 현재가치
+                                pr1x = pr1x1[dayPlus - 1] // 1x 수익률
+                                pr3x = pr3x1[dayPlus - 1] // 3x 수익률
+                                prinv1x = prinv1x1[dayPlus - 1] // inv1x 수익률
+                                prinv3x = prinv3x1[dayPlus - 1] // inv3x 수익률
 
-                                pr1x = pr1x1[dayPlus] // 1x 수익률
-                                pr3x = pr3x1[dayPlus] // 3x 수익률
-                                prinv1x = prinv1x1[dayPlus] // inv1x 수익률
-                                prinv3x = prinv3x1[dayPlus] // inv3x 수익률
-
-                                tradecomtot = tradecomtot1[dayPlus] // 거래수수료 총 합
-                                dividendtot = dividendtot1[dayPlus] // 총 배당금
-                                countMonth = countMonth1[dayPlus] // 경과 개월 수 카운트
-                                countYear = countYear1[dayPlus] // 플레이 한 햇수 카운트
-                                tax = tax1[dayPlus] // 세금
-                                taxtot = taxtot1[dayPlus] // 총 세금
+                                tradecomtot = tradecomtot1[dayPlus - 1] // 거래수수료 총 합
+                                dividendtot = dividendtot1[dayPlus - 1] // 총 배당금
+                                countMonth = countMonth1[dayPlus - 1] // 경과 개월 수 카운트
+                                countYear = countYear1[dayPlus - 1] // 플레이 한 햇수 카운트
+                                tax = tax1[dayPlus - 1] // 세금
+                                taxtot = taxtot1[dayPlus - 1] // 총 세금
 
 
                                 runOnUiThread {
@@ -1451,13 +1456,10 @@ class GameNormalActivity : AppCompatActivity() {
                                     snpD.notifyDataChanged()
 
                                     // 차트 축 최대 범위 설정
-                                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(
-                                        125F
-                                    ) // X축 범위: 125 거래일(~6개월)
+                                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
 
                                     // 차트 축 이동
                                     findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-
 
                                     // 경과 기간 최신화
                                     findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
@@ -1531,7 +1533,8 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_notification).text =
                                         "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다"
                                 }
-                                delay(50L)
+                                delay(60L)
+                                dayPlus -= 1
                             }
                         } catch (e: IndexOutOfBoundsException) {
                             e.printStackTrace()
@@ -1540,22 +1543,168 @@ class GameNormalActivity : AppCompatActivity() {
                             break
                         }
 
+                        ////////////////////////////////////////////////////////////////////////////
+                        fundIndex1.removeAt(dayPlus)
+                        bondIndex1.removeAt(dayPlus)
+                        indproIndex1.removeAt(dayPlus)
+                        unemIndex1.removeAt(dayPlus)
+                        infIndex1.removeAt(dayPlus)
+
+                        fundCount1.removeAt(dayPlus)
+                        bondCount1.removeAt(dayPlus)
+                        indproCount1.removeAt(dayPlus)
+                        unemCount1.removeAt(dayPlus)
+                        infCount1.removeAt(dayPlus)
+
+                        asset1.removeAt(dayPlus)
+                        cash1.removeAt(dayPlus)
+                        input1.removeAt(dayPlus)
+                        bought1.removeAt(dayPlus)
+                        sold1.removeAt(dayPlus)
+                        evaluation1.removeAt(dayPlus)
+                        profit1.removeAt(dayPlus)
+                        profitrate1.removeAt(dayPlus)
+                        profittot1.removeAt(dayPlus)
+                        profityear1.removeAt(dayPlus)
+
+                        quant1x1.removeAt(dayPlus)
+                        quant3x1.removeAt(dayPlus)
+                        quantinv1x1.removeAt(dayPlus)
+                        quantinv3x1.removeAt(dayPlus)
+
+                        bought1x1.removeAt(dayPlus)
+                        bought3x1.removeAt(dayPlus)
+                        boughtinv1x1.removeAt(dayPlus)
+                        boughtinv3x1.removeAt(dayPlus)
+                        aver1x1.removeAt(dayPlus)
+                        aver3x1.removeAt(dayPlus)
+                        averinv1x1.removeAt(dayPlus)
+                        averinv3x1.removeAt(dayPlus)
+
+                        buylim1x1.removeAt(dayPlus)
+                        buylim3x1.removeAt(dayPlus)
+                        buyliminv1x1.removeAt(dayPlus)
+                        buyliminv3x1.removeAt(dayPlus)
+
+                        price1x1.removeAt(dayPlus)
+                        price3x1.removeAt(dayPlus)
+                        priceinv1x1.removeAt(dayPlus)
+                        priceinv3x1.removeAt(dayPlus)
+
+                        val1x1.removeAt(dayPlus)
+                        val3x1.removeAt(dayPlus)
+                        valinv1x1.removeAt(dayPlus)
+                        valinv3x1.removeAt(dayPlus)
+
+                        pr1x1.removeAt(dayPlus)
+                        pr3x1.removeAt(dayPlus)
+                        prinv1x1.removeAt(dayPlus)
+                        prinv3x1.removeAt(dayPlus)
+
+                        tradecomtot1.removeAt(dayPlus)
+                        dividendtot1.removeAt(dayPlus)
+                        countMonth1.removeAt(dayPlus)
+                        countYear1.removeAt(dayPlus)
+                        tax1.removeAt(dayPlus)
+                        taxtot1.removeAt(dayPlus)
+
+
+
+                        fundIndex = fundIndex1[dayPlus - 1]
+                        bondIndex = bondIndex1[dayPlus - 1]
+                        indproIndex = indproIndex1[dayPlus - 1]
+                        unemIndex = unemIndex1[dayPlus - 1]
+                        infIndex = infIndex1[dayPlus - 1]
+
+                        fundCount = fundCount1[dayPlus - 1]
+                        bondCount = bondCount1[dayPlus - 1]
+                        indproCount = indproCount1[dayPlus - 1]
+                        unemCount = unemCount1[dayPlus - 1]
+                        infCount = infCount1[dayPlus - 1]
+
+                        asset = asset1[dayPlus - 1] // 총 자산
+                        cash = cash1[dayPlus - 1]// 보유 현금
+                        input = input1[dayPlus - 1] // 총 인풋
+                        bought = bought1[dayPlus - 1] // 총 매수금액
+                        sold = sold1[dayPlus - 1]// 총 매도금액
+                        evaluation = evaluation1[dayPlus - 1] // 평가금액
+                        profit = profit1[dayPlus - 1] // 순손익
+                        profitrate = profitrate1[dayPlus - 1] // 수익률
+                        profittot = profittot1[dayPlus - 1] // 실현 순손익
+                        profityear = profityear1[dayPlus - 1] // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+
+                        quant1x = quant1x1[dayPlus - 1] // 1x 보유 수량
+                        quant3x = quant3x1[dayPlus - 1] // 3x 보유 수량
+                        quantinv1x = quantinv1x1[dayPlus - 1] // -1x 보유 수량
+                        quantinv3x = quantinv3x1[dayPlus - 1] // -3x 보유 수량
+
+                        bought1x = bought1x1[dayPlus - 1]
+                        bought3x = bought3x1[dayPlus - 1]
+                        boughtinv1x = boughtinv1x1[dayPlus - 1]
+                        boughtinv3x = boughtinv3x1[dayPlus - 1]
+                        aver1x = aver1x1[dayPlus - 1] // 1x 평균 단가
+                        aver3x = aver3x1[dayPlus - 1] // 3x 평균 단가
+                        averinv1x = averinv1x1[dayPlus - 1] // inv1x 평균 단가
+                        averinv3x = averinv3x1[dayPlus - 1] // inv3x 평균 단가
+
+                        buylim1x = buylim1x1[dayPlus - 1] // 1x 매수 한계 수량
+                        buylim3x = buylim3x1[dayPlus - 1] // 3x 매수 한계 수량
+                        buyliminv1x = buyliminv1x1[dayPlus - 1] // -1x 매수 한계 수량
+                        buyliminv3x = buyliminv3x1[dayPlus - 1] // -3x 매수 한계 수량
+
+                        price1x = price1x1[dayPlus - 1] // 1x 현재가
+                        price3x = price3x1[dayPlus - 1] // 3x 현재가
+                        priceinv1x = priceinv1x1[dayPlus - 1] // -1x 현재가
+                        priceinv3x = priceinv3x1[dayPlus - 1] // -3x 현재가
+
+                        val1x = val1x1[dayPlus - 1] // 1x 현재가치
+                        val3x = val3x1[dayPlus - 1] // 3x 현재가치
+                        valinv1x = valinv1x1[dayPlus - 1] // -1x 현재가치
+                        valinv3x = valinv3x1[dayPlus - 1]// -3x 현재가치
+
+                        pr1x = pr1x1[dayPlus - 1] // 1x 수익률
+                        pr3x = pr3x1[dayPlus - 1] // 3x 수익률
+                        prinv1x = prinv1x1[dayPlus - 1] // inv1x 수익률
+                        prinv3x = prinv3x1[dayPlus - 1] // inv3x 수익률
+
+                        tradecomtot = tradecomtot1[dayPlus - 1] // 거래수수료 총 합
+                        dividendtot = dividendtot1[dayPlus - 1] // 총 배당금
+                        countMonth = countMonth1[dayPlus - 1] // 경과 개월 수 카운트
+                        countYear = countYear1[dayPlus - 1] // 플레이 한 햇수 카운트
+                        tax = tax1[dayPlus - 1] // 세금
+                        taxtot = taxtot1[dayPlus - 1] // 총 세금
+
+                        println("시간역행 중 : " + dayPlus.toString())
+                        ////////////////////////////////////////////////////////////////////////////
+
+
                         runOnUiThread {
                             findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
                             findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+
                             fundD.notifyDataChanged()
                             bondD.notifyDataChanged()
+                            indproD.notifyDataChanged()
                             unemD.notifyDataChanged()
                             infD.notifyDataChanged()
-                            findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+
+                            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+
+                            findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus).toFloat())
+                            findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus).toFloat())
+                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus).toFloat())
+                            findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus).toFloat())
+                            findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus).toFloat())
                         }
+
+                        delay(500L)
 
                         println("시간역행 끝 : " + dayPlus.toString())
                         item1Length = 0
