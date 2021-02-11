@@ -9,8 +9,8 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.example.myapplication.data.Profile
-import com.example.myapplication.data.ProflieDB
+import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.data.ProflieDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
