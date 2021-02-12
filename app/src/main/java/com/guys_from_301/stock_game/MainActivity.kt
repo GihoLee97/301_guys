@@ -60,15 +60,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_game.setOnClickListener{
+            val dialog = Dialog_loading(this@MainActivity)
+            dialog.show()
             val intentgame = Intent(this, GameNormalActivity::class.java)
             val intent = Intent(this,GameSettingActivity::class.java)
-            if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)      startActivity(intent)
+            if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
+                startActivity(intent)
+                dialog.dismiss()
+            }
             else {
                 setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
                 setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
                 setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
                 setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
-                startActivity(intentgame)}
+                startActivity(intentgame)
+                dialog.dismiss()
+            }
         }
 
         btn_market.setOnClickListener {

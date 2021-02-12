@@ -274,6 +274,9 @@ class GameNormalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
         val random = Random()
+        val dialog = Dialog_loading(this@GameNormalActivity)
+        dialog.show()
+
 
         gameSetDb = GameSetDB.getInstace(this)
         gl = 250 * gameSetDb?.gameSetDao()?.getSetGameLength()!!
@@ -295,6 +298,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         if (gameNormalDb?.gameNormalDao()?.getAll()?.isEmpty() != true) {
             sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()?.endpoint!!
+            setGamelength = gameSetDb?.gameSetDao()?.getSetGameLength()!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             // 차트 전역 변수 초기화
             initialize(gameNormalDb!!)
@@ -440,6 +444,8 @@ class GameNormalActivity : AppCompatActivity() {
             }
 
             job2.join()
+            dialog.dismiss()
+
 
             val job3 = launch {
                 nowdraw(sp, criteria, gl)
