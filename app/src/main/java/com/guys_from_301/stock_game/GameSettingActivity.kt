@@ -154,7 +154,7 @@ class GameSettingActivity : AppCompatActivity() {
                     newGameSetDB.setgamelength = setGamelength
                     newGameSetDB.setgamespeed = setGamespeed
                     newGameSetDB.setmonthly = setMonthly
-                    newGameSetDB.setsalaryraise = setMonthly
+                    newGameSetDB.setsalaryraise = setSalaryraise
                     gameSetDb?.gameSetDao()?.insert(newGameSetDB)
                 }
                 val addThread = Thread(addRunnable)

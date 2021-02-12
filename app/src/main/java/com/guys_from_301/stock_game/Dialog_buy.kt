@@ -345,7 +345,7 @@ class Dialog_buy(context: Context) {
                     price = price3x * quant
                     temptradecom = price3x * (tradecomrate - 1F) * quant
 
-                    tvBuyquant.text = dec.format(quant)+" 주"
+                    tvBuyquant.text = dec.format(quant)
                     tvBuyprice.text = dec.format(price)+" 원"
                     tvBuytradecom.text = dec.format(temptradecom)+" 원"
 

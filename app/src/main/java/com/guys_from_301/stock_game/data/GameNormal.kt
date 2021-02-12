@@ -37,6 +37,10 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
                        @ColumnInfo(name = "buylim3x") var buylim3x:Float,
                        @ColumnInfo(name = "buyliminv1x") var buyliminv1x: Float,
                        @ColumnInfo(name = "buyliminv3x") var buyliminv3x:Float,
+                       @ColumnInfo(name = "price1x") var price1x: Float,
+                       @ColumnInfo(name = "price3x") var price3x: Float,
+                       @ColumnInfo(name = "priceinv1x") var priceinv1x: Float,
+                       @ColumnInfo(name = "priceinv3x") var priceinv3x: Float,
                        @ColumnInfo(name = "val1x") var val1x: Float,
 @ColumnInfo(name = "val3x") var val3x: Float,
 @ColumnInfo(name = "valinv1x") var valinv1x: Float,
@@ -45,6 +49,8 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
                        @ColumnInfo(name = "pr3x") var pr3x:Float,
                        @ColumnInfo(name = "prinv1x") var prinv1x:Float,
                        @ColumnInfo(name = "prinv3x") var prinv3x:Float,
+                       @ColumnInfo(name = "monthly") var monthly:Float,
+                       @ColumnInfo(name = "monthtoggle") var monthtoggle: Boolean,
                        @ColumnInfo(name = "tradecomtot") var tradecomtot: Float,
                        @ColumnInfo(name = "tradecom") var tradecom:Float,
 @ColumnInfo(name = "dividendtot") var dividendtot: Float,
@@ -58,10 +64,13 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
                        @ColumnInfo(name = "item4active")var item4active: Boolean,
 @ColumnInfo(name = "endpoint")var endpoint: Int,
 @ColumnInfo(name = "countyear")var countyear: Int,
-                       @ColumnInfo(name = "countmonth") var countmonth:Int
+                       @ColumnInfo(name = "countmonth") var countmonth:Int,
+                       @ColumnInfo(name = "snpnowdays") var snpnowdays:Int,
+                       @ColumnInfo(name = " snpnowval") var snpnowval: Float,
+                       @ColumnInfo(name = "snpdiff") var snpdiff: Float
 )
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
-    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"nothing",
-    false,0,0,false,false,false,0,0,0)
+    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,false,0F,0F,0F,0F,"nothing",
+    false,0,0,false,false,false,0,0,0,0,0F,0F)
 }

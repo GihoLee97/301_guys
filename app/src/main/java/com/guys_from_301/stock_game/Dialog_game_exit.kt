@@ -44,8 +44,8 @@ class Dialog_game_exit (context : Context)  {
                 val addRunnable = Runnable {
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
                     val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
-                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, val1x, val3x, valinv1x, valinv3x,
-                        pr1x, pr3x, prinv1x, prinv3x, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, endpoint, countYear, countMonth)
+                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff)
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                 }
                 val addThread = Thread(addRunnable)
@@ -53,8 +53,9 @@ class Dialog_game_exit (context : Context)  {
                 dlg.dismiss()
                 gameend = !gameend /////////////////////////////////////////////////////////////////////
                 endsuccess = false
-//            val intent = Intent(mContext, MainActivity::class.java)
-                (mContext as Activity).finish()
+                val intent = Intent(mContext, MainActivity::class.java)
+//                (mContext as Activity).finish()
+                mContext?.startActivity(intent)
             }
 
           }
