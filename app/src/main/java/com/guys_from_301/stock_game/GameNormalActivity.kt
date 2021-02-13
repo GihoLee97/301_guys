@@ -929,6 +929,7 @@ class GameNormalActivity : AppCompatActivity() {
                         localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
 
+
                         var fundDate = fund_date[fundIndex]
                         var fundDate_sf = sf.parse(fundDate)
                         var bondDate = bond_date[bondIndex]
@@ -1751,7 +1752,12 @@ class GameNormalActivity : AppCompatActivity() {
                         tax = tax1[dayPlus - 1] // 세금
                         taxtot = taxtot1[dayPlus - 1] // 총 세금
 
-                        monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 월 투자금 정상화
+                        if (sf.parse(snp_date[start + dayPlus - 1]).month < 1) {
+                            monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), (countYear-1).toDouble())).toFloat() // 월 투자금 정상화
+                        }
+                        else {
+                            monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 월 투자금 정상화
+                        }
 
 
                         snpD.removeEntry(dayPlus.toFloat(), 0)
