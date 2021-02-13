@@ -9,5 +9,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="game_introduction">"스톡AI는\n지난 70년간의 미국 주식 데이터 상에서\n모의로 투자하는 게임입니다."</string>
     <string name="guide_ment1">"게임을 시작하기 앞서\n닉네임을 설정하겠습니다"</string>
+    <string name="about_fund">"Fund Rate: 연방기금금리로 ~~~다"</string>
+    <string name="about_bond">"Bond Rate: 설명~!~!~!~"</string>
+    <string name="about_indpro">"indpro 설명~!~!"</string>
+    <string name="about_unem">"unem 설명~!~!~"</string>
+    <string name="about_inf">"infla 설명~!~!~!"</string>
 </resources>
 

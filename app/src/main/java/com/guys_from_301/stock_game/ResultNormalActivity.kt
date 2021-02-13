@@ -7,6 +7,8 @@ import android.widget.TextView
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProflieDB
+import java.lang.Float.NaN
+import java.lang.Float.isNaN
 
 class ResultNormalActivity : AppCompatActivity() {
     private var profileDb : ProflieDB? = null
@@ -41,15 +43,21 @@ class ResultNormalActivity : AppCompatActivity() {
     }
 
     fun reflect(){
-        //아직 profittotal 제대로 반영 안됨
         profileDb = ProflieDB.getInstace(this@ResultNormalActivity)
         gamenormalDb = GameNormalDB.getInstace(this@ResultNormalActivity)
         var profittotal: Float = profitrate
         var money = profileDb?.profileDao()?.getMoney()!!
         val newProfile = Profile()
-        // 사용자 profiledb의 money 업데이트
         println("---zz"+profittotal)
-        newProfile.money = Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat())
+        println("---zz"+ profitrate)
+
+        // 사용자 profiledb의 money 업데이트
+        if(isNaN(profittotal)){
+            newProfile.money = profileDb?.profileDao()?.getMoney()!!
+        }
+        else{
+            newProfile.money = Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat())
+        }
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
         newProfile.rank = profileDb?.profileDao()?.getRank()!!
         newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
@@ -72,5 +80,4 @@ class ResultNormalActivity : AppCompatActivity() {
         )
         gamenormalDb?.gameNormalDao()?.deleteAll()
     }
-
 }

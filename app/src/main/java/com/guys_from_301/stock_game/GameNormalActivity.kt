@@ -4,9 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import com.github.mikephil.charting.charts.LineChart
@@ -274,6 +278,16 @@ class GameNormalActivity : AppCompatActivity() {
     private val btnRefresh: Long = 5L // 버튼 Refresh 조회 간격 [ms]
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // 지표 설명 관련 /////////////////////////////////////////////////////////////////////
+    private lateinit var layout_fund : LinearLayout
+    private lateinit var layout_bond : LinearLayout
+    private lateinit var layout_indpro : LinearLayout
+    private lateinit var layout_unem : LinearLayout
+    private lateinit var layout_inf : LinearLayout
+
+    // 버튼 색깔 ///////////////////////////////////////////////////////////////////////////////////
+    private val colorOn: String = "#FFFFFFFF" // 버튼 선택시 색깔 White
+    private val colorOff: String = "#FF808080" // 미선택 버튼 색깔 Gray
 
     //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -393,8 +407,57 @@ class GameNormalActivity : AppCompatActivity() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         }
 
-
         // Button 동작
+        // 지표 설명
+        layout_fund = findViewById(R.id.Layout_fund)
+        layout_bond = findViewById(R.id.Layout_bond)
+        layout_indpro = findViewById(R.id.Layout_indpro)
+        layout_unem = findViewById(R.id.Layout_unem)
+        layout_inf = findViewById(R.id.Layout_inf)
+
+
+        findViewById<LinearLayout>(R.id.layout_btn_fund).setOnClickListener{
+            if(layout_fund.visibility == View.VISIBLE){
+                layout_fund.visibility = View.GONE
+            }
+            else{
+                layout_fund.visibility = View.VISIBLE
+            }
+        }
+        findViewById<LinearLayout>(R.id.layout_btn_bond).setOnClickListener{
+            if(layout_bond.visibility == View.VISIBLE){
+                layout_bond.visibility = View.GONE
+            }
+            else{
+                layout_bond.visibility = View.VISIBLE
+            }
+        }
+        findViewById<LinearLayout>(R.id.layout_btn_indpro).setOnClickListener{
+            if(layout_indpro.visibility == View.VISIBLE){
+                layout_indpro.visibility = View.GONE
+            }
+            else{
+                layout_indpro.visibility = View.VISIBLE
+            }
+        }
+        findViewById<LinearLayout>(R.id.layout_btn_unem).setOnClickListener{
+            if(layout_unem.visibility == View.VISIBLE){
+                layout_unem.visibility = View.GONE
+            }
+            else{
+                layout_unem.visibility = View.VISIBLE
+            }
+        }
+        findViewById<LinearLayout>(R.id.layout_btn_inf).setOnClickListener{
+            if(layout_inf.visibility == View.VISIBLE){
+                layout_inf.visibility = View.GONE
+            }
+            else{
+                layout_inf.visibility = View.VISIBLE
+            }
+        }
+
+
         // 매수
         findViewById<Button>(R.id.btn_buy).setOnClickListener {
             val dlgBuy = Dialog_buy(this)

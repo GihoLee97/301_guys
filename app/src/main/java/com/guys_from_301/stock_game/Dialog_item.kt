@@ -216,7 +216,6 @@ class Dialog_item(context: Context, _nowstack :Int) {
         }
 
         btnItemok.setOnClickListener {
-
             // DB에 스택 변동사항 저장
             var profileDb : ProflieDB? = null
             profileDb = ProflieDB?.getInstace(mContext!!)
@@ -241,7 +240,6 @@ class Dialog_item(context: Context, _nowstack :Int) {
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
             profileDb?.profileDao()?.update(newProfile)
-
             //
             dlg.dismiss()
             click =
