@@ -1087,7 +1087,7 @@ class GameNormalActivity : AppCompatActivity() {
                                 auto3xratio = autoratio * (100 - auto1x) / 10000F
 
                                 if (auto1xratio!=0F) {
-                                    if ((monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() > 0) {
+                                    if (((monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() - (monthly * auto1xratio / (price1x * tradecomrate)) > 0)) {
                                         auto1xquant = (monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() - 1
                                     }
                                     else {
@@ -1101,14 +1101,14 @@ class GameNormalActivity : AppCompatActivity() {
                                     aver1x = bought1x / quant1x // 평균단가 반영
                                 }
                                 if (auto3xratio!=0F) {
-                                    if ((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() > 0) {
+                                    if (((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - (monthly * auto3xratio / (price3x * tradecomrate)) > 0)) {
                                         auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - 1
                                     }
                                     else {
                                         auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt()
                                     }
 
-                                    cash -= auto3xquant * price1x * tradecomrate
+                                    cash -= auto3xquant * price3x * tradecomrate
                                     tradecomtot += auto3xquant * price3x * (tradecomrate - 1F)
                                     quant3x += auto3xquant
                                     bought3x += price3x * auto3xquant
@@ -1759,7 +1759,6 @@ class GameNormalActivity : AppCompatActivity() {
                             monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 월 투자금 정상화
                         }
 
-
                         snpD.removeEntry(dayPlus.toFloat(), 0)
                         fundD.removeEntry(dayPlus.toFloat(), 0)
                         bondD.removeEntry(dayPlus.toFloat(), 0)
@@ -1968,7 +1967,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
-        if (gameend && endsuccess) {
+        if (endsuccess) {
             var profileDb: ProflieDB? = null
             profileDb = ProflieDB.getInstace(this@GameNormalActivity)
             funlevelup(
