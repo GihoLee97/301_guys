@@ -1071,7 +1071,7 @@ class GameNormalActivity : AppCompatActivity() {
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
 
-                        // 월 투자금 입금
+                        // 월 투자금 입금 시작
                         if (snpDate_sf.date >= 10 && !monthToggle) {
                             cash += monthly // 월 투자금 현금으로 입금
                             input += monthly // 총 input 최신화
@@ -1118,7 +1118,6 @@ class GameNormalActivity : AppCompatActivity() {
                                 }
 
 
-
                                 if (auto3xratio!=0F) {
                                     if (((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - (monthly * auto3xratio / (price3x * tradecomrate)) > 0)) {
                                         auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - 1
@@ -1153,9 +1152,10 @@ class GameNormalActivity : AppCompatActivity() {
                             ////////////////////////////////////////////////////////////////////////
                             monthToggle = true // 해당 월 투자금 지급 여부
                         }
+                        // 월 투자금 입금 코드 종료
 
 
-                        // 월 바뀜 시
+                        // 월 바뀜 시 실행할 코드 시작
                         if (snpDate_sf.month != preMonth) {
 
                             monthToggle = false
@@ -1239,8 +1239,10 @@ class GameNormalActivity : AppCompatActivity() {
                             }
                             println("월 바뀜!")
                         }
+                        // 월 바뀜 시 실행할 코드 종료
 
 
+                        // 자산 관련 데이터 계산 시작
                         // 운용수수료 및 괴리율 반영
                         price1x *= (feerate1x + snpDiff * dcp1x) //
                         price3x *= (feerate3x + 3 * snpDiff * dcp3x) //
@@ -1289,6 +1291,7 @@ class GameNormalActivity : AppCompatActivity() {
                         profitrate = 100F * profit / input
                         profit = evaluation + cash - input // input 대비 수익률
                         asset = cash + evaluation // 총 자산
+                        // 자산 관련 데이터 계산 종료
 
 
                         runOnUiThread {
@@ -1358,7 +1361,7 @@ class GameNormalActivity : AppCompatActivity() {
                         }
 
                         ////////////////////////////////////////////////////////////////////////////
-                        // 시간역행 아이템
+                        // 시간역행 아이템용 데이터 저장 시작
                         println("현재 dayPlus: " + dayPlus.toString())
 
                         item1Able = dayPlus - 2 // 시간 역행 가능한 범위
@@ -1429,12 +1432,13 @@ class GameNormalActivity : AppCompatActivity() {
                         taxtot1.add(taxtot)
 
                         println("현재 fundIndex Size: " + fundIndex1.size.toString()+" | 현재 asset1 Size: " + asset1.size.toString())
+                        // 시간역행 아이템용 데이터 저장 종료
                         ////////////////////////////////////////////////////////////////////////////
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
                         if (setGamespeed == 0) {
-                            oneday = 1995L // 1 day/sec
+                            oneday = 1995L // 0.5 day/sec
                         } else if (setGamespeed == 1) {
                             oneday = 995L // 1 day/sec
                         } else if (setGamespeed == 2) {
@@ -1447,13 +1451,17 @@ class GameNormalActivity : AppCompatActivity() {
                             oneday = 195L // 5 day/sec
                         } else if (setGamespeed == 6) {
                             oneday = 115L // 8 day/sec
+                        } else if (setGamespeed == 7) {
+                            oneday = 95L // 10 day/sec
                         }
                         ////////////////////////////////////////////////////////////////////////////
-
 
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절
                     }
+
+
+                    // 정상 진행 시 코드 종료, 시간 역행 아이템 사용시 실행할 코드 시작
                     else if (dayPlus <= gl && item1Active) {
                         runOnUiThread {
                             findViewById<Button>(R.id.btn_buy).isEnabled = false
@@ -1708,9 +1716,8 @@ class GameNormalActivity : AppCompatActivity() {
                                         per.format(prinv1x) + " %"
                                     findViewById<TextView>(R.id.tv_profitinv3x).text =
                                         per.format(prinv3x) + " %"
-
                                 }
-                                delay(70L) // UI 쓰레드 동작 시간 확보
+                                delay(70L) // UI 쓰레드 동작 시간 확보, UI 쓰레드 문제로 강제 종료시 이 값을 증가시킬것
                                 dayPlus -= 1
                             }
                         } catch (e: IndexOutOfBoundsException) {
@@ -1983,6 +1990,7 @@ class GameNormalActivity : AppCompatActivity() {
                             findViewById<Button>(R.id.btn_item).isEnabled = true
                         }
                     }
+                    // 시간 역행 아이템 사용 시 코드 종료, 설정한 게임 플레이 시간 도달 시 실핼할 코드 시작
                     else {
                         println("게임 끝")
                         endsuccess = true
@@ -1990,6 +1998,7 @@ class GameNormalActivity : AppCompatActivity() {
                         break
                         break
                     }
+                    // 설정한 게임 플레이 시간 도달 시 실핼할 코드 종료
                 }
             }
             else {

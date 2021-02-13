@@ -186,7 +186,7 @@
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            android:max="4"
+            android:max="7"
             >
         </SeekBar>
 

@@ -56,6 +56,22 @@ class GameSettingActivity : AppCompatActivity() {
         btnGamestart = findViewById(R.id.btn_gamestart)
         gameSetDb = GameSetDB.getInstace(this)
 
+        // 초기 값 설정(테스트 쉽게)
+        setCash = 1000000F // 100 만원
+        seekbarSetcash.progress = 1
+        tvSetcash.text = dec.format(setCash / 10000F)+ " 만 원"
+
+        setMonthly = 1000000F // 100 만원
+        seekbarSetmonthly.progress = 10
+        tvSetmonthly.text = dec.format(setMonthly / 10000F)+ " 만 원"
+
+        setGamelength = 5
+        tvSetgamelength.text = "$setGamelength years"
+
+        setGamespeed = 7
+        seekbarSetgamespeed.progress = 7
+        tvSetgamespeed.text = "10 days/sec"
+
 
         // Seekbar Range: 0 ~ 1000
         seekbarSetcash.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -125,20 +141,47 @@ class GameSettingActivity : AppCompatActivity() {
             }
         })
 
-        // Seekbar Range: 0 ~ 4
+        // Seekbar Range: 0 ~ 7
         seekbarSetgamespeed.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                setGamespeed = progress + 1
-                tvSetgamespeed.text = "$setGamespeed days/sec"
+                setGamespeed = progress
+                if (setGamespeed==0) {
+                    tvSetgamespeed.text = "0.5 days/sec"
+                } else if (setGamespeed==6) {
+                    tvSetgamespeed.text = "8 days/sec"
+                } else if (setGamespeed==7) {
+                    tvSetgamespeed.text = "10 days/sec"
+                }
+                else {
+                    tvSetgamespeed.text = "$setGamespeed days/sec"
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                setGamespeed = seekBar!!.progress + 1
-                tvSetgamespeed.text = "$setGamespeed days/sec"
+                setGamespeed = seekBar!!.progress
+                if (setGamespeed==0) {
+                    tvSetgamespeed.text = "0.5 days/sec"
+                } else if (setGamespeed==6) {
+                    tvSetgamespeed.text = "8 days/sec"
+                } else if (setGamespeed==7) {
+                    tvSetgamespeed.text = "10 days/sec"
+                }
+                else {
+                    tvSetgamespeed.text = "$setGamespeed days/sec"
+                }
             }
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                setGamespeed = seekBar!!.progress + 1
-                tvSetgamespeed.text = "$setGamespeed days/sec"
+                setGamespeed = seekBar!!.progress
+                if (setGamespeed==0) {
+                    tvSetgamespeed.text = "0.5 days/sec"
+                } else if (setGamespeed==6) {
+                    tvSetgamespeed.text = "8 days/sec"
+                } else if (setGamespeed==7) {
+                    tvSetgamespeed.text = "10 days/sec"
+                }
+                else {
+                    tvSetgamespeed.text = "$setGamespeed days/sec"
+                }
             }
         })
 
