@@ -62,15 +62,17 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 @ColumnInfo(name = "item2active")var item2active: Boolean,
 @ColumnInfo(name = "item3active")var item3active:Boolean,
                        @ColumnInfo(name = "item4active")var item4active: Boolean,
+                       @ColumnInfo(name = "autobuy")var autobuy: Boolean,
+                       @ColumnInfo(name = "autoratio")var autoratio: Int,
+                       @ColumnInfo(name = "auto1x")var auto1x: Int,
 @ColumnInfo(name = "endpoint")var endpoint: Int,
 @ColumnInfo(name = "countyear")var countyear: Int,
                        @ColumnInfo(name = "countmonth") var countmonth:Int,
                        @ColumnInfo(name = "snpnowdays") var snpnowdays:Int,
                        @ColumnInfo(name = " snpnowval") var snpnowval: Float,
                        @ColumnInfo(name = "snpdiff") var snpdiff: Float
-)
-{
-    constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
-    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,false,0F,0F,0F,0F,"nothing",
-    false,0,0,false,false,false,0,0,0,0,0F,0F)
+) {
+    constructor() : this("", 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, "초기값", 0F, 0F, 0, 0, 0, 0, 0, 0, 0F, 0F,
+            0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, false, 0F, 0F, 0F, 0F, "nothing",
+            false, 0, 0, false, false, false, false, 0, 100, 0, 0, 0, 0, 0F, 0F)
 }

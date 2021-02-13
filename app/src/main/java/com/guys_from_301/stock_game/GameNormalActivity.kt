@@ -387,6 +387,7 @@ class GameNormalActivity : AppCompatActivity() {
             snpNowdays = 0
             snpNowVal = 0F
             snpDiff = 0F
+
             item1Active = false
             item2Active = false
             item3Active = false
@@ -394,6 +395,9 @@ class GameNormalActivity : AppCompatActivity() {
             item1Length = 0
             item1Able = 0
 
+            autobuy = false
+            autoratio = 0
+            auto1x = 100
 
             setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
             setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
@@ -616,12 +620,17 @@ class GameNormalActivity : AppCompatActivity() {
         snpNowdays = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpnowdays!!
         snpNowVal = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpnowval!!
         snpDiff = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpdiff!!
+
         item1Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1active!!
         item2Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item2active!!
         item3Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item3active!!
         item4Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item4active!!
         item1Length = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1length!!
         item1Able = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1able!!
+
+        autobuy = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.autobuy!!
+        autoratio = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.autoratio!!
+        auto1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.auto1x!!
 
 
         setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
