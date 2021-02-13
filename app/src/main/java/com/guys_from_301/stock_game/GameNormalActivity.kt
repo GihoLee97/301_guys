@@ -103,7 +103,6 @@ private val dcp1x: Float = 0.995F // 괴리율(Discrepancy): 1x, inv1x
 private val dcp3x: Float = 0.99F // 괴리율(Discrepancy):  3x, inv3x
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 // Item 값들
 var item1Active: Boolean = false // 시간 되돌리기
 var item2Active: Boolean = false // 뉴스 제공량
@@ -129,6 +128,10 @@ var endsuccess: Boolean = false // 게임 정상종료
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 var islevelup: Boolean = false
 var profittotal: Float = 0F
+
+
+//뉴스 관련/////////////////////////
+var newssave = mutableListOf<Int>()
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -288,6 +291,7 @@ class GameNormalActivity : AppCompatActivity() {
     // 버튼 색깔 ///////////////////////////////////////////////////////////////////////////////////
     private val colorOn: String = "#FFFFFFFF" // 버튼 선택시 색깔 White
     private val colorOff: String = "#FF808080" // 미선택 버튼 색깔 Gray
+
 
     //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -1079,6 +1083,23 @@ class GameNormalActivity : AppCompatActivity() {
                             snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
+                        //뉴스
+                        for(i in 0..40600){
+                            if(news_date[i] == snpNowDate){
+                                newssave.add(i)
+                            }
+                        }
+                        if(newssave.size>=3 && (newssave[0] !=null)){
+                            var tmp0 = newssave[0]
+                            var tmp1 = newssave[1]
+                            var tmp2 = newssave[2]
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
+                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+                            }
+                        }
+                        newssave.clear()
 
                         // 월 투자금 입금 시작
                         if (snpDate_sf.date >= 10 && !monthToggle) {

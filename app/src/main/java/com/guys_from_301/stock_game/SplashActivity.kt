@@ -38,6 +38,9 @@ val inf_date: ArrayList<String> = ArrayList() // Inflation rate 날짜
 val inf_val: ArrayList<String> = ArrayList() // Inflation rate 값
 var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완료:1)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+// 뉴스 데이터//////////////////////
+val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
+val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
 
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
@@ -87,6 +90,36 @@ class SplashActivity : AppCompatActivity() {
 
             // 모든 금융 데이터 csv 파일들은 \app\src\main\assets 에 저장
             // 금융 데이터 업데이트 시 해당 파일들 만을 최신화, 나머지는 모두 자동화
+
+            // "news_korean.csv" 파일에서 뉴스 정보 추출
+            /////////////////////////////////////////////////////////////////////////////
+
+            try{
+//                fileReader = BufferedReader()
+                fileReader = BufferedReader(InputStreamReader(getAssets().open("news_korean.csv"),"utf-8"))
+                // 헤더 없음 40601 행까지 데이터 있음
+                csvReader = CSVReaderBuilder(fileReader).withSkipLines(0).build()
+                val news_rs = csvReader.readAll()
+                count = 0
+                for (news_r in news_rs){
+                    news_date.add(count, news_r[0])
+                    news_information.add(count, news_r[1])
+                    count += 1
+                }
+            } catch (e: Exception) {
+                println("Reading CSV Error : NEWS !") // 에러 메시지 출력
+                e.printStackTrace()
+            } finally {
+                try {
+                    fileReader!!.close()
+                    csvReader!!.close()
+                    count = 0
+                } catch (e: IOException) {
+                    println("Closing fileReader/csvParser Error : NEWS !") // 에러 메시지 출력
+                    e.printStackTrace()
+                    count = 0
+                }
+            }
 
             ///////////////////////////////////////////////////////////////////////////////////////
             // "^GSPC.csv" 파일로 부터 S&P500 historical data 추출
@@ -337,6 +370,7 @@ class SplashActivity : AppCompatActivity() {
             loadcomp = true
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 
     private fun isGoogleAuthChecked() : Boolean{

@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.ProflieDB
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         gameSetDb = GameSetDB.getInstace(this)
@@ -60,21 +62,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_game.setOnClickListener{
-            val dialog = Dialog_loading(this@MainActivity)
-            dialog.show()
-            val intentgame = Intent(this, GameNormalActivity::class.java)
-            val intent = Intent(this,GameSettingActivity::class.java)
-            if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
-                startActivity(intent)
-                dialog.dismiss()
+            var profileDb: ProflieDB? = null
+            profileDb = ProflieDB.getInstace(this)
+            var money = profileDb?.profileDao()?.getMoney()!!
+
+            if(money <= 0){
+                Toast.makeText(this, "현금이 없습니다.", Toast.LENGTH_LONG).show()
             }
-            else {
-                setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
-                setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
-                setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
-                setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
-                startActivity(intentgame)
-                dialog.dismiss()
+            else{
+                val dialog = Dialog_loading(this@MainActivity)
+                dialog.show()
+                val intentgame = Intent(this, GameNormalActivity::class.java)
+                val intent = Intent(this,GameSettingActivity::class.java)
+                if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+                else {
+                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
+                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
+                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
+                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+                    startActivity(intentgame)
+                    dialog.dismiss()
+                }
             }
         }
 
