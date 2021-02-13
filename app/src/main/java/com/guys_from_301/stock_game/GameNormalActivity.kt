@@ -1100,7 +1100,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     bought1x += price1x * auto1xquant // 매입금 반영
                                     aver1x = bought1x / quant1x // 평균단가 반영
 
-                                    // 자동 매수내역 DB 연동
+                                    // 자동 매수내역 DB 저장
                                     val addRunnable = Runnable {
                                         val newGameNormalDB = GameNormal()
                                         newGameNormalDB.id = localdatatime
@@ -1132,7 +1132,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     bought3x += price3x * auto3xquant
                                     aver3x = bought3x / quant3x
 
-                                    // 자동 매수내역 DB 연동
+                                    // 자동 매수내역 DB 저장
                                     val addRunnable = Runnable {
                                         val newGameNormalDB = GameNormal()
                                         newGameNormalDB.id = localdatatime
@@ -1722,7 +1722,7 @@ class GameNormalActivity : AppCompatActivity() {
                             }
                         } catch (e: IndexOutOfBoundsException) {
                             e.printStackTrace()
-                            gameend = true
+                            endsuccess = true
                             break
                             break
                             break
