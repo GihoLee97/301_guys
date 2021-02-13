@@ -7,6 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".GameNormalActivity">
 
+    <LinearLayout
+        android:id="@+id/Layout_fund"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:gravity="center|top">
+        <TextView
+            android:layout_marginVertical="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_fund"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Layout_bond"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        android:visibility="invisible"
+        >
+        <TextView
+            android:layout_marginVertical="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_bond"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Layout_indpro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        android:visibility="invisible"
+        >
+        <TextView
+            android:layout_marginVertical="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_indpro"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Layout_unem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:gravity="center|top">
+        <TextView
+            android:layout_marginVertical="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_unem"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/Layout_inf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:gravity="center|top">
+        <TextView
+            android:layout_marginVertical="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_inf"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout_GameNormalActivity"
         android:layout_width="match_parent"
@@ -32,48 +115,81 @@
                     android:orientation="horizontal"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_fund"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layout_btn_fund"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_fund"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layout_btn_bond"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_bond"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_bond"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layout_btn_indpro"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_indpro"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_indpro"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layout_btn_unem"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_unem"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_unem"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/layout_btn_inf"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_inf"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_inf"
+                            android:layout_width="150dp"
+                            android:layout_height="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
                 </LinearLayout>
-
             </HorizontalScrollView>
 
             <com.github.mikephil.charting.charts.LineChart
