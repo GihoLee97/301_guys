@@ -109,6 +109,12 @@ var item1Length: Int = 0 // 되돌릴 거래일 수
 var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
 
 
+// 자동 기능 변수들
+var autobuy: Boolean = false // 자동 매수기능 활성여부
+var autoratio: Int = 0 // 월급가운데 1x 매수 비율 (%)
+var auto1x: Int = 0 // 월급가운데 3x 매수 비율 (%)
+
+
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
 var click: Boolean = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
 var gameend: Boolean = false // 게임 종료시 적용
@@ -404,8 +410,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 자동
         findViewById<Button>(R.id.btn_auto).setOnClickListener {
-            //val dlgAuto = Dialog_auto(this)
-            gameend = !gameend
+            val dlgAuto = Dialog_auto(this)
+            dlgAuto.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
