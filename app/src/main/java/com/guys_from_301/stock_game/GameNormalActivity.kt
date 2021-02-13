@@ -1099,7 +1099,25 @@ class GameNormalActivity : AppCompatActivity() {
                                     quant1x += auto1xquant // 수량 반영
                                     bought1x += price1x * auto1xquant // 매입금 반영
                                     aver1x = bought1x / quant1x // 평균단가 반영
+
+                                    val addRunnable = Runnable {
+                                        val newGameNormalDB = GameNormal()
+                                        newGameNormalDB.id = localdatatime
+                                        newGameNormalDB.buyorsell = "매수"
+                                        newGameNormalDB.select = 1
+                                        newGameNormalDB.price = price1x
+                                        newGameNormalDB.volume = auto1xquant * price1x
+                                        newGameNormalDB.quant = auto1xquant
+                                        newGameNormalDB.tradecom = auto1xquant * price1x * (tradecomrate - 1F)
+                                        newGameNormalDB.cash = cash
+                                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                                    }
+                                    val addThread = Thread(addRunnable)
+                                    addThread.start()
                                 }
+
+
+
                                 if (auto3xratio!=0F) {
                                     if (((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - (monthly * auto3xratio / (price3x * tradecomrate)) > 0)) {
                                         auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - 1
@@ -1113,7 +1131,25 @@ class GameNormalActivity : AppCompatActivity() {
                                     quant3x += auto3xquant
                                     bought3x += price3x * auto3xquant
                                     aver3x = bought3x / quant3x
+
+                                    val addRunnable = Runnable {
+                                        val newGameNormalDB = GameNormal()
+                                        newGameNormalDB.id = localdatatime
+                                        newGameNormalDB.buyorsell = "매수"
+                                        newGameNormalDB.select = 2
+                                        newGameNormalDB.price = price3x
+                                        newGameNormalDB.volume = auto3xquant * price3x
+                                        newGameNormalDB.quant = auto3xquant
+                                        newGameNormalDB.tradecom = auto3xquant * price3x * (tradecomrate - 1F)
+                                        newGameNormalDB.cash = cash
+                                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                                    }
+                                    val addThread = Thread(addRunnable)
+                                    addThread.start()
                                 }
+
+
+
                             }
                             ////////////////////////////////////////////////////////////////////////
                             monthToggle = true // 해당 월 투자금 지급 여부
