@@ -2,6 +2,7 @@ package com.guys_from_301.stock_game
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.view.Window
 import android.widget.*
 import android.widget.Button
@@ -19,6 +20,9 @@ class Dialog_auto(context: Context) {
 
     private var autoratiotemp: Int = 0
     private var auto1xtemp: Int = 0
+    private var auto1xratiotemp: Float = 0F
+    private var auto3xratiotemp: Float = 0F
+
 
     private lateinit var seekbarAutoratio: SeekBar
     private lateinit var seekbarAuto1x: SeekBar
@@ -46,74 +50,197 @@ class Dialog_auto(context: Context) {
         btnAutocancel = dlg.findViewById(R.id.btn_autocancel)
 
 
-        auto1xtemp = auto1x // 현재 값 불러오기
-        autoratiotemp = autoratiotemp // 현재 값 불러오기
+        autoratiotemp = autoratio // 현재 값 불러오기
+        seekbarAutoratio.progress = autoratiotemp // 현재 상태 Seekbar 에 반영
 
-        seekbarAutoratio.progress = auto1xtemp // 현재 상태 Seekbar 에 반영
-        seekbarAuto1x.progress = auto1xtemp // 현재 상태 Seekbar 에 반영
 
-        tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+        // 레버리지 거래 아이템 효과 연동
+        if (!item4Active) {
+            auto1xtemp = 100
+            seekbarAuto1x.progress = auto1xtemp
+            seekbarAuto1x.isEnabled = false
+            seekbarAuto1x.setBackgroundColor(Color.parseColor("#FF808080"))
+            tvAuto1x.setBackgroundColor(Color.parseColor("#FF808080"))
+            tvAuto3x.setBackgroundColor(Color.parseColor("#FF808080"))
+        }
+        else {
+            auto1xtemp = auto1x // 현재 값 불러오기
+            seekbarAuto1x.progress = auto1xtemp // 현재 상태 Seekbar 에 반영
+        }
+
+        auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+        auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+        tvAutoratio.text = "$autoratiotemp %"
+        tvAuto1x.text = "1x"
+        tvAuto3x.text = "3x"
+        if (autoratiotemp==0) {
+            tvAuto.text = "자동 매수를 사용하지 않습니다"
+        }
+        else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+            tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+        }
+        else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+            tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+        }
+        else {
+            tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+        }
 
 
         seekbarAutoratio.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                auto1xtemp = progress
-                tvAuto1x.text = "$auto1xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                autoratiotemp = progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAutoratio.text = "$autoratiotemp %"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                auto1xtemp = seekBar!!.progress
-                tvAuto1x.text = "$auto1xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                autoratiotemp = seekBar!!.progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAutoratio.text = "$autoratiotemp %"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                auto1xtemp = seekBar!!.progress
-                tvAuto1x.text = "$auto1xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                autoratiotemp = seekBar!!.progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAutoratio.text = "$autoratiotemp %"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
         })
 
 
         seekbarAuto1x.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                auto3xtemp = progress
-                tvAuto3x.text = "$auto3xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                auto1xtemp = progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAuto1x.text = auto1xtemp.toString()+" %"
+                tvAuto3x.text = (100 - auto1xtemp).toString()+" %"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                auto3xtemp = seekBar!!.progress
-                tvAuto3x.text = "$auto3xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                auto1xtemp = seekBar!!.progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAuto1x.text = auto1xtemp.toString()+" %"
+                tvAuto3x.text = (100 - auto1xtemp).toString()+" %"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                auto3xtemp = seekBar!!.progress
-                tvAuto3x.text = "$auto3xtemp %"
-                tvAuto.text = "매월 월급의 $auto1xtemp% 만큼 1x, $auto3xtemp% 만큼 3x 자동 매수"
+                auto1xtemp = seekBar!!.progress
+                auto1xratiotemp = autoratiotemp * auto1xtemp / 100F
+                auto3xratiotemp = autoratiotemp * (100 - auto1xtemp) / 100F
+
+                tvAuto1x.text = "1x"
+                tvAuto3x.text = "3x"
+                if (autoratiotemp==0) {
+                    tvAuto.text = "자동 매수를 사용하지 않습니다"
+                }
+                else if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수"
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
+                else {
+                    tvAuto.text = "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수"
+                }
             }
         })
 
 
         btnAutook.setOnClickListener {
-            if ((auto1xtemp > 0) || (auto3xtemp > 0)) {
+            if (autoratiotemp > 0) {
                 autobuy = true
+                autoratio = autoratiotemp // 변경사항 전역변수에 저장
                 auto1x = auto1xtemp // 변경사항 전역변수에 저장
-                autoratiotemp = autoratiotemp // 변경사항 전역변수에 저장
 
-                Toast.makeText(dlg.context, "아이템을 이용하여 레버리지 ETF 거래를 언락해야합니다", Toast.LENGTH_SHORT).show()
+                if ((auto1xratiotemp!=0F) && (auto3xratiotemp==0F)) {
+                    Toast.makeText(dlg.context, "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x 자동 매수", Toast.LENGTH_SHORT).show()
+
+                }
+                else if ((auto1xratiotemp==0F) && (auto3xratiotemp!=0F)) {
+                    Toast.makeText(dlg.context, "매월 투자금의 "+per.format(auto3xratiotemp)+" % 3x 자동 매수", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(dlg.context, "매월 투자금의 "+per.format(auto1xratiotemp)+" % 1x, "+per.format(auto3xratiotemp)+" % 3x 자동 매수", Toast.LENGTH_SHORT).show()
+                }
             }
-
             else {
                 autobuy = false
+                autoratiotemp = autoratio // 변경사항 전역변수에 저장
                 auto1x = auto1xtemp // 변경사항 전역변수에 저장
-                auto3x = auto3xtemp // 변경사항 전역변수에 저장
 
                 Toast.makeText(dlg.context, "자동 매수 기능을 사용하지 않습니다", Toast.LENGTH_SHORT).show()
             }
-
                 dlg.dismiss()
                 click = !click /////////////////////////////////////////////////////////////////////////
         }
@@ -124,11 +251,6 @@ class Dialog_auto(context: Context) {
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
-
-
-
-
-
-
+        dlg.show()
     }
 }

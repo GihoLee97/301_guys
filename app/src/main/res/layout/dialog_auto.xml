@@ -15,7 +15,23 @@
         android:background="#43b55d"/>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="매달 월급의 0 %로 1x 매수, 0 %로 3x 매수"
+            android:textSize="15sp"
+            android:gravity="center">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -24,7 +40,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:text="투자금"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:layout_weight="1">
         </TextView>
@@ -40,14 +56,14 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:text="0 %"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:layout_weight="1">
         </TextView>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -57,7 +73,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:text="1x"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:layout_weight="1">
         </TextView>
@@ -73,25 +89,9 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:text="3x"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:gravity="center"
             android:layout_weight="1">
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/tv_auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="매달 월급의 0 %로 1x 매수, 0 %로 3x 매수"
-            android:textSize="20sp"
-            android:gravity="center">
         </TextView>
     </LinearLayout>
 

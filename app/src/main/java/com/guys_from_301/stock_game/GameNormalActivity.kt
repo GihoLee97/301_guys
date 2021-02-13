@@ -24,6 +24,7 @@ import java.lang.IndexOutOfBoundsException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 자산 관련 변수들 생성
@@ -39,7 +40,7 @@ var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 var localdatatime: String = "0"
 var endpoint: Int = 0
-var monthToggle = true
+var monthToggle = true  // 해당 월 투자금 지급 여부
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -111,8 +112,8 @@ var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
 
 // 자동 기능 변수들
 var autobuy: Boolean = false // 자동 매수기능 활성여부
-var autoratio: Int = 0 // 월급가운데 1x 매수 비율 (%)
-var auto1x: Int = 0 // 월급가운데 3x 매수 비율 (%)
+var autoratio: Int = 0 // 월 투자금 가운데 자동 매수 비율
+var auto1x: Int = 100 // 자동 매수 금액 중 1x 매수 비율 (%)
 
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
@@ -847,6 +848,12 @@ class GameNormalActivity : AppCompatActivity() {
         var preMonth = snpSP_sf.month // 이전 달 저장
         var preYear = snpSP_sf.year // 이전 년도 저장
 
+        // 자동 매수
+        var monthly: Float = setMonthly // 월급
+        var auto1xratio: Float = 0F
+        var auto3xratio: Float = 0F
+        var auto1xquant: Int = 0
+        var auto3xquant: Int = 0
 
         while (true) {
             //dialog_result = Dialog_result(this)
@@ -1000,15 +1007,52 @@ class GameNormalActivity : AppCompatActivity() {
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
 
-                        // 월급 입금
+                        // 월 투자금 입금
                         if (snpDate_sf.date >= 10 && !monthToggle) {
-                            cash += setMonthly // 월 투자금 현금으로 입금
-                            input += setMonthly // 총 input 최신화
+                            cash += monthly // 월 투자금 현금으로 입금
+                            input += monthly // 총 input 최신화
                             runOnUiThread {
                                 findViewById<TextView>(R.id.tv_notification).text =
-                                    "알림: 월 투자금 " + dec.format(setMonthly) + " 원이 입금되었습니다"
+                                    "알림: 월 투자금 " + dec.format(monthly) + " 원이 입금되었습니다"
                             }
-                            monthToggle = true
+
+                            ////////////////////////////////////////////////////////////////////////
+                            // 자동 매수
+                            if (autobuy) {
+                                auto1xratio = autoratio * auto1x / 10000F
+                                auto3xratio = autoratio * (100 - auto1x) / 10000F
+
+                                if (auto1xratio!=0F) {
+                                    if ((monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() > 0) {
+                                        auto1xquant = (monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() - 1
+                                    }
+                                    else {
+                                        auto1xquant = (monthly * auto1xratio / (price1x * tradecomrate)).roundToInt()
+                                    }
+
+                                    cash -= auto1xquant * price1x * tradecomrate
+                                    tradecomtot += auto1xquant * price1x * (tradecomrate - 1F)
+                                    quant1x += auto1xquant // 수량 반영
+                                    bought1x += price1x * auto1xquant // 매입금 반영
+                                    aver1x = bought1x / quant1x // 평균단가 반영
+                                }
+                                if (auto3xratio!=0F) {
+                                    if ((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() > 0) {
+                                        auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - 1
+                                    }
+                                    else {
+                                        auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt()
+                                    }
+
+                                    cash -= auto3xquant * price1x * tradecomrate
+                                    tradecomtot += auto3xquant * price3x * (tradecomrate - 1F)
+                                    quant3x += auto3xquant
+                                    bought3x += price3x * auto3xquant
+                                    aver3x = bought3x / quant3x
+                                }
+                            }
+                            ////////////////////////////////////////////////////////////////////////
+                            monthToggle = true // 해당 월 투자금 지급 여부
                         }
 
 
@@ -1044,12 +1088,12 @@ class GameNormalActivity : AppCompatActivity() {
                                             "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
                                     }
                                 }
-                            } else if (snpDate_sf.month == 1) {
-                                setMonthly *= (1F + setSalaryraise / 100F) // 연봉 인상으로 월 투자금 증가
+                            } else if ((snpDate_sf.month == 1) && (countYear >= 1)) {
+                                monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 연봉 인상으로 월 투자금 증가
                                 runOnUiThread {
                                     findViewById<TextView>(R.id.tv_notification).text =
                                         "알림: 연봉 " + per.format(setSalaryraise) + "% 인상으로 월 투자금이 " + dec.format(
-                                            setMonthly
+                                            monthly
                                         ) + " 원이 되었습니다"
                                 }
                             }
@@ -1643,6 +1687,8 @@ class GameNormalActivity : AppCompatActivity() {
                         countYear = countYear1[dayPlus - 1] // 플레이 한 햇수 카운트
                         tax = tax1[dayPlus - 1] // 세금
                         taxtot = taxtot1[dayPlus - 1] // 총 세금
+
+                        monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 월 투자금 정상화
 
 
                         snpD.removeEntry(dayPlus.toFloat(), 0)
