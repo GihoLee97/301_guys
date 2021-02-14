@@ -8,6 +8,9 @@ interface GameNormalDao {
     @Query("SELECT * FROM GameNormal ORDER BY id ASC")
     fun getAll(): List<GameNormal>
 
+    @Query("SELECT * FROM GameNormal WHERE setId = :setId ORDER BY id ASC")
+    fun getSetWithNormal(setId: String): List<GameNormal>
+
     @Query("SELECT profittot FROM GameNormal")
     fun getProfitTot(): Float
 
@@ -28,4 +31,8 @@ interface GameNormalDao {
 
     @Query("DELETE from GameNormal")
     fun deleteAll()
+
+    @Query("DELETE FROM GameNormal WHERE setId IS :id")
+    fun deleteId(id: String)
+
 }

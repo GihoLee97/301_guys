@@ -3,10 +3,7 @@ package com.guys_from_301.stock_game
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.guys_from_301.stock_game.data.GameSet
 import com.guys_from_301.stock_game.data.GameSetDB
 import java.text.DecimalFormat
@@ -26,6 +23,7 @@ class GameSettingActivity : AppCompatActivity() {
     private lateinit var tvSetsalaryraise: TextView
     private lateinit var tvSetgamelength: TextView
     private lateinit var tvSetgamespeed: TextView
+    private lateinit var tvSetname: EditText
 
     private lateinit var seekbarSetcash: SeekBar
     private lateinit var seekbarSetmonthly: SeekBar
@@ -41,6 +39,7 @@ class GameSettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_setting)
 
+        tvSetname = findViewById(R.id.tv_setname)
         tvSetcash = findViewById(R.id.tv_setcash)
         tvSetmonthly = findViewById(R.id.tv_setmonthly)
         tvSetsalaryraise = findViewById(R.id.tv_setsalaryraise)
@@ -187,24 +186,33 @@ class GameSettingActivity : AppCompatActivity() {
 
 
         btnGamestart.setOnClickListener {
-            if (setCash==0F) {
-                Toast.makeText(this@GameSettingActivity, "초기 자본금을 설정하세요", Toast.LENGTH_SHORT).show()
+            if(tvSetname.text.isNullOrBlank() == true){
+                Toast.makeText(this@GameSettingActivity,"계좌이름을 적어주세요",Toast.LENGTH_SHORT).show()
             }
             else {
-                val addRunnable = Runnable {
-                    val newGameSetDB = GameSet()
-                    newGameSetDB.setcash = setCash
-                    newGameSetDB.setgamelength = setGamelength
-                    newGameSetDB.setgamespeed = setGamespeed
-                    newGameSetDB.setmonthly = setMonthly
-                    newGameSetDB.setsalaryraise = setSalaryraise
-                    gameSetDb?.gameSetDao()?.insert(newGameSetDB)
+                if (setCash==0F) {
+                    Toast.makeText(this@GameSettingActivity, "초기 자본금을 설정하세요", Toast.LENGTH_SHORT).show()
                 }
-                val addThread = Thread(addRunnable)
-                addThread.start()
+                else{
+                    val addRunnable = Runnable {
+                        val newGameSetDB = GameSet()
+                        newGameSetDB.id = tvSetname.text.toString()
+                        setId = tvSetname.text.toString()
+                        newGameSetDB.setcash = setCash
+                        newGameSetDB.setgamelength = setGamelength
+                        newGameSetDB.setgamespeed = setGamespeed
+                        newGameSetDB.setmonthly = setMonthly
+                        newGameSetDB.setsalaryraise = setSalaryraise
+                        gameSetDb?.gameSetDao()?.insert(newGameSetDB)
+//                        setId = newGameSetDB.id
+                    }
+                    val addThread = Thread(addRunnable)
+                    addThread.start()
 
-                val intent = Intent(this,GameNormalActivity::class.java)
-                startActivity(intent)
+                    val intent = Intent(this,GameNormalActivity::class.java)
+                    startActivity(intent)
+                }
+
             }
         }
 

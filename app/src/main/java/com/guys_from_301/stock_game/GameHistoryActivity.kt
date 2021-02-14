@@ -19,7 +19,7 @@ class GameHistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_history)
-        //기본설정(data 불러오기 , 변수 선언)
+        //기본설정(data 불러오기 및 리사이클러뷰 바인딩)
         historyDb = GameNormalDB.getInstace(this)
         mAdapter = HistoryAdapter(this, history)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)

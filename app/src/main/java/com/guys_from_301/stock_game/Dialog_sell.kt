@@ -464,6 +464,7 @@ class Dialog_sell(context: Context) {
                     newGameNormalDB.quant = quant
                     newGameNormalDB.tradecom = temptradecom
                     newGameNormalDB.cash = cash
+                    newGameNormalDB.setId = setId
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                 }
                 val addThread = Thread(addRunnable)

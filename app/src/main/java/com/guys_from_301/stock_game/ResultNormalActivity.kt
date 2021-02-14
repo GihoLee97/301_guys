@@ -78,6 +78,6 @@ class ResultNormalActivity : AppCompatActivity() {
                 profileDb?.profileDao()?.getHistory()!!,
                 profileDb?.profileDao()?.getLevel()!!
         )
-        gamenormalDb?.gameNormalDao()?.deleteAll()
+        gamenormalDb?.gameNormalDao()?.deleteId(setId)
     }
 }

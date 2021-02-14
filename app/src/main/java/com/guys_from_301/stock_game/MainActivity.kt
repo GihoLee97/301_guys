@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 val dialog = Dialog_loading(this@MainActivity)
                 dialog.show()
-                val intentgame = Intent(this, GameNormalActivity::class.java)
+                val intentgame = Intent(this, PickGameActivity::class.java)
                 val intent = Intent(this,GameSettingActivity::class.java)
                 if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
                     startActivity(intent)

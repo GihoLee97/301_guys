@@ -44,7 +44,8 @@ var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 var localdatatime: String = "0"
 var endpoint: Int = 0
-var monthToggle = true  // 해당 월 투자금 지급 여부
+var monthToggle = true
+var setId: String = ""
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -304,8 +305,9 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         gameSetDb = GameSetDB.getInstace(this)
-        gl = 250 * gameSetDb?.gameSetDao()?.getSetGameLength()!!
-
+        val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+//        setId = gameSetDb?.gameSetDao()?.getId()!!
+        if (gameset != null) { gl = 250 * gameset.setgamelength }
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
         // 값 표준화: 시작일(sp)을 100으로
@@ -321,15 +323,21 @@ class GameNormalActivity : AppCompatActivity() {
         val startThread = Thread(startRunnable)
         startThread.start()
 
-        if (gameNormalDb?.gameNormalDao()?.getAll()?.isEmpty() != true) {
-            sp = gameNormalDb?.gameNormalDao()?.getAll()?.last()?.endpoint!!
-            setGamelength = gameSetDb?.gameSetDao()?.getSetGameLength()!!
+        if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() != true) {
+            sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.last()?.endpoint!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
+            val gamehistory = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)!!.last()
             // 차트 전역 변수 초기화
-            initialize(gameNormalDb!!)
+            if (gameset != null) {
+                setGamelength = gameset.setgamelength!!
+                initialize(gamehistory!!, gameset)
+            }
             criteria = 1F
         }
         else {
+            if (gameset != null) {
+                setId = gameset.id
+            }
             asset = setCash // 총 자산
             cash = setCash // 보유 현금
             input = setCash // 총 인풋
@@ -403,8 +411,10 @@ class GameNormalActivity : AppCompatActivity() {
             autoratio = 0
             auto1x = 100
 
-            setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
-            setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+            if (gameset != null) {
+                setSalaryraise = gameset.setsalaryraise
+                setGamespeed = gameset.setgamespeed
+            }
             monthToggle = true
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -414,6 +424,7 @@ class GameNormalActivity : AppCompatActivity() {
             gameend = false // 게임 종료시 적용
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         }
+
 
         // Button 동작
         // 지표 설명
@@ -503,15 +514,6 @@ class GameNormalActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 chartdata(sp, criteria)
-                val addRunnable = Runnable {
-                    val newGameNormalDB = GameNormal()
-                    newGameNormalDB.id = localdatatime
-                    newGameNormalDB.buyorsell = "시작"
-                    newGameNormalDB.endpoint = sp
-                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-                }
-                val addThread = Thread(addRunnable)
-                addThread.start()
             }
 
             job1.join()
@@ -562,85 +564,84 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
-    private fun initialize(gamehistoryDb: GameNormalDB) {
-        asset =  gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.assets!!// 총 자산
-        cash = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.cash!! // 보유 현금
-        input = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.input!! // 총 인풋
-        bought = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.bought!! // 총 매수금액
-        sold = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.sold!! // 총 매도금액
-        evaluation = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.evaluation!!// 평가금액
-        profit = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.profit!! // 순손익
-        profitrate = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.profitrate!! // 수익률
-        profittot = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.profittot!! // 실현 순손익
-        profityear = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.profityear!! // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
+    private fun initialize(gamehistory: GameNormal, gameset:GameSet) {
+        asset =  gamehistory?.assets!!// 총 자산
+        cash = gamehistory?.cash!! // 보유 현금
+        input = gamehistory?.input!! // 총 인풋
+        bought = gamehistory?.bought!! // 총 매수금액
+        sold = gamehistory?.sold!! // 총 매도금액
+        evaluation = gamehistory?.evaluation!!// 평가금액
+        profit = gamehistory?.profit!! // 순손익
+        profitrate = gamehistory?.profitrate!! // 수익률
+        profittot = gamehistory?.profittot!! // 실현 순손익
+        profityear = gamehistory?.profityear!! // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 
-        quant1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.quant1x!! // 1x 보유 수량
-        quant3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.quant3x!! // 3x 보유 수량
-        quantinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.quantinv1x!! // -1x 보유 수량
-        quantinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.quantinv3x!! // -3x 보유 수량
+        quant1x = gamehistory?.quant1x!! // 1x 보유 수량
+        quant3x = gamehistory?.quant3x!! // 3x 보유 수량
+        quantinv1x = gamehistory?.quantinv1x!! // -1x 보유 수량
+        quantinv3x = gamehistory?.quantinv3x!! // -3x 보유 수량
 
-        bought1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.bought1x!!
-        bought3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.bought3x!!
-        boughtinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.boughtinv1x!!
-        boughtinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.boughtinv3x!!
+        bought1x = gamehistory?.bought1x!!
+        bought3x = gamehistory?.bought3x!!
+        boughtinv1x = gamehistory?.boughtinv1x!!
+        boughtinv3x = gamehistory?.boughtinv3x!!
 
-        aver1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.aver1x!! // 1x 평균 단가
-        aver3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.aver3x!! // 3x 평균 단가
-        averinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.averinv1x!! // inv1x 평균 단가
-        averinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.averinv3x!! // inv3x 평균 단가
+        aver1x = gamehistory?.aver1x!! // 1x 평균 단가
+        aver3x = gamehistory?.aver3x!! // 3x 평균 단가
+        averinv1x = gamehistory?.averinv1x!! // inv1x 평균 단가
+        averinv3x = gamehistory?.averinv3x!! // inv3x 평균 단가
 
-        buylim1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.buylim1x!! // 1x 매수 한계 수량
-        buylim3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.buylim3x!! // 3x 매수 한계 수량
-        buyliminv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.buyliminv1x!! // -1x 매수 한계 수량
-        buyliminv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.buyliminv3x!! // -3x 매수 한계 수량
+        buylim1x = gamehistory?.buylim1x!! // 1x 매수 한계 수량
+        buylim3x = gamehistory?.buylim3x!! // 3x 매수 한계 수량
+        buyliminv1x = gamehistory?.buyliminv1x!! // -1x 매수 한계 수량
+        buyliminv3x = gamehistory?.buyliminv3x!! // -3x 매수 한계 수량
 
-        price1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.price1x!! // 1x 현재가
-        price3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.price3x!! // 3x 현재가
-        priceinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.priceinv1x!! // -1x 현재가
-        priceinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.priceinv3x!! // -3x 현재가
+        price1x = gamehistory?.price1x!! // 1x 현재가
+        price3x = gamehistory?.price3x!! // 3x 현재가
+        priceinv1x = gamehistory?.priceinv1x!! // -1x 현재가
+        priceinv3x = gamehistory?.priceinv3x!! // -3x 현재가
 
-        val1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.val1x!! // 1x 현재가치
-        val3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.val3x!! // 3x 현재가치
-        valinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.valinv1x!! // -1x 현재가치
-        valinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.valinv3x!! // -3x 현재가치
+        val1x = gamehistory?.val1x!! // 1x 현재가치
+        val3x = gamehistory?.val3x!! // 3x 현재가치
+        valinv1x = gamehistory?.valinv1x!! // -1x 현재가치
+        valinv3x = gamehistory?.valinv3x!! // -3x 현재가치
 
-        pr1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.pr1x!! // 1x 수익률
-        pr3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.pr3x!! // 3x 수익률
-        prinv1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.prinv1x!! // inv1x 수익률
-        prinv3x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.prinv3x!! // inv3x 수익률
+        pr1x = gamehistory?.pr1x!! // 1x 수익률
+        pr3x = gamehistory?.pr3x!! // 3x 수익률
+        prinv1x = gamehistory?.prinv1x!! // inv1x 수익률
+        prinv3x = gamehistory?.prinv3x!! // inv3x 수익률
 
         tradecomrate = 1.001F // 거래수수료(Trade Commission): 0.1% , 거래시 차감(곱하는 방식)
-        tradecomtot = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.tradecomtot!! // 거래수수료 총 합
+        tradecomtot = gamehistory?.tradecomtot!! // 거래수수료 총 합
 
         dividendrate = 0.0153F / 4F // 배당금(VOO: 1.53% / year), 분기 단위로 현금으로 입금
-        dividendtot = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.dividendtot!! // 총 배당금
-        countMonth = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.countmonth!! // 경과 개월 수 카운트
-        countYear = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.countyear!! // 플레이 한 햇수 카운트
+        dividendtot = gamehistory?.dividendtot!! // 총 배당금
+        countMonth = gamehistory?.countmonth!! // 경과 개월 수 카운트
+        countYear = gamehistory?.countyear!! // 플레이 한 햇수 카운트
         tax = 0F // 세금
-        taxtot = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.taxtot!! // 총 세금
+        taxtot = gamehistory?.taxtot!! // 총 세금
         // var currency: Float = 0F // 환율(현재 미반영)
 
         snpNowDate = "yyyy-mm-dd"
-        snpNowdays = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpnowdays!!
-        snpNowVal = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpnowval!!
-        snpDiff = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.snpdiff!!
+        snpNowdays = gamehistory?.snpnowdays!!
+        snpNowVal = gamehistory?.snpnowval!!
+        snpDiff = gamehistory?.snpdiff!!
+        item1Active = gamehistory?.item1active!!
+        item2Active = gamehistory?.item2active!!
+        item3Active = gamehistory?.item3active!!
+        item4Active = gamehistory?.item4active!!
+        item1Length = gamehistory?.item1length!!
+        item1Able = gamehistory?.item1able!!
 
-        item1Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1active!!
-        item2Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item2active!!
-        item3Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item3active!!
-        item4Active = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item4active!!
-        item1Length = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1length!!
-        item1Able = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.item1able!!
-
-        autobuy = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.autobuy!!
-        autoratio = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.autoratio!!
-        auto1x = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.auto1x!!
+        autobuy = gamehistory?.autobuy!!
+        autoratio = gamehistory?.autoratio!!
+        auto1x = gamehistory?.auto1x!!
 
 
-        setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
-        setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
-        setMonthly = gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.monthly!!
-        monthToggle =gamehistoryDb?.gameNormalDao()?.getAll()?.last()?.monthtoggle!!
+        setSalaryraise = gameset.setsalaryraise
+        setGamespeed = gameset.setgamespeed
+        setMonthly = gamehistory?.monthly!!
+        monthToggle =gamehistory?.monthtoggle!!
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1486,6 +1487,7 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         ////////////////////////////////////////////////////////////////////////////
 
+
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절
                     }
@@ -2041,7 +2043,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
-        if (endsuccess) {
+        if (gameend && endsuccess) {
             var profileDb: ProflieDB? = null
             profileDb = ProflieDB.getInstace(this@GameNormalActivity)
             funlevelup(
@@ -2050,8 +2052,8 @@ class GameNormalActivity : AppCompatActivity() {
                 100
             )
             val deleteRunnable = Runnable {
-                gameNormalDb?.gameNormalDao()?.deleteAll()
-                gameSetDb?.gameSetDao()?.deleteAll()
+                gameNormalDb?.gameNormalDao()?.deleteId(setId)
+                gameSetDb?.gameSetDao()?.deleteId(setId)
             }
             val deleteThread = Thread(deleteRunnable)
             deleteThread.start()
