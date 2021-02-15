@@ -1750,6 +1750,7 @@ class GameNormalActivity : AppCompatActivity() {
                             }
                         } catch (e: IndexOutOfBoundsException) {
                             e.printStackTrace()
+                            gameend = true
                             endsuccess = true
                             break
                             break
@@ -2021,6 +2022,7 @@ class GameNormalActivity : AppCompatActivity() {
                     // 시간 역행 아이템 사용 시 코드 종료, 설정한 게임 플레이 시간 도달 시 실핼할 코드 시작
                     else {
                         println("게임 끝")
+                        gameend = true
                         endsuccess = true
                         break
                         break
