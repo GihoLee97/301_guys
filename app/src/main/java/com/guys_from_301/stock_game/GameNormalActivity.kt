@@ -437,6 +437,10 @@ class GameNormalActivity : AppCompatActivity() {
             }
             else{
                 layout_fund.visibility = View.VISIBLE
+                layout_bond.visibility = View.GONE
+                layout_indpro.visibility = View.GONE
+                layout_unem.visibility = View.GONE
+                layout_inf.visibility = View.GONE
             }
         }
         findViewById<LinearLayout>(R.id.layout_btn_bond).setOnClickListener{
@@ -444,7 +448,11 @@ class GameNormalActivity : AppCompatActivity() {
                 layout_bond.visibility = View.GONE
             }
             else{
+                layout_fund.visibility = View.GONE
                 layout_bond.visibility = View.VISIBLE
+                layout_indpro.visibility = View.GONE
+                layout_unem.visibility = View.GONE
+                layout_inf.visibility = View.GONE
             }
         }
         findViewById<LinearLayout>(R.id.layout_btn_indpro).setOnClickListener{
@@ -452,7 +460,11 @@ class GameNormalActivity : AppCompatActivity() {
                 layout_indpro.visibility = View.GONE
             }
             else{
+                layout_fund.visibility = View.GONE
+                layout_bond.visibility = View.GONE
                 layout_indpro.visibility = View.VISIBLE
+                layout_unem.visibility = View.GONE
+                layout_inf.visibility = View.GONE
             }
         }
         findViewById<LinearLayout>(R.id.layout_btn_unem).setOnClickListener{
@@ -460,7 +472,11 @@ class GameNormalActivity : AppCompatActivity() {
                 layout_unem.visibility = View.GONE
             }
             else{
+                layout_fund.visibility = View.GONE
+                layout_bond.visibility = View.GONE
+                layout_indpro.visibility = View.GONE
                 layout_unem.visibility = View.VISIBLE
+                layout_inf.visibility = View.GONE
             }
         }
         findViewById<LinearLayout>(R.id.layout_btn_inf).setOnClickListener{
@@ -468,6 +484,10 @@ class GameNormalActivity : AppCompatActivity() {
                 layout_inf.visibility = View.GONE
             }
             else{
+                layout_fund.visibility = View.GONE
+                layout_bond.visibility = View.GONE
+                layout_indpro.visibility = View.GONE
+                layout_unem.visibility = View.GONE
                 layout_inf.visibility = View.VISIBLE
             }
         }
