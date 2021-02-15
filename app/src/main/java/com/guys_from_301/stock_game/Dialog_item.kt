@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import com.guys_from_301.stock_game.data.GameNormal
+import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProflieDB
 import kotlin.math.abs
@@ -41,6 +43,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
     private lateinit var btnItemok: Button
     private lateinit var listenter: ItemDialogClickedListener
 
+    private var gameNormalDb: GameNormalDB? = null
+
 
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
@@ -63,6 +67,7 @@ class Dialog_item(context: Context, _nowstack :Int) {
         btnItem3ok = dlg.findViewById(R.id.btn_item3ok)
         btnItem4ok = dlg.findViewById(R.id.btn_item4ok)
         btnItemok = dlg.findViewById(R.id.btn_itemok)
+        gameNormalDb = GameNormalDB.getInstace(dlg.context)
 
         tvItemstack.text = nowstack.toString() + "스택"
 
@@ -162,6 +167,23 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
                 btnItem1ok.text = "사용됨"
                 btnItem1ok.isEnabled = false
+                val addRunnable = kotlinx.coroutines.Runnable {
+                    val newGameNormalDB = GameNormal()
+                    newGameNormalDB.id = localdatatime
+                    newGameNormalDB.buyorsell = "아이템 사용"
+                    newGameNormalDB.select = 1
+                    newGameNormalDB.setId = setId
+                    newGameNormalDB.item1active = item1Active
+                    newGameNormalDB.item1active = item2Active
+                    newGameNormalDB.item1active = item3Active
+                    newGameNormalDB.item1active = item4Active
+                    newGameNormalDB.item1able = item1Able
+                    newGameNormalDB.item1length = item1Length
+                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+
                 Toast.makeText(
                     dlg.context,
                     item1ConsumeTemp.toString() + "스택을 소모해 " + item1Length.toString() + " 거래일 만큼 시간을 되돌립니다",
@@ -182,6 +204,23 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
                 btnItem2ok.text = "사용됨"
                 btnItem2ok.isEnabled = false
+                val addRunnable = kotlinx.coroutines.Runnable {
+                    val newGameNormalDB = GameNormal()
+                    newGameNormalDB.id = localdatatime
+                    newGameNormalDB.buyorsell = "아이템 사용"
+                    newGameNormalDB.select = 2
+                    newGameNormalDB.setId = setId
+                    newGameNormalDB.item1active = item1Active
+                    newGameNormalDB.item1active = item2Active
+                    newGameNormalDB.item1active = item3Active
+                    newGameNormalDB.item1active = item4Active
+                    newGameNormalDB.item1able = item1Able
+                    newGameNormalDB.item1length = item1Length
+                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+
                 Toast.makeText(
                     dlg.context,
                     item2ConsumeTemp.toString() + "스택을 소모해 1초에 " + item2speed.toString() + " 거래일 만큼의 시간이 흐릅니다",
@@ -200,6 +239,23 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
             btnItem3ok.text = "사용중"
             btnItem3ok.isEnabled = false
+            val addRunnable = kotlinx.coroutines.Runnable {
+                val newGameNormalDB = GameNormal()
+                newGameNormalDB.id = localdatatime
+                newGameNormalDB.buyorsell = "아이템 사용"
+                newGameNormalDB.select = 3
+                newGameNormalDB.setId = setId
+                newGameNormalDB.item1active = item1Active
+                newGameNormalDB.item1active = item2Active
+                newGameNormalDB.item1active = item3Active
+                newGameNormalDB.item1active = item4Active
+                newGameNormalDB.item1able = item1Able
+                newGameNormalDB.item1length = item1Length
+                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+            }
+            val addThread = Thread(addRunnable)
+            addThread.start()
+
             Toast.makeText(dlg.context, "50스택을 소모해 제공되는 뉴스가 월 10개로 늘었습니다", Toast.LENGTH_SHORT)
                 .show()
         }
@@ -212,6 +268,23 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
             btnItem4ok.text = "사용중"
             btnItem4ok.isEnabled = false
+            val addRunnable = kotlinx.coroutines.Runnable {
+                val newGameNormalDB = GameNormal()
+                newGameNormalDB.id = localdatatime
+                newGameNormalDB.buyorsell = "아이템 사용"
+                newGameNormalDB.select = 4
+                newGameNormalDB.setId = setId
+                newGameNormalDB.item1active = item1Active
+                newGameNormalDB.item1active = item2Active
+                newGameNormalDB.item1active = item3Active
+                newGameNormalDB.item1active = item4Active
+                newGameNormalDB.item1able = item1Able
+                newGameNormalDB.item1length = item1Length
+                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+            }
+            val addThread = Thread(addRunnable)
+            addThread.start()
+
             Toast.makeText(dlg.context, "50스택을 소모해 레버리지 ETF 거래가 가능해졌습니다", Toast.LENGTH_SHORT).show()
         }
 
@@ -219,6 +292,7 @@ class Dialog_item(context: Context, _nowstack :Int) {
             // DB에 스택 변동사항 저장
             var profileDb : ProflieDB? = null
             profileDb = ProflieDB?.getInstace(mContext!!)
+            // DB에 아이템 사용여부 저장
             // 서버에 올리는 코드
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),

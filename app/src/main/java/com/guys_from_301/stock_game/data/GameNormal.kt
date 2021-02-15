@@ -50,7 +50,7 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
                        @ColumnInfo(name = "prinv1x") var prinv1x:Float,
                        @ColumnInfo(name = "prinv3x") var prinv3x:Float,
                        @ColumnInfo(name = "monthly") var monthly:Float,
-                       @ColumnInfo(name = "monthtoggle") var monthtoggle: Boolean,
+                       @ColumnInfo(name = "monthtoggle") var monthtoggle: Int,
                        @ColumnInfo(name = "tradecomtot") var tradecomtot: Float,
                        @ColumnInfo(name = "tradecom") var tradecom:Float,
 @ColumnInfo(name = "dividendtot") var dividendtot: Float,
@@ -75,6 +75,6 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
 )
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
-    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,false,0F,0F,0F,0F,"nothing",
+    0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0,0F,0F,0F,0F,"nothing",
     false,0,0,false,false,false,false,0,0,0,0,0,0,0F,0F,"0")
 }

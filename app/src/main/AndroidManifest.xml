@@ -12,17 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PickGameActivity"></activity>
-        <activity android:name=".MarketActivity" />
-        <activity android:name=".GameSettingActivity" />
-        <activity android:name=".RankingActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".GameHistoryActivity" />
-        <activity android:name=".AccountManagementActivity" /> <!-- android:name 설정 -->
+        <activity android:name=".PickGameActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MarketActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GameSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RankingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".WelcomeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GameHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AccountManagementActivity"
+            android:screenOrientation="portrait"/> <!-- android:name 설정 -->
         <!-- Splash Activity -->
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,12 +46,18 @@
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />
 
-        <activity android:name=".InitialActivity" />
-        <activity android:name=".ResultNormalActivity" />
-        <activity android:name=".GameNormalActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".MainActivity" /> <!-- kakao (2020-1-29) -->
+        <activity android:name=".InitialActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ResultNormalActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GameNormalActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/> <!-- kakao (2020-1-29) -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

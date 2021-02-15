@@ -44,7 +44,7 @@ var profittot: Float = 0F // 실현 순손익
 var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이 아닌 수익만 기록)
 var localdatatime: String = "0"
 var endpoint: Int = 0
-var monthToggle = true
+var monthToggle = 1
 var setId: String = ""
 
 var quant1x: Int = 0 // 1x 보유 수량
@@ -317,11 +317,6 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         gameNormalDb = GameNormalDB.getInstace(this)
-        val startRunnable = Runnable {
-            gameHistory = gameNormalDb!!.gameNormalDao().getAll()
-        }
-        val startThread = Thread(startRunnable)
-        startThread.start()
 
         if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() != true) {
             sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.last()?.endpoint!!
@@ -415,7 +410,7 @@ class GameNormalActivity : AppCompatActivity() {
                 setSalaryraise = gameset.setsalaryraise
                 setGamespeed = gameset.setgamespeed
             }
-            monthToggle = true
+            monthToggle = 1
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1103,7 +1098,7 @@ class GameNormalActivity : AppCompatActivity() {
                         newssave.clear()
 
                         // 월 투자금 입금 시작
-                        if (snpDate_sf.date >= 10 && !monthToggle) {
+                        if (snpDate_sf.date >= 10 && monthToggle==0) {
                             cash += monthly // 월 투자금 현금으로 입금
                             input += monthly // 총 input 최신화
                             runOnUiThread {
@@ -1142,6 +1137,7 @@ class GameNormalActivity : AppCompatActivity() {
                                         newGameNormalDB.quant = auto1xquant
                                         newGameNormalDB.tradecom = auto1xquant * price1x * (tradecomrate - 1F)
                                         newGameNormalDB.cash = cash
+                                        newGameNormalDB.setId = setId
                                         gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                                     }
                                     val addThread = Thread(addRunnable)
@@ -1181,7 +1177,7 @@ class GameNormalActivity : AppCompatActivity() {
                                 }
                             }
                             ////////////////////////////////////////////////////////////////////////
-                            monthToggle = true // 해당 월 투자금 지급 여부
+                            monthToggle = 1 // 해당 월 투자금 지급 여부
                         }
                         // 월 투자금 입금 코드 종료
 
@@ -1189,7 +1185,7 @@ class GameNormalActivity : AppCompatActivity() {
                         // 월 바뀜 시 실행할 코드 시작
                         if (snpDate_sf.month != preMonth) {
 
-                            monthToggle = false
+                            monthToggle = 0
 
                             if (countMonth < 12) {
                                 countMonth += 1
