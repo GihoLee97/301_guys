@@ -205,61 +205,63 @@
                 android:layout_height="100dp"
                 android:layout_marginBottom="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-                <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum = "10">
+                <ScrollView
                     android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="5"
+                    android:layout_height="wrap_content"
+                    android:layout_weight = "9"
                     >
-                    <TextView
-                        android:id="@+id/news1"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
                         android:gravity="center"
-                        android:text="뉴스1"
-                        android:textSize="15dp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/news2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="뉴스2"
-                        android:textSize="15dp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/news3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="뉴스3"
-                        android:textSize="15dp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/news4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="뉴스4"
-                        android:textSize="15dp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/news5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="뉴스5"
-                        android:textSize="15dp">
-                    </TextView>
-                </LinearLayout>
+                        >
+                        <TextView
+                            android:id="@+id/news1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="뉴스1">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/news2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="뉴스2">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/news3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="뉴스3">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/news4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="뉴스4">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/news5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="뉴스5">
+                        </TextView>
+                    </LinearLayout>
 
+                </ScrollView>
                 <LinearLayout
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:layout_weight = "1"
                     >
                     <TextView
                         android:layout_width="match_parent"

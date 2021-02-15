@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:hint="이름을 입력하세요"
-                android:textSize="20sp">
+                android:textSize="20sp"
+                android:inputType="textPersonName">
             </EditText>
 
 

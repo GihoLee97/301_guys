@@ -60,6 +60,7 @@ var boughtinv3x: Float = 0F
 var aver1x: Float = 0F // 1x 평균 단가
 var aver3x: Float = 0F // 3x 평균 단가
 var averinv1x: Float = 0F // inv1x 평균 단가
+
 var averinv3x: Float = 0F // inv3x 평균 단가
 
 var buylim1x: Float = 0F // 1x 매수 한계 수량
@@ -1085,14 +1086,56 @@ class GameNormalActivity : AppCompatActivity() {
                                 newssave.add(i)
                             }
                         }
-                        if(newssave.size>=3 && (newssave[0] !=null)){
+                        if(newssave.size==0){
+                        }
+                        else if(newssave.size ==1){
                             var tmp0 = newssave[0]
-                            var tmp1 = newssave[1]
-                            var tmp2 = newssave[2]
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
+                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
+                            }
+                        }
+                        else if(newssave.size ==2){
+                            var tmp0 = newssave[0]; var tmp1 = newssave[1]
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
+                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+                                findViewById<TextView>(R.id.news3).text ="뉴스 없음"
+                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
+                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                            }
+                        }
+                        else if(newssave.size ==3){
+                            var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]
                             runOnUiThread {
                                 findViewById<TextView>(R.id.news1).text = news_information[tmp0]
                                 findViewById<TextView>(R.id.news2).text = news_information[tmp1]
                                 findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
+                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                            }
+                        }
+                        else if(newssave.size ==4){
+                            var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]; var tmp3 = newssave[3]
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
+                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
+                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                            }
+                        }
+                        else if(newssave.size >= 5){
+                            var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]; var tmp3 = newssave[3]; var tmp4 = newssave[4]
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
+                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
+                                findViewById<TextView>(R.id.news5).text = news_information[tmp4]
                             }
                         }
                         newssave.clear()
