@@ -286,6 +286,21 @@
                         android:text="0 개월"
                         android:textSize="15sp">
                     </TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="남은 기간"
+                        android:textSize="15sp">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/left_year_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0 년 0 개월"
+                        android:textSize="15sp">
+                    </TextView>
                 </LinearLayout>
             </LinearLayout>
 

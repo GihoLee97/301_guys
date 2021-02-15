@@ -1383,11 +1383,19 @@ class GameNormalActivity : AppCompatActivity() {
                         asset = cash + evaluation // 총 자산
                         // 자산 관련 데이터 계산 종료
 
-
                         runOnUiThread {
                             // 경과 기간 최신화
                             findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
                             findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
+                            // 남은 기간 최신화
+                            if(countMonth==0){
+                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
+                                        " 년 0 개월"
+                            }
+                            else {
+                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
+                                        " 년 ${12 - countMonth} 개월"
+                            }
 
                             // 자산 가치 관련 값들 최신화
                             findViewById<TextView>(R.id.tv_asset).text =
@@ -1742,6 +1750,15 @@ class GameNormalActivity : AppCompatActivity() {
                                     // 경과 기간 최신화
                                     findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
                                     findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
+                                    // 남은 기간 최신화
+                                    if(countMonth==0){
+                                        findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
+                                                " 년 0 개월"
+                                    }
+                                    else {
+                                        findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
+                                                " 년 ${12 - countMonth} 개월"
+                                    }
 
                                     // 자산 가치 관련 값들 최신화
                                     findViewById<TextView>(R.id.tv_asset).text =
@@ -2000,6 +2017,16 @@ class GameNormalActivity : AppCompatActivity() {
                             // 경과 기간 최신화
                             findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
                             findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
+                            // 남은 기간 최신화
+                            if(countMonth==0){
+                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
+                                        " 년 0 개월"
+                            }
+                            else {
+                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
+                                        " 년 ${12 - countMonth} 개월"
+                            }
+
 
                             // 자산 가치 관련 값들 최신화
                             findViewById<TextView>(R.id.tv_asset).text =
