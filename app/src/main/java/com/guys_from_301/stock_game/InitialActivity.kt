@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
+import android.text.InputFilter
 
 class InitialActivity : AppCompatActivity() {
     val mContext : Context = this
@@ -63,6 +65,13 @@ class InitialActivity : AppCompatActivity() {
         btn_generalSignup = findViewById(R.id.btn_generalsignup)
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
+
+        val id1: EditText = findViewById(R.id.et_id)
+        val pw1: EditText = findViewById(R.id.et_pw)
+
+        onlyAlphabetFilterToEnglishET(id1)
+        onlyAlphabetFilterToEnglishET(pw1)
+
 
         // 회원가입 & onClickListner
         btn_generalSignup.setOnClickListener{
@@ -418,6 +427,40 @@ class InitialActivity : AppCompatActivity() {
         })
     }
 
+    private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText) {
+        IdorPw.setFilters(arrayOf(
+                InputFilter { src, start, end, dst, dstart, dend ->
+                    if (src == " ") { // for space
+                        println("---sp")
+                        return@InputFilter ""
+                    }
+                    if (src == "") { // for backspace
+                        println("---back")
+                        return@InputFilter ""
+                    }
+                    if (src.matches(Regex("[a-zA-Z0-9]+"))) {
+                        println("---정상")
+                        return@InputFilter src
+                    }
+//                    if (src.matches(Regex("[ㄱ-ㅎㅏ-ㅣ가-힣]+"))) {
+//                        println("---1")
+//                        return@InputFilter ""
+//                    }
+                    else{
+                        if(src == "ㄱ")
+                        {
+                            println("---ok")
+                            return@InputFilter ""
+                        }
+                        println("---why")
+                        return@InputFilter ""
+                    }
+//                    Toast.makeText(this, "영단어를 입력해주세요", Toast.LENGTH_LONG).show()
+//                    IdorPw.setText("")
+//                    return@InputFilter ""
+                }
+        ))
+    }
 }
 
 

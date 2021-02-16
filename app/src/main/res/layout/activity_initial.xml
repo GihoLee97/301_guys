@@ -38,10 +38,7 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="아이디를 입력하세요"
-            android:inputType="textPersonName"
-            android:maxLength = "10"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-            />
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/et_pw"
@@ -49,9 +46,8 @@
             android:layout_height="50dp"
             android:ems="10"
             android:hint="비밀번호를 입력하세요"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:password="true"
-            android:maxLength = "10"
             />
 
     </LinearLayout>
