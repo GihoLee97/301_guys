@@ -66,6 +66,7 @@ class InitialActivity : AppCompatActivity() {
 
         // 회원가입 & onClickListner
         btn_generalSignup.setOnClickListener{
+
             val id1: TextView = findViewById(R.id.et_id)
             val pw1: TextView = findViewById(R.id.et_pw)
 
@@ -418,4 +419,6 @@ class InitialActivity : AppCompatActivity() {
     }
 
 }
+
+
 
