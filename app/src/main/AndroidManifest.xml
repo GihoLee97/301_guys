@@ -57,7 +57,10 @@
         <activity android:name=".ProfileActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/> <!-- kakao (2020-1-29) -->
+            android:screenOrientation="portrait"/>
+        <activity android:name=".FriendActivity"
+            android:screenOrientation="portrait"/>
+        <!-- kakao (2020-1-29) -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
