@@ -1,14 +1,12 @@
 package com.guys_from_301.stock_game
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClientStateListener
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.*
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProflieDB
 import com.google.android.gms.ads.AdRequest
@@ -16,21 +14,28 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
-    private lateinit var purchasesUpdateListener : PurchasesUpdatedListener
-    private lateinit var billingClient : BillingClient
+    // 결제 객체
+    private lateinit var billingManager : BillingManager
     // 보상형 광고 관련 코드
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     var profileDb: ProflieDB? = null
+    // Button
     private lateinit var btn_ad : Button
+    private lateinit var btn_purchase : Button
     var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_market)
 
-        btn_ad = findViewById(R.id.Ad_Button)
+        btn_ad = findViewById(R.id.btn_ad)
+        btn_purchase = findViewById(R.id.btn_purchase)
         //
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
@@ -38,30 +43,14 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         loadad()
         initLayout()
 
-        purchasesUpdateListener =
-            PurchasesUpdatedListener { billingResult, purchases ->
-                // To be implemented in a later section.
-            }
+        // billing Manager for purchase process
+        billingManager = BillingManager(this)
 
-        billingClient = BillingClient.newBuilder(this)
-            .setListener(purchasesUpdateListener)
-            .enablePendingPurchases()
-            .build()
-
-        billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
-                    // The BillingClient is ready. You can query purchases here.
-                    Log.d("Giho","PlayStore respond")
-                }
-            }
-            override fun onBillingServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-                Log.d("Giho","PlayStore do not respond")
-            }
-        })
+        btn_purchase.setOnClickListener {
+            billingManager.startConnection()
+        }
     }
+
     fun initLayout(){
         btn_ad.setOnClickListener{
             if (mRewardedVideoAd.isLoaded) {

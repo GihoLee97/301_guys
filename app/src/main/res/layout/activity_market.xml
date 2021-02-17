@@ -8,9 +8,16 @@
 
     <Button
         android:layout_gravity="center"
-        android:id="@+id/Ad_Button"
+        android:id="@+id/btn_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="광고시작"/>
+
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/btn_purchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="결제"/>
 
 </LinearLayout>
