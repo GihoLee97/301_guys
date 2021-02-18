@@ -3,6 +3,11 @@ package com.guys_from_301.stock_game
 import com.kakao.sdk.talk.TalkApiClient
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 
 
 class FriendActivity  : AppCompatActivity() {
@@ -16,23 +21,38 @@ class FriendActivity  : AppCompatActivity() {
             }
             else if (profile != null) {
                 println("카카오톡 성공"+profile.nickname+" "+profile.countryISO)
+                //println("---"+pro)
 //                Log.i(TAG, "카카오톡 프로필 가져오기 성공" +
 //                        "\n닉네임: ${profile.nickname}" +
 //                        "\n프로필사진: ${profile.thumbnailUrl}" +
 //                        "\n국가코드: ${profile.countryISO}")
             }
         }
-
         TalkApiClient.instance.friends { friends, error ->
             if (error != null) {
                 println("카카오톡 친구 목록 실패"+error)
             }
             else if (friends != null) {
-                println("카카오톡 친구 목록 성공\n" +"${friends.elements.joinToString("\n")}")
+                val friendscount = friends.totalCount
+                var count = 0
+                while(count < friendscount){
+                    findViewById<LinearLayout>(2131231057+count).visibility = View.VISIBLE
+                    findViewById<TextView>(2131231371+3*count).text = friends.elements[count].profileNickname
+                    count += 1
+                }
+                println("---22: "+R.id.user1_name)
+                println("---33: "+R.id.user2_name)
+
+                println("---"+friends)
+
+                println("---" +friends.elements[0].profileNickname)
+                println("---" +friends.elements[1].profileNickname)
                 // 친구의 UUID 로 메시지 보내기 가능
             }
         }
-
+        findViewById<Button>(R.id.btn_goback).setOnClickListener{
+            onBackPressed()
+        }
 
     }
 

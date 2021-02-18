@@ -4,17 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -24,9 +19,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.data.ProflieDB
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -35,7 +33,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
-import android.text.InputFilter
 
 class InitialActivity : AppCompatActivity() {
     val mContext : Context = this
