@@ -6,11 +6,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import com.github.mikephil.charting.charts.LineChart
@@ -46,6 +44,7 @@ var localdatatime: String = "0"
 var endpoint: Int = 0
 var monthToggle = 1
 var setId: Int = 0
+var tradeday: Int = 0//누적 거래일에 더할 거래일
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -316,7 +315,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 값 표준화: 시작일(sp)을 100으로
         var criteria: Float = 100 / (snp_val[sp].toFloat())
-
+        tradeday = 0
 
 
 
@@ -516,8 +515,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
-            var profileDb: ProflieDB? = null
-            profileDb = ProflieDB.getInstace(this)
+            var profileDb: ProfileDB? = null
+            profileDb = ProfileDB.getInstace(this)
 
             val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!, profileDb?.profileDao()?.getValue1()!!)
             dlgItem.start()
@@ -562,6 +561,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     // 뒤로가기 눌렀을 떄 게임 종료 다이얼로그 띄움
     override fun onBackPressed() {
+        tradeday = dayPlus
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
         eventCount = eventCount+1
         if(eventCount == 1)   dlg_exit.start()
@@ -571,6 +571,7 @@ class GameNormalActivity : AppCompatActivity() {
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
+        tradeday = dayPlus
         if (!gameend && !endsuccess) {
             eventCount = eventCount+1
             val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
@@ -2172,8 +2173,8 @@ class GameNormalActivity : AppCompatActivity() {
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
         if (gameend && endsuccess) {
-            var profileDb: ProflieDB? = null
-            profileDb = ProflieDB.getInstace(this@GameNormalActivity)
+            var profileDb: ProfileDB? = null
+            profileDb = ProfileDB.getInstace(this@GameNormalActivity)
             funlevelup(
                 profileDb?.profileDao()?.getLoginid()!!,
                 profileDb?.profileDao()?.getLoginpw()!!,
@@ -2198,9 +2199,9 @@ class GameNormalActivity : AppCompatActivity() {
 
     fun funlevelup(u_id: String, u_pw: String, u_exp: Int) {
         val mContext: Context = this
-        var profileDb: ProflieDB? = null
+        var profileDb: ProfileDB? = null
         var funlevel_up: RetrofitLevelUp? = null
-        profileDb = ProflieDB.getInstace(mContext)
+        profileDb = ProfileDB.getInstace(mContext)
         val url = "http://stockgame.dothome.co.kr/test/levelup.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
@@ -2226,7 +2227,7 @@ class GameNormalActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         var data: DATACLASS = response.body()!!
-                        profileDb = ProflieDB?.getInstace(mContext)
+                        profileDb = ProfileDB?.getInstace(mContext)
                         if (profileDb?.profileDao()?.getLevel()!! != data?.LEVEL) {
                             islevelup = true
                         }
@@ -2243,7 +2244,7 @@ class GameNormalActivity : AppCompatActivity() {
                         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                         profileDb?.profileDao()?.update(newProfile)
-                        profileDb = ProflieDB?.getInstace(mContext)
+                        profileDb = ProfileDB?.getInstace(mContext)
                     }
                 }
             })

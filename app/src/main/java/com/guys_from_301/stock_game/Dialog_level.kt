@@ -7,7 +7,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 
 class Dialog_level(context: Context) {
     var mContext: Context = context
@@ -18,9 +18,9 @@ class Dialog_level(context: Context) {
 
     val intent = Intent(mContext, MainActivity::class.java)
 
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     fun start(){
-        profileDb = ProflieDB.getInstace(mContext)
+        profileDb = ProfileDB.getInstace(mContext)
 
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_level) //다이얼로그에 사용할 xml 파일을 불러옴

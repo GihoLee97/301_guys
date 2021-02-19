@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.*
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -23,7 +23,7 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
     private val viewModel = _viewModel
 
 
-    fun start(profileDb :ProflieDB?) {
+    fun start(profileDb :ProfileDB?) {
 
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_nickname) //다이얼로그에 사용할 xml 파일을 불러옴
@@ -38,7 +38,7 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
             var login_id: String = profileDb?.profileDao()?.getLoginid()!!
 
             var nickname: String = nickname_editText.text.toString().trim()
-            var history: String = profileDb?.profileDao()?.getHistory()!!
+            var history: Int = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var profit: Int = profileDb?.profileDao()?.getProfit()!!
             var funnickcheck: RetrofitNickcheck? = null

@@ -1,11 +1,14 @@
 package com.guys_from_301.stock_game
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -41,10 +44,14 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 // 뉴스 데이터//////////////////////
 val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
 val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
+//push alarm
+val CHANNEL_ID = "tardis"
+lateinit var notificationManager : NotificationManager
+lateinit var pushAlarmManager: PushAlarmManager
 
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     lateinit var mAdView : AdView
     private lateinit var mAuth : FirebaseAuth
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
@@ -57,10 +64,23 @@ class SplashActivity : AppCompatActivity() {
         //광고
         MobileAds.initialize(this){}
 
+        //push alarm channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
 
 
         Handler().postDelayed({ //delay를 위한 handler
-            profileDb = ProflieDB?.getInstace(this)
+            profileDb = ProfileDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
                 val loginMethod = profileDb?.profileDao()?.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login

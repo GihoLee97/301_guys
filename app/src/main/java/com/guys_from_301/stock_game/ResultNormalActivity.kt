@@ -6,12 +6,11 @@ import android.widget.Button
 import android.widget.TextView
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
-import java.lang.Float.NaN
+import com.guys_from_301.stock_game.data.ProfileDB
 import java.lang.Float.isNaN
 
 class ResultNormalActivity : AppCompatActivity() {
-    private var profileDb : ProflieDB? = null
+    private var profileDb : ProfileDB? = null
     private var gamenormalDb: GameNormalDB? = null
     private lateinit var btnok : Button
     private lateinit var textprofit : TextView
@@ -43,7 +42,7 @@ class ResultNormalActivity : AppCompatActivity() {
     }
 
     fun reflect(){
-        profileDb = ProflieDB.getInstace(this@ResultNormalActivity)
+        profileDb = ProfileDB.getInstace(this@ResultNormalActivity)
         gamenormalDb = GameNormalDB.getInstace(this@ResultNormalActivity)
         var profittotal: Float = profitrate
         var money = profileDb?.profileDao()?.getMoney()!!

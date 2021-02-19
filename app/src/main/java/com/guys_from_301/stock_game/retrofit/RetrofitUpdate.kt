@@ -22,13 +22,13 @@ interface RetrofitUpdate {
         @Field("u_value1") u_value1: Int,
         @Field("u_nickname") u_nickname: String,
         @Field("u_profit") u_profit: Int,
-        @Field("u_history") u_history: String,
+        @Field("u_history") u_history: Int,
         @Field("u_level") u_level: Int)
             : Call<String>
 }
 
 // update
-fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:String, u_profit:Int, u_history:String, u_level:Int) {
+fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:String, u_profit:Int, u_history:Int, u_level:Int) {
     var funupdate: RetrofitUpdate? = null
     val url = "http://stockgame.dothome.co.kr/test/update.php/"
     var gson: Gson = GsonBuilder()

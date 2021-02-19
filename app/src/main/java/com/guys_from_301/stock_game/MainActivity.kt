@@ -10,16 +10,14 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.onesignal.OneSignal
-import android.util.Log
 import com.guys_from_301.stock_game.data.GameSet
-import java.time.LocalDateTime
 
 
 const val START_CASH = 10000000F
@@ -44,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_market : Button
     private lateinit var btn_ranking: Button
     private lateinit var btn_friend: Button
+    private lateinit var btn_shareMyself: Button
+    private lateinit var btn_share: Button
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         btn_market = findViewById(R.id.btn_market)
         btn_ranking = findViewById(R.id.btn_ranking)
         btn_friend = findViewById(R.id.btn_friend)
+        btn_shareMyself = findViewById(R.id.btn_shareMyself)
+        btn_share = findViewById(R.id.btn_share)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         btn_friend.setOnClickListener{
@@ -87,8 +89,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_game.setOnClickListener{
-            var profileDb: ProflieDB? = null
-            profileDb = ProflieDB.getInstace(this)
+            var profileDb: ProfileDB? = null
+            profileDb = ProfileDB.getInstace(this)
             var money = profileDb?.profileDao()?.getMoney()!!
 
             if(money <= 0){
@@ -128,14 +130,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_market.setOnClickListener {
-//            val intent = Intent(this,MarketActivity::class.java)
-//            startActivity(intent)
             val intent = Intent(this,MarketActivity::class.java)
             startActivity(intent)
         }
         btn_ranking.setOnClickListener{
             val intent = Intent(this, RankingActivity::class.java)
             startActivity(intent)
+        }
+        btn_shareMyself.setOnClickListener {
+            var kakaoLinkManager = KakaoLinkManager(this)
+            kakaoLinkManager.sendMessageMyself()
+        }
+        btn_share.setOnClickListener {
+            var kakaoLinkManager = KakaoLinkManager(this)
+            kakaoLinkManager.sendMessage()
         }
 
         while (true) {
