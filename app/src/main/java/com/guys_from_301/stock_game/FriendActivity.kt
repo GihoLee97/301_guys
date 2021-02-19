@@ -35,13 +35,22 @@ class FriendActivity  : AppCompatActivity() {
             else if (friends != null) {
                 val friendscount = friends.totalCount
                 var count = 0
-                while(count < friendscount){
-                    findViewById<LinearLayout>(2131231057+count).visibility = View.VISIBLE
-                    findViewById<TextView>(2131231371+3*count).text = friends.elements[count].profileNickname
-                    count += 1
-                }
-                println("---22: "+R.id.user1_name)
-                println("---33: "+R.id.user2_name)
+                var textView = TextView(this)
+                textView.text = friends.elements[count].profileNickname
+                println("---2"+friends.elements[count].profileNickname)
+                var layout = LinearLayout(this)
+                layout.addView(textView)
+                findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
+
+//                findViewById<LinearLayout>(R.id.layout_user1)
+
+                //myLinearLayout.addView(textView)
+
+//                while(count < friendscount){
+//                    findViewById<LinearLayout>(2131231057+count).visibility = View.VISIBLE
+//                    findViewById<TextView>(2131231371+3*count).text = friends.elements[count].profileNickname
+//                    count += 1
+//                }
 
                 println("---"+friends)
 
