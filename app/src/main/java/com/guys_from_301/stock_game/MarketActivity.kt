@@ -88,7 +88,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         // 서버에 업데이트
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                 getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                profileDb?.profileDao()?.getMoney()!!+1000000,
+                profileDb?.profileDao()?.getMoney()!!+1000000, profileDb?.profileDao()?.getValue1()!!+10000,
                 profileDb?.profileDao()?.getNickname()!!,
                 profileDb?.profileDao()?.getProfit()!!,
                 profileDb?.profileDao()?.getHistory()!!,
