@@ -13,7 +13,7 @@ class PickAdapter (val context: Context, var game: List<GameSet>, val itemClick:
         var view: View = itemView
         val name = itemView.findViewById<TextView>(R.id.gameName)
         fun bind(game : GameSet){
-            name.text = game.id
+            name.text = game.id.toString()
             itemView.setOnClickListener{ itemClick(game) }
         }
     }

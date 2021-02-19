@@ -18,9 +18,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.onesignal.OneSignal
 import android.util.Log
+import com.guys_from_301.stock_game.data.GameSet
+import java.time.LocalDateTime
 
 
-
+const val START_CASH = 10000000F
+const val START_MONTHLY = 1000000F
+const val START_SALARY_RAISE = 6F
+const val START_GAME_LENGTH = 30
+const val START_GAME_SPEED = 1
+//푸쉬알람 ID
 const val ONESIGNAL_APP_ID = "b096a9b0-2d91-48b5-886b-b3e8d6ba0116"
 var rank1_nick :String = ""; var rank1_money :String = ""; var rank2_nick :String = ""; var rank2_money :String = ""
 var rank3_nick :String = ""; var rank3_money :String = ""; var rank4_nick :String = ""; var rank4_money :String = ""
@@ -91,16 +98,29 @@ class MainActivity : AppCompatActivity() {
                 val dialog = Dialog_loading(this@MainActivity)
                 dialog.show()
                 val intentgame = Intent(this, PickGameActivity::class.java)
-                val intent = Intent(this,GameSettingActivity::class.java)
+                val intent = Intent(this,GameNormalActivity::class.java)
                 if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
+                    val addRunnable = Runnable {
+                        val newGameSetDB = GameSet()
+                        setId = 1
+                        newGameSetDB.id = 1
+                        newGameSetDB.setcash = START_CASH
+                        newGameSetDB.setgamelength = START_GAME_LENGTH
+                        newGameSetDB.setgamespeed = START_GAME_SPEED
+                        newGameSetDB.setmonthly = START_MONTHLY
+                        newGameSetDB.setsalaryraise = START_SALARY_RAISE
+                        gameSetDb?.gameSetDao()?.insert(newGameSetDB)
+                    }
+                    val addThread = Thread(addRunnable)
+                    addThread.start()
                     startActivity(intent)
                     dialog.dismiss()
                 }
                 else {
-                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
-                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
-                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
-                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+//                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
+//                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
+//                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
+//                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
                     startActivity(intentgame)
                     dialog.dismiss()
                 }

@@ -45,7 +45,7 @@ var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이
 var localdatatime: String = "0"
 var endpoint: Int = 0
 var monthToggle = 1
-var setId: String = ""
+var setId: Int = 0
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -134,6 +134,9 @@ var profittotal: Float = 0F
 
 //뉴스 관련/////////////////////////
 var newssave = mutableListOf<Int>()
+
+//이벤트 횟수(종료 다이알로그 중복 생성 방지용)/////////////////////////
+var eventCount: Int = 0
 
 class GameNormalActivity : AppCompatActivity() {
 
@@ -307,7 +310,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         gameSetDb = GameSetDB.getInstace(this)
         val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
-//        setId = gameSetDb?.gameSetDao()?.getId()!!
+        //setId = gameSetDb?.gameSetDao()?.getId()!!
         if (gameset != null) { gl = 250 * gameset.setgamelength }
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
@@ -319,7 +322,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         gameNormalDb = GameNormalDB.getInstace(this)
 
-        if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() != true) {
+        if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() == false) {
             sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.last()?.endpoint!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
             val gamehistory = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)!!.last()
@@ -331,12 +334,13 @@ class GameNormalActivity : AppCompatActivity() {
             criteria = 1F
         }
         else {
-            if (gameset != null) {
-                setId = gameset.id
-            }
-            asset = setCash // 총 자산
-            cash = setCash // 보유 현금
-            input = setCash // 총 인풋
+            asset = START_CASH
+            cash = START_CASH
+            input = START_CASH
+            setGamelength = START_GAME_LENGTH
+            setGamespeed = START_GAME_SPEED
+            setMonthly = START_MONTHLY
+            setSalaryraise = START_SALARY_RAISE
             bought = 0F // 총 매수금액
             sold = 0F // 총 매도금액
             evaluation = 0F// 평가금액
@@ -407,10 +411,6 @@ class GameNormalActivity : AppCompatActivity() {
             autoratio = 0
             auto1x = 100
 
-            if (gameset != null) {
-                setSalaryraise = gameset.setsalaryraise
-                setGamespeed = gameset.setgamespeed
-            }
             monthToggle = 1
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -563,18 +563,20 @@ class GameNormalActivity : AppCompatActivity() {
     // 뒤로가기 눌렀을 떄 게임 종료 다이얼로그 띄움
     override fun onBackPressed() {
         val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
-        dlg_exit.start()
-        click = !click /////////////////////////////////////////////////////////////////////////////
+        eventCount = eventCount+1
+        if(eventCount == 1)   dlg_exit.start()
+        if(click == false)  click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
         if (!gameend && !endsuccess) {
+            eventCount = eventCount+1
             val dlg_exit = Dialog_game_exit(this@GameNormalActivity)
-            dlg_exit.start()
+            if(eventCount == 1) dlg_exit.start()
         }
-        click = !click /////////////////////////////////////////////////////////////////////////////
+        if(click == false)  click = !click /////////////////////////////////////////////////////////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

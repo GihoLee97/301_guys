@@ -71,10 +71,11 @@ data class GameNormal (@PrimaryKey(autoGenerate = false) var id : String,
                        @ColumnInfo(name = "snpnowdays") var snpnowdays:Int,
                        @ColumnInfo(name = " snpnowval") var snpnowval: Float,
                        @ColumnInfo(name = "snpdiff") var snpdiff: Float,
-                       @ColumnInfo(name = "setId") var setId: String
+                       @ColumnInfo(name = "setId") var setId: Int,
+                       @ColumnInfo(name = "endtime")var endtime: String
 )
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
     0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0,0F,0F,0F,0F,"nothing",
-    false,0,0,false,false,false,false,0,0,0,0,0,0,0F,0F,"0")
+    false,0,0,false,false,false,false,0,0,0,0,0,0,0F,0F,0,"")
 }
