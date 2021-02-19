@@ -14,11 +14,12 @@ import com.guys_from_301.stock_game.data.ProflieDB
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class Dialog_item(context: Context, _nowstress :Int) {
+class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
     var mContext: Context? = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감\
 
-    private var nowstress: Int = _nowstress // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
+    private var nowmoney: Int = _nowmoney // 현재 현금 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
+    private var nowvalue1: Int = _nowvalue1 // 현재 현금 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
     private var item1ConsumeTemp: Int = 0 // 아이템1 소모 생명
     private var item2ConsumeTemp: Int = 0 // 아이템2 소모 생명
     private var itemConsumeStacks: Int = 0 // 총 소모스택
@@ -69,7 +70,7 @@ class Dialog_item(context: Context, _nowstress :Int) {
         btnItemok = dlg.findViewById(R.id.btn_itemok)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
 
-        tvItemstack.text = nowstress.toString() + "스택"
+        tvItemstack.text = nowmoney.toString() + "스택"
 
 
         // 각 버튼 및 탐색바 초기화
@@ -185,8 +186,8 @@ class Dialog_item(context: Context, _nowstress :Int) {
             if (item1Length == 0) {
                 Toast.makeText(dlg.context, "되돌아갈 거래일 수를 지정하세요", Toast.LENGTH_SHORT).show()
             } else {
-                nowstress = nowstress?.minus(item1ConsumeTemp)
-                tvItemstack.text = nowstress.toString() + "스택"
+                nowmoney = nowmoney?.minus(item1ConsumeTemp)
+                tvItemstack.text = nowmoney.toString() + "스택"
                 btnItemok.text = "확인"
 
                 item1Active = true
@@ -222,8 +223,8 @@ class Dialog_item(context: Context, _nowstress :Int) {
             if (item2speed == setGamespeed) {
                 Toast.makeText(dlg.context, "변경할 시간 진행 빠르기를 선택하세요", Toast.LENGTH_SHORT).show()
             } else {
-                nowstress = nowstress?.minus(item2ConsumeTemp)
-                tvItemstack.text = nowstress.toString() + "스택"
+                nowmoney = nowmoney?.minus(item2ConsumeTemp)
+                tvItemstack.text = nowmoney.toString() + "스택"
                 btnItemok.text = "확인"
 
                 setGamespeed = item2speed
@@ -258,8 +259,8 @@ class Dialog_item(context: Context, _nowstress :Int) {
 
 
         btnItem3ok.setOnClickListener {
-            nowstress = nowstress?.minus(50)
-            tvItemstack.text = nowstress.toString() + "스택"
+            nowmoney = nowmoney?.minus(50)
+            tvItemstack.text = nowmoney.toString() + "스택"
             btnItemok.text = "확인"
             item3Active = true
 
@@ -287,8 +288,8 @@ class Dialog_item(context: Context, _nowstress :Int) {
         }
 
         btnItem4ok.setOnClickListener {
-            nowstress = nowstress?.minus(50)
-            tvItemstack.text = nowstress.toString() + "스택"
+            nowmoney = nowmoney?.minus(50)
+            tvItemstack.text = nowmoney.toString() + "스택"
             btnItemok.text = "확인"
             item4Active = true
 
@@ -322,7 +323,7 @@ class Dialog_item(context: Context, _nowstress :Int) {
             // 서버에 올리는 코드
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                    nowstress, profileDb?.profileDao()?.getNickname()!!,
+                    nowmoney, nowvalue1, profileDb?.profileDao()?.getNickname()!!,
                     profileDb?.profileDao()?.getProfit()!!,
                     profileDb?.profileDao()?.getHistory()!!,
                     profileDb?.profileDao()?.getLevel()!!)
@@ -335,7 +336,8 @@ class Dialog_item(context: Context, _nowstress :Int) {
             newProfile.exp = profileDb?.profileDao()?.getExp()!!
             newProfile.rank = profileDb?.profileDao()?.getRank()!!
             newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.money = nowstress
+            newProfile.money = nowmoney
+            newProfile.value1 = nowvalue1
             newProfile.profit = profileDb?.profileDao()?.getProfit()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
