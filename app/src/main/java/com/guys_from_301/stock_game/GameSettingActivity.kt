@@ -196,15 +196,13 @@ class GameSettingActivity : AppCompatActivity() {
                 else{
                     val addRunnable = Runnable {
                         val newGameSetDB = GameSet()
-                        newGameSetDB.id = tvSetname.text.toString()
-                        setId = tvSetname.text.toString()
                         newGameSetDB.setcash = setCash
                         newGameSetDB.setgamelength = setGamelength
                         newGameSetDB.setgamespeed = setGamespeed
                         newGameSetDB.setmonthly = setMonthly
                         newGameSetDB.setsalaryraise = setSalaryraise
                         gameSetDb?.gameSetDao()?.insert(newGameSetDB)
-//                        setId = newGameSetDB.id
+                        setId = newGameSetDB.id
                     }
                     val addThread = Thread(addRunnable)
                     addThread.start()

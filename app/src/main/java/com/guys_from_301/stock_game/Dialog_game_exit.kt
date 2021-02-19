@@ -11,16 +11,17 @@ import android.widget.Toast
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.GameSetDB
+import java.time.LocalDateTime
 
 class Dialog_game_exit (context : Context)  {
     var mContext: Context? = context
-
     val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnsave : Button
     private lateinit var btncancel : Button
     private lateinit var btnexit : Button
     private var gameNormalDb: GameNormalDB? = null
     private var gameSetDb: GameSetDB? = null
+    private lateinit var localDateTime: LocalDateTime
 
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
@@ -41,11 +42,13 @@ class Dialog_game_exit (context : Context)  {
                 Toast.makeText(dlg.context, "시간 역행 중에는 게임을 저장할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
             else {
+                eventCount = 0
                 val addRunnable = Runnable {
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
+                    localDateTime = LocalDateTime.now()
                     val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
                         bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId)
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, localdatatime)
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                 }
                 val addThread = Thread(addRunnable)
@@ -62,6 +65,7 @@ class Dialog_game_exit (context : Context)  {
 
         btnexit = dlg.findViewById(R.id.btn_exit)
         btnexit.setOnClickListener {
+            eventCount = 0
 //            Toast.makeText(context, "메인 액티비티 종료", Toast.LENGTH_SHORT).show()
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
@@ -77,8 +81,12 @@ class Dialog_game_exit (context : Context)  {
         }
         btncancel = dlg.findViewById(R.id.btn_cancel)
         btncancel.setOnClickListener {
+            eventCount = 0
             dlg.dismiss()
-            click = !click /////////////////////////////////////////////////////////////////////
+            if (click== true){
+                click = !click /////////////////////////////////////////////////////////////////////
+            }
+
         }
         dlg.show()
     }

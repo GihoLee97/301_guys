@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class GameSet(@PrimaryKey(autoGenerate = false ) var id: String,
+data class GameSet(@PrimaryKey(autoGenerate = false ) var id: Int,
 //                   @ColumnInfo(name = "setname") var setname: String,
                    @ColumnInfo(name ="setcash") var setcash: Float,
                    @ColumnInfo(name="setmonthly") var setmonthly: Float,
@@ -14,5 +14,5 @@ data class GameSet(@PrimaryKey(autoGenerate = false ) var id: String,
                    @ColumnInfo(name = "setgamespeed") var setgamespeed: Int
 
 ) {
-    constructor(): this("0",0F,0F,0F,0,0)
+    constructor(): this(0,0F,0F,0F,0,0)
 }

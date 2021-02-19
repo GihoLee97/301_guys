@@ -14,7 +14,7 @@ interface GameSetDao {
     fun getId(): Int
 
     @Query("SELECT * FROM GameSet WHERE id = :id")
-    fun getSetWithId(id: String): GameSet
+    fun getSetWithId(id: Int): GameSet
 
     @Query("SELECT setmonthly FROM GameSet")
     fun getSetMonthly(): Float
@@ -32,7 +32,7 @@ interface GameSetDao {
     fun deleteAll()
 
     @Query("DELETE FROM GameSet WHERE id IS :id")
-    fun deleteId(id: String)
+    fun deleteId(id: Int)
 
     @Insert
     fun insert(gameSet: GameSet)
