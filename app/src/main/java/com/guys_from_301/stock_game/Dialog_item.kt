@@ -18,9 +18,9 @@ class Dialog_item(context: Context, _nowstack :Int) {
     var mContext: Context? = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감\
 
-    private var nowstack: Int = _nowstack // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
-    private var item1ConsumeTemp: Int = 0 // 아이템1 소모 스택
-    private var item2ConsumeTemp: Int = 0 // 아이템2 소모 스택
+    private var nowstress: Int = _nowstack // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
+    private var item1ConsumeTemp: Int = 0 // 아이템1 소모 생명
+    private var item2ConsumeTemp: Int = 0 // 아이템2 소모 생명
     private var itemConsumeStacks: Int = 0 // 총 소모스택
 
     private var item2speed: Int = 0 // 아이템2 게임 스피드
@@ -69,7 +69,7 @@ class Dialog_item(context: Context, _nowstack :Int) {
         btnItemok = dlg.findViewById(R.id.btn_itemok)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
 
-        tvItemstack.text = nowstack.toString() + "스택"
+        tvItemstack.text = nowstress.toString() + "스택"
 
 
         // 각 버튼 및 탐색바 초기화
@@ -134,23 +134,49 @@ class Dialog_item(context: Context, _nowstack :Int) {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 item2speed = progress
                 item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
-                tvItem2.text =
-                    item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
 
+                if (item2speed==6) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                } else if (item2speed==7) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
+                } else {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 item2speed = seekBar!!.progress
                 item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
-                tvItem2.text =
-                    item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+
+                if (item2speed==6) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                } else if (item2speed==7) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
+                } else {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                }
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 item2speed = seekBar!!.progress
                 item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
-                tvItem2.text =
-                    item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+
+                if (item2speed==6) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                } else if (item2speed==7) {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
+                } else {
+                    tvItem2.text =
+                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                }
             }
         })
 
@@ -159,8 +185,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
             if (item1Length == 0) {
                 Toast.makeText(dlg.context, "되돌아갈 거래일 수를 지정하세요", Toast.LENGTH_SHORT).show()
             } else {
-                nowstack = nowstack?.minus(item1ConsumeTemp)
-                tvItemstack.text = nowstack.toString() + "스택"
+                nowstress = nowstress?.minus(item1ConsumeTemp)
+                tvItemstack.text = nowstress.toString() + "스택"
                 btnItemok.text = "확인"
 
                 item1Active = true
@@ -196,8 +222,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
             if (item2speed == setGamespeed) {
                 Toast.makeText(dlg.context, "변경할 시간 진행 빠르기를 선택하세요", Toast.LENGTH_SHORT).show()
             } else {
-                nowstack = nowstack?.minus(item2ConsumeTemp)
-                tvItemstack.text = nowstack.toString() + "스택"
+                nowstress = nowstress?.minus(item2ConsumeTemp)
+                tvItemstack.text = nowstress.toString() + "스택"
                 btnItemok.text = "확인"
 
                 setGamespeed = item2speed
@@ -232,8 +258,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
 
         btnItem3ok.setOnClickListener {
-            nowstack = nowstack?.minus(50)
-            tvItemstack.text = nowstack.toString() + "스택"
+            nowstress = nowstress?.minus(50)
+            tvItemstack.text = nowstress.toString() + "스택"
             btnItemok.text = "확인"
             item3Active = true
 
@@ -261,8 +287,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
         }
 
         btnItem4ok.setOnClickListener {
-            nowstack = nowstack?.minus(50)
-            tvItemstack.text = nowstack.toString() + "스택"
+            nowstress = nowstress?.minus(50)
+            tvItemstack.text = nowstress.toString() + "스택"
             btnItemok.text = "확인"
             item4Active = true
 
@@ -296,7 +322,7 @@ class Dialog_item(context: Context, _nowstack :Int) {
             // 서버에 올리는 코드
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                    nowstack, profileDb?.profileDao()?.getNickname()!!,
+                    nowstress, profileDb?.profileDao()?.getNickname()!!,
                     profileDb?.profileDao()?.getProfit()!!,
                     profileDb?.profileDao()?.getHistory()!!,
                     profileDb?.profileDao()?.getLevel()!!)
@@ -309,7 +335,7 @@ class Dialog_item(context: Context, _nowstack :Int) {
             newProfile.exp = profileDb?.profileDao()?.getExp()!!
             newProfile.rank = profileDb?.profileDao()?.getRank()!!
             newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.money = nowstack
+            newProfile.money = nowstress
             newProfile.profit = profileDb?.profileDao()?.getProfit()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!

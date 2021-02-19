@@ -520,7 +520,6 @@ class GameNormalActivity : AppCompatActivity() {
             profileDb = ProflieDB.getInstace(this)
 
             val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!)
-//            val dlgItem = Dialog_item(this)
             dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }
@@ -948,6 +947,10 @@ class GameNormalActivity : AppCompatActivity() {
         var auto1xquant: Int = 0
         var auto3xquant: Int = 0
 
+        // 뉴스
+        var newsindex: Int = 1 // 뉴스 인덱스
+        var newscount: Int = 0 // 일별 뉴스 길이 카운트. 현재 < 5
+
         while (true) {
             //dialog_result = Dialog_result(this)
             if (!gameend) {
@@ -958,7 +961,6 @@ class GameNormalActivity : AppCompatActivity() {
                         endpoint = start + dayPlus
                         localdatatime = snpDate
                         var snpDate_sf = sf.parse(snpDate) // 기준 일자 (SNP 날짜)
-
 
                         var fundDate = fund_date[fundIndex]
                         var fundDate_sf = sf.parse(fundDate)
@@ -1100,13 +1102,49 @@ class GameNormalActivity : AppCompatActivity() {
                             snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
 
-                        //뉴스
+                        // 뉴스
+                        var newsDate = news_date[newsindex]
+                        var newsDate_sf = sf.parse(newsDate)
+
+                        if (newsDate_sf.time < snpDate_sf.time) {
+                            while (newsDate_sf.time < snpDate_sf.time) {
+                                // newsDate = snpDate 일 때 멈춤
+                                newsindex += 1
+                                newsDate = news_date[newsindex]
+                                newsDate_sf = sf.parse(newsDate)
+                            }
+                        }
+                        else if (newsDate_sf.time >= snpDate_sf.time) {
+                            while (newsDate_sf.time >= snpDate_sf.time) {
+                                // newsDat = snpDate - 1  일 때 멈춤
+                                newsindex -= 1
+                                newsDate = news_date[newsindex]
+                                newsDate_sf = sf.parse(newsDate)
+                            }
+                            newsindex += 1
+                        }
+
+                        while ((newsDate_sf.time==snpDate_sf.time) && (newscount<=5)) {
+                            newssave.add(newsindex)
+                            newsindex += 1
+                            newscount += 1
+                        }
+                        newscount = 0 // newscount 초기화
+
                         for(i in 0..40600){
                             if(news_date[i] == snpNowDate){
                                 newssave.add(i)
                             }
                         }
+
                         if(newssave.size==0){
+                            runOnUiThread {
+                                findViewById<TextView>(R.id.news1).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
+                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
+                            }
                         }
                         else if(newssave.size ==1){
                             var tmp0 = newssave[0]
@@ -1536,21 +1574,21 @@ class GameNormalActivity : AppCompatActivity() {
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
                         if (setGamespeed == 0) {
-                            oneday = 1995L // 0.5 day/sec
+                            oneday = 1995L - 90L // 0.5 day/sec
                         } else if (setGamespeed == 1) {
-                            oneday = 995L // 1 day/sec
+                            oneday = 995L - 90L // 1 day/sec
                         } else if (setGamespeed == 2) {
-                            oneday = 495L // 2 day/sec
+                            oneday = 495L - 90L // 2 day/sec
                         } else if (setGamespeed == 3) {
-                            oneday = 1000L / 3L - 5L // 3 day/sec
+                            oneday = 1000L / 3L - 5L - 90L // 3 day/sec
                         } else if (setGamespeed == 4) {
-                            oneday = 245L // 4 day/sec
+                            oneday = 245L - 90L // 4 day/sec
                         } else if (setGamespeed == 5) {
-                            oneday = 195L // 5 day/sec
+                            oneday = 195L - 90L // 5 day/sec
                         } else if (setGamespeed == 6) {
-                            oneday = 115L // 8 day/sec
+                            oneday = 115L - 90L // 8 day/sec
                         } else if (setGamespeed == 7) {
-                            oneday = 95L // 10 day/sec
+                            oneday = 95L - 90L // 10 day/sec
                         }
                         ////////////////////////////////////////////////////////////////////////////
 
@@ -1825,7 +1863,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     findViewById<TextView>(R.id.tv_profitinv3x).text =
                                         per.format(prinv3x) + " %"
                                 }
-                                delay(70L) // UI 쓰레드 동작 시간 확보, UI 쓰레드 문제로 강제 종료시 이 값을 증가시킬것
+                                delay(80L) // UI 쓰레드 동작 시간 확보, UI 쓰레드 문제로 강제 종료시 이 값을 증가시킬것
                                 dayPlus -= 1
                             }
                         } catch (e: IndexOutOfBoundsException) {
