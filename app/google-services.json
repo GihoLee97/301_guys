@@ -14,19 +14,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "736423790876-aoufv6oldk9kl61hr19ro278vtv0m5st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guys_from_301.stock_game",
+            "certificate_hash": "dd92c31b68b4c070da9dcb57783a0d0f8e97cbe2"
+          }
+        },
+        {
           "client_id": "736423790876-ifbc2d68nfhrd28lmssaav3la02rc54b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.guys_from_301.stock_game",
             "certificate_hash": "375f3f34efda4291a39ae65dcc80cc860f9f03e4"
-          }
-        },
-        {
-          "client_id": "736423790876-j2a4cimbauq5l33bllvhhfne15uirhfr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.guys_from_301.stock_game",
-            "certificate_hash": "7cfc249d4165e89afd7902e9ab8083db26f69a16"
           }
         },
         {

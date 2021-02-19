@@ -1,241 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="순위"
-            android:background="@color/white"/>
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="이름"
-            android:background="@color/white"/>
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="닉네임"
-            android:background="@color/white"/>
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="보유 스택"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_user1"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="1등"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user1_name"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="이름"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user1_nickname"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="닉네임"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user1_money"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="보유 스택"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_user2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="2등"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user2_name"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="이름"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user2_nickname"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="닉네임"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user2_money"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="보유 스택"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/layout_user3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="3등"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user3_name"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="이름"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user3_nickname"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="닉네임"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user3_money"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="보유 스택"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        android:id="@+id/layout_user4">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="4등"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user4_name"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="이름"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user4_nickname"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="닉네임"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/user4_money"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:text="보유 스택"
-            android:background="@color/white"/>
-
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:id="@+id/layout_admin">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:text="이름"
+                android:background="@color/white"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
