@@ -2238,6 +2238,7 @@ class GameNormalActivity : AppCompatActivity() {
                         newProfile.exp = data?.EXP!!
                         newProfile.login = profileDb?.profileDao()?.getLogin()!!
                         newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                        newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
                         newProfile.profit = profileDb?.profileDao()?.getProfit()!!
                         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!

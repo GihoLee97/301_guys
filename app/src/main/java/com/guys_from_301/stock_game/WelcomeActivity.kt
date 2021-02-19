@@ -142,7 +142,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
-                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, nickname, profit, history, level)
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, value1, nickname, profit, history, level)
 
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)
