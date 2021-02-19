@@ -16,6 +16,9 @@ interface ProfileDao {
     @Query("SELECT money FROM Profile")
     fun getMoney(): Int
 
+    @Query("SELECT value1 FROM Profile")
+    fun getValue1(): Int
+
     @Query("SELECT profit FROM Profile")
     fun getProfit(): Int
 

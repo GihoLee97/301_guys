@@ -81,6 +81,13 @@
             />
 
         <TextView
+            android:id="@+id/value1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="피로도"
+            />
+
+        <TextView
             android:id="@+id/rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

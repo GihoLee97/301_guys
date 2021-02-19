@@ -519,7 +519,7 @@ class GameNormalActivity : AppCompatActivity() {
             var profileDb: ProflieDB? = null
             profileDb = ProflieDB.getInstace(this)
 
-            val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!)
+            val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getValue1()!!)
             dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
         }

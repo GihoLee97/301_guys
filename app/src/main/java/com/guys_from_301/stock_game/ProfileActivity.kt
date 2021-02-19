@@ -19,6 +19,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var nickname_textView: TextView
     private lateinit var level_textView: TextView
     private lateinit var money_textView: TextView
+    private lateinit var value1_textView: TextView
     private lateinit var accountManagement_btn: Button
     private lateinit var nickname_btn: Button
     private val profileActivityViewModel = ProfileActivityViewModel(this)
@@ -33,6 +34,7 @@ class ProfileActivity : AppCompatActivity() {
         nickname_textView = findViewById(R.id.nickName_text)
         level_textView = findViewById(R.id.level)
         money_textView = findViewById(R.id.money)
+        value1_textView = findViewById(R.id.value1)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
         val history_btn = findViewById<Button>(R.id.history_btn)
@@ -41,6 +43,7 @@ class ProfileActivity : AppCompatActivity() {
 
         level_textView.text = "레벨: "+profileDb?.profileDao()?.getLevel()!!
         money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
+        value1_textView.text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
         profileActivityViewModel.getNickname().observe(this, Observer {
             nickname_textView.text = it
         })

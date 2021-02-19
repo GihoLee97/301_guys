@@ -14,11 +14,11 @@ import com.guys_from_301.stock_game.data.ProflieDB
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class Dialog_item(context: Context, _nowstack :Int) {
+class Dialog_item(context: Context, _nowstress :Int) {
     var mContext: Context? = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감\
 
-    private var nowstress: Int = _nowstack // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
+    private var nowstress: Int = _nowstress // 현재 스택 받아오기. 다이얼로그 닫힐때 합산해서 DB에 반영
     private var item1ConsumeTemp: Int = 0 // 아이템1 소모 생명
     private var item2ConsumeTemp: Int = 0 // 아이템2 소모 생명
     private var itemConsumeStacks: Int = 0 // 총 소모스택

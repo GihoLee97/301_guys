@@ -95,6 +95,7 @@ class WelcomeActivity : AppCompatActivity() {
             var history: String = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var money :Int = 1000000
+            var value1: Int = 100000
             var profit: Int = profileDb?.profileDao()?.getProfit()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
@@ -133,6 +134,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                                 newProfile.nickname = inputStr.trim()
                                 newProfile.money = money
+                                newProfile.value1 = value1
                                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                                 newProfile.login = profileDb?.profileDao()?.getLogin()!!

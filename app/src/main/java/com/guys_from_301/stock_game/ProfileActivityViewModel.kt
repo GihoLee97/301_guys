@@ -15,6 +15,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var id = MutableLiveData<Long>()
     private var nickname = MutableLiveData<String>()
     private var money = MutableLiveData<Int>()
+    private var value1 = MutableLiveData<Int>()
     private var profit = MutableLiveData<Int>()
     private var history = MutableLiveData<String>()
     private var level = MutableLiveData<Int>()
@@ -29,6 +30,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         id.value = profileDb?.profileDao()?.getId()
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
+        value1.value = profileDb?.profileDao()?.getValue1()
         profit.value = profileDb?.profileDao()?.getProfit()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
@@ -44,6 +46,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         id.value = profileDb?.profileDao()?.getId()
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
+        value1.value = profileDb?.profileDao()?.getValue1()
         profit.value = profileDb?.profileDao()?.getProfit()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
@@ -57,7 +60,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun write2database(){
         var write = Runnable {
             profileDb = ProflieDB.getInstace(profileActivity)
-            var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,profit.value!!,history.value!!,
+            var newProfile = Profile(id.value!!,nickname.value!!,money.value!!,value1.value!!,profit.value!!,history.value!!,
                     level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
             profileDb?.profileDao()?.update(newProfile)
         }
@@ -69,6 +72,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setId(newId : Long){ id.value = newId }
     fun setNickname(newNickname : String){ nickname.value = newNickname }
     fun setMoney(newMoney : Int){ money.value = newMoney}
+    fun setValue1(newMoney : Int){ value1.value = newMoney}
     fun setProfit(newProfit : Int){ profit.value = newProfit }
     fun setHistory(newHistory : String){ history.value = newHistory }
     fun setLevel(newLevel : Int){ level.value = newLevel }
@@ -87,6 +91,9 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         write2database() }
     fun setnWriteMoney(newMoney: Int){
         money.value = newMoney
+        write2database() }
+    fun setnWriteValue1(newValue1: Int){
+        value1.value = newValue1
         write2database() }
     fun setnWriteProfit(newProfit : Int){
         profit.value = newProfit
@@ -117,6 +124,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getId(): LiveData<Long> { return id }
     fun getNickname(): LiveData<String> { return nickname }
     fun getMoney(): LiveData<Int> {return money}
+    fun getValue1(): LiveData<Int> {return value1}
     fun getProfit(): LiveData<Int> { return profit }
     fun getHistory(): LiveData<String> { return history }
     fun setLevel(): LiveData<Int> { return level }
