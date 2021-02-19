@@ -21,7 +21,7 @@ class DATACLASS {
     @Expose
     var MONEY : Int
 
-    @SerializedName("VLAUE1")
+    @SerializedName("VALUE1")
     @Expose
     var VALUE1 : Int
 
