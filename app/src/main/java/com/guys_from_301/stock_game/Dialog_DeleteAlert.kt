@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitDelete
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -32,10 +32,10 @@ class Dialog_DeleteAlert(context: Context) {
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
         pw_present = dlg.findViewById(R.id.pw_present)
         pw_check = dlg.findViewById(R.id.pw_check)
-        var profileDb: ProflieDB? = null
+        var profileDb: ProfileDB? = null
 
         btnOK.setOnClickListener {
-            profileDb = ProflieDB?.getInstace(mContext)
+            profileDb = ProfileDB?.getInstace(mContext)
             if ((pw_present.text.toString().trim() == pw_check.text.toString().trim()) && (profileDb?.profileDao()?.getLoginpw()!! == pw_present.text.toString().trim())) {
                 accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                         getHash(pw_present.text.toString().trim()).trim())
@@ -94,8 +94,8 @@ class Dialog_DeleteAlert(context: Context) {
         })
     }
     private fun generallogout(){
-        var profileDb: ProflieDB? = null
-        profileDb = ProflieDB?.getInstace(mContext)
+        var profileDb: ProfileDB? = null
+        profileDb = ProfileDB?.getInstace(mContext)
 
         val newProfile = Profile()
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()

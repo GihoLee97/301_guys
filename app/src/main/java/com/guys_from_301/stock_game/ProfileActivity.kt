@@ -9,16 +9,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 
 class ProfileActivity : AppCompatActivity() {
     //receive profile room data
     val mContext : Context = this
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     private var profileList = mutableListOf<Profile>()
     private lateinit var nickname_textView: TextView
     private lateinit var level_textView: TextView
     private lateinit var money_textView: TextView
+    private lateinit var tradeday_textView: TextView
     private lateinit var accountManagement_btn: Button
     private lateinit var nickname_btn: Button
     private val profileActivityViewModel = ProfileActivityViewModel(this)
@@ -29,10 +30,11 @@ class ProfileActivity : AppCompatActivity() {
 
         Log.d("Giho","ProfileActivity")
 
-        profileDb = ProflieDB.getInstace(this)
+        profileDb = ProfileDB.getInstace(this)
         nickname_textView = findViewById(R.id.nickName_text)
         level_textView = findViewById(R.id.level)
         money_textView = findViewById(R.id.money)
+        tradeday_textView = findViewById(R.id.tradeday)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
         val history_btn = findViewById<Button>(R.id.history_btn)
@@ -41,6 +43,7 @@ class ProfileActivity : AppCompatActivity() {
 
         level_textView.text = "레벨: "+profileDb?.profileDao()?.getLevel()!!
         money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
+        tradeday_textView.text = "누적거래일: "+profileDb?.profileDao()?.getHistory()!!
         profileActivityViewModel.getNickname().observe(this, Observer {
             nickname_textView.text = it
         })
@@ -55,7 +58,7 @@ class ProfileActivity : AppCompatActivity() {
             nickname_textView.text = "닉네임을 정하세요."
 
             val dlg_nick = Dialog_nick(this,true,profileActivityViewModel)
-            profileDb = ProflieDB.getInstace(this)
+            profileDb = ProfileDB.getInstace(this)
 
             dlg_nick.start(profileDb)
         }
@@ -68,7 +71,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         accountManagement_btn.setOnClickListener {
-            profileDb = ProflieDB.getInstace(this@ProfileActivity)
+            profileDb = ProfileDB.getInstace(this@ProfileActivity)
             val intent = Intent(this, AccountManagementActivity::class.java)
             startActivity(intent)
         }

@@ -81,6 +81,13 @@
             />
 
         <TextView
+            android:id="@+id/tradeday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="누적거래일"
+            />
+
+        <TextView
             android:id="@+id/rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

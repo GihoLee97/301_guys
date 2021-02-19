@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -51,7 +51,7 @@ lateinit var pushAlarmManager: PushAlarmManager
 
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     lateinit var mAdView : AdView
     private lateinit var mAuth : FirebaseAuth
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
@@ -80,7 +80,7 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({ //delay를 위한 handler
-            profileDb = ProflieDB?.getInstace(this)
+            profileDb = ProfileDB?.getInstace(this)
             if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
                 val loginMethod = profileDb?.profileDao()?.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login

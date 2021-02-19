@@ -15,7 +15,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.Observer
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -85,14 +85,14 @@ class WelcomeActivity : AppCompatActivity() {
         welcomeViewModel.currClick.observe(this,clickObserver)
 
         btn_nicknameOkWelcome.setOnClickListener {
-            var profileDb: ProflieDB? = null
-            profileDb = ProflieDB?.getInstace(this)
+            var profileDb: ProfileDB? = null
+            profileDb = ProfileDB?.getInstace(this)
             var inputStr = editText_nicknameWelcome.text.toString()
             //TODO
             var login_id: String = profileDb?.profileDao()?.getLoginid()!!
             var login_pw: String = profileDb?.profileDao()?.getLoginpw()!!
             var nickname: String = inputStr.trim()
-            var history: String = profileDb?.profileDao()?.getHistory()!!
+            var history: Int = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var money :Int = 1000000
             var profit: Int = profileDb?.profileDao()?.getProfit()!!
@@ -127,8 +127,8 @@ class WelcomeActivity : AppCompatActivity() {
                             }
                             if (okcode == "555") {
                                 Toast.makeText(mContext, "닉네임이 확정되었습니다.", Toast.LENGTH_LONG).show()
-                                var profileDb: ProflieDB? = null
-                                profileDb = ProflieDB?.getInstace(mContext!!)
+                                var profileDb: ProfileDB? = null
+                                profileDb = ProfileDB?.getInstace(mContext!!)
                                 val newProfile = Profile()
                                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                                 newProfile.nickname = inputStr.trim()

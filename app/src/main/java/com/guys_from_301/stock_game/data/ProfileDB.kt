@@ -7,17 +7,17 @@ import androidx.room.RoomDatabase
 
 
 @Database(entities =  [Profile::class], version =  3)
-abstract class ProflieDB: RoomDatabase() {
+abstract class ProfileDB: RoomDatabase() {
     abstract  fun profileDao(): ProfileDao
 
     companion object{
-        private var INSTANCE : ProflieDB? =null
+        private var INSTANCE : ProfileDB? =null
 
-        fun getInstace(context: Context): ProflieDB?{
+        fun getInstace(context: Context): ProfileDB?{
             if (INSTANCE == null){
-                synchronized(ProflieDB::class){
+                synchronized(ProfileDB::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        ProflieDB::class.java,
+                        ProfileDB::class.java,
                         "profile.db")
                         .allowMainThreadQueries().fallbackToDestructiveMigration()
                         .build()

@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -23,9 +23,9 @@ class Dialog_change_pw(context: Context) {
     private lateinit var btnCancel : Button
     private lateinit var pw_present: EditText
     private lateinit var pw_future : EditText
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     fun start(){
-        profileDb = ProflieDB.getInstace(mContext)
+        profileDb = ProfileDB.getInstace(mContext)
 
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_change_pw) //다이얼로그에 사용할 xml 파일을 불러옴
@@ -90,7 +90,7 @@ class Dialog_change_pw(context: Context) {
         })
     }
     private fun updateInFo(pw : String){
-        profileDb = ProflieDB?.getInstace(mContext)
+        profileDb = ProfileDB?.getInstace(mContext)
         val setRunnable = Runnable {
             val newProfile = Profile()
             newProfile.id = profileDb?.profileDao()?.getId()?.toLong()

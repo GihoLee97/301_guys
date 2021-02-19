@@ -5,18 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 
 class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     //변수 선언
     private var profileActivity = _profileActivity
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
 
     private var id = MutableLiveData<Long>()
     private var nickname = MutableLiveData<String>()
     private var money = MutableLiveData<Int>()
     private var profit = MutableLiveData<Int>()
-    private var history = MutableLiveData<String>()
+    private var history = MutableLiveData<Int>()
     private var level = MutableLiveData<Int>()
     private var exp = MutableLiveData<Int>()
     private var rank = MutableLiveData<Int>()
@@ -25,7 +25,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var login_pw = MutableLiveData<String>()
 
     init {
-        profileDb = ProflieDB.getInstace(profileActivity)
+        profileDb = ProfileDB.getInstace(profileActivity)
         id.value = profileDb?.profileDao()?.getId()
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
@@ -40,7 +40,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     }
 
     fun refresh(){
-        profileDb = ProflieDB.getInstace(profileActivity)
+        profileDb = ProfileDB.getInstace(profileActivity)
         id.value = profileDb?.profileDao()?.getId()
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
@@ -56,7 +56,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
 
     fun write2database(){
         var write = Runnable {
-            profileDb = ProflieDB.getInstace(profileActivity)
+            profileDb = ProfileDB.getInstace(profileActivity)
             var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,profit.value!!,history.value!!,
                     level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
             profileDb?.profileDao()?.update(newProfile)
@@ -70,7 +70,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setNickname(newNickname : String){ nickname.value = newNickname }
     fun setMoney(newMoney : Int){ money.value = newMoney}
     fun setProfit(newProfit : Int){ profit.value = newProfit }
-    fun setHistory(newHistory : String){ history.value = newHistory }
+    fun setHistory(newHistory : Int){ history.value = newHistory }
     fun setLevel(newLevel : Int){ level.value = newLevel }
     fun setExp(newExp: Int){ exp.value = newExp }
     fun setRank(newRank : Int){ rank.value = profileDb?.profileDao()?.getRank() }
@@ -91,7 +91,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setnWriteProfit(newProfit : Int){
         profit.value = newProfit
         write2database() }
-    fun setnWriteHistory(newHistory : String){
+    fun setnWriteHistory(newHistory : Int){
         history.value = newHistory
         write2database() }
     fun setnWriteLevel(newLevel : Int){
@@ -118,7 +118,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getNickname(): LiveData<String> { return nickname }
     fun getMoney(): LiveData<Int> {return money}
     fun getProfit(): LiveData<Int> { return profit }
-    fun getHistory(): LiveData<String> { return history }
+    fun getHistory(): LiveData<Int> { return history }
     fun setLevel(): LiveData<Int> { return level }
     fun setExp(): LiveData<Int> { return exp }
     fun getRank(): LiveData<Int> { return rank }

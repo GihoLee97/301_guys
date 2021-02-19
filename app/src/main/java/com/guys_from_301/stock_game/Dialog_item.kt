@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -316,8 +316,8 @@ class Dialog_item(context: Context, _nowstack :Int) {
 
         btnItemok.setOnClickListener {
             // DB에 스택 변동사항 저장
-            var profileDb : ProflieDB? = null
-            profileDb = ProflieDB?.getInstace(mContext!!)
+            var profileDb : ProfileDB? = null
+            profileDb = ProfileDB?.getInstace(mContext!!)
             // DB에 아이템 사용여부 저장
             // 서버에 올리는 코드
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),

@@ -20,7 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -37,7 +37,7 @@ import kotlin.concurrent.schedule
 class InitialActivity : AppCompatActivity() {
     val mContext : Context = this
     // profileDb
-    private var profileDb : ProflieDB? = null
+    private var profileDb : ProfileDB? = null
     var saveid :String = ""
     var savepw :String = ""
 
@@ -320,7 +320,7 @@ class InitialActivity : AppCompatActivity() {
         getuserinformation(id, pw)
 
         Timer().schedule(500) {
-            profileDb = ProflieDB.getInstace(this@InitialActivity)
+            profileDb = ProfileDB.getInstace(this@InitialActivity)
             if (profileDb?.profileDao()?.getNickname() == "#########first_login##########") {
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
@@ -335,17 +335,17 @@ class InitialActivity : AppCompatActivity() {
     // remember which login method did user used with DB
     private fun memorizeLogMethod(method : String){
         var temp = 0
-        profileDb = ProflieDB?.getInstace(this)
+        profileDb = ProfileDB?.getInstace(this)
         // if profile DB is empty insert dummy
         if (profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             if (method == "GENERAL") temp = 1
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            val newProfile = Profile(1, "#########first_login##########",0, 0, "", 1,0,0, temp, "a", "")
+            val newProfile = Profile(1, "#########first_login##########",0, 0, 0, 1,0,0, temp, "a", "")
             profileDb?.profileDao()?.insert(newProfile)
         } else {
-            profileDb = ProflieDB?.getInstace(this)
+            profileDb = ProfileDB?.getInstace(this)
             temp = profileDb?.profileDao()?.getLogin()!!
             if (method == "GENERAL") temp = temp?.or(1)
             else if (method == "GOOGLE") temp = temp?.or(2)
@@ -405,7 +405,7 @@ class InitialActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
                     var data: DATACLASS? = response.body()!!
-                    profileDb = ProflieDB?.getInstace(this@InitialActivity)
+                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
                     val newProfile = Profile()
                     newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                     newProfile.nickname = data?.NICKNAME!!
@@ -418,7 +418,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw
                     profileDb?.profileDao()?.update(newProfile)
-                    profileDb = ProflieDB?.getInstace(this@InitialActivity)
+                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
                 }
             }
         })

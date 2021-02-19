@@ -8,13 +8,13 @@ import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.firebase.auth.FirebaseAuth
 import com.kakao.sdk.user.UserApiClient
 
 class AccountManagementActivity : AppCompatActivity() {
     //receive profile room data
-    private var profileDb: ProflieDB? = null
+    private var profileDb: ProfileDB? = null
     private lateinit var googleAuth : FirebaseAuth
     private lateinit var layout_generalAccountManagement : LinearLayout
     private lateinit var layout_googleAccountManagement : LinearLayout
@@ -62,7 +62,7 @@ class AccountManagementActivity : AppCompatActivity() {
         btn_kakaoAccountRevokeAccess = findViewById(R.id.btn_kakaoAccountRevokeAccess)
 
         // 현재 로그인된 계정만 띄우기
-        profileDb = ProflieDB.getInstace(this)
+        profileDb = ProfileDB.getInstace(this)
         if(profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             Toast.makeText(this, "there is no profile in DB", Toast.LENGTH_SHORT).show()
             layout_generalAccountManagement.visibility = View.GONE
@@ -157,7 +157,7 @@ class AccountManagementActivity : AppCompatActivity() {
         if(method=="GENERAL") loginMethod = 1
         else if(method=="GOOGLE") loginMethod = 2
         else if(method=="KAKAO") loginMethod = 4
-        profileDb = ProflieDB?.getInstace(this)
+        profileDb = ProfileDB?.getInstace(this)
         if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
             val setRunnable = Runnable {
                 val newProfile = Profile()
@@ -177,7 +177,7 @@ class AccountManagementActivity : AppCompatActivity() {
     }
 
     private fun generallogout(){
-        profileDb = ProflieDB?.getInstace(this)
+        profileDb = ProfileDB?.getInstace(this)
 
         val newProfile = Profile()
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()

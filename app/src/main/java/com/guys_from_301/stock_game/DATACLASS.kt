@@ -31,7 +31,7 @@ class DATACLASS {
 
     @SerializedName("HISTORY")
     @Expose
-    var HISTORY : String
+    var HISTORY : Int
 
     @SerializedName("LEVEL")
     @Expose
@@ -41,7 +41,7 @@ class DATACLASS {
     @Expose
     var EXP : Int
 
-    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, NICKNAME:String, PROFIT:Int, HISTORY:String, LEVEL : Int, EXP:Int) {
+    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, NICKNAME:String, PROFIT:Int, HISTORY:Int, LEVEL : Int, EXP:Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
         this.DATE = DATE

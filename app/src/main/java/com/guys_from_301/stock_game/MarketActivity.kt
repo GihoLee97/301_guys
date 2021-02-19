@@ -1,30 +1,24 @@
 package com.guys_from_301.stock_game
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import com.android.billingclient.api.*
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     // 결제 객체
     private lateinit var billingManager : BillingManager
     // 보상형 광고 관련 코드
     private lateinit var mRewardedVideoAd: RewardedVideoAd
-    var profileDb: ProflieDB? = null
+    var profileDb: ProfileDB? = null
     // Button
     private lateinit var btn_ad : Button
     private lateinit var btn_purchase : Button
@@ -87,8 +81,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     }
 
     override fun onRewarded(rItem: RewardItem?) {
-        var profileDb: ProflieDB? = null
-        profileDb = ProflieDB.getInstace(this)
+        var profileDb: ProfileDB? = null
+        profileDb = ProfileDB.getInstace(this)
         var money = profileDb?.profileDao()?.getMoney()!!.toInt()+1000000
         Toast.makeText(this, "보상지급: +100만스택\n현재 보유 스택: "+money, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
@@ -114,8 +108,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     }
 
     fun dbupdate(){
-        var profileDb: ProflieDB? = null
-        profileDb = ProflieDB.getInstace(this)
+        var profileDb: ProfileDB? = null
+        profileDb = ProfileDB.getInstace(this)
         val newProfile = Profile()
 
         newProfile.id = profileDb?.profileDao()?.getId()!!

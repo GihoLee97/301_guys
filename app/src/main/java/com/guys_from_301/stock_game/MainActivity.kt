@@ -10,16 +10,14 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.onesignal.OneSignal
-import android.util.Log
 import com.guys_from_301.stock_game.data.GameSet
-import java.time.LocalDateTime
 
 
 const val START_CASH = 10000000F
@@ -91,8 +89,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_game.setOnClickListener{
-            var profileDb: ProflieDB? = null
-            profileDb = ProflieDB.getInstace(this)
+            var profileDb: ProfileDB? = null
+            profileDb = ProfileDB.getInstace(this)
             var money = profileDb?.profileDao()?.getMoney()!!
 
             if(money <= 0){

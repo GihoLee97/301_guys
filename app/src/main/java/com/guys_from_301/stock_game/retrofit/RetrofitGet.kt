@@ -2,7 +2,7 @@ package com.guys_from_301.stock_game
 
 import android.content.Context
 import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProflieDB
+import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -25,7 +25,7 @@ interface RetrofitGet{
 
 fun getinformation(context: Context, u_id: String, u_pw: String) {
     val mContext : Context = context
-    var profileDb : ProflieDB? = null
+    var profileDb : ProfileDB? = null
     var fungetinformation: RetrofitGet? = null
     val url = "http://stockgame.dothome.co.kr/test/getall.php/"
     var gson: Gson = GsonBuilder()
@@ -46,7 +46,7 @@ fun getinformation(context: Context, u_id: String, u_pw: String) {
         override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
             if (response.isSuccessful && response.body() != null) {
                 var data: DATACLASS? = response.body()!!
-                profileDb = ProflieDB?.getInstace(mContext)
+                profileDb = ProfileDB?.getInstace(mContext)
                 val newProfile = Profile()
                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                 newProfile.nickname = data?.NICKNAME!!
@@ -59,7 +59,7 @@ fun getinformation(context: Context, u_id: String, u_pw: String) {
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
-                profileDb = ProflieDB?.getInstace(mContext)
+                profileDb = ProfileDB?.getInstace(mContext)
             }
         }
     })

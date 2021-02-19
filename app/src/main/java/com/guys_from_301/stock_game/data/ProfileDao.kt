@@ -20,7 +20,7 @@ interface ProfileDao {
     fun getProfit(): Int
 
     @Query("SELECT History FROM Profile")
-    fun getHistory(): String
+    fun getHistory(): Int
 
     @Query("SELECT level FROM Profile")
     fun getLevel(): Int

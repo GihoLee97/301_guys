@@ -8,9 +8,7 @@ import android.view.Window
 import android.widget.Button
 //import androidx.core.content.ContextCompat.startActivity
 import android.widget.Toast
-import com.guys_from_301.stock_game.data.GameNormal
-import com.guys_from_301.stock_game.data.GameNormalDB
-import com.guys_from_301.stock_game.data.GameSetDB
+import com.guys_from_301.stock_game.data.*
 import java.time.LocalDateTime
 
 class Dialog_game_exit (context : Context)  {
@@ -21,6 +19,7 @@ class Dialog_game_exit (context : Context)  {
     private lateinit var btnexit : Button
     private var gameNormalDb: GameNormalDB? = null
     private var gameSetDb: GameSetDB? = null
+    private var profileDb: ProfileDB? = null
     private lateinit var localDateTime: LocalDateTime
 
     fun start() {
@@ -28,6 +27,7 @@ class Dialog_game_exit (context : Context)  {
         dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
 
+        profileDb = ProfileDB.getInstace(dlg.context)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
         gameSetDb = GameSetDB.getInstace(dlg.context)
         btnsave = dlg.findViewById(R.id.btn_save)
@@ -44,6 +44,18 @@ class Dialog_game_exit (context : Context)  {
             else {
                 eventCount = 0
                 val addRunnable = Runnable {
+                    val newProfile = Profile()
+                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                    newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
+                    newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                    newProfile.exp = profileDb?.profileDao()?.getExp()!!
+                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                    newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                    newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                    newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                    newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                    profileDb?.profileDao()?.update(newProfile)
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
                     localDateTime = LocalDateTime.now()
                     val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
@@ -70,6 +82,18 @@ class Dialog_game_exit (context : Context)  {
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
             val deleteRunnable = Runnable {
+                val newProfile = Profile()
+                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
+                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                newProfile.exp = profileDb?.profileDao()?.getExp()!!
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                profileDb?.profileDao()?.update(newProfile)
                 gameSetDb?.gameSetDao()?.deleteId(setId)
             }
             val deleteThread = Thread(deleteRunnable)
