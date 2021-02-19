@@ -1,6 +1,9 @@
 package com.guys_from_301.stock_game
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -41,6 +44,10 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 // 뉴스 데이터//////////////////////
 val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
 val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
+//push alarm
+val CHANNEL_ID = "tardis"
+lateinit var notificationManager : NotificationManager
+lateinit var pushAlarmManager: PushAlarmManager
 
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
@@ -57,6 +64,19 @@ class SplashActivity : AppCompatActivity() {
         //광고
         MobileAds.initialize(this){}
 
+        //push alarm channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
 
 
         Handler().postDelayed({ //delay를 위한 handler
