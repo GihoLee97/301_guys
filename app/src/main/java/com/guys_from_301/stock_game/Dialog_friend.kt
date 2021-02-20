@@ -17,9 +17,7 @@ class Dialog_friend(context: Context, count : Int) {
     private lateinit var textlevel : TextView
     private lateinit var textnick : TextView
 
-    private var profileDb: ProfileDB? = null
     fun start(count: Int){
-        profileDb = ProfileDB.getInstace(mContext)
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_friend) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
@@ -30,9 +28,9 @@ class Dialog_friend(context: Context, count : Int) {
         textnick = dlg.findViewById(R.id.friendnick_text)
 
 
-        textnick.text = friendnick[count].toString()
-        textmoney.text = friendmoney[count].toString()
-        textlevel.text = friendlevel[count].toString()
+        textnick.text = "닉네임: " + friendnick[count].toString()
+        textmoney.text = "현금: " + friendmoney[count].toString()
+        textlevel.text = "레벨: " + friendlevel[count].toString()
 
         btnOK.setOnClickListener {
             dlg.dismiss()

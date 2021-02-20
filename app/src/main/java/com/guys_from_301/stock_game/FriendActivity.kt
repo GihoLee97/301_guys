@@ -23,6 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 // 친구 정보
 
+
+var friendid = mutableListOf<String>()
 var friendmoney = mutableListOf<Int>()
 var friendlevel = mutableListOf<Int>()
 var friendnick = mutableListOf<String>()
@@ -54,17 +56,12 @@ class FriendActivity  : AppCompatActivity() {
                 var count = 0
                 while(count<friendscount){
                     addlayout(friends, count)
-
-                    friendInfo(getHash(friends.elements[count].uuid).toString().trim(), count)
-                    count ++
+                    friendid.add(getHash((friends.elements[count].id).toString()))
+                    count++
                 }
+                println("---몇일까"+friendscount)
+                friendInfo(friendid, friendscount)
 
-
-                println("---"+friends)
-
-                println("---" +friends.elements[0].profileNickname)
-                println("---" +friends.elements[1].profileNickname)
-                // 친구의 UUID 로 메시지 보내기 가능
             }
         }
         findViewById<Button>(R.id.btn_goback).setOnClickListener{
@@ -76,14 +73,19 @@ class FriendActivity  : AppCompatActivity() {
     fun addlayout(friends: Friends<Friend>, count : Int){
         var textView = TextView(this)
         var layout = LinearLayout(this)
-        textView.text = friends.elements[count].profileNickname
+        textView.text = "이름: " + friends.elements[count].profileNickname
         textView.textSize = 30f
         layout.gravity = Gravity.CENTER
         layout.setOnClickListener{
-            //TODO: 친구 정보들 띄우자
-//            val dialog = Dialog_friend(this, count)
-//            dialog.start(count)
-            println("---"+friendnick[0])
+            if(friendlevel[count] == -1)
+            {
+                Toast.makeText(this, "가입하지 않는 유저입니다. 초대를 보내보세요!", Toast.LENGTH_LONG).show()
+            }
+            else{
+                val dialog = Dialog_friend(this, count)
+                dialog.start(count)
+
+            }
         }
         layout.addView(textView)
         findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
@@ -91,7 +93,7 @@ class FriendActivity  : AppCompatActivity() {
 
     // 친구 정보 받아오는 코드
 
-    fun friendInfo(u_id: String, count: Int) {
+    fun friendInfo(u_id: MutableList<String>, u_number :Int) {
         var funfriend: RetrofitFriend? = null
         val url = "http://stockgame.dothome.co.kr/test/friendrank.php/"
         var gson: Gson = GsonBuilder()
@@ -105,20 +107,34 @@ class FriendActivity  : AppCompatActivity() {
                         .build()
         //creating our api
         funfriend = retrofit.create(RetrofitFriend::class.java)
-        funfriend.funfriend(u_id).enqueue(object : Callback<DATACLASS> {
-            override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
+        funfriend.funfriend(u_id, u_number).enqueue(object : Callback<MutableList<DATACLASS>> {
+            override fun onFailure(call: Call<MutableList<DATACLASS>>, t: Throwable) {
                 println("---실패")
                 //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
             }
 
-            override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
-                println("---머지")
+            override fun onResponse(call: Call<MutableList<DATACLASS>>, response: retrofit2.Response<MutableList<DATACLASS>>) {
                 if (response.isSuccessful && response.body() != null) {
+                    val data: MutableList<DATACLASS> = response.body()!!
                     println("---성공")
-                    var data: DATACLASS = response.body()!!
-                    friendmoney[count] = data?.MONEY
-                    friendlevel[count] = data?.LEVEL
-                    friendnick[count] = data?.NICKNAME
+                    for(i in 0..u_number-1){
+                        if(response.body()!![i]==null){
+                            println("---그치")
+                            friendmoney.add(-1)
+                            friendlevel.add(-1)
+                            friendnick.add("존재하지 않는 아이디")
+                        }
+                        else{
+                            friendmoney.add(data[i].MONEY)
+                            friendlevel.add(data[i].LEVEL)
+                            friendnick.add(data[i].NICKNAME)
+                        }
+                    }
+ //                   while(response.body()!![])
+                    println("---"+response.body()!!)
+//                    println("---돈"+response.body()!![2].MONEY)
+//                    println("---성분"+response.body()!![2].LEVEL)
+//                    println("---닉넴"+response.body()!![2].NICKNAME)
                 }
             }
         })
