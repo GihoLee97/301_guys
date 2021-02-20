@@ -41,11 +41,6 @@ class FriendActivity  : AppCompatActivity() {
             }
             else if (profile != null) {
                 println("카카오톡 성공"+profile.nickname+" "+profile.countryISO)
-                //println("---"+pro)
-//                Log.i(TAG, "카카오톡 프로필 가져오기 성공" +
-//                        "\n닉네임: ${profile.nickname}" +
-//                        "\n프로필사진: ${profile.thumbnailUrl}" +
-//                        "\n국가코드: ${profile.countryISO}")
             }
         }
         TalkApiClient.instance.friends { friends, error ->
@@ -60,9 +55,7 @@ class FriendActivity  : AppCompatActivity() {
                     friendid.add(getHash((friends.elements[count].id).toString()))
                     count++
                 }
-                println("---몇일까"+friendscount)
                 friendInfo(friendid, friendscount)
-
             }
         }
         findViewById<Button>(R.id.btn_goback).setOnClickListener{
@@ -108,7 +101,6 @@ class FriendActivity  : AppCompatActivity() {
     }
 
     // 친구 정보 받아오는 코드
-
     fun friendInfo(u_id: MutableList<String>, u_number :Int) {
         var funfriend: RetrofitFriend? = null
         val url = "http://stockgame.dothome.co.kr/test/friendrank.php/"
@@ -125,8 +117,7 @@ class FriendActivity  : AppCompatActivity() {
         funfriend = retrofit.create(RetrofitFriend::class.java)
         funfriend.funfriend(u_id, u_number).enqueue(object : Callback<MutableList<DATACLASS>> {
             override fun onFailure(call: Call<MutableList<DATACLASS>>, t: Throwable) {
-                println("---실패")
-                //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                println("---실패: "+t.message)
             }
 
             override fun onResponse(call: Call<MutableList<DATACLASS>>, response: retrofit2.Response<MutableList<DATACLASS>>) {
@@ -135,7 +126,6 @@ class FriendActivity  : AppCompatActivity() {
                     println("---성공")
                     for(i in 0..u_number-1){
                         if(response.body()!![i]==null){
-                            println("---그치")
                             friendmoney.add(-1)
                             friendlevel.add(-1)
                             friendnick.add("존재하지 않는 아이디")
@@ -146,11 +136,6 @@ class FriendActivity  : AppCompatActivity() {
                             friendnick.add(data[i].NICKNAME)
                         }
                     }
- //                   while(response.body()!![])
-                    println("---"+response.body()!!)
-//                    println("---돈"+response.body()!![2].MONEY)
-//                    println("---성분"+response.body()!![2].LEVEL)
-//                    println("---닉넴"+response.body()!![2].NICKNAME)
                 }
             }
         })

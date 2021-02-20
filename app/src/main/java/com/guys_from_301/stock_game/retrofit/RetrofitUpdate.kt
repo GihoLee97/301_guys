@@ -45,17 +45,12 @@ fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:S
     funupdate= retrofit.create(RetrofitUpdate::class.java)
     funupdate.update(u_id, u_pw, u_money, u_value1, u_nickname, u_profit, u_roundcount, u_history, u_level).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>, t: Throwable) {
-            //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+            println("---서버업데이트실패: "+t.message)
         }
         override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
             if (response.isSuccessful && response.body() != null) {
-//                val okcode: String = response.body()!!
-//                if (okcode == "7774"){
-                //Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
-                //loginSuccess("GENERAL") // memorize login method and move to MainActivity
+                println("---서버업데이트성공")
             }
-//                if (okcode == "4"){
-            //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
         }
     })
 
