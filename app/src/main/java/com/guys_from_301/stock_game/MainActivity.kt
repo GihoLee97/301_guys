@@ -51,8 +51,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_market : Button
     private lateinit var btn_ranking: Button
     private lateinit var btn_friend: Button
-    private lateinit var btn_shareMyself: Button
-    private lateinit var btn_share: Button
+    private lateinit var btn_sendKakaoMessageMyself: Button
+    private lateinit var btn_sendKakaoMessageToOthers: Button
+    private lateinit var btn_shareText: Button
+    private lateinit var btn_pushAlarm: Button
+    private lateinit var btn_captureView: Button
 
 
     lateinit var mAdView : AdView
@@ -80,8 +83,11 @@ class MainActivity : AppCompatActivity() {
         btn_market = findViewById(R.id.btn_market)
         btn_ranking = findViewById(R.id.btn_ranking)
         btn_friend = findViewById(R.id.btn_friend)
-        btn_shareMyself = findViewById(R.id.btn_shareMyself)
-        btn_share = findViewById(R.id.btn_share)
+        btn_sendKakaoMessageMyself = findViewById(R.id.btn_sendKakaoMessageMyself)
+        btn_sendKakaoMessageToOthers = findViewById(R.id.btn_sendKakaoMessageToOthers)
+        btn_shareText = findViewById(R.id.btn_shareText)
+        btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
+        btn_captureView = findViewById(R.id.btn_captureView)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         btn_friend.setOnClickListener{
@@ -149,13 +155,20 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, RankingActivity::class.java)
             startActivity(intent)
         }
-        btn_shareMyself.setOnClickListener {
-            var kakaoLinkManager = KakaoLinkManager(this)
-            kakaoLinkManager.sendMessageMyself()
+        btn_sendKakaoMessageMyself.setOnClickListener {
+            kakaoMessageManager.sendMessageMyself()
         }
-        btn_share.setOnClickListener {
-            var kakaoLinkManager = KakaoLinkManager(this)
-            kakaoLinkManager.sendMessage()
+        btn_sendKakaoMessageToOthers.setOnClickListener {
+            kakaoMessageManager.sendMessage()
+        }
+        btn_shareText.setOnClickListener {
+            shareManager.shareText(this,"텍스트 공유하기 성공~")
+        }
+        btn_pushAlarm.setOnClickListener {
+            pushAlarmManager.generateAndPushAlarm(this)
+        }
+        btn_captureView.setOnClickListener {
+            captureUtil.captureAndSaveView(findViewById(R.id.textView2))
         }
 
         // 피로도 저감 코드

@@ -130,8 +130,8 @@ class InitialActivity : AppCompatActivity() {
                     UserApiClient.instance.me { user, error ->
                         var id : String = ""
                         var pw : String = ""
-                        id = user?.kakaoAccount?.email.toString()
-                        pw = user?.id.toString() + user?.kakaoAccount?.profile?.nickname.toString()
+                        id = user?.id.toString()
+                        pw = user?.kakaoAccount?.email.toString()
                         dialog.dismiss()
                         Log.i(TAG, "로그인 성공 ${token.accessToken}")
                         GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
@@ -433,6 +433,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.money = data?.MONEY!!
                     newProfile.value1 = data?.VALUE1!!
                     newProfile.profit = data?.PROFIT!!
+                    newProfile.roundcount = data?.ROUNDCOUNT!!
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw
                     profileDb?.profileDao()?.update(newProfile)

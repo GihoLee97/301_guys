@@ -7,13 +7,17 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-class PushAlarmManager(activity: Activity) {
-    private var mActivity = activity
+class PushAlarmManager() {
     private lateinit var builder: NotificationCompat.Builder
 
+    fun generateAndPushAlarm(activity: Activity){
+        generateAlarm(activity)
+        push(activity)
+    }
+
     // push alarm 생성
-    fun generateAlarm() {
-        builder = NotificationCompat.Builder(mActivity, CHANNEL_ID)
+    private fun generateAlarm(activity: Activity) {
+        builder = NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.splash)
                 .setContentTitle("타디스에서 알립니다~")
                 .setContentText("플레이한지 너무 오랜 시간이 지났습니다. 다시 들어와서 플레이하세요~")
@@ -23,18 +27,18 @@ class PushAlarmManager(activity: Activity) {
     }
 
     // push alarm 띄우기
-    fun push() {
+    private fun push(activity: Activity) {
         Log.d("Giho", "pushAlarm push success")
-        NotificationManagerCompat.from(mActivity).notify(1, builder.build())
+        NotificationManagerCompat.from(activity).notify(1, builder.build())
     }
 
-    fun openSetting() {
+    fun openSetting(activity: Activity) {
         // 알람 채널 설정 열기
         val myNotificationChannel = notificationManager.getNotificationChannel(CHANNEL_ID)
         val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS).apply {
             putExtra(Settings.EXTRA_APP_PACKAGE, "com.guys_from_301.stock_game")
             putExtra(Settings.EXTRA_CHANNEL_ID, myNotificationChannel.getId())
         }
-        mActivity.startActivity(intent)
+        activity.startActivity(intent)
     }
 }
