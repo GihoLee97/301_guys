@@ -28,7 +28,7 @@ class Dialog_game_exit (context : Context)  {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
-        relativeprofitrate = profitrate / marketrate
+        relativeprofitrate = (profitrate+100) / marketrate*100-100
 
         profileDb = ProfileDB.getInstace(dlg.context)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
@@ -49,13 +49,15 @@ class Dialog_game_exit (context : Context)  {
                 val addRunnable = Runnable {
                     val newProfile = Profile()
                     newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.rank = profileDb?.profileDao()?.getRank()!!
                     newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                    newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
                     newProfile.level = profileDb?.profileDao()?.getLevel()!!
                     newProfile.exp = profileDb?.profileDao()?.getExp()!!
                     newProfile.login = profileDb?.profileDao()?.getLogin()!!
                     newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                    newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                    newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getHistory()!!+relativeprofitrate* tradeday)/(profileDb?.profileDao()?.getHistory()!!+ tradeday)
+                    newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
+                    newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
                     newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                     newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                     profileDb?.profileDao()?.update(newProfile)
@@ -88,12 +90,12 @@ class Dialog_game_exit (context : Context)  {
                 val newProfile = Profile()
                 newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                 newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                 newProfile.exp = profileDb?.profileDao()?.getExp()!!
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getRoundCount()!!+relativeprofitrate)/(profileDb?.profileDao()?.getRoundCount()!!+1)
+                newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getHistory()!!+relativeprofitrate* tradeday)/(profileDb?.profileDao()?.getHistory()!!+ tradeday)
+                newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
                 newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!

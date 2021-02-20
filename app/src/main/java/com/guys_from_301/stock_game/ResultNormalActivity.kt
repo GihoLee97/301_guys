@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
+import org.w3c.dom.Text
 import java.lang.Float.isNaN
 
 class ResultNormalActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class ResultNormalActivity : AppCompatActivity() {
     private var gamenormalDb: GameNormalDB? = null
     private lateinit var btnok : Button
     private lateinit var textprofit : TextView
+    private lateinit var textrelativeprofitrate : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_normal)
@@ -21,10 +23,12 @@ class ResultNormalActivity : AppCompatActivity() {
         gameend = false // 게임 전역번수 초기화
         endsuccess = false // 게임 전역번수 초기화
 
+        textrelativeprofitrate = findViewById(R.id.ResultRelativeProfit)
         textprofit = findViewById(R.id.ResultProfit)
         btnok = findViewById(R.id.btn_resultOk)
 
         textprofit.text = "수익률: "+ profitrate + "%"
+        textrelativeprofitrate.text = "시장대비 수익률: "+ relativeprofitrate+"%"
 
         btnok.setOnClickListener{
             GotoMainactivity()
@@ -58,13 +62,12 @@ class ResultNormalActivity : AppCompatActivity() {
             newProfile.money = Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat())
         }
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-        newProfile.rank = profileDb?.profileDao()?.getRank()!!
         newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
         newProfile.history = profileDb?.profileDao()?.getHistory()!!
         newProfile.level = profileDb?.profileDao()?.getLevel()!!
         newProfile.exp = profileDb?.profileDao()?.getExp()!!
         newProfile.login = profileDb?.profileDao()?.getLogin()!!
-        newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getRoundCount()!!+relativeprofitrate)/(profileDb?.profileDao()?.getRoundCount()!!+1)
         newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!

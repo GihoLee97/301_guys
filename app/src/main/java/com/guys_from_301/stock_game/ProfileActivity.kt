@@ -16,6 +16,7 @@ class ProfileActivity : AppCompatActivity() {
     val mContext : Context = this
     private var profileDb: ProfileDB? = null
     private var profileList = mutableListOf<Profile>()
+    private lateinit var profitrate_textView: TextView
     private lateinit var nickname_textView: TextView
     private lateinit var level_textView: TextView
     private lateinit var money_textView: TextView
@@ -33,6 +34,7 @@ class ProfileActivity : AppCompatActivity() {
         Log.d("Giho","ProfileActivity")
 
         profileDb = ProfileDB.getInstace(this)
+        profitrate_textView = findViewById(R.id.profitrate)
         nickname_textView = findViewById(R.id.nickName_text)
         level_textView = findViewById(R.id.level)
         money_textView = findViewById(R.id.money)
@@ -45,6 +47,7 @@ class ProfileActivity : AppCompatActivity() {
         lateinit var changenick: String
         var count:Int = 0
 
+        profitrate_textView.text = "시장대비 평균수익률: "+profileDb?.profileDao()?.getProfit()!!
         level_textView.text = "레벨: "+profileDb?.profileDao()?.getLevel()!!
         money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
         value1_textView.text = "피로도: "+profileDb?.profileDao()?.getValue1()!!

@@ -1103,7 +1103,7 @@ class GameNormalActivity : AppCompatActivity() {
                         snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
                         snpNowVal = snp_val[start + dayPlus].toFloat()
-                        marketrate = snpNowVal/ START_SNP_VAL
+                        marketrate = (price1x/ START_SNP_VAL)*100
                         snpDiff =
                             snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")
@@ -1270,13 +1270,14 @@ class GameNormalActivity : AppCompatActivity() {
                                     val addRunnable = Runnable {
                                         val newGameNormalDB = GameNormal()
                                         newGameNormalDB.id = localdatatime
-                                        newGameNormalDB.buyorsell = "매수"
+                                        newGameNormalDB.buyorsell = "자동매수"
                                         newGameNormalDB.select = 2
                                         newGameNormalDB.price = price3x
                                         newGameNormalDB.volume = auto3xquant * price3x
                                         newGameNormalDB.quant = auto3xquant
                                         newGameNormalDB.tradecom = auto3xquant * price3x * (tradecomrate - 1F)
                                         newGameNormalDB.cash = cash
+                                        newGameNormalDB.setId = setId
                                         gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                                     }
                                     val addThread = Thread(addRunnable)

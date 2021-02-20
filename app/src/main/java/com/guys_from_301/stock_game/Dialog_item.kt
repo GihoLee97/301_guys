@@ -25,7 +25,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
     private var itemConsumeStacks: Int = 0 // 총 소모스택
 
     private var item2speed: Int = 0 // 아이템2 게임 스피드
-
+    private var itemcount: Int = 0//아이템 사용 카운트
     private lateinit var tvItemstack: TextView
     private lateinit var tvItem1: TextView
     private lateinit var tvItem2: TextView
@@ -196,8 +196,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 btnItem1ok.isEnabled = false
                 val addRunnable = kotlinx.coroutines.Runnable {
                     val newGameNormalDB = GameNormal()
-                    newGameNormalDB.id = localdatatime
-                    newGameNormalDB.buyorsell = "아이템 사용"
+                    newGameNormalDB.id = localdatatime+itemcount
+                    newGameNormalDB.buyorsell = "시간역행 아이템 사용"
                     newGameNormalDB.select = 1
                     newGameNormalDB.setId = setId
                     newGameNormalDB.item1active = item1Active
@@ -210,6 +210,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 }
                 val addThread = Thread(addRunnable)
                 addThread.start()
+                itemcount++
 
                 Toast.makeText(
                     dlg.context,
@@ -233,8 +234,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 btnItem2ok.isEnabled = false
                 val addRunnable = kotlinx.coroutines.Runnable {
                     val newGameNormalDB = GameNormal()
-                    newGameNormalDB.id = localdatatime
-                    newGameNormalDB.buyorsell = "아이템 사용"
+                    newGameNormalDB.id = localdatatime+itemcount
+                    newGameNormalDB.buyorsell = "상대성 이론 아이템 사용"
                     newGameNormalDB.select = 2
                     newGameNormalDB.setId = setId
                     newGameNormalDB.item1active = item1Active
@@ -247,6 +248,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 }
                 val addThread = Thread(addRunnable)
                 addThread.start()
+
+                itemcount++
 
                 Toast.makeText(
                     dlg.context,
@@ -268,8 +271,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             btnItem3ok.isEnabled = false
             val addRunnable = kotlinx.coroutines.Runnable {
                 val newGameNormalDB = GameNormal()
-                newGameNormalDB.id = localdatatime
-                newGameNormalDB.buyorsell = "아이템 사용"
+                newGameNormalDB.id = localdatatime+itemcount
+                newGameNormalDB.buyorsell = "뉴스 아이템 사용"
                 newGameNormalDB.select = 3
                 newGameNormalDB.setId = setId
                 newGameNormalDB.item1active = item1Active
@@ -282,6 +285,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             }
             val addThread = Thread(addRunnable)
             addThread.start()
+            itemcount++
 
             Toast.makeText(dlg.context, "50스택을 소모해 제공되는 뉴스가 월 10개로 늘었습니다", Toast.LENGTH_SHORT)
                 .show()
@@ -297,8 +301,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             btnItem4ok.isEnabled = false
             val addRunnable = kotlinx.coroutines.Runnable {
                 val newGameNormalDB = GameNormal()
-                newGameNormalDB.id = localdatatime
-                newGameNormalDB.buyorsell = "아이템 사용"
+                newGameNormalDB.id = localdatatime+itemcount
+                newGameNormalDB.buyorsell = "레버리지 아이템 사용"
                 newGameNormalDB.select = 4
                 newGameNormalDB.setId = setId
                 newGameNormalDB.item1active = item1Active
@@ -311,6 +315,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             }
             val addThread = Thread(addRunnable)
             addThread.start()
+            itemcount++
 
             Toast.makeText(dlg.context, "50스택을 소모해 레버리지 ETF 거래가 가능해졌습니다", Toast.LENGTH_SHORT).show()
         }
