@@ -7,6 +7,12 @@ interface ItemDao {
     @Query("SELECT * FROM item")
     fun getAll(): MutableList<Item>
 
+    @Query("SELECT id FROM Item")
+    fun getId(): Long
+
+    @Query("SELECT lasttime FROM Item")
+    fun getLasttime(): Long
+
     @Insert
     fun insert(item: Item)
 

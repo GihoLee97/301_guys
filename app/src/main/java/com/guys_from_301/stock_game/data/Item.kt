@@ -5,12 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Item (@PrimaryKey(autoGenerate = true) var id: Long?,
-@ColumnInfo(name = "name") var name : String,
-@ColumnInfo(name = "effect") var effect : String,
-@ColumnInfo(name = "count") var count: Int,
-@ColumnInfo(name = "price") var price: Int
-)
-{
-    constructor(): this(null,"-","-", 0,0)
+data class Item(@PrimaryKey(autoGenerate = true) var id: Long?,
+
+    @ColumnInfo(name = "lasttime") var lasttime: Long // 피로도 저감 마지막 시점 저장
+
+) {
+    constructor() : this(null, 0L)
 }

@@ -12,6 +12,8 @@ import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
+import com.guys_from_301.stock_game.data.Item
+import com.guys_from_301.stock_game.data.ItemDB
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk

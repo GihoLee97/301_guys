@@ -1,23 +1,29 @@
 package com.guys_from_301.stock_game
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.guys_from_301.stock_game.data.GameSetDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.onesignal.OneSignal
-import com.guys_from_301.stock_game.data.GameSet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 
 const val START_CASH = 10000000F
@@ -36,6 +42,9 @@ var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :Stri
 class MainActivity : AppCompatActivity() {
 
     private var gameSetDb: GameSetDB? = null
+    var itemDb: ItemDB? = null
+    val mContext: Context = this
+    var profileDb : ProfileDB? = null
     private lateinit var btn_profile : Button
     private lateinit var btn_setting : Button
     private lateinit var btn_game : Button
@@ -45,8 +54,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_shareMyself: Button
     private lateinit var btn_share: Button
 
+
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
+        itemDb = ItemDB?.getInstace(mContext!!)
+        profileDb = ProfileDB?.getInstace(mContext!!)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -146,6 +158,13 @@ class MainActivity : AppCompatActivity() {
             kakaoLinkManager.sendMessage()
         }
 
+        // 피로도 저감 코드
+        CoroutineScope(Dispatchers.IO).launch {
+            val job1 = launch {
+                value1reduc()
+            }
+        }
+
         while (true) {
             if (loadcomp) {
                 btn_game.isEnabled = true
@@ -164,6 +183,17 @@ class MainActivity : AppCompatActivity() {
     // 두번 누르면 종료되는 코드
     var time3: Long = 0
     override fun onBackPressed() {
+        // 서버에 올리는 코드(피로도)
+        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
+            getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+            profileDb?.profileDao()?.getMoney()!!,
+            profileDb?.profileDao()?.getValue1()!!,
+            profileDb?.profileDao()?.getNickname()!!,
+            profileDb?.profileDao()?.getProfit()!!,
+            profileDb?.profileDao()?.getRoundCount()!!,
+            profileDb?.profileDao()?.getHistory()!!,
+            profileDb?.profileDao()?.getLevel()!!
+        )
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
         if (time2 in 0..2000) {
@@ -214,6 +244,55 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    // 피로도 저감 코드
+    suspend fun value1reduc() {
+        while (true) {
+            var lasttime = itemDb?.itemDao()?.getLasttime()!! // 마지막 피로도 저감 시간
+            var nowtime = System.currentTimeMillis() // 현재 시간
+
+            if ((nowtime - lasttime) >= 1000L) {
+                var nowvalue1 = profileDb?.profileDao()?.getValue1()!!
+                var value1temp = 1 * (((nowtime - lasttime)/1000L).toFloat()).roundToInt() // 분당 1 씩 저감
+
+                if ((nowvalue1 - value1temp) <= 0 ) {
+                    nowvalue1 = 0
+                } else {
+                    nowvalue1 -= value1temp
+                }
+
+                // DB 피로도 업데이트
+                val newProfile = Profile()
+                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                newProfile.exp = profileDb?.profileDao()?.getExp()!!
+                newProfile.rank = profileDb?.profileDao()?.getRank()!!
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                newProfile.value1 = nowvalue1
+                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                profileDb?.profileDao()?.update(newProfile)
+                //
+
+                // 피로도 저감 시간 저장
+                val newItem = Item()
+                newItem.id = itemDb?.itemDao()!!.getId()
+                newItem.lasttime = nowtime
+                itemDb?.itemDao()?.update(newItem)
+                //
+
+                runOnUiThread{
+                    findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
+                    findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
+                }
+            }
+        }
+        delay(1000L) // 50초에 한 번씩 확인
     }
 
 }

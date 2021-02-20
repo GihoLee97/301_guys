@@ -23,6 +23,10 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     private lateinit var btn_ad : Button
     private lateinit var btn_purchase : Button
     var isLoading = false
+    var money: Int = 0
+    var value1: Int = 0
+    val moneyreward: Int = 1000000
+    val value1reward: Int = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,13 +87,20 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     override fun onRewarded(rItem: RewardItem?) {
         var profileDb: ProfileDB? = null
         profileDb = ProfileDB.getInstace(this)
-        var money = profileDb?.profileDao()?.getMoney()!!.toInt()+1000000
-        var value1 = profileDb?.profileDao()?.getValue1()!!.toInt()+10000
+        money = profileDb?.profileDao()?.getMoney()!!.toInt()+moneyreward
+        value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
+
+        if (value1 >= value1reward) {
+            value1 -= value1reward
+        } else {
+            value1 = 0
+        }
+
         Toast.makeText(this, "보상지급: +100만스택\n현재 보유 스택: "+money, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
                         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
             getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-            profileDb?.profileDao()?.getMoney()!!+1000000, profileDb?.profileDao()?.getValue1()!!+10000,
+            money, value1,
             profileDb?.profileDao()?.getNickname()!!,
             profileDb?.profileDao()?.getProfit()!!,
             profileDb?.profileDao()?.getRoundCount()!!,
@@ -124,8 +135,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         newProfile.level = profileDb?.profileDao()?.getLevel()!!
         newProfile.exp = profileDb?.profileDao()?.getExp()!!
         newProfile.rank = profileDb?.profileDao()?.getRank()!!
-        newProfile.money = profileDb?.profileDao()?.getMoney()!!+1000000
-        newProfile.value1 = profileDb?.profileDao()?.getValue1()!!+10000
+        newProfile.money = money
+        newProfile.value1 = value1
         profileDb?.profileDao()?.update(newProfile)
     }
 

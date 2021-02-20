@@ -18,6 +18,8 @@ import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.Item
+import com.guys_from_301.stock_game.data.ItemDB
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -43,6 +45,7 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+
 
         mGestureDetector = GestureDetectorCompat(this,GestureListener())
 
@@ -101,6 +104,7 @@ class WelcomeActivity : AppCompatActivity() {
             var roundcount: Int = profileDb?.profileDao()?.getRoundCount()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
+
 
             if (inputStr.trim() == "" || inputStr.toString().trim() == null) {
                 Toast.makeText(mContext, "닉네임을 입력하세요!", Toast.LENGTH_LONG).show()

@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.Item
+import com.guys_from_301.stock_game.data.ItemDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.auth.LoginClient
@@ -147,6 +149,20 @@ class InitialActivity : AppCompatActivity() {
             }
 
         })
+
+        // 피로도: 로그인 화면에서 마지막 저장시간 초기화
+        var itemDb: ItemDB? = null
+        itemDb = ItemDB?.getInstace(this)
+        val newItem = Item()
+        var nowtime = System.currentTimeMillis() // 현재 시간
+
+        val addRunnable = Runnable {
+            newItem.lasttime = nowtime
+            itemDb?.itemDao()?.insert(newItem)
+        }
+        val addThread = Thread(addRunnable)
+        addThread.start()
+        //
     }
 
     // general signup

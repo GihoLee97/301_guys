@@ -30,6 +30,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +40,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <TextView
+            android:id="@+id/tv_value1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="피로도: "
+            android:textSize="12sp">
+        </TextView>
+        <ProgressBar
+            android:id="@+id/progress_value1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:indeterminateOnly="false"
+            android:max="10000"
+            android:progress="2500"
+            android:indeterminateTint="#ff0000"/>
 
         <Button
             android:id="@+id/btn_friend"
@@ -99,6 +118,7 @@
             android:layout_height="wrap_content"
             android:text="남에게 공유하기"
             android:textSize="10dp" />
+
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView
