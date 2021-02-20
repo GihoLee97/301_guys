@@ -6,10 +6,9 @@ import android.util.Log
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.template.model.*
 
-class KakaoLinkManager(_activity: Activity) {
+class KakaoMessageManager() {
 
-    private val mActivity = _activity
-    private val defaultFeed = FeedTemplate(
+    val defaultFeed = FeedTemplate(
             content = Content(
                     title = "실전형 모의 주식게임 \"타디스\"",
                     description = "#S&P500 #주식앱 #주식공부 #동학개미",
@@ -43,9 +42,6 @@ class KakaoLinkManager(_activity: Activity) {
                 Log.i(TAG, "나에게 보내기 성공")
             }
         }
-        pushAlarmManager = PushAlarmManager(mActivity)
-        pushAlarmManager.generateAlarm()
-        pushAlarmManager.push()
     }
 
     fun sendMessage() {

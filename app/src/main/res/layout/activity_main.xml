@@ -25,7 +25,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="앱이름"
+        android:text="타디스"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -84,20 +85,43 @@
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center">
 
         <Button
-            android:id="@+id/btn_shareMyself"
+            android:id="@+id/btn_sendKakaoMessageMyself"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나에게 공유하기"
+            android:text="나에게 카톡보내기"
             android:textSize="10dp" />
 
         <Button
-            android:id="@+id/btn_share"
+            android:id="@+id/btn_sendKakaoMessageToOthers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="남에게 공유하기"
+            android:text="남에게 카톡보내기"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/btn_shareText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="텍스트 공유하기"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/btn_pushAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="푸쉬알람 보내기"
+            android:textSize="10dp" />
+
+
+        <Button
+            android:id="@+id/btn_captureView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="특정 화면 캡쳐"
             android:textSize="10dp" />
     </LinearLayout>
 

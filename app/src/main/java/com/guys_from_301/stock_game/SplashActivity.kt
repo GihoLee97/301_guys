@@ -44,10 +44,20 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 // 뉴스 데이터//////////////////////
 val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
 val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
+
+//MUST BE INITIALIZED AT FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 //push alarm
 val CHANNEL_ID = "tardis"
 lateinit var notificationManager : NotificationManager
-lateinit var pushAlarmManager: PushAlarmManager
+val pushAlarmManager = PushAlarmManager()
+//Kakao message Manager
+val kakaoMessageManager = KakaoMessageManager()
+//share manager
+val shareManager = ShareManager()
+//capture Manager
+val captureUtil = CaptureUtil()
+//MUST BE INITIALIZED AT FIRST-END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
+
 
 class SplashActivity : AppCompatActivity() {
     //receive profile room data
