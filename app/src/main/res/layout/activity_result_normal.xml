@@ -37,6 +37,12 @@
             android:text="수익률:     (상위%)"
             />
         <TextView
+            android:id="@+id/ResultRelativeProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시장대비 수익률:     (상위%)"
+            />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="제세금 내역:  "

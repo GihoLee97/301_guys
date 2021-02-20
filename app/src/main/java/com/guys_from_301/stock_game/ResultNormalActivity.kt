@@ -64,7 +64,8 @@ class ResultNormalActivity : AppCompatActivity() {
         newProfile.level = profileDb?.profileDao()?.getLevel()!!
         newProfile.exp = profileDb?.profileDao()?.getExp()!!
         newProfile.login = profileDb?.profileDao()?.getLogin()!!
-        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+        newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getRoundCount()!!+relativeprofitrate)/(profileDb?.profileDao()?.getRoundCount()!!+1)
+        newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
         profileDb?.profileDao()?.update(newProfile)
@@ -75,6 +76,7 @@ class ResultNormalActivity : AppCompatActivity() {
                 profileDb?.profileDao()?.getValue1()!!,
                 profileDb?.profileDao()?.getNickname()!!,
                 profileDb?.profileDao()?.getProfit()!!,
+                profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
                 profileDb?.profileDao()?.getLevel()!!
         )
