@@ -1,5 +1,6 @@
 package com.guys_from_301.stock_game
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,7 +26,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-
+var _MainActivity : Context? = null
 const val START_CASH = 10000000F
 const val START_MONTHLY = 1000000F
 const val START_SALARY_RAISE = 6F
@@ -40,7 +41,6 @@ var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :Strin
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
 
 class MainActivity : AppCompatActivity() {
-
     private var gameSetDb: GameSetDB? = null
     var itemDb: ItemDB? = null
     val mContext: Context = this
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
         profileDb = ProfileDB?.getInstace(mContext!!)
-
+        _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         gameSetDb = GameSetDB.getInstace(this)

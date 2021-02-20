@@ -1,5 +1,6 @@
 package com.guys_from_301.stock_game
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -142,7 +143,7 @@ class AccountManagementActivity : AppCompatActivity() {
             dlg_change_pw.start()
         }
         btn_generalAcountSignout.setOnClickListener{
-            generallogout()
+            updatelogOutInFo2DB("GENERAL")
             val intent = Intent(this,InitialActivity::class.java)
             startActivity(intent)
         }
@@ -178,7 +179,6 @@ class AccountManagementActivity : AppCompatActivity() {
 
     private fun generallogout(){
         profileDb = ProfileDB?.getInstace(this)
-
         val newProfile = Profile()
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
         newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
