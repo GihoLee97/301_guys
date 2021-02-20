@@ -129,7 +129,7 @@ class InitialActivity : AppCompatActivity() {
                         var id : String = ""
                         var pw : String = ""
                         id = user?.kakaoAccount?.email.toString()
-                        pw = user?.id.toString() + user?.kakaoAccount?.profile?.nickname.toString()
+                        pw = user?.id.toString()
                         dialog.dismiss()
                         Log.i(TAG, "로그인 성공 ${token.accessToken}")
                         GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
@@ -405,7 +405,6 @@ class InitialActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
-                    println("---get")
                     var data: DATACLASS? = response.body()!!
                     profileDb = ProfileDB?.getInstace(this@InitialActivity)
                     val newProfile = Profile()
