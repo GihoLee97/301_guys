@@ -13,26 +13,5 @@ interface RetrofitFriend  {
     @POST("/test/friendrank.php/")
     fun funfriend(
             @Field("u_id") u_id : String
-    ): Call<FRIENDCLASS>
-}
-
-class FRIENDCLASS {
-
-    @SerializedName("MONEY")
-    @Expose
-    var MONEY : Int
-
-    @SerializedName("NICKNAME")
-    @Expose
-    var NICKNAME : String
-
-    @SerializedName("LEVEL")
-    @Expose
-    var LEVEL : Int
-
-    constructor(MONEY: Int, NICKNAME:String, LEVEL : Int) {
-        this.MONEY = MONEY
-        this.NICKNAME = NICKNAME
-        this.LEVEL = LEVEL
-    }
+    ): Call<DATACLASS>
 }

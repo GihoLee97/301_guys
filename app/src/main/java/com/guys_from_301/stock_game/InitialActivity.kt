@@ -128,8 +128,8 @@ class InitialActivity : AppCompatActivity() {
                     UserApiClient.instance.me { user, error ->
                         var id : String = ""
                         var pw : String = ""
-                        id = user?.kakaoAccount?.email.toString()
-                        pw = user?.id.toString()
+                        id = user?.id.toString()
+                        pw = user?.kakaoAccount?.email.toString()
                         dialog.dismiss()
                         Log.i(TAG, "로그인 성공 ${token.accessToken}")
                         GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
