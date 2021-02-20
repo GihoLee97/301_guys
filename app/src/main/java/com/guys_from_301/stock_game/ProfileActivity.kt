@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var money_textView: TextView
     private lateinit var value1_textView: TextView
     private lateinit var tradeday_textView: TextView
+    private lateinit var completegame_textView: TextView
     private lateinit var accountManagement_btn: Button
     private lateinit var nickname_btn: Button
     private val profileActivityViewModel = ProfileActivityViewModel(this)
@@ -37,6 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         money_textView = findViewById(R.id.money)
         value1_textView = findViewById(R.id.value1)
         tradeday_textView = findViewById(R.id.tradeday)
+        completegame_textView = findViewById(R.id.completegame)
         nickname_btn = findViewById(R.id.nickname_btn)
         accountManagement_btn = findViewById(R.id.accountManagement_btn)
         val history_btn = findViewById<Button>(R.id.history_btn)
@@ -47,6 +49,7 @@ class ProfileActivity : AppCompatActivity() {
         money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
         value1_textView.text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
         tradeday_textView.text = "누적거래일: "+profileDb?.profileDao()?.getHistory()!!
+        completegame_textView.text = "완료한 게임 횟수: "+profileDb?.profileDao()?.getRoundCount()!!
         profileActivityViewModel.getNickname().observe(this, Observer {
             nickname_textView.text = it
         })

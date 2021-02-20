@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.round
 
 class WelcomeActivity : AppCompatActivity() {
     var mContext: Context = this
@@ -96,7 +97,8 @@ class WelcomeActivity : AppCompatActivity() {
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var money :Int = 1000000
             var value1: Int = 0
-            var profit: Int = profileDb?.profileDao()?.getProfit()!!
+            var profit: Float = profileDb?.profileDao()?.getProfit()!!
+            var roundcount: Int = profileDb?.profileDao()?.getRoundCount()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
 
@@ -142,7 +144,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
-                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, value1, nickname, profit, history, level)
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, value1, nickname, profit, roundcount, history, level)
 
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)

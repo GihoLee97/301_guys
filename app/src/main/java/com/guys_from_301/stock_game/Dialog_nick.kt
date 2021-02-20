@@ -40,7 +40,7 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
             var nickname: String = nickname_editText.text.toString().trim()
             var history: Int = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
-            var profit: Int = profileDb?.profileDao()?.getProfit()!!
+            var profit: Float = profileDb?.profileDao()?.getProfit()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
             if (nickname_editText.text.toString().trim() == "" || nickname_editText.text.toString().trim() == null) {
@@ -81,6 +81,7 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
                                     profileDb?.profileDao()?.getValue1()!!,
                                     profileDb?.profileDao()?.getNickname()!!,
                                     profileDb?.profileDao()?.getProfit()!!,
+                                    profileDb?.profileDao()?.getRoundCount()!!,
                                     profileDb?.profileDao()?.getHistory()!!,
                                     profileDb?.profileDao()?.getLevel()!!)
                                 dlg.dismiss()

@@ -92,6 +92,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             profileDb?.profileDao()?.getMoney()!!+1000000, profileDb?.profileDao()?.getValue1()!!+10000,
             profileDb?.profileDao()?.getNickname()!!,
             profileDb?.profileDao()?.getProfit()!!,
+            profileDb?.profileDao()?.getRoundCount()!!,
             profileDb?.profileDao()?.getHistory()!!,
             profileDb?.profileDao()?.getLevel()!!
         )
