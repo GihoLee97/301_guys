@@ -8,7 +8,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.retrofit.FRIENDCLASS
+import com.guys_from_301.stock_game.retrofit.RetrofitFriend
+import com.guys_from_301.stock_game.retrofit.RetrofitRanking
+import com.kakao.sdk.talk.model.Friend
+import com.kakao.sdk.talk.model.Friends
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
+// 친구 정보
 
 class FriendActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,15 +48,9 @@ class FriendActivity  : AppCompatActivity() {
                 val friendscount = friends.totalCount
                 var count = 0
                 while(count<friendscount){
-                    var textView = TextView(this)
-                    var layout = LinearLayout(this)
-                    textView.text = friends.elements[count].profileNickname
-                    println("---2"+friends.elements[count].profileNickname)
-                    layout.addView(textView)
-                    findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
+                    addlayout(friends, count)
                     count ++
                 }
-
 //                findViewById<LinearLayout>(R.id.layout_admin).addView(textView)
 
 //                findViewById<LinearLayout>(R.id.layout_user1)
@@ -70,6 +76,44 @@ class FriendActivity  : AppCompatActivity() {
 
     }
 
+    fun addlayout(friends: Friends<Friend>, count : Int){
+        var textView = TextView(this)
+        var layout = LinearLayout(this)
+        textView.text = friends.elements[count].profileNickname
+//        println("---2"+friends.elements[count].profileNickname)
+        layout.addView(textView)
+        findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
+    }
+
+    // 친구 정보 받아오는 코드
+
+    fun friendInfo(u_id: String) {
+        var funfriend: RetrofitFriend? = null
+        val url = "http://stockgame.dothome.co.kr/test/friendrank.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funfriend = retrofit.create(RetrofitFriend::class.java)
+        funfriend.funfriend(u_id).enqueue(object : Callback<FRIENDCLASS> {
+            override fun onFailure(call: Call<FRIENDCLASS>, t: Throwable) {
+                //Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<FRIENDCLASS>, response: retrofit2.Response<FRIENDCLASS>) {
+                if (response.isSuccessful && response.body() != null) {
+                    var data: FRIENDCLASS = response.body()!!
+
+                }
+            }
+        })
+    }
 }
 
 

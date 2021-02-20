@@ -405,6 +405,7 @@ class InitialActivity : AppCompatActivity() {
             }
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
+                    println("---get")
                     var data: DATACLASS? = response.body()!!
                     profileDb = ProfileDB?.getInstace(this@InitialActivity)
                     val newProfile = Profile()
@@ -417,6 +418,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.money = data?.MONEY!!
                     newProfile.value1 = data?.VALUE1!!
                     newProfile.profit = data?.PROFIT!!
+                    newProfile.roundcount = data?.ROUNDCOUNT!!
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw
                     profileDb?.profileDao()?.update(newProfile)

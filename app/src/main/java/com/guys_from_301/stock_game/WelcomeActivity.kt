@@ -96,7 +96,7 @@ class WelcomeActivity : AppCompatActivity() {
             var history: Int = profileDb?.profileDao()?.getHistory()!!
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var money :Int = 1000000
-            var value1: Int = 0
+            var value1: Int = 10
             var profit: Float = profileDb?.profileDao()?.getProfit()!!
             var roundcount: Int = profileDb?.profileDao()?.getRoundCount()!!
             var funnickcheck: RetrofitNickcheck? = null
@@ -141,11 +141,13 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                                 newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                                newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
-                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(), money, value1, nickname, profit, roundcount, history, level)
-
+                                update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(),
+                                        money, value1, nickname, profit, roundcount, history, level)
+                                println("---update되나"+nickname)
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)
                                 step = "Nickname Setting Complished"

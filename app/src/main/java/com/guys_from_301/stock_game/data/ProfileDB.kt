@@ -26,7 +26,6 @@ abstract class ProfileDB: RoomDatabase() {
             return INSTANCE
         }
 
-
         fun destroyINSTACE(){
             INSTANCE = null
         }
