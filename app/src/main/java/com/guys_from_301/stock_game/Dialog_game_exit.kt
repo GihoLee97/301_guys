@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.guys_from_301.stock_game.data.*
 import java.time.LocalDateTime
 
+var relativeprofitrate: Float = 0F//시장대비수익률
+
 class Dialog_game_exit (context : Context)  {
     var mContext: Context? = context
     val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
@@ -26,6 +28,7 @@ class Dialog_game_exit (context : Context)  {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_game_exit)     //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        relativeprofitrate = profitrate / marketrate
 
         profileDb = ProfileDB.getInstace(dlg.context)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
@@ -60,7 +63,7 @@ class Dialog_game_exit (context : Context)  {
                     localDateTime = LocalDateTime.now()
                     val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"저장", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
                         bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, localdatatime)
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime)
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                 }
                 val addThread = Thread(addRunnable)
@@ -90,7 +93,8 @@ class Dialog_game_exit (context : Context)  {
                 newProfile.exp = profileDb?.profileDao()?.getExp()!!
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getRoundCount()!!+relativeprofitrate)/(profileDb?.profileDao()?.getRoundCount()!!+1)
+                newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)

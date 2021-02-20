@@ -28,6 +28,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
+const val START_SNP_VAL:Float = 100000F
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 자산 관련 변수들 생성
 var asset: Float = 0F // 총 자산
@@ -45,6 +46,7 @@ var endpoint: Int = 0
 var monthToggle = 1
 var setId: Int = 0
 var tradeday: Int = 0//누적 거래일에 더할 거래일
+var marketrate: Float = 0F//시장 수익률
 
 var quant1x: Int = 0 // 1x 보유 수량
 var quant3x: Int = 0 // 3x 보유 수량
@@ -1101,6 +1103,7 @@ class GameNormalActivity : AppCompatActivity() {
                         snpNowDate = snp_date[start + dayPlus]
                         snpNowdays = dayPlus
                         snpNowVal = snp_val[start + dayPlus].toFloat()
+                        marketrate = snpNowVal/ START_SNP_VAL
                         snpDiff =
                             snp_val[start + dayPlus].toFloat() / snp_val[start + dayPlus - 1].toFloat() - 1F
                         println("현재 날짜 : $snpNowDate | 현재 경과 거래일 : $snpNowdays | 현재 S&P 500 지수 값 : $snpNowVal | 등락 : $snpDiff")

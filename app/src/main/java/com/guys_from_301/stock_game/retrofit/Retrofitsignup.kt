@@ -13,5 +13,4 @@ interface Retrofitsignup{
         @Field("u_pw") u_pw: String,
         @Field("u_date") u_date: String)
     : Call<String>
-
 }
