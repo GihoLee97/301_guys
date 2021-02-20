@@ -168,7 +168,8 @@ class MainActivity : AppCompatActivity() {
             pushAlarmManager.generateAndPushAlarm(this)
         }
         btn_captureView.setOnClickListener {
-            captureUtil.captureAndSaveView(findViewById(R.id.textView2))
+            val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
+            shareManager.shareBinary(this,uri.toString())
         }
 
         // 피로도 저감 코드
