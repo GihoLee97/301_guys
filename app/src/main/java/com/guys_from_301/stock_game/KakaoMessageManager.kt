@@ -1,6 +1,7 @@
 package com.guys_from_301.stock_game
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.kakao.sdk.talk.TalkApiClient
@@ -68,6 +69,34 @@ class KakaoMessageManager() {
                             if (result.failureInfos != null) {
                                 Log.d(TAG, "메시지 보내기에 일부 성공했으나, 일부 대상에게는 실패 \n${result.failureInfos}")
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 한명에게만 초대 메세지 보내기
+
+    fun sendMessageonlyone(uuid: String) {
+        // 카카오톡 친구 목록 가져오기
+        TalkApiClient.instance.friends { friends, error ->
+            if (error != null) {
+                Log.e(ContentValues.TAG, "카카오톡 친구 목록 가져오기 실패", error)
+            } else {
+                Log.d(ContentValues.TAG, "카카오톡 친구 목록 가져오기 성공 \n${friends!!.elements.joinToString("\n")}")
+                Log.d("Giho", ("카카오톡 친구 수 : " + friends.elements.size.toString()))
+                var receiverUuids = List(1, { i ->uuid })
+                // Feed 메시지
+                val template = defaultFeed
+                // 메시지 보내기
+                TalkApiClient.instance.sendDefaultMessage(receiverUuids, template) { result, error ->
+                    if (error != null) {
+                        Log.e(ContentValues.TAG, "메시지 보내기 실패", error)
+                    } else if (result != null) {
+                        Log.i(ContentValues.TAG, "메시지 보내기 성공 ${result.successfulReceiverUuids}")
+                        if (result.failureInfos != null) {
+                            Log.d(ContentValues.TAG, "메시지 보내기에 일부 성공했으나, 일부 대상에게는 실패 \n${result.failureInfos}")
                         }
                     }
                 }

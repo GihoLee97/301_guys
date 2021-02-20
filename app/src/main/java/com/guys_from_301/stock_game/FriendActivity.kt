@@ -1,9 +1,11 @@
 package com.guys_from_301.stock_game
 
+import android.content.ContentValues
 import com.kakao.sdk.talk.TalkApiClient
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Layout
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -20,10 +22,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.guys_from_301.stock_game.kakaoMessageManager
 
 // 친구 정보
-
-
 var friendid = mutableListOf<String>()
 var friendmoney = mutableListOf<Int>()
 var friendlevel = mutableListOf<Int>()
@@ -73,10 +74,24 @@ class FriendActivity  : AppCompatActivity() {
     fun addlayout(friends: Friends<Friend>, count : Int){
         var textView = TextView(this)
         var layout = LinearLayout(this)
+        var button_info = Button(this)
+        var button_invite = Button(this)
         textView.text = "이름: " + friends.elements[count].profileNickname
         textView.textSize = 30f
+        button_info.text = "정보보기"
+        button_invite.text = "초대보내기"
+        button_invite.setOnClickListener{
+            if(friendlevel[count]==-1){
+                kakaoMessageManager.sendMessageonlyone(friends.elements[count].uuid)
+                Toast.makeText(this, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
+            }
+            else{
+                Toast.makeText(this, "이미 가입한 사용자입니다.", Toast.LENGTH_LONG).show()
+            }
+
+        }
         layout.gravity = Gravity.CENTER
-        layout.setOnClickListener{
+        button_info.setOnClickListener{
             if(friendlevel[count] == -1)
             {
                 Toast.makeText(this, "가입하지 않는 유저입니다. 초대를 보내보세요!", Toast.LENGTH_LONG).show()
@@ -84,10 +99,11 @@ class FriendActivity  : AppCompatActivity() {
             else{
                 val dialog = Dialog_friend(this, count)
                 dialog.start(count)
-
             }
         }
         layout.addView(textView)
+        layout.addView(button_info)
+        layout.addView(button_invite)
         findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
     }
 
@@ -139,6 +155,7 @@ class FriendActivity  : AppCompatActivity() {
             }
         })
     }
+
 }
 
 
