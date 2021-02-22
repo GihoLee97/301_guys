@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.guys_from_301.stock_game.data.*
@@ -1596,37 +1597,37 @@ class GameNormalActivity : AppCompatActivity() {
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
-                        if ((setGamespeed==1) && (value1now <= 10000)) {
+                        if ((setGamespeed==1) && (value1now <= 10000 - 8)) {
                             oneday = 7995L - 80L // 8 sec/day
                             value1diff = 8
                             value1now += value1diff
 
-                        } else if ((setGamespeed==2) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==2) && (value1now <= 10000 - 4)) {
                             oneday = 3995L - 80L // 4 sec/day
                             value1diff = 4
                             value1now += value1diff
 
-                        } else if ((setGamespeed==3) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==3) && (value1now <= 10000 - 2)) {
                             oneday = 1995L - 80L // 2 sec/day
                             value1diff = 2
                             value1now += value1diff
 
-                        } else if ((setGamespeed==4) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==4) && (value1now <= 10000 - 2)) {
                             oneday = 495L - 80L // 2 day/sec
                             value1diff = 2
                             value1now += value1diff
 
-                        } else if ((setGamespeed==5) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==5) && (value1now <= 10000 - 4)) {
                             oneday = 245L - 80L // 4 day/sec
                             value1diff = 4
                             value1now += value1diff
 
-                        } else if ((setGamespeed==6) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==6) && (value1now <= 10000 - 8)) {
                             oneday = 115L - 80L // 8 day/sec
                             value1diff = 8
                             value1now += value1diff
 
-                        } else if ((setGamespeed==7) && (value1now <= 10000)) {
+                        } else if ((setGamespeed==7) && (value1now <= 10000 - 10)) {
                             oneday = 95L - 80L // 10 day/sec
                             value1diff = 10
                             value1now += value1diff
@@ -1636,8 +1637,10 @@ class GameNormalActivity : AppCompatActivity() {
 
                         }
                         ////////////////////////////////////////////////////////////////////////////
-
-
+                        runOnUiThread{
+                            findViewById<TextView>(R.id.tv_value1).text = "피로도: "+ value1now.toString()
+                            findViewById<ProgressBar>(R.id.progress_value1).progress = value1now
+                        }
 
                         dayPlus += 1 // 시간 진행
                         delay(oneday) // 게임 진행 속도 조절

@@ -675,6 +675,22 @@
                             android:layout_height="wrap_content"
                             android:text="수수료 합계:  " />
 
+                        <TextView
+                            android:id="@+id/tv_value1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="피로도: ">
+                        </TextView>
+                        <ProgressBar
+                            android:id="@+id/progress_value1"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:indeterminateOnly="false"
+                            android:max="10000"
+                            android:progress="0"
+                            android:indeterminateTint="#ff0000"/>
+
 
 
                     </LinearLayout>
