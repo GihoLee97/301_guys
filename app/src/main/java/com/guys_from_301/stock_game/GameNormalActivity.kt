@@ -2240,6 +2240,21 @@ class GameNormalActivity : AppCompatActivity() {
             startActivity(intent)
         }
         else {
+            // save gameSpeed setting on the database
+            val gameDb = GameSetDB.getInstace(this)
+            val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+            val updateSettingRunnable = Runnable {
+                var newGameSetDB = GameSet()
+                newGameSetDB.id =  gameset!!.id
+                newGameSetDB.setcash = gameset.setcash
+                newGameSetDB.setgamelength = gameset.setgamelength
+                newGameSetDB.setgamespeed = setGamespeed
+                newGameSetDB.setmonthly = gameset.setmonthly
+                newGameSetDB.setsalaryraise = gameset.setsalaryraise
+                gameDb?.gameSetDao()?.update(newGameSetDB)
+            }
+            val updateSettingThread = Thread(updateSettingRunnable)
+            updateSettingThread.start()
             val intent = Intent(this@GameNormalActivity, MainActivity::class.java)
             startActivity(intent)
         }
