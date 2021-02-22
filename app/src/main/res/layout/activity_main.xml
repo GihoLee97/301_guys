@@ -156,6 +156,12 @@
             android:text="다른 매체로 화면 공유"
             android:textSize="10dp" />
 
+        <Button
+            android:id="@+id/btn_quest_tmp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="업적 달성하기"
+            android:textSize="10dp" />
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView

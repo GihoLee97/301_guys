@@ -485,6 +485,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw
                     //TODO: 업적저장
+                    questdecode(data?.QUEST!!)
                     profileDb?.profileDao()?.update(newProfile)
                     profileDb = ProfileDB?.getInstace(this@InitialActivity)
                 }
@@ -492,11 +493,30 @@ class InitialActivity : AppCompatActivity() {
         })
     }
 
+    //업적 디코딩
+    private fun questdecode(questcode : Int){
+        var cnt = 0
+        var tmp = 0
+        questDb = QuestDB.getInstance(this@InitialActivity)
+        var stringquest = Integer.toBinaryString(questcode)
+
+        //가져온 string은 숫자앞에서부터 저장된다. 13=1101(2) 1, 1, 0, 1 순서
+        // '0' 은 48 '1'은 49
+
+        for(i in 0..stringquest.length - 1){
+            val newQuest = Quest()
+            newQuest.id = stringquest.length -i
+            newQuest.achievement = stringquest[i].toInt()-48
+            newQuest.theme = questDb?.questDao()?.getAll()!![stringquest.length -i -1].theme
+            newQuest.questcontents = questDb?.questDao()?.getAll()!![stringquest.length -i -1].questcontents
+            questDb?.questDao()?.update(newQuest)
+        }
+    }
+
     private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText) {
         IdorPw.setFilters(arrayOf(
                 InputFilter { src, start, end, dst, dstart, dend ->
                     if (src == " ") { // for space
-                        println("---sp")
                         return@InputFilter ""
                     }
                     if (src == "") { // for backspace
