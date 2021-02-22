@@ -134,8 +134,8 @@ class AccountManagementActivity : AppCompatActivity() {
                 }
             }
             updatelogOutInFo2DB("KAKAO")
-            val intent = Intent(this,InitialActivity::class.java)
-            startActivity(intent)
+            val dlg_delete = Dialog_DeleteKakaoGoogle(this)
+            dlg_delete.start()
         }
         // 일반 로그인 시 비밀번호 변경
         btn_generalAccountPW.setOnClickListener{
@@ -148,6 +148,7 @@ class AccountManagementActivity : AppCompatActivity() {
             startActivity(intent)
         }
         btn_generalAccountDelete.setOnClickListener{
+            updatelogOutInFo2DB("GENERAL")
             val dlg_delete = Dialog_DeleteAlert(this)
             dlg_delete.start()
         }

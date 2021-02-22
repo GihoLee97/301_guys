@@ -17,6 +17,7 @@ import com.guys_from_301.stock_game.data.ItemDB
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.talk.TalkApiClient
 import com.opencsv.CSVReader
 import com.opencsv.CSVReaderBuilder
 import kotlinx.coroutines.Dispatchers
@@ -434,7 +435,10 @@ class SplashActivity : AppCompatActivity() {
         } else {
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
+
     }
+
+
 
     private fun go2MainActivity(){
         val intent = Intent(this, MainActivity::class.java) //Main으로 이동
