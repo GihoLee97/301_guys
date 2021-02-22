@@ -25,6 +25,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.guys_from_301.stock_game.kakaoMessageManager
 import com.guys_from_301.stock_game.MainActivity
+import com.guys_from_301.stock_game.data.Quest
+import com.guys_from_301.stock_game.data.QuestDB
 
 // 친구 정보
 var friendid = mutableListOf<String>()
@@ -37,12 +39,17 @@ var frienduuid = mutableListOf<String>()
 class FriendActivity  : AppCompatActivity() {
     val coloroff = "#FF808080"
     val coloron = "#FF7070E7"
+    private var questDb: QuestDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend)
         var cnt = 0
+        questDb = QuestDB.getInstance(this)
+        var friendquest = questDb?.questDao()?.getQuestByTheme("친구 초대하기")?.get(0)
         while(cnt < friendlevel.size){
-            addlayout(cnt)
+            if (friendquest != null) {
+                addlayout(cnt, friendquest)
+            }
             cnt++
         }
 
@@ -52,7 +59,7 @@ class FriendActivity  : AppCompatActivity() {
 
     }
 
-    fun addlayout( count : Int){
+    fun addlayout( count : Int, friendquest: Quest){
         var textView = TextView(this)
         var layout = LinearLayout(this)
         var button_info = Button(this)
@@ -74,6 +81,13 @@ class FriendActivity  : AppCompatActivity() {
         button_invite.setOnClickListener{
             if(friendlevel[count]==-1){
                 kakaoMessageManager.sendMessageonlyone(frienduuid[count])
+                friendquest.achievement = friendquest.achievement+1
+                val addRunnable = kotlinx.coroutines.Runnable {
+                    questDb?.questDao()?.insert(friendquest)
+                }
+                val addThread = Thread(addRunnable)
+                addThread.start()
+                questAchieved.add(friendquest)
                 Toast.makeText(this, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
             }
             else{
