@@ -63,6 +63,7 @@
             android:id="@+id/btn_friend"
             android:layout_width="100dp"
             android:layout_height="50dp"
+            android:visibility="invisible"
             android:text="친구" />
 
         <Button
