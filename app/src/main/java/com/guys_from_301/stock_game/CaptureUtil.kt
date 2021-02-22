@@ -1,6 +1,5 @@
 package com.guys_from_301.stock_game
 
-import android.app.usage.ExternalStorageStats
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -8,11 +7,9 @@ import android.os.Environment
 import android.util.Log
 import android.view.View
 import androidx.core.net.toUri
-import androidx.core.os.EnvironmentCompat
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.net.URI
 
 class CaptureUtil(){
 
@@ -56,6 +53,32 @@ class CaptureUtil(){
         Log.d("Giho","Url : "+fileCacheItem.toURL().toString())
         return fileCacheItem.toUri()
     }
+
+    private fun saveCaptureWithKakao(bitmap: Bitmap) :String{
+        val path = File(strFolderPath)
+        if(!path.exists()){
+            path.mkdirs()
+            Log.d("Giho","Folder created")
+        }
+        val strFilename = "/" + System.currentTimeMillis() + ".png"
+        val fileCacheItem = File(path,strFilename)
+
+        try {
+            var fos = FileOutputStream(fileCacheItem)
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,fos)
+        } catch (e : FileNotFoundException){
+            Log.d("Giho","Failed to save file because:" + e.message)
+        }
+        Log.d("Giho","Url : "+fileCacheItem.toURL().toString())
+        return strFolderPath+strFilename
+    }
+
+    fun captureAndSaveViewWithKakao(view: View) :String{
+        Log.d("Giho","CaptureAndSaveViewStart")
+        val path = saveCaptureWithKakao(captureView(view)!!)
+        return path
+    }
+
 
     fun captureAndSaveView(view: View) :Uri{
         Log.d("Giho","CaptureAndSaveViewStart")

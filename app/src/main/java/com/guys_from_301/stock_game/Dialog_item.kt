@@ -100,9 +100,9 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                     item1Length = (progress * item1Able / 1000F).roundToInt()
                 }
 
-                item1ConsumeTemp = item1Length // 스택소모
+                item1ConsumeTemp = item1Length * 50 // 피로도 증가
                 tvItem1.text =
-                    item1ConsumeTemp.toString() + "스택 소모, " + item1Length.toString() + " 거래일 되돌리기"
+                    "피로도 "+item1ConsumeTemp.toString() + " 증가, " + item1Length.toString() + " 거래일 되돌리기"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -112,9 +112,9 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                     item1Length = (seekBar!!.progress * item1Able / 1000F).roundToInt()
                 }
 
-                item1ConsumeTemp = item1Length // 스택소모
+                item1ConsumeTemp = item1Length * 50 // 피로도 증가
                 tvItem1.text =
-                    item1ConsumeTemp.toString() + "스택 소모, " + item1Length.toString() + " 거래일 되돌리기"
+                    "피로도 "+item1ConsumeTemp.toString() + " 증가, " + item1Length.toString() + " 거래일 되돌리기"
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -124,9 +124,9 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                     item1Length = (seekBar!!.progress * item1Able / 1000F).roundToInt()
                 }
 
-                item1ConsumeTemp = item1Length // 스택소모
+                item1ConsumeTemp = item1Length * 50 // 피로도 증가
                 tvItem1.text =
-                    item1ConsumeTemp.toString() + "스택 소모, " + item1Length.toString() + " 거래일 되돌리기"
+                    "피로도 "+item1ConsumeTemp.toString() + " 증가, " + item1Length.toString() + " 거래일 되돌리기"
             }
         })
 
@@ -134,59 +134,102 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
         seekbarItem2.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 item2speed = progress
-                item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
 
-                if (item2speed==6) {
+                if (item2speed==0) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
+                } else if (item2speed==1) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
+                } else if (item2speed==2) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
+                } else if (item2speed==3) {
+                    tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
+                } else if (item2speed==4) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
+                } else if (item2speed==5) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
+                } else if (item2speed==6) {
+                    tvItem2.text =
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
-                } else {
-                    tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 item2speed = seekBar!!.progress
-                item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
 
-                if (item2speed==6) {
+                if (item2speed==0) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
+                } else if (item2speed==1) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
+                } else if (item2speed==2) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
+                } else if (item2speed==3) {
+                    tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
+                } else if (item2speed==4) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
+                } else if (item2speed==5) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
+                } else if (item2speed==6) {
+                    tvItem2.text =
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
-                } else {
-                    tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 item2speed = seekBar!!.progress
-                item2ConsumeTemp = abs(setGamespeed - item2speed) * 30
 
-                if (item2speed==6) {
+                if (item2speed==0) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "8 거래일"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
+                } else if (item2speed==1) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
+                } else if (item2speed==2) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
+                } else if (item2speed==3) {
+                    tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
+                } else if (item2speed==4) {
+                    tvItem2.text =
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
+                } else if (item2speed==5) {
+                    tvItem2.text =
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
+                } else if (item2speed==6) {
+                    tvItem2.text =
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + "10 거래일"
-                } else {
-                    tvItem2.text =
-                            item2ConsumeTemp.toString() + "스택 소모, 초당 " + item2speed.toString() + " 거래일"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
         })
 
 
         btnItem1ok.setOnClickListener {
-            if (item1Length == 0) {
+            if (item1Length == 0 && value1now < 10000 - 50) {
                 Toast.makeText(dlg.context, "되돌아갈 거래일 수를 지정하세요", Toast.LENGTH_SHORT).show()
+            } else if (item1ConsumeTemp + value1now > 10000) {
+                Toast.makeText(dlg.context, "여유 피로도가 부족합니다", Toast.LENGTH_SHORT).show()
             } else {
-                nowmoney = nowmoney?.minus(item1ConsumeTemp)
                 tvItemstack.text = nowmoney.toString() + "스택"
                 btnItemok.text = "확인"
 
@@ -224,14 +267,12 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             if (item2speed == setGamespeed) {
                 Toast.makeText(dlg.context, "변경할 시간 진행 빠르기를 선택하세요", Toast.LENGTH_SHORT).show()
             } else {
-                nowmoney = nowmoney?.minus(item2ConsumeTemp)
                 tvItemstack.text = nowmoney.toString() + "스택"
                 btnItemok.text = "확인"
 
                 setGamespeed = item2speed
 
-                btnItem2ok.text = "사용됨"
-                btnItem2ok.isEnabled = false
+                btnItem2ok.text = "변경"
                 val addRunnable = kotlinx.coroutines.Runnable {
                     val newGameNormalDB = GameNormal()
                     newGameNormalDB.id = localdatatime+itemcount
@@ -250,14 +291,11 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 addThread.start()
 
                 itemcount++
-
                 Toast.makeText(
                     dlg.context,
-                    item2ConsumeTemp.toString() + "스택을 소모해 1초에 " + item2speed.toString() + " 거래일 만큼의 시간이 흐릅니다",
-                    Toast.LENGTH_SHORT
+                    "시간 진행 빠르기를 변경합니다", Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
 
 

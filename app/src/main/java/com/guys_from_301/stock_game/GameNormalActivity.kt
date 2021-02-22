@@ -1618,42 +1618,42 @@ class GameNormalActivity : AppCompatActivity() {
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
-                        if ((setGamespeed==1) && (value1now <= 10000 - 8)) {
+                        if ((setGamespeed==0) && (value1now <= 10000 - 3)) {
                             oneday = 7995L - 80L // 8 sec/day
-                            value1diff = 8
+                            value1diff = 3
                             value1now += value1diff
 
-                        } else if ((setGamespeed==2) && (value1now <= 10000 - 4)) {
+                        } else if ((setGamespeed==1) && (value1now <= 10000 - 2)) {
                             oneday = 3995L - 80L // 4 sec/day
-                            value1diff = 4
+                            value1diff = 2
                             value1now += value1diff
 
-                        } else if ((setGamespeed==3) && (value1now <= 10000 - 2)) {
+                        } else if ((setGamespeed==2) && (value1now <= 10000 - 1)) {
                             oneday = 1995L - 80L // 2 sec/day
-                            value1diff = 2
+                            value1diff = 1
                             value1now += value1diff
 
-                        } else if ((setGamespeed==4) && (value1now <= 10000 - 2)) {
+                        } else if ((setGamespeed==4) && (value1now <= 10000 - 1)) {
                             oneday = 495L - 80L // 2 day/sec
+                            value1diff = 1
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==5) && (value1now <= 10000 - 2)) {
+                            oneday = 245L - 80L // 4 day/sec
                             value1diff = 2
                             value1now += value1diff
 
-                        } else if ((setGamespeed==5) && (value1now <= 10000 - 4)) {
-                            oneday = 245L - 80L // 4 day/sec
+                        } else if ((setGamespeed==6) && (value1now <= 10000 - 3)) {
+                            oneday = 115L - 80L // 8 day/sec
+                            value1diff = 3
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==7) && (value1now <= 10000 - 4)) {
+                            oneday = 95L - 80L // 10 day/sec
                             value1diff = 4
                             value1now += value1diff
 
-                        } else if ((setGamespeed==6) && (value1now <= 10000 - 8)) {
-                            oneday = 115L - 80L // 8 day/sec
-                            value1diff = 8
-                            value1now += value1diff
-
-                        } else if ((setGamespeed==7) && (value1now <= 10000 - 10)) {
-                            oneday = 95L - 80L // 10 day/sec
-                            value1diff = 10
-                            value1now += value1diff
-
-                        } else { // 피로도 == 0, or setGamespeed == 0
+                        } else { // 피로도 == 10000, or setGamespeed == 3
                             oneday = 995L - 80L // 1 day/sec
 
                         }
@@ -1823,7 +1823,7 @@ class GameNormalActivity : AppCompatActivity() {
                                 taxtot = taxtot1[dayPlus - 1] // 총 세금
 
 
-                                value1now += 100 // 피로도 증가
+                                value1now += 50 // 피로도 증가
 
 
                                 runOnUiThread {

@@ -1,6 +1,5 @@
 package com.guys_from_301.stock_game
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -34,7 +33,7 @@ const val START_CASH = 10000000F
 const val START_MONTHLY = 1000000F
 const val START_SALARY_RAISE = 6F
 const val START_GAME_LENGTH = 30
-const val START_GAME_SPEED = 0
+const val START_GAME_SPEED = 3
 //푸쉬알람 ID
 const val ONESIGNAL_APP_ID = "b096a9b0-2d91-48b5-886b-b3e8d6ba0116"
 var rank1_nick :String = ""; var rank1_money :String = ""; var rank2_nick :String = ""; var rank2_money :String = ""
@@ -62,8 +61,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_sendKakaoMessageToOthers: Button
     private lateinit var btn_shareText: Button
     private lateinit var btn_pushAlarm: Button
-    private lateinit var btn_captureView: Button
-
+    private lateinit var btn_captureViewAndShareWithKakao: Button
+    private lateinit var btn_captureViewAndShareWithOthers: Button
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,7 +131,8 @@ class MainActivity : AppCompatActivity() {
         btn_sendKakaoMessageToOthers = findViewById(R.id.btn_sendKakaoMessageToOthers)
         btn_shareText = findViewById(R.id.btn_shareText)
         btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
-        btn_captureView = findViewById(R.id.btn_captureView)
+        btn_captureViewAndShareWithKakao = findViewById(R.id.btn_captureViewAndShareWithKakao)
+        btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
@@ -234,9 +234,13 @@ class MainActivity : AppCompatActivity() {
         btn_pushAlarm.setOnClickListener {
             pushAlarmManager.generateAndPushAlarm(this)
         }
-        btn_captureView.setOnClickListener {
+        btn_captureViewAndShareWithKakao.setOnClickListener {
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.textView2))
+            shareManager.shareBinaryWithKakao(this,path)
+        }
+        btn_captureViewAndShareWithOthers.setOnClickListener {
             val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
-            shareManager.shareBinary(this,uri.toString())
+            shareManager.shareBinaryWithOthers(this,uri.toString())
         }
 
         findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
