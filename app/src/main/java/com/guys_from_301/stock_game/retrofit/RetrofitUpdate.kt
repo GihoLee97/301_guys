@@ -24,13 +24,12 @@ interface RetrofitUpdate {
         @Field("u_profit") u_profit: Float,
         @Field("u_roundcount") u_roundcount: Int,
         @Field("u_history") u_history: Int,
-        @Field("u_level") u_level: Int,
-        @Field("u_quest") u_quest: Int)
+        @Field("u_level") u_level: Int)
             : Call<String>
 }
 
 // update
-fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:String, u_profit:Float, u_roundcount:Int, u_history:Int, u_level:Int, u_quest:Int) {
+fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:String, u_profit:Float, u_roundcount:Int, u_history:Int, u_level:Int) {
     var funupdate: RetrofitUpdate? = null
     val url = "http://stockgame.dothome.co.kr/test/update.php/"
     var gson: Gson = GsonBuilder()
@@ -44,7 +43,7 @@ fun update(u_id: String, u_pw: String,u_money : Int, u_value1: Int, u_nickname:S
             .build()
     //creating our api
     funupdate= retrofit.create(RetrofitUpdate::class.java)
-    funupdate.update(u_id, u_pw, u_money, u_value1, u_nickname, u_profit, u_roundcount, u_history, u_level, u_quest).enqueue(object : Callback<String> {
+    funupdate.update(u_id, u_pw, u_money, u_value1, u_nickname, u_profit, u_roundcount, u_history, u_level).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>, t: Throwable) {
             println("---서버업데이트실패: "+t.message)
         }

@@ -150,8 +150,7 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
                                 update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(),
-                                        money, value1, nickname, profit, roundcount, history, level, 0)
-                                println("---update되나"+nickname)
+                                        money, value1, nickname, profit, roundcount, history, level)
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)
                                 step = "Nickname Setting Complished"

@@ -484,6 +484,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.roundcount = data?.ROUNDCOUNT!!
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw
+                    //TODO: 업적저장
                     profileDb?.profileDao()?.update(newProfile)
                     profileDb = ProfileDB?.getInstace(this@InitialActivity)
                 }

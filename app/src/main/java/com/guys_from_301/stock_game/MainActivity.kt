@@ -280,8 +280,8 @@ class MainActivity : AppCompatActivity() {
             profileDb?.profileDao()?.getProfit()!!,
             profileDb?.profileDao()?.getRoundCount()!!,
             profileDb?.profileDao()?.getHistory()!!,
-            profileDb?.profileDao()?.getLevel()!!,
-            0)
+            profileDb?.profileDao()?.getLevel()!!
+            )
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
         if (time2 in 0..2000) {

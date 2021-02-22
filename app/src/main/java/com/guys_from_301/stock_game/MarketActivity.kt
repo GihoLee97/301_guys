@@ -105,8 +105,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
                 profileDb?.profileDao()?.getProfit()!!,
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!,
-                0
+                profileDb?.profileDao()?.getLevel()!!
         )
         // profiledb에 업데이트
         dbupdate()

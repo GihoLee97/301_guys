@@ -83,8 +83,7 @@ class ResultNormalActivity : AppCompatActivity() {
                 profileDb?.profileDao()?.getProfit()!!,
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!,
-                0
+                profileDb?.profileDao()?.getLevel()!!
         )
         gamenormalDb?.gameNormalDao()?.deleteId(setId)
     }
