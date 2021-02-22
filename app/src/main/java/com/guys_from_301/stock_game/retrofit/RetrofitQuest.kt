@@ -22,7 +22,7 @@ interface RetrofitQuest {
 }
 
 // quest
-fun postquest(u_id: String, u_pw: String, u_quest:Int) {
+fun quest(u_id: String, u_pw: String, u_quest:Int) {
     var funquest: RetrofitQuest? = null
     val url = "http://stockgame.dothome.co.kr/test/quest.php/"
     var gson: Gson = GsonBuilder()

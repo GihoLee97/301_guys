@@ -147,6 +147,14 @@ class MainActivity : AppCompatActivity() {
             )
         } }
 
+
+        //업적 달성하기 tmp
+        findViewById<Button>(R.id.btn_quest_tmp).setOnClickListener{
+            val dialog = Dialog_quest(this@MainActivity)
+            dialog.start()
+        }
+        //
+
         // 카카오 로그인 시에만 친구 창 뜨게 하기
         if(profileDb?.profileDao()?.getLogin()==4){
             btn_friend.visibility = View.VISIBLE

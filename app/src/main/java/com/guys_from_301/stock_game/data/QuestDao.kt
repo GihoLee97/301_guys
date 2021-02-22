@@ -17,7 +17,7 @@ interface QuestDao {
     fun insert(quest: Quest)
 
     @Update
-    fun uqdate(quest: Quest)
+    fun update(quest: Quest)
 
     @Query("DELETE from Quest")
     fun deleteAll()
