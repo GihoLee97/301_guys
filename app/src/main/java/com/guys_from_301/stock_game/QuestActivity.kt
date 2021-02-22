@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,11 @@ class QuestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quest)
-
+        
+        findViewById<Button>(R.id.btn_goback).setOnClickListener{
+            onBackPressed()
+        }
+        
         questDb = QuestDB.getInstance(this)
         var mAdapter = QuestAdapter(this, questList)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
