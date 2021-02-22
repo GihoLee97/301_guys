@@ -74,8 +74,13 @@
         <Button
             android:id="@+id/btn_setting"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:text="설정" />
+        <Button
+            android:id="@+id/btn_quest"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="도전과제" />
 
         <Button
             android:id="@+id/btn_game"

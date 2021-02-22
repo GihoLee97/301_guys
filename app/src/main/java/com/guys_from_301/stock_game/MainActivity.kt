@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     var profileDb : ProfileDB? = null
     private lateinit var btn_profile : Button
     private lateinit var btn_setting : Button
+    private lateinit var btn_quest: Button
     private lateinit var btn_game : Button
     private lateinit var btn_market : Button
     private lateinit var btn_ranking: Button
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         btn_profile = findViewById(R.id.btn_profile)
         btn_setting = findViewById(R.id.btn_setting)
+        btn_quest = findViewById(R.id.btn_quest)
         btn_game =  findViewById(R.id.btn_game)
         btn_market = findViewById(R.id.btn_market)
         btn_ranking = findViewById(R.id.btn_ranking)
@@ -103,6 +105,11 @@ class MainActivity : AppCompatActivity() {
 
         btn_setting.setOnClickListener {
             val intent = Intent(this,SettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        btn_quest.setOnClickListener {
+            val intent = Intent(this, QuestActivity::class.java)
             startActivity(intent)
         }
 

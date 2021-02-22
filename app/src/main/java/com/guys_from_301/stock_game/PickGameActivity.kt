@@ -42,7 +42,7 @@ class PickGameActivity : AppCompatActivity() {
                 mAdapter.notifyDataSetChanged()
 
                 pRecyclerView.adapter = mAdapter
-                val manager = LinearLayoutManager(this)
+                val manager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                 pRecyclerView.setHasFixedSize(true)
                 manager.reverseLayout = true
                 manager.stackFromEnd = true

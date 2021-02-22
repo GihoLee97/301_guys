@@ -19,10 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.guys_from_301.stock_game.data.Item
-import com.guys_from_301.stock_game.data.ItemDB
-import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.data.*
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -42,6 +39,31 @@ class InitialActivity : AppCompatActivity() {
     private var profileDb : ProfileDB? = null
     var saveid :String = ""
     var savepw :String = ""
+    // questDb
+    private var questDb: QuestDB? = null
+    private var questList = arrayListOf<String>(
+        "게임 내 수익률 50% 달성",
+        "게임 내 수익률 100% 달성",
+        "게임 내 수익률 200% 달성",
+        "게임 내 수익률 300% 달성",
+        "게임 내 수익률 400% 달성",
+        "게임 내 수익률 500% 달성",
+        "게임 내 수익률 1000% 달성",
+        "시장대비 평균수익률 100% 달성",
+        "시장대비 평균수익률 120% 달성",
+        "시장대비 평균수익률 150% 달성",
+        "시장대비 평균수익률 200% 달성",
+        "게임 누적 거래일 10000일 달성",
+        "게임 누적 거래일 30000일 달성",
+        "게임 누적 거래일 50000일 달성",
+        "게임 누적 거래일 100000일 달성",
+        "5 거래일 연속 흑자",
+        "10 거래일 연속 흑자",
+        "20 거래일 연속 흑자",
+        "게임 1번 플레이하기",
+        "게임 10번 플레이하기",
+        "친구 초대하기"
+    )
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -163,6 +185,17 @@ class InitialActivity : AppCompatActivity() {
         val addThread = Thread(addRunnable)
         addThread.start()
         //
+
+
+        // 도전과제: 초기 도전과제 저장
+        questDb = QuestDB.getInstance(this)
+        // if profile DB is empty insert dummy
+        if (questDb?.questDao()?.getAll().isNullOrEmpty()) {
+            for (i in 0..questList.size-1){
+                val newQuest = Quest(i, "" ,questList[i], 0)
+                questDb?.questDao()?.insert(newQuest)
+            }
+        }
     }
 
     // general signup
