@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Quest(@PrimaryKey(autoGenerate = true) var id: Int,
                  @ColumnInfo(name = "theme") var theme: String,
                  @ColumnInfo(name = "questcontents") var questcontents: String,
-                 @ColumnInfo(name = "achieve") var achievement: Int
+                 @ColumnInfo(name = "achievement") var achievement: Int
 ) {
     constructor(): this(0,"","",0)
 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -14,7 +15,9 @@ import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.RetrofitFriend
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
+import com.kakao.sdk.talk.TalkApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
         profileDb = ProfileDB?.getInstace(mContext!!)
+
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -78,6 +82,39 @@ class MainActivity : AppCompatActivity() {
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
 
+        //친구 정보 코드
+        TalkApiClient.instance.profile { profile, error ->
+            if (error != null) {
+                println("카카오톡 실패??"+error)
+            }
+            else if (profile != null) {
+                println("카카오톡 성공"+profile.nickname+" "+profile.countryISO)
+            }
+        }
+        TalkApiClient.instance.friends { friends, error ->
+            if (error != null) {
+                println("카카오톡 친구 목록 실패"+error)
+            }
+            else if (friends != null) {
+                if(friendlevel != null){
+                    friendid.clear()
+                    friendmoney.clear()
+                    friendlevel.clear()
+                    friendnick.clear()
+                    friendname.clear()
+                    frienduuid.clear()
+                }
+                val friendscount = friends.totalCount
+                var count = 0
+                while(count<friendscount){
+                    friendid.add(getHash((friends.elements[count].id).toString()))
+                    friendname.add(friends.elements[count].profileNickname)
+                    frienduuid.add(friends.elements[count].uuid)
+                    count++
+                }
+                friendInfo(friendid, friendscount)
+            }
+        }
         btn_profile = findViewById(R.id.btn_profile)
         btn_setting = findViewById(R.id.btn_setting)
         btn_quest = findViewById(R.id.btn_quest)
@@ -92,11 +129,15 @@ class MainActivity : AppCompatActivity() {
         btn_captureView = findViewById(R.id.btn_captureView)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
+        // 카카오 로그인 시에만 친구 창 뜨게 하기
+        if(profileDb?.profileDao()?.getLogin()==4){
+            btn_friend.visibility = View.VISIBLE
+        }
+
         btn_friend.setOnClickListener{
             val intent = Intent(this,FriendActivity::class.java)
             startActivity(intent)
         }
-
 
         btn_profile.setOnClickListener{
             val intent = Intent(this,ProfileActivity::class.java)
@@ -216,8 +257,8 @@ class MainActivity : AppCompatActivity() {
             profileDb?.profileDao()?.getProfit()!!,
             profileDb?.profileDao()?.getRoundCount()!!,
             profileDb?.profileDao()?.getHistory()!!,
-            profileDb?.profileDao()?.getLevel()!!
-        )
+            profileDb?.profileDao()?.getLevel()!!,
+            0)
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
         if (time2 in 0..2000) {
@@ -317,6 +358,47 @@ class MainActivity : AppCompatActivity() {
             }
             delay(200L) // 0.2초에 한 번씩 확인
         }
+    }
+
+    // 친구 정보 받아오는 코드
+    fun friendInfo(u_id: MutableList<String>, u_number :Int) {
+        var funfriend: RetrofitFriend? = null
+        val url = "http://stockgame.dothome.co.kr/test/friendrank.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funfriend = retrofit.create(RetrofitFriend::class.java)
+        funfriend.funfriend(u_id, u_number).enqueue(object : Callback<MutableList<DATACLASS>> {
+            override fun onFailure(call: Call<MutableList<DATACLASS>>, t: Throwable) {
+                println("---실패: "+t.message)
+            }
+
+            override fun onResponse(call: Call<MutableList<DATACLASS>>, response: retrofit2.Response<MutableList<DATACLASS>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val data: MutableList<DATACLASS> = response.body()!!
+                    println("---성공")
+                    for(i in 0..u_number-1){
+                        if(response.body()!![i]==null){
+                            friendmoney.add(-1)
+                            friendlevel.add(-1)
+                            friendnick.add("존재하지 않는 아이디")
+                        }
+                        else{
+                            friendmoney.add(data[i].MONEY)
+                            friendlevel.add(data[i].LEVEL)
+                            friendnick.add(data[i].NICKNAME)
+                        }
+                    }
+                }
+            }
+        })
     }
 
 }
