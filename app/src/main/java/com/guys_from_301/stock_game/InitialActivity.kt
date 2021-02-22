@@ -33,6 +33,13 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
 
+const val IN_GAME_PROFIT = 7
+const val RELATIVE_PROFIT = IN_GAME_PROFIT+4
+const val CUMULATIVE_TRADING_DAY = RELATIVE_PROFIT+4
+const val CONTINUOUS_SURPLUS = CUMULATIVE_TRADING_DAY+3
+const val PLAY_GAME = CONTINUOUS_SURPLUS+2
+const val INVITE = PLAY_GAME+1
+
 class InitialActivity : AppCompatActivity() {
     val mContext : Context = this
     // profileDb
@@ -49,10 +56,10 @@ class InitialActivity : AppCompatActivity() {
         "게임 내 수익률 400% 달성",
         "게임 내 수익률 500% 달성",
         "게임 내 수익률 1000% 달성",
+        "시장대비 평균수익률 10% 달성",
+        "시장대비 평균수익률 20% 달성",
+        "시장대비 평균수익률 50% 달성",
         "시장대비 평균수익률 100% 달성",
-        "시장대비 평균수익률 120% 달성",
-        "시장대비 평균수익률 150% 달성",
-        "시장대비 평균수익률 200% 달성",
         "게임 누적 거래일 10000일 달성",
         "게임 누적 거래일 30000일 달성",
         "게임 누적 거래일 50000일 달성",
@@ -62,6 +69,8 @@ class InitialActivity : AppCompatActivity() {
         "20 거래일 연속 흑자",
         "게임 1번 플레이하기",
         "게임 10번 플레이하기",
+        "게임 50번 플레이하기",
+        "게임 100번 플레이하기",
         "친구 초대하기"
     )
 
@@ -191,8 +200,14 @@ class InitialActivity : AppCompatActivity() {
         questDb = QuestDB.getInstance(this)
         // if profile DB is empty insert dummy
         if (questDb?.questDao()?.getAll().isNullOrEmpty()) {
-            for (i in 0..questList.size-1){
-                val newQuest = Quest(i, "" ,questList[i], 0)
+            for (i in 1..questList.size){
+                val newQuest = Quest(i, "" ,questList[i-1], 0)
+                if(i<= IN_GAME_PROFIT) newQuest.theme = "게임 내 수익률"
+                else if(i<= RELATIVE_PROFIT) newQuest.theme = "시장대비 평균수익률"
+                else if(i<= CUMULATIVE_TRADING_DAY) newQuest.theme = "누적 거래일"
+                else if(i<= CONTINUOUS_SURPLUS) newQuest.theme = "연속 흑자"
+                else if(i<= PLAY_GAME) newQuest.theme = "게임 플레이하기"
+                else if(i== INVITE) newQuest.theme = "친구 초대하기"
                 questDb?.questDao()?.insert(newQuest)
             }
         }

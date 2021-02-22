@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
     var itemDb: ItemDB? = null
     val mContext: Context = this
     var profileDb : ProfileDB? = null
+    var questDb: QuestDB? = null
+    private var tradedayQuestList:List<Quest>? = null
+    private var countGameQuestList:List<Quest>? = null
     private lateinit var btn_profile : Button
     private lateinit var btn_setting : Button
     private lateinit var btn_quest: Button
@@ -66,6 +69,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
         profileDb = ProfileDB?.getInstace(mContext!!)
+        questDb = QuestDB.getInstance(mContext!!)
+        tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
+        countGameQuestList = questDb?.questDao()?.getQuestByTheme("게임 플레이하기")
 
         _MainActivity = this
         super.onCreate(savedInstanceState)
@@ -129,6 +135,18 @@ class MainActivity : AppCompatActivity() {
         btn_captureView = findViewById(R.id.btn_captureView)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
+        //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
+        profileDb?.profileDao()?.getHistory()?.let { tradedayQuestList?.let { it1 ->
+            checkQuestCumulativeTradingDay(it,
+                it1
+            )
+        } }
+        profileDb?.profileDao()?.getRoundCount()?.let { countGameQuestList?.let { it1 ->
+            checkQuestPlayedGame(it,
+                it1
+            )
+        } }
+
         // 카카오 로그인 시에만 친구 창 뜨게 하기
         if(profileDb?.profileDao()?.getLogin()==4){
             btn_friend.visibility = View.VISIBLE
@@ -138,6 +156,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,FriendActivity::class.java)
             startActivity(intent)
         }
+
 
         btn_profile.setOnClickListener{
             val intent = Intent(this,ProfileActivity::class.java)
@@ -399,6 +418,98 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+
+    fun checkQuestCumulativeTradingDay(tradeday:Int, questList: List<Quest>){
+        for(i in 0 .. questList.size-1){
+            if(questList?.get(i)?.achievement  == 0){
+                when(i){
+                    0-> if(tradeday>=10000){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    1-> if(tradeday>=30000){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    2-> if(tradeday>=50000){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    3-> if(tradeday>=100000){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+
+                }
+            }
+        }
+    }
+
+    fun checkQuestPlayedGame( countGame: Int, questList: List<Quest>){
+        for(i in 0 .. questList.size-1){
+            if(questList?.get(i)?.achievement  == 0){
+                when(i){
+                    0-> if(countGame>=1){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    1-> if(countGame>=10){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    3-> if(countGame>=50){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                    4-> if(countGame>=100){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i].id)
+                    }
+                }
+            }
+        }
     }
 
 }

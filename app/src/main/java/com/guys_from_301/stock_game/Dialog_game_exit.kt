@@ -105,7 +105,7 @@ class Dialog_game_exit (context : Context)  {
                 newProfile.value1 = value1now
                 newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getHistory()!!+relativeprofitrate* tradeday)/(profileDb?.profileDao()?.getHistory()!!+ tradeday)
                 newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
-                newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
+                newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)

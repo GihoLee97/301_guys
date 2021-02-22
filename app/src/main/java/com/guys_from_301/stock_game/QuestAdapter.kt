@@ -14,7 +14,7 @@ class QuestAdapter(val context: Context, val questList: List<Quest>):RecyclerVie
         private val tv_quest = itemView.findViewById<TextView>(R.id.quest)
         private val check_achievement = itemView.findViewById<CheckBox>(R.id.achievement)
         fun bind(quest: Quest){
-            if(quest.achievement==0) check_achievement.isChecked = true
+            if(quest.achievement==1) check_achievement.isChecked = true
             tv_quest.text = quest.questcontents
         }
     }

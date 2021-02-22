@@ -7,6 +7,12 @@ interface QuestDao {
     @Query("SELECT * FROM Quest ORDER BY id ASC")
     fun getAll(): List<Quest>
 
+    @Query("SELECT * FROM Quest WHERE theme IS :theme ORDER BY id ASC")
+    fun getQuestByTheme(theme: String): List<Quest>
+
+    @Query("SELECT * FROM Quest WHERE id IS :id")
+    fun getQusetById(id: Int): List<Quest>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(quest: Quest)
 

@@ -69,7 +69,8 @@ class ResultNormalActivity : AppCompatActivity() {
         newProfile.level = profileDb?.profileDao()?.getLevel()!!
         newProfile.exp = profileDb?.profileDao()?.getExp()!!
         newProfile.login = profileDb?.profileDao()?.getLogin()!!
-        newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
+        if(isSafeCompleted)  newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
+        else newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
         profileDb?.profileDao()?.update(newProfile)
