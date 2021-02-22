@@ -135,15 +135,18 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 item2speed = progress
 
-                if (item2speed==1) {
+                if (item2speed==0) {
                     tvItem2.text =
-                            "피로도 초당 8 증가, 진행속도 8 sec/day"
-                } else if (item2speed==2) {
+                        "피로도 초당 8 증가, 진행속도 8 sec/day"
+                } else if (item2speed==1) {
                     tvItem2.text =
                         "피로도 초당 4 증가, 진행속도 4 sec/day"
-                } else if (item2speed==3) {
+                } else if (item2speed==2) {
                     tvItem2.text =
                         "피로도 초당 2 증가, 진행속도 2 sec/day"
+                } else if (item2speed==3) {
+                    tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
                 } else if (item2speed==4) {
                     tvItem2.text =
                         "피로도 초당 2 증가, 진행속도 2 day/sec"
@@ -156,24 +159,24 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 } else if (item2speed==7) {
                     tvItem2.text =
                         "피로도 초당 10 증가, 진행속도 10 day/sec"
-                } else {
-                    tvItem2.text =
-                        "피로도 증가 없음, 진행속도 1 day/sec"
                 }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 item2speed = seekBar!!.progress
 
-                if (item2speed==1) {
+                if (item2speed==0) {
                     tvItem2.text =
                         "피로도 초당 8 증가, 진행속도 8 sec/day"
-                } else if (item2speed==2) {
+                } else if (item2speed==1) {
                     tvItem2.text =
                         "피로도 초당 4 증가, 진행속도 4 sec/day"
-                } else if (item2speed==3) {
+                } else if (item2speed==2) {
                     tvItem2.text =
                         "피로도 초당 2 증가, 진행속도 2 sec/day"
+                } else if (item2speed==3) {
+                    tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
                 } else if (item2speed==4) {
                     tvItem2.text =
                         "피로도 초당 2 증가, 진행속도 2 day/sec"
@@ -186,9 +189,6 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 } else if (item2speed==7) {
                     tvItem2.text =
                         "피로도 초당 10 증가, 진행속도 10 day/sec"
-                } else {
-                    tvItem2.text =
-                        "피로도 증가 없음, 진행속도 1 day/sec"
                 }
             }
 
@@ -206,6 +206,9 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                         "피로도 초당 2 증가, 진행속도 2 sec/day"
                 } else if (item2speed==3) {
                     tvItem2.text =
+                        "피로도 증가 없음, 진행속도 1 day/sec"
+                } else if (item2speed==4) {
+                    tvItem2.text =
                         "피로도 초당 2 증가, 진행속도 2 day/sec"
                 } else if (item2speed==5) {
                     tvItem2.text =
@@ -216,9 +219,6 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 } else if (item2speed==7) {
                     tvItem2.text =
                         "피로도 초당 10 증가, 진행속도 10 day/sec"
-                } else {
-                    tvItem2.text =
-                        "피로도 증가 없음, 진행속도 1 day/sec"
                 }
             }
         })

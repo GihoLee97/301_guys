@@ -34,7 +34,7 @@ const val START_CASH = 10000000F
 const val START_MONTHLY = 1000000F
 const val START_SALARY_RAISE = 6F
 const val START_GAME_LENGTH = 30
-const val START_GAME_SPEED = 4
+const val START_GAME_SPEED = 3
 //푸쉬알람 ID
 const val ONESIGNAL_APP_ID = "b096a9b0-2d91-48b5-886b-b3e8d6ba0116"
 var rank1_nick :String = ""; var rank1_money :String = ""; var rank2_nick :String = ""; var rank2_money :String = ""

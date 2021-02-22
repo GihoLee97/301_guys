@@ -1612,7 +1612,7 @@ class GameNormalActivity : AppCompatActivity() {
                             value1diff = 2
                             value1now += value1diff
 
-                        } else if ((setGamespeed==3) && (value1now <= 10000 - 2)) {
+                        } else if ((setGamespeed==4) && (value1now <= 10000 - 2)) {
                             oneday = 495L - 80L // 2 day/sec
                             value1diff = 2
                             value1now += value1diff
@@ -1632,7 +1632,7 @@ class GameNormalActivity : AppCompatActivity() {
                             value1diff = 10
                             value1now += value1diff
 
-                        } else { // 피로도 == 4, or setGamespeed == 0
+                        } else { // 피로도 == 10000, or setGamespeed == 3
                             oneday = 995L - 80L // 1 day/sec
 
                         }
