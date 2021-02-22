@@ -135,17 +135,6 @@ class MainActivity : AppCompatActivity() {
         btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
-        //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
-        profileDb?.profileDao()?.getHistory()?.let { tradedayQuestList?.let { it1 ->
-            checkQuestCumulativeTradingDay(it,
-                it1
-            )
-        } }
-        profileDb?.profileDao()?.getRoundCount()?.let { countGameQuestList?.let { it1 ->
-            checkQuestPlayedGame(it,
-                it1
-            )
-        } }
 
 
         //업적 달성하기 tmp
@@ -444,7 +433,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     1-> if(tradeday>=30000){
                         questList?.get(i)?.achievement = 1
@@ -453,7 +442,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     2-> if(tradeday>=50000){
                         questList?.get(i)?.achievement = 1
@@ -462,7 +451,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     3-> if(tradeday>=100000){
                         questList?.get(i)?.achievement = 1
@@ -471,7 +460,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
 
                 }
@@ -490,7 +479,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     1-> if(countGame>=10){
                         questList?.get(i)?.achievement = 1
@@ -499,7 +488,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     3-> if(countGame>=50){
                         questList?.get(i)?.achievement = 1
@@ -508,7 +497,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                     4-> if(countGame>=100){
                         questList?.get(i)?.achievement = 1
@@ -517,11 +506,32 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i].id)
+                        questAchieved.add(questList[i])
                     }
                 }
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
+        profileDb?.profileDao()?.getHistory()?.let { tradedayQuestList?.let { it1 ->
+            checkQuestCumulativeTradingDay(it,
+                it1
+            )
+        } }
+        profileDb?.profileDao()?.getRoundCount()?.let { countGameQuestList?.let { it1 ->
+            checkQuestPlayedGame(it,
+                it1
+            )
+        } }
+        var textView1 = findViewById<TextView>(R.id.textView2)
+
+        if(questAchieved.isEmpty() == false){
+            val dlgQuest = Dialog_quest(this)
+            dlgQuest.start()
+        }
+    }
 }

@@ -49,6 +49,5 @@ class QuestActivity : AppCompatActivity() {
         val thread = Thread(r)
         thread.start()
 
-
     }
 }

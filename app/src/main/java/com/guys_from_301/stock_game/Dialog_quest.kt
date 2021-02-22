@@ -1,9 +1,15 @@
 package com.guys_from_301.stock_game
 
 import android.app.Dialog
+import android.app.ProgressDialog.show
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.Window
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.guys_from_301.stock_game.data.*
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -30,6 +36,27 @@ class Dialog_quest(context: Context) {
         questDb = QuestDB.getInstance(mContext!!)
 
         questDb?.questDao()?.getAll()!![0].questcontents
+        questDb = QuestDB.getInstance(dlg.context)
+        var mAdapter = QuestAdapter(dlg.context, questAchieved)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(dlg.context)
+        val qRecyclerView = dlg.findViewById<RecyclerView>(R.id.qRecyclerView)
+        val r = Runnable{
+            try{
+                mAdapter = QuestAdapter(dlg.context, questAchieved)
+                mAdapter.notifyDataSetChanged()
+
+                qRecyclerView.adapter = mAdapter
+                val manager = LinearLayoutManager(dlg.context, LinearLayoutManager.HORIZONTAL, false)
+                qRecyclerView.setHasFixedSize(true)
+                manager.reverseLayout = true
+                manager.stackFromEnd = true
+                qRecyclerView.layoutManager = manager
+            }catch (e: Exception){
+                Log.d("tag", "Error - $e")
+            }
+        }
+        val thread = Thread(r)
+        thread.start()
         btnOk = dlg.findViewById(R.id.btn_ok)
         btnQuest = dlg.findViewById(R.id.btn_quest)
         btnOk.setOnClickListener{
@@ -37,6 +64,7 @@ class Dialog_quest(context: Context) {
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).toString().trim(),
                     sum())
             dlg.dismiss()
+            questAchieved = arrayListOf()
         }
 
         btnQuest.setOnClickListener{
@@ -45,6 +73,9 @@ class Dialog_quest(context: Context) {
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).toString().trim(),
                     sum())
             dlg.dismiss()
+            val intent = Intent(mContext, QuestActivity::class.java)
+            questAchieved = arrayListOf()
+            mContext?.startActivity(intent)
         }
         dlg.show()
     }
