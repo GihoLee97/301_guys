@@ -137,28 +137,28 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
 
                 if (item2speed==0) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 sec/day"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
                 } else if (item2speed==1) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 sec/day"
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
                 } else if (item2speed==2) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 sec/day"
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
                 } else if (item2speed==3) {
                     tvItem2.text =
                         "피로도 증가 없음, 진행속도 1 day/sec"
                 } else if (item2speed==4) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 day/sec"
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
                 } else if (item2speed==5) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 day/sec"
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
                 } else if (item2speed==6) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 day/sec"
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                        "피로도 초당 10 증가, 진행속도 10 day/sec"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
 
@@ -167,28 +167,28 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
 
                 if (item2speed==0) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 sec/day"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
                 } else if (item2speed==1) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 sec/day"
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
                 } else if (item2speed==2) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 sec/day"
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
                 } else if (item2speed==3) {
                     tvItem2.text =
                         "피로도 증가 없음, 진행속도 1 day/sec"
                 } else if (item2speed==4) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 day/sec"
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
                 } else if (item2speed==5) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 day/sec"
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
                 } else if (item2speed==6) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 day/sec"
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                        "피로도 초당 10 증가, 진행속도 10 day/sec"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
 
@@ -197,28 +197,28 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
 
                 if (item2speed==0) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 sec/day"
+                        "피로도 초당 3 증가, 진행속도 8 sec/day"
                 } else if (item2speed==1) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 sec/day"
+                        "피로도 초당 2 증가, 진행속도 4 sec/day"
                 } else if (item2speed==2) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 sec/day"
+                        "피로도 초당 1 증가, 진행속도 2 sec/day"
                 } else if (item2speed==3) {
                     tvItem2.text =
                         "피로도 증가 없음, 진행속도 1 day/sec"
                 } else if (item2speed==4) {
                     tvItem2.text =
-                        "피로도 초당 2 증가, 진행속도 2 day/sec"
+                        "피로도 초당 1 증가, 진행속도 2 day/sec"
                 } else if (item2speed==5) {
                     tvItem2.text =
-                        "피로도 초당 4 증가, 진행속도 4 day/sec"
+                        "피로도 초당 2 증가, 진행속도 4 day/sec"
                 } else if (item2speed==6) {
                     tvItem2.text =
-                        "피로도 초당 8 증가, 진행속도 8 day/sec"
+                        "피로도 초당 3 증가, 진행속도 8 day/sec"
                 } else if (item2speed==7) {
                     tvItem2.text =
-                        "피로도 초당 10 증가, 진행속도 10 day/sec"
+                        "피로도 초당 4 증가, 진행속도 10 day/sec"
                 }
             }
         })
