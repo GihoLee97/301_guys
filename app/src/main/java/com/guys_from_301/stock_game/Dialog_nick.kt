@@ -83,7 +83,8 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
                                     profileDb?.profileDao()?.getProfit()!!,
                                     profileDb?.profileDao()?.getRoundCount()!!,
                                     profileDb?.profileDao()?.getHistory()!!,
-                                    profileDb?.profileDao()?.getLevel()!!)
+                                    profileDb?.profileDao()?.getLevel()!!,
+                                    0)
                                 dlg.dismiss()
                             }
                             if(okcode =="666"){

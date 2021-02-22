@@ -332,7 +332,8 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                     profileDb?.profileDao()?.getProfit()!!,
                     profileDb?.profileDao()?.getRoundCount()!!,
                     profileDb?.profileDao()?.getHistory()!!,
-                    profileDb?.profileDao()?.getLevel()!!)
+                    profileDb?.profileDao()?.getLevel()!!,
+                    0)
                     // update money to DB
             val newProfile = Profile()
             newProfile.id = profileDb?.profileDao()?.getId()?.toLong()

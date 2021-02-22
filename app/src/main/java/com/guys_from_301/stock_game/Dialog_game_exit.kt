@@ -116,7 +116,6 @@ class Dialog_game_exit (context : Context)  {
             if (click== true){
                 click = !click /////////////////////////////////////////////////////////////////////
             }
-
         }
         dlg.show()
     }

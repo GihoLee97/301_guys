@@ -98,14 +98,15 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         Toast.makeText(this, "보상지급: +100만스택\n현재 보유 스택: "+money, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
-                        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-            getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-            money, value1,
-            profileDb?.profileDao()?.getNickname()!!,
-            profileDb?.profileDao()?.getProfit()!!,
-            profileDb?.profileDao()?.getRoundCount()!!,
-            profileDb?.profileDao()?.getHistory()!!,
-            profileDb?.profileDao()?.getLevel()!!
+        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
+                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+                money, value1,
+                profileDb?.profileDao()?.getNickname()!!,
+                profileDb?.profileDao()?.getProfit()!!,
+                profileDb?.profileDao()?.getRoundCount()!!,
+                profileDb?.profileDao()?.getHistory()!!,
+                profileDb?.profileDao()?.getLevel()!!,
+                0
         )
         // profiledb에 업데이트
         dbupdate()
