@@ -239,7 +239,7 @@
                 android:layout_weight="1"
                 app:backgroundTint="@color/teal_700"
                 android:layout_gravity="center"
-                android:text="카카오 계정 연결 해제"
+                android:text="카카오 계정 탈퇴"
                 android:textSize="18dp" />
         </LinearLayout>
 

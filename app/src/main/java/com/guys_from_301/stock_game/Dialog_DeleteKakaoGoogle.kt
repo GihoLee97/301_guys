@@ -17,39 +17,25 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Dialog_DeleteAlert(context: Context) {
+class Dialog_DeleteKakaoGoogle(context: Context) {
     var mContext: Context = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnOK: Button
     private lateinit var btnCancel: Button
-    private lateinit var pw_present: EditText
-    private lateinit var pw_check: EditText
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
-        dlg.setContentView(R.layout.dialog_deletealert) //다이얼로그에 사용할 xml 파일을 불러옴
+        dlg.setContentView(R.layout.dialog_deletekakaogoogle) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
         btnOK = dlg.findViewById(R.id.btn_deleteok)
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
-        pw_present = dlg.findViewById(R.id.pw_present)
-        pw_check = dlg.findViewById(R.id.pw_check)
+
         var profileDb: ProfileDB? = null
 
         btnOK.setOnClickListener {
             profileDb = ProfileDB?.getInstace(mContext)
-            if ((pw_present.text.toString().trim() == pw_check.text.toString().trim()) && (profileDb?.profileDao()?.getLoginpw()!! == pw_present.text.toString().trim())) {
-                accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                        getHash(pw_present.text.toString().trim()).trim())
-                dlg.dismiss()
-            }
-            println("---db:"+profileDb?.profileDao()?.getLoginpw()!!)
-            println("---현재:"+pw_present.text.toString().trim())
-            println("---화긴: "+pw_check.text.toString().trim())
-            if(profileDb?.profileDao()?.getLoginpw()!! != pw_present.text.toString().trim()) {
-                Toast.makeText(mContext, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-            }
-            if(pw_present.text.toString().trim() != pw_check.text.toString().trim()) {
-                Toast.makeText(mContext, "비밀번호와 비밀번호 확인이 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-            }
+            accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
+                    getHash(profileDb?.profileDao()?.getLoginpw()!!).trim())
+            dlg.dismiss()
         }
         btnCancel.setOnClickListener {
             dlg.dismiss()
@@ -92,5 +78,4 @@ class Dialog_DeleteAlert(context: Context) {
             }
         })
     }
-
 }
