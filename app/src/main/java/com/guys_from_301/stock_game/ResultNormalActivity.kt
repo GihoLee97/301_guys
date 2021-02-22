@@ -63,6 +63,7 @@ class ResultNormalActivity : AppCompatActivity() {
         }
         newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
         newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+        newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
         newProfile.profit = profileDb?.profileDao()?.getProfit()!!
         newProfile.history = profileDb?.profileDao()?.getHistory()!!
         newProfile.level = profileDb?.profileDao()?.getLevel()!!

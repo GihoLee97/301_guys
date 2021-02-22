@@ -179,6 +179,9 @@ class MainActivity : AppCompatActivity() {
             shareManager.shareBinary(this,uri.toString())
         }
 
+        findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
+        findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
+
         // 피로도 저감 코드
         CoroutineScope(Dispatchers.IO).launch {
             val job1 = launch {
@@ -275,7 +278,7 @@ class MainActivity : AppCompatActivity() {
 
             if ((nowtime - lasttime) >= 1000L) {
                 var nowvalue1 = profileDb?.profileDao()?.getValue1()!!
-                var value1temp = 1 * (((nowtime - lasttime)/1000L).toFloat()).roundToInt() // 분당 1 씩 저감
+                var value1temp = 1 * (((nowtime - lasttime)/1000L).toFloat()).roundToInt() // 초당 1 씩 저감
 
                 if ((nowvalue1 - value1temp) <= 0 ) {
                     nowvalue1 = 0
@@ -312,8 +315,8 @@ class MainActivity : AppCompatActivity() {
                     findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
                 }
             }
+            delay(200L) // 0.2초에 한 번씩 확인
         }
-        delay(1000L) // 50초에 한 번씩 확인
     }
 
 }

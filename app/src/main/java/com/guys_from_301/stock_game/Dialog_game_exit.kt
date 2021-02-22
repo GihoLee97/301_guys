@@ -22,6 +22,7 @@ class Dialog_game_exit (context : Context)  {
     private var gameNormalDb: GameNormalDB? = null
     private var gameSetDb: GameSetDB? = null
     private var profileDb: ProfileDB? = null
+    private var itemDb: ItemDB? = null
     private lateinit var localDateTime: LocalDateTime
 
     fun start() {
@@ -33,12 +34,9 @@ class Dialog_game_exit (context : Context)  {
         profileDb = ProfileDB.getInstace(dlg.context)
         gameNormalDb = GameNormalDB.getInstace(dlg.context)
         gameSetDb = GameSetDB.getInstace(dlg.context)
-        btnsave = dlg.findViewById(R.id.btn_save)
-        btnsave.setOnClickListener{
-            gameend = !gameend /////////////////////////////////////////////////////////////////////
-            
-        }
+        itemDb = ItemDB.getInstace(dlg.context)
 
+        btnsave = dlg.findViewById(R.id.btn_save)
 
         btnsave.setOnClickListener {
             if (item1Active) {
@@ -55,6 +53,7 @@ class Dialog_game_exit (context : Context)  {
                     newProfile.exp = profileDb?.profileDao()?.getExp()!!
                     newProfile.login = profileDb?.profileDao()?.getLogin()!!
                     newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                    newProfile.value1 = value1now
                     newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getHistory()!!+relativeprofitrate* tradeday)/(profileDb?.profileDao()?.getHistory()!!+ tradeday)
                     newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
                     newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
@@ -67,7 +66,16 @@ class Dialog_game_exit (context : Context)  {
                         bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
                         pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime)
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+
+                    // 피로도 저감 시간 저장
+                    var nowtime = System.currentTimeMillis() // 현재 시간
+                    val newItem = Item()
+                    newItem.id = itemDb?.itemDao()!!.getId()
+                    newItem.lasttime = nowtime
+                    itemDb?.itemDao()?.update(newItem)
+                    //
                 }
+
                 val addThread = Thread(addRunnable)
                 addThread.start()
                 dlg.dismiss()
@@ -94,6 +102,7 @@ class Dialog_game_exit (context : Context)  {
                 newProfile.exp = profileDb?.profileDao()?.getExp()!!
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.money = profileDb?.profileDao()?.getMoney()!!
+                newProfile.value1 = value1now
                 newProfile.profit = (profileDb?.profileDao()?.getProfit()!!*profileDb?.profileDao()?.getHistory()!!+relativeprofitrate* tradeday)/(profileDb?.profileDao()?.getHistory()!!+ tradeday)
                 newProfile.history = profileDb?.profileDao()?.getHistory()!!+ tradeday
                 newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
@@ -101,7 +110,16 @@ class Dialog_game_exit (context : Context)  {
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
                 gameSetDb?.gameSetDao()?.deleteId(setId)
+
+                // 피로도 저감 시간 저장
+                var nowtime = System.currentTimeMillis() // 현재 시간
+                val newItem = Item()
+                newItem.id = itemDb?.itemDao()!!.getId()
+                newItem.lasttime = nowtime
+                itemDb?.itemDao()?.update(newItem)
+                //
             }
+
             val deleteThread = Thread(deleteRunnable)
             deleteThread.start()
             dlg.dismiss()

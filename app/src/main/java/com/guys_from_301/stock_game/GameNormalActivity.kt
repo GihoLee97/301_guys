@@ -115,6 +115,8 @@ var item4Active: Boolean = false // 3x, -3x 레버리지 거래 오픈
 var item1Length: Int = 0 // 되돌릴 거래일 수
 var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
 
+var value1now: Int = 0 // 초기화 시 ItemDB와 연동
+
 
 // 자동 기능 변수들
 var autobuy: Boolean = false // 자동 매수기능 활성여부
@@ -150,6 +152,10 @@ class GameNormalActivity : AppCompatActivity() {
     private var gameHistory = listOf<GameNormal>()
     private var gameSetDb: GameSetDB? = null
     private var gl: Int = 0
+
+    private var profileDb : ProfileDB? = null
+    private var itemDb: ItemDB? = null
+    val mContext: Context = this
 
 
     // 유효구간 가운데 랜덤으로 시작 시점 산출 /////////////////////////////////////////////////////
@@ -416,6 +422,11 @@ class GameNormalActivity : AppCompatActivity() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+            // 피로도 불러오기
+            profileDb = ProfileDB.getInstace(this)
+            value1now = profileDb?.profileDao()?.getValue1()!!
+
+
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
             click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
             gameend = false // 게임 종료시 적용
@@ -517,7 +528,6 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 아이템
         findViewById<Button>(R.id.btn_item).setOnClickListener {
-            var profileDb: ProfileDB? = null
             profileDb = ProfileDB.getInstace(this)
 
             val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!, profileDb?.profileDao()?.getValue1()!!)
@@ -664,6 +674,9 @@ class GameNormalActivity : AppCompatActivity() {
         monthToggle =gamehistory?.monthtoggle!!
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 피로도 불러오기
+        profileDb = ProfileDB.getInstace(this)
+        value1now = profileDb?.profileDao()?.getValue1()!!
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
         click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
@@ -951,6 +964,9 @@ class GameNormalActivity : AppCompatActivity() {
         var auto3xratio: Float = 0F
         var auto1xquant: Int = 0
         var auto3xquant: Int = 0
+
+        // 피로도
+        var value1diff: Int = 0
 
         // 뉴스
         var newsindex: Int = 1 // 뉴스 인덱스
@@ -1580,24 +1596,47 @@ class GameNormalActivity : AppCompatActivity() {
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
-                        if (setGamespeed == 0) {
-                            oneday = 1995L - 90L // 0.5 day/sec
-                        } else if (setGamespeed == 1) {
-                            oneday = 995L - 90L // 1 day/sec
-                        } else if (setGamespeed == 2) {
-                            oneday = 495L - 90L // 2 day/sec
-                        } else if (setGamespeed == 3) {
-                            oneday = 1000L / 3L - 5L - 90L // 3 day/sec
-                        } else if (setGamespeed == 4) {
-                            oneday = 245L - 90L // 4 day/sec
-                        } else if (setGamespeed == 5) {
-                            oneday = 195L - 90L // 5 day/sec
-                        } else if (setGamespeed == 6) {
-                            oneday = 115L - 90L // 8 day/sec
-                        } else if (setGamespeed == 7) {
-                            oneday = 95L - 90L // 10 day/sec
+                        if ((setGamespeed==1) && (value1now <= 10000)) {
+                            oneday = 7995L - 80L // 8 sec/day
+                            value1diff = 8
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==2) && (value1now <= 10000)) {
+                            oneday = 3995L - 80L // 4 sec/day
+                            value1diff = 4
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==3) && (value1now <= 10000)) {
+                            oneday = 1995L - 80L // 2 sec/day
+                            value1diff = 2
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==4) && (value1now <= 10000)) {
+                            oneday = 495L - 80L // 2 day/sec
+                            value1diff = 2
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==5) && (value1now <= 10000)) {
+                            oneday = 245L - 80L // 4 day/sec
+                            value1diff = 4
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==6) && (value1now <= 10000)) {
+                            oneday = 115L - 80L // 8 day/sec
+                            value1diff = 8
+                            value1now += value1diff
+
+                        } else if ((setGamespeed==7) && (value1now <= 10000)) {
+                            oneday = 95L - 80L // 10 day/sec
+                            value1diff = 10
+                            value1now += value1diff
+
+                        } else { // 피로도 == 0, or setGamespeed == 0
+                            oneday = 995L - 80L // 1 day/sec
+
                         }
                         ////////////////////////////////////////////////////////////////////////////
+
 
 
                         dayPlus += 1 // 시간 진행
@@ -1758,6 +1797,9 @@ class GameNormalActivity : AppCompatActivity() {
                                 countYear = countYear1[dayPlus - 1] // 플레이 한 햇수 카운트
                                 tax = tax1[dayPlus - 1] // 세금
                                 taxtot = taxtot1[dayPlus - 1] // 총 세금
+
+
+                                value1now += 100 // 피로도 증가
 
 
                                 runOnUiThread {
@@ -2168,6 +2210,7 @@ class GameNormalActivity : AppCompatActivity() {
             }
             else {
                 println("게임 끝")
+                break
                 break
             }
             delay(btnRefresh)

@@ -96,7 +96,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             value1 = 0
         }
 
-        Toast.makeText(this, "보상지급: +100만스택\n현재 보유 스택: "+money, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "보상지급: +100만 스택, -1000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
                         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
             getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
