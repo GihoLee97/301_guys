@@ -1,6 +1,5 @@
 package com.guys_from_301.stock_game
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -59,8 +58,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_sendKakaoMessageToOthers: Button
     private lateinit var btn_shareText: Button
     private lateinit var btn_pushAlarm: Button
-    private lateinit var btn_captureView: Button
-
+    private lateinit var btn_captureViewAndShareWithKakao: Button
+    private lateinit var btn_captureViewAndShareWithOthers: Button
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,7 +125,8 @@ class MainActivity : AppCompatActivity() {
         btn_sendKakaoMessageToOthers = findViewById(R.id.btn_sendKakaoMessageToOthers)
         btn_shareText = findViewById(R.id.btn_shareText)
         btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
-        btn_captureView = findViewById(R.id.btn_captureView)
+        btn_captureViewAndShareWithKakao = findViewById(R.id.btn_captureViewAndShareWithKakao)
+        btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
         // 카카오 로그인 시에만 친구 창 뜨게 하기
@@ -215,9 +215,13 @@ class MainActivity : AppCompatActivity() {
         btn_pushAlarm.setOnClickListener {
             pushAlarmManager.generateAndPushAlarm(this)
         }
-        btn_captureView.setOnClickListener {
+        btn_captureViewAndShareWithKakao.setOnClickListener {
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.textView2))
+            shareManager.shareBinaryWithKakao(this,path)
+        }
+        btn_captureViewAndShareWithOthers.setOnClickListener {
             val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
-            shareManager.shareBinary(this,uri.toString())
+            shareManager.shareBinaryWithOthers(this,uri.toString())
         }
 
         findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!

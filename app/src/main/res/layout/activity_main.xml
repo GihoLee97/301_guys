@@ -143,10 +143,17 @@
 
 
         <Button
-            android:id="@+id/btn_captureView"
+            android:id="@+id/btn_captureViewAndShareWithKakao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="특정 화면 캡쳐"
+            android:text="카카오로 화면 공유"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/btn_captureViewAndShareWithOthers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다른 매체로 화면 공유"
             android:textSize="10dp" />
 
     </LinearLayout>
