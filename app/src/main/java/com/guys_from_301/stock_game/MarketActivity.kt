@@ -26,7 +26,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     var money: Int = 0
     var value1: Int = 0
     val moneyreward: Int = 1000000
-    val value1reward: Int = 1000
+    val value1reward: Int = 5000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +96,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             value1 = 0
         }
 
-        Toast.makeText(this, "보상지급: +100만 스택, -1000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                 getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
