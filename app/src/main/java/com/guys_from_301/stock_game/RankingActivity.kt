@@ -1,19 +1,20 @@
 package com.guys_from_301.stock_game
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.fragment.Fragment_ranking_kakao
 import com.guys_from_301.stock_game.fragment.Fragment_ranking_local
+import com.guys_from_301.stock_game.fragment.arrayimage
 import com.guys_from_301.stock_game.fragment.realkakaoplayer
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,26 +26,63 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RankingActivity : AppCompatActivity() {
 
     private lateinit var tv_local_ranking: TextView
-    private lateinit var tv_kakao_ranking:TextView
+    private lateinit var tv_kakao_ranking: TextView
+    private lateinit var tv_my_level: TextView
+    private lateinit var tv_my_stack: TextView
+    private lateinit var tv_my_nick: TextView
+    private lateinit var tv_kakao_space : TextView
+    private lateinit var tv_local_space : TextView
 
+
+    //색깔
+    var coloron = "#F68A06"
+    var coloroff = "#FFFFFF"
     var profileDb : ProfileDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranking)
         friendsort()
         profileDb = ProfileDB.getInstace(this)
+        if(profileDb?.profileDao()?.getLogin() != 4){
+            findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+        }
+        else{
+            UserApiClient.instance.me { user, error ->
+                if (error!=null)
+                    Toast.makeText(this,"사용자 정보 요청 실패(카카오)",Toast.LENGTH_SHORT)
+                else if (user!=null) {
+                    Glide.with(this).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(findViewById<ImageView>(R.id.iv_my_image))
+                }
+            }
+        }
         tv_local_ranking = findViewById(R.id.tv_localRanking)
         tv_kakao_ranking = findViewById(R.id.tv_kakaoRanking)
+        tv_my_level =findViewById(R.id.tv_my_level)
+        tv_my_nick = findViewById(R.id.tv_my_nick)
+        tv_my_stack = findViewById(R.id.tv_my_stack)
+        tv_kakao_space = findViewById(R.id.tv_kakao_space)
+        tv_local_space = findViewById(R.id.tv_local_space)
+
+        tv_my_stack.text = profileDb?.profileDao()?.getMoney()!!.toString()+"   "
+        tv_my_nick.text = "   "+profileDb?.profileDao()?.getNickname()!!
+        tv_my_level.text = "   레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
+        tv_kakao_space.setBackgroundColor(Color.parseColor(coloroff))
+        tv_local_space.setBackgroundColor(Color.parseColor(coloroff))
+
         if(profileDb?.profileDao()?.getLogin()!! != 4 ){
             findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
         }
         tv_local_ranking.setOnClickListener{
+            tv_kakao_space.setBackgroundColor(Color.parseColor(coloroff))
+            tv_local_space.setBackgroundColor(Color.parseColor(coloron))
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fl_ranking, Fragment_ranking_local())
                     .commit()
         }
 
         tv_kakao_ranking.setOnClickListener{
+            tv_kakao_space.setBackgroundColor(Color.parseColor(coloron))
+            tv_local_space.setBackgroundColor(Color.parseColor(coloroff))
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fl_ranking, Fragment_ranking_kakao())
                     .commit()
