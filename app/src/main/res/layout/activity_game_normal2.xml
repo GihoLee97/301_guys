@@ -17,13 +17,15 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#E5E5E5">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="게임 1"
+                android:fontFamily="@font/paybooc_otf_bold"
                 android:textSize="20sp">
             </TextView>
         </LinearLayout>
@@ -33,7 +35,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:background="#E5E5E5">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -50,16 +53,19 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="총 자산은"
-                    android:textSize="20sp">
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:textSize="18sp">
                 </TextView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="&#xffe6; 149,925,000 입니다"
-                    android:textSize="20sp">
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:textSize="18sp">
                 </TextView>
                 <LinearLayout
                     android:layout_marginTop="20dp"
@@ -71,38 +77,42 @@
 
                     <TextView
                         android:layout_width="80dp"
-                        android:layout_height="30dp"
+                        android:layout_height="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="수익률"
-                        android:textSize="16sp"></TextView>
-
+                        android:fontFamily="@font/paybooc_otf_extrabold"
+                        android:textSize="14sp">
+                    </TextView>
                     <TextView
                         android:layout_width="80dp"
-                        android:layout_height="30dp"
+                        android:layout_height="20dp"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="56.2 %"
-                        android:textSize="16sp">
+                        android:fontFamily="@font/paybooc_otf_extrabold"
+                        android:textSize="14sp">
                     </TextView>
                     <TextView
                         android:layout_width="50dp"
-                        android:layout_height="30dp"
+                        android:layout_height="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="총 손익"
-                        android:textSize="16sp">
+                        android:fontFamily="@font/paybooc_otf_extrabold"
+                        android:textSize="14sp">
                     </TextView>
                     <TextView
                         android:layout_width="110dp"
-                        android:layout_height="30dp"
+                        android:layout_height="20dp"
                         android:layout_weight="1"
                         android:layout_marginRight="20dp"
                         android:gravity="right"
                         android:text="&#xffe6; 52,463,000"
-                        android:textSize="16sp">
+                        android:fontFamily="@font/paybooc_otf_extrabold"
+                        android:textSize="14sp">
                     </TextView>
                 </LinearLayout>
             </LinearLayout>
@@ -123,10 +133,29 @@
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="left"
+                    android:text="S&amp;P 500 Index"
+                    android:fontFamily="@font/paybooc_otf_extrabold"
+                    android:textSize="14sp">
+                </TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:text="120.13"
+                    android:fontFamily="@font/paybooc_otf_extrabold"
+                    android:textSize="14sp">
+                </TextView>
             </LinearLayout>
-
-
         </LinearLayout>
 
         <ScrollView
@@ -136,23 +165,60 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="510dp"
+                android:layout_height="570dp"
                 android:orientation="vertical"
-                android:weightSum="17">
+                android:weightSum="18">
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/paybooc_otf_extrabold"
+                        android:gravity="center"
+                        android:text="ETF 종목"
+                        android:textSize="15sp">
+                    </TextView>
+
+                </LinearLayout>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="160dp"
                     android:layout_weight="6">
 
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/borderline"
+                        android:orientation="vertical"
+                        android:elevation="10dp">
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/paybooc_otf_extrabold"
+                            android:gravity="left"
+                            android:text="1X"
+                            android:textSize="14sp">
+                        </TextView>
+                    </LinearLayout>
+                    
                 </HorizontalScrollView>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp">
                     <View
                         android:layout_width="375dp"
                         android:layout_height="1dp"
@@ -164,7 +230,8 @@
                         android:layout_height="28dp"
                         android:gravity="center"
                         android:text="뉴스"
-                        android:textSize="15sp">
+                        android:fontFamily="@font/paybooc_otf_bold"
+                        android:textSize="14sp">
                     </TextView>
                     <View
                         android:layout_width="375dp"
@@ -172,13 +239,235 @@
                         android:layout_gravity="center"
                         android:background="@color/black">
                     </View>
-
                 </LinearLayout>
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_weight="10">
+                    android:layout_height="350dp"
+                    android:layout_weight="10"
+                    android:weightSum="11">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/paybooc_otf_extrabold"
+                            android:gravity="center"
+                            android:text="주요 경제 지표"
+                            android:textSize="15sp">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:weightSum="12">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="5"
+                            android:gravity="left"
+                            android:text="연방준비은행 기금 금리"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_fund"
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="3">
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="2"
+                            android:gravity="right"
+                            android:text="1.9 %"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:weightSum="12">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="5"
+                            android:gravity="left"
+                            android:text="10년 만기 국채 이율"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_bond"
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="3">
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="2"
+                            android:gravity="right"
+                            android:text="1.9 %"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:weightSum="12">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="5"
+                            android:gravity="left"
+                            android:text="산업생산량"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_indpro"
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="3">
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="2"
+                            android:gravity="right"
+                            android:text="1.9 %"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:weightSum="12">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="5"
+                            android:gravity="left"
+                            android:text="실업률"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_unem"
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="3">
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="2"
+                            android:gravity="right"
+                            android:text="1.9 %"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_weight="2"
+                        android:weightSum="12">
+                        <TextView
+                            android:layout_width="150dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="5"
+                            android:gravity="left"
+                            android:text="인플레이션"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/cht_inf"
+                            android:layout_width="90dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="3">
+                        </com.github.mikephil.charting.charts.LineChart>
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_weight="2"
+                            android:gravity="right"
+                            android:text="1.9 %"
+                            android:fontFamily="@font/paybooc_otf_extrabold">
+                        </TextView>
+                    </LinearLayout>
+
+
+
 
                 </LinearLayout>
 
@@ -206,7 +495,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="아이템"
-                    android:textSize="15sp"
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:textSize="13sp"
                     android:textColor="@color/white"
                     android:backgroundTint="#666666"
                     android:background="#666666">
@@ -216,6 +506,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:text="거래하기"
+                    android:fontFamily="@font/paybooc_otf_bold"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:backgroundTint="#F68A06"
@@ -229,20 +520,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="#E5E5E5">
+                android:background="#E5E5E5"
+                android:weightSum="6">
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="피로도"
-                    android:textSize="15sp">
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:textSize="14sp"
+                    android:layout_weight="1">
                 </TextView>
                 <ProgressBar
                     android:id="@+id/progress_value1"
                     style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="290dp"
                     android:layout_height="15dp"
+                    android:layout_marginRight="10dp"
                     android:layout_gravity="center"
+                    android:layout_weight="5"
                     android:indeterminateOnly="false"
                     android:max="10000"
                     android:progress="0"
