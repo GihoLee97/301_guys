@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
                     friendnick.clear()
                     friendname.clear()
                     frienduuid.clear()
+                    friendimage.clear()
                 }
                 val friendscount = friends.totalCount
                 var count = 0
@@ -115,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                     friendid.add(getHash((friends.elements[count].id).toString()))
                     friendname.add(friends.elements[count].profileNickname)
                     frienduuid.add(friends.elements[count].uuid)
+                    friendimage.add(friends.elements[count].profileThumbnailImage)
                     count++
                 }
                 friendInfo(friendid, friendscount)
