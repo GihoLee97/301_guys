@@ -21,7 +21,7 @@ var arrayimage = mutableListOf<Int>()
 class Fragment_ranking_kakao : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var v : View = inflater.inflate(R.layout.fragment_ranking_kakao, container, false)
-       // v.findViewById<>()
+
         if(arrayll !=null || arraytvname != null || arraytvmoney != null){
             arrayll.clear()
             arraytvmoney.clear()
@@ -71,7 +71,7 @@ class Fragment_ranking_kakao : Fragment() {
             for(i in 1..10){
                 v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
                 v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                Glide.with(v).load(realkakaoplayer[i-1].IMAGE).into(v.findViewById<ImageView>(arrayimage[i-1]))
+                Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
             }
         }
         else if(realkakaoplayer == null || realkakaoplayer.size ==0){
@@ -83,7 +83,7 @@ class Fragment_ranking_kakao : Fragment() {
             for(i in 1..realkakaoplayer.size){
                 v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
                 v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                Glide.with(v).load(realkakaoplayer[i-1].IMAGE).into(v.findViewById<ImageView>(arrayimage[i-1]))
+                Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
             }
             for(i in realkakaoplayer.size+1..10){
                 v.findViewById<LinearLayout>(arrayll[i-1]).visibility = View.GONE

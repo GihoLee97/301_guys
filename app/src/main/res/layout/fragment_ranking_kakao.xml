@@ -7,10 +7,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
             <LinearLayout
                 android:id="@+id/ll_kakaoUser2"
                 android:layout_width="0dp"
@@ -44,6 +51,10 @@
                     android:gravity="center"
                     android:id="@+id/tv_user2_money"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
             <LinearLayout
                 android:id="@+id/ll_kakaoUser1"
                 android:layout_width="0dp"
@@ -77,6 +88,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user1_money"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
             <LinearLayout
                 android:id="@+id/ll_kakaoUser3"
 
@@ -111,6 +126,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user3_money"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
