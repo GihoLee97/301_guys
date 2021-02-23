@@ -9,4 +9,56 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
+
+    <!--main activity-->
+    <style name="main_userName">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="main_totalProfitRateKr">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="main_totalProfitRate">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/color_style_3</item>
+    </style>
+    <style name="main_moduleTitle">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="main_relieveTiredness">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4D5256</item>
+    </style>
+    <style name="main_tirednessDescription">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4D5256</item>
+    </style>
+    <style name="main_dashboardQuest">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="main_dashboardQuestToGo">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="main_dashboardQuestDescription">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#EAEEEF</item>
+    </style>
+    <style name="main_dashboardQuestName">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#EAEEEF</item>
+    </style>
 </resources>

@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background"
-        android:gravity="center_vertical|fill_horizontal">
-        <shape android:shape="rectangle"
-            android:tint="?attr/colorControlNormal">
-            <corners android:radius="10dp"/>
-            <size android:height="40dp" />
-            <solid android:color="#90caf9" />
-        </shape>
+        android:drawable="@drawable/ic_progressbar_progressoutline">
     </item>
-    <item android:id="@android:id/progress"
-        android:gravity="center_vertical|fill_horizontal">
+    <item android:id="@android:id/progress">
         <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle"
-                android:tint="?attr/colorControlActivated">
+            <shape>
                 <corners android:radius="10dp"/>
-                <size android:height="40dp" />
-                <solid android:color="#b9f6ca" />
+                <gradient
+                    android:angle="0"
+                    android:startColor="#ED9D0B"
+                    android:centerColor="#F4730B"
+                    android:endColor="#E86B2E"/>
+                <size android:height="16dp" />
             </shape>
         </scale>
     </item>
