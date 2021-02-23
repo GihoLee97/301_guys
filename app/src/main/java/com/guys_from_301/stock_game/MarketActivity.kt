@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
@@ -12,16 +13,25 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import java.text.DecimalFormat
 
 class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     // 결제 객체
     private lateinit var billingManager : BillingManager
     // 보상형 광고 관련 코드
     private lateinit var mRewardedVideoAd: RewardedVideoAd
-    var profileDb: ProfileDB? = null
     // Button
     private lateinit var btn_ad : Button
     private lateinit var btn_purchase : Button
+    private lateinit var btn_home : Button
+    private lateinit var btn_ranking : Button
+    private lateinit var btn_market : Button
+    private lateinit var btn_profile : Button
+    private lateinit var btn_receipt : Button
+
+    private var profileDb: ProfileDB? = null
+    //TextView
+    private lateinit var tv_stack : TextView
     var isLoading = false
     var money: Int = 0
     var value1: Int = 0
@@ -31,10 +41,20 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_market)
+        profileDb = ProfileDB.getInstace(this)
 
+        //btn
         btn_ad = findViewById(R.id.btn_ad)
         btn_purchase = findViewById(R.id.btn_purchase)
-        //
+        btn_home = findViewById(R.id.btn_home)
+        btn_ranking = findViewById(R.id.btn_ranking)
+        btn_market = findViewById(R.id.btn_market)
+        btn_profile = findViewById(R.id.btn_profile)
+        btn_receipt = findViewById(R.id.btn_receipt)
+
+        //tv
+        tv_stack = findViewById(R.id.tv_stack)
+        tv_stack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
@@ -46,6 +66,25 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
 
         btn_purchase.setOnClickListener {
             billingManager.startConnection()
+        }
+
+
+
+        btn_receipt.setOnClickListener{
+            Toast.makeText(this, "구매 내역!", Toast.LENGTH_LONG).show()
+        }
+        // 하단바 버튼들
+        btn_home.setOnClickListener{
+            Toast.makeText(this, "아직 구현 안됨ㅎㅎ", Toast.LENGTH_LONG).show()
+        }
+        btn_ranking.setOnClickListener{
+            Toast.makeText(this, "아직 구현 안됨ㅎㅎ", Toast.LENGTH_LONG).show()
+        }
+        btn_market.setOnClickListener{
+            Toast.makeText(this, "아직 구현 안됨ㅎㅎ", Toast.LENGTH_LONG).show()
+        }
+        btn_profile.setOnClickListener{
+            Toast.makeText(this, "아직 구현 안됨ㅎㅎ", Toast.LENGTH_LONG).show()
         }
     }
 

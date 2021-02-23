@@ -1,11 +1,18 @@
 package com.guys_from_301.stock_game
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.fragment.Fragment_ranking_kakao
+import com.guys_from_301.stock_game.fragment.Fragment_ranking_local
+import com.guys_from_301.stock_game.fragment.realkakaoplayer
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,48 +24,56 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RankingActivity : AppCompatActivity() {
 
-    private lateinit var btn_goback : Button
-    private lateinit var user1_nick: TextView; private lateinit var user1_money: TextView
-    private lateinit var user2_nick: TextView; private lateinit var user2_money: TextView
-    private lateinit var user3_nick: TextView; private lateinit var user3_money: TextView
-    private lateinit var user4_nick: TextView; private lateinit var user4_money: TextView
-    private lateinit var user5_nick: TextView; private lateinit var user5_money: TextView
-    private lateinit var user6_nick: TextView; private lateinit var user6_money: TextView
-    private lateinit var user7_nick: TextView; private lateinit var user7_money: TextView
-    private lateinit var user8_nick: TextView; private lateinit var user8_money: TextView
-    private lateinit var user9_nick: TextView; private lateinit var user9_money: TextView
-    private lateinit var user10_nick: TextView; private lateinit var user10_money: TextView
+    private lateinit var tv_local_ranking: TextView
+    private lateinit var tv_kakao_ranking:TextView
 
+    var profileDb : ProfileDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranking)
-        btn_goback = findViewById(R.id.btn_goback)
-        user1_nick = findViewById(R.id.user1_nickname); user1_money = findViewById(R.id.user1_money)
-        user2_nick = findViewById(R.id.user2_nickname); user2_money = findViewById(R.id.user2_money)
-        user3_nick = findViewById(R.id.user3_nickname); user3_money = findViewById(R.id.user3_money)
-        user4_nick = findViewById(R.id.user4_nickname); user4_money = findViewById(R.id.user4_money)
-        user5_nick = findViewById(R.id.user5_nickname); user5_money = findViewById(R.id.user5_money)
-        user6_nick = findViewById(R.id.user6_nickname); user6_money = findViewById(R.id.user6_money)
-        user7_nick = findViewById(R.id.user7_nickname); user7_money = findViewById(R.id.user7_money)
-        user8_nick = findViewById(R.id.user8_nickname); user8_money = findViewById(R.id.user8_money)
-        user9_nick = findViewById(R.id.user9_nickname); user9_money = findViewById(R.id.user9_money)
-        user10_nick = findViewById(R.id.user10_nickname); user10_money = findViewById(R.id.user10_money)
-        user1_nick.text = rank1_nick; user1_money.text = rank1_money
-        user2_nick.text = rank2_nick; user2_money.text = rank2_money
-        user3_nick.text = rank3_nick; user3_money.text = rank3_money
-        user4_nick.text = rank4_nick; user4_money.text = rank4_money
-        user5_nick.text = rank5_nick; user5_money.text = rank5_money
-        user6_nick.text = rank6_nick; user6_money.text = rank6_money
-        user7_nick.text = rank7_nick; user7_money.text = rank7_money
-        user8_nick.text = rank8_nick; user8_money.text = rank8_money
-        user9_nick.text = rank9_nick; user9_money.text = rank9_money
-        user9_nick.text = rank9_nick; user9_money.text = rank9_money
-        user10_nick.text = rank10_nick; user10_money.text = rank10_money
+        friendsort()
+        profileDb = ProfileDB.getInstace(this)
+        tv_local_ranking = findViewById(R.id.tv_localRanking)
+        tv_kakao_ranking = findViewById(R.id.tv_kakaoRanking)
+        if(profileDb?.profileDao()?.getLogin()!! != 4 ){
+            findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
+        }
+        tv_local_ranking.setOnClickListener{
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_ranking, Fragment_ranking_local())
+                    .commit()
+        }
 
-        btn_goback.setOnClickListener{
-            onBackPressed()
+        tv_kakao_ranking.setOnClickListener{
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_ranking, Fragment_ranking_kakao())
+                    .commit()
+            if(realkakaoplayer == null || realkakaoplayer.size ==0) {
+                Toast.makeText(this, "친구를 초대해보세요!", Toast.LENGTH_LONG).show()
+            }
         }
     }
+    // 돈 많은 순서대로 정렬
+    fun friendsort(){
+        if(realkakaoplayer!=null){
+            realkakaoplayer.clear()
+        }
+        for (cnt in 1..friendlevel.size){
+            if(friendlevel[cnt-1] != -1){
+                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", 0, 0, "c")
+                friendlevel[cnt-1]
+                tmp?.NAME = friendname[cnt-1];
+                tmp?.NICKNAME = friendnick[cnt-1];
+                tmp?.MONEY = friendmoney[cnt-1];
+                tmp?.LEVEL = friendlevel[cnt-1]
+                tmp?.IMAGE = friendimage[cnt-1]
+                realkakaoplayer.add(tmp)
+            }
+        }
+        //sort
+        realkakaoplayer.sortByDescending { it.MONEY }
+    }
+
 }
 
 
