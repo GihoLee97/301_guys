@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.guys_from_301.stock_game.data.ProfileDB
 
-class FragmentRankingLocal : Fragment() {
+class FragmentRanking : Fragment() {
     var profileDb : ProfileDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class FragmentRankingLocal : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var v : View = inflater.inflate(R.layout.fragment_rankinglocal, container, false)
+        var v : View = inflater.inflate(R.layout.fragment_ranking, container, false)
         profileDb = ProfileDB.getInstace(_MainActivity!!)
         if(profileDb?.profileDao()?.getLogin()!! != 4 ){
             v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
@@ -63,7 +63,7 @@ class FragmentRankingLocal : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentRankingLocal().apply {
+            FragmentRanking().apply {
                 arguments = Bundle().apply {
                 }
             }

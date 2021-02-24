@@ -549,19 +549,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public fun goRankingKaKao(){
-        val transaction = manager.beginTransaction()
-        val fragment = FragmentRankingKakao()
-        transaction.replace(R.id.nav_host,fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-    public fun goRankingLocal(){
-        val transaction = manager.beginTransaction()
-        val fragment = FragmentRankingLocal()
-        transaction.replace(R.id.nav_host,fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
 }
