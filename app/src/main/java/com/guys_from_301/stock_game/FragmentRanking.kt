@@ -1,5 +1,6 @@
 package com.guys_from_301.stock_game
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,8 @@ var arraytvmoney = mutableListOf<Int>()
 var arrayimage = mutableListOf<Int>()
 
 class FragmentRanking : Fragment() {
+    val coloron = "#F68A06"
+    val coloroff = "#FFFFFF"
     var profileDb : ProfileDB? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +42,14 @@ class FragmentRanking : Fragment() {
         v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
         v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
         v.findViewById<TextView>(R.id.tv_kakaoRanking).setOnClickListener{
+            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
+            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.VISIBLE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.GONE
         }
         v.findViewById<TextView>(R.id.tv_localRanking).setOnClickListener {
+            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
+            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
         }
