@@ -1,317 +1,764 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="#F68A06">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="40dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_weight="2"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="40dp"
-                android:text="상점"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_weight="4"
-                />
-            <Button
-                android:id="@+id/btn_receipt"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:text="구매내역"
-                android:layout_weight="2"
-                android:background="#F68A06"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-<!--      돈 이미지 넣을 자리-->
-
-            <TextView
-                android:id="@+id/tv_stack"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="40dp"
-                android:text="1,000"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center|left"
-                android:layout_weight="4"
-                />
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:text="   초기 투자 금액"
-            android:textStyle="bold"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="   초기 자산"
-                android:textStyle="bold"
-                android:layout_weight="2"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="$15,000"
-                android:textStyle="bold"
-                android:layout_weight="2"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:layout_weight="2"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:layout_weight="2"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="   월급"
-                android:textStyle="bold"
-                android:layout_weight="2"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="$1,200"
-                android:textStyle="bold"
-                android:layout_weight="2"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="연봉인상률"
-                android:textStyle="bold"
-                android:layout_weight="2"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="2.0%"
-                android:textStyle="bold"
-                android:layout_weight="2"
-                />
-        </LinearLayout>
-    </LinearLayout>
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_ad"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="#F96209"
-                android:text="  오늘의 스택    광고보고스택얻기!  "
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F68A06"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="상점"
+                        android:layout_marginTop="0dp"
+                        android:textAppearance="@style/market_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/btn_marketReceipt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#F68A06"
+                        android:text="구매내역"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="24dp"
+                        android:textAppearance="@style/market_receipt"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_stack"
+                        android:layout_marginTop="68dp"
+                        android:layout_marginLeft="24dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_mountOfStack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:layout_marginTop="64dp"
+                        android:layout_marginLeft="65dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="1,000"
+                        android:textAppearance="@style/market_mountOfStack" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginLeft="24dp"
+                    android:text="초기 투자 금액"
+                    android:textAppearance="@style/market_defaultSettingTitle"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="24dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="초기 자산"
+                        android:textAppearance="@style/market_defaultSettingItemTitle"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="$15,000"
+                        android:textAppearance="@style/market_defaultSettingItem"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="월급"
+                            android:textAppearance="@style/market_defaultSettingItemTitle"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="47dp"
+                            android:text="$1,200"
+                            android:textAppearance="@style/market_defaultSettingItem"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="연봉인상률"
+                            android:textAppearance="@style/market_defaultSettingItemTitle"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="2.0%"
+                            android:textAppearance="@style/market_defaultSettingItem"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_todayStack"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/borderline5"
+                    android:elevation="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_video_white"
+                        android:layout_marginLeft="18dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="52dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="오늘의 스택"
+                        android:textAppearance="@style/market_todayStack"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="광고 보고 스택 얻기!"
+                        android:textAppearance="@style/market_todayStackDescription"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="투자 업그레이드"
+                    android:textAppearance="@style/market_itemGroupTitle" />
+
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/borderline4"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="초기\n자산"
+                            android:textAppearance="@style/market_itemTitle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="7dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="+ $1000"
+                            android:textAppearance="@style/market_itemEffect" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F68A06"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_stack_orange"/>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="28dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_transparent_asset"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/borderline4"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="월급"
+                            android:textAppearance="@style/market_itemTitle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="7dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="+ $1000"
+                            android:textAppearance="@style/market_itemEffect" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F68A06"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_stack_orange"/>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="28dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_transparent_monthly"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/borderline4"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="연봉\n인상률"
+                            android:textAppearance="@style/market_itemTitle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="7dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="+ 0.5%"
+                            android:textAppearance="@style/market_itemEffect" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F68A06"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_stack_orange"/>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginBottom="28dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_transparent_sallary_raise_rate"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="스택 구매"
+                    android:textAppearance="@style/market_itemGroupTitle" />
+
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_stack_purchase_background"
+                        android:alpha="0.75"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="100 스택"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="17dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_won"/>
+
+                        <ImageView
+                            android:layout_width="48.5dp"
+                            android:layout_height="46dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_stack"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_stack_purchase_background"
+                        android:alpha="0.75"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="200 스택"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="2,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="17dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_won"/>
+
+                        <ImageView
+                            android:layout_width="48.5dp"
+                            android:layout_height="46dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_stack"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_stack_purchase_background"
+                        android:alpha="0.75"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1000 스택"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="10,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="17dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_won"/>
+
+                        <ImageView
+                            android:layout_width="48.5dp"
+                            android:layout_height="46dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_stack"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="피로도 충전"
+                    android:textAppearance="@style/market_itemGroupTitle" />
+
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="14dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_medicine_purchase_background"
+                        android:alpha="0.7"
+                        android:elevation="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="100%"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_stack"/>
+
+                        <ImageView
+                            android:layout_width="33.64dp"
+                            android:layout_height="45.64dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="4.5dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_medicine"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_stack_purchase_background"
+                        android:alpha="0.75"
+                        android:elevation="10dp"
+                        android:visibility="invisible"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="200 스택"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="2,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="17dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_won"/>
+
+                        <ImageView
+                            android:layout_width="48.5dp"
+                            android:layout_height="46dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_stack"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_stack_purchase_background"
+                        android:alpha="0.75"
+                        android:elevation="10dp"
+                        android:visibility="invisible"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="37dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="1000 스택"
+                            android:textAppearance="@style/market_mountOfStackSmall"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginBottom="13dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="10,000"
+                            android:textAppearance="@style/market_itemPrice"
+                            android:textColor="#F1F5F5"/>
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginLeft="57dp"
+                            android:layout_marginBottom="17dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_won"/>
+
+                        <ImageView
+                            android:layout_width="48.5dp"
+                            android:layout_height="46dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_transparent_stack"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textSize="20dp"
-                android:text="   투자 업그레이드"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:id="@+id/btn_purchase"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:text="초기자산"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="월급"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="연봉 인상률"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textSize="20dp"
-                android:text="   스택 구매"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:text="100스택"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="200스택"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="1000스택"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:textSize="20dp"
-                android:text="   피로도 충전"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:text="10%"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="20%"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:text="100%"/>
-                <TextView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent" />
+                android:orientation="vertical"/>
+
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>
