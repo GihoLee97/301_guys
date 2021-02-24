@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/prac" />
+        app:navGraph="@navigation/fragment_admin" />
 
     <LinearLayout
         android:id="@+id/nB_main"
