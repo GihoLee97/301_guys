@@ -1,10 +1,15 @@
 package com.guys_from_301.stock_game
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.data.Quest
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +25,7 @@ class FragmentHome : Fragment() {
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
+    var profileDb : ProfileDB? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +38,17 @@ class FragmentHome : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        var v : View = inflater.inflate(R.layout.fragment_home, container, false)
+        profileDb = ProfileDB.getInstace(_MainActivity!!)
+
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard3).setOnClickListener{
+            val intent = Intent(_MainActivity, QuestActivity::class.java)
+            startActivity(intent)
+        }
+
+        v.findViewById<TextView>(R.id.tv_userName).text = profileDb?.profileDao()?.getNickname()!!+"님"
+
+        return v
     }
 
     companion object {

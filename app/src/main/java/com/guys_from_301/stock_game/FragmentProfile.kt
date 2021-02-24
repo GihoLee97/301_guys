@@ -5,6 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.guys_from_301.stock_game.data.ProfileDB
+import com.kakao.sdk.user.UserApiClient
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +29,10 @@ class FragmentProfile : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
+    private lateinit var tv_my_nick : TextView
+    var profileDb: ProfileDB? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +46,57 @@ class FragmentProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+
+        profileDb = ProfileDB.getInstace(_MainActivity!!)
+        var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
+        tv_my_nick = v.findViewById(R.id.tv_my_nick)
+        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
+        v.findViewById<TextView>(R.id.tv_my_level).text = "   레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
+
+        if(profileDb?.profileDao()?.getLogin()!! != 4){
+            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+        }
+        else{
+            UserApiClient.instance.me { user, error ->
+                if (error!=null)
+                    Toast.makeText(_MainActivity,"사용자 정보 요청 실패(카카오)", Toast.LENGTH_SHORT)
+                else if (user!=null) {
+                    Glide.with(_MainActivity!!).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(v.findViewById<ImageView>(R.id.iv_my_image))
+                }
+            }
+        }
+        v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
+            if(profileDb?.profileDao()?.getLogin()!! == 1){
+                val dlg_delete = Dialog_DeleteAlert(_MainActivity!!)
+                dlg_delete.start()
+            }
+            else{
+                val dlg_delete = Dialog_DeleteKakaoGoogle(_MainActivity!!)
+                dlg_delete.start()
+            }
+        }
+        v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
+            val dlg = Dialog_nick(_MainActivity!!, false, profileActivityViewModel)
+            dlg.start(profileDb)
+        }
+
+        return v
     }
+//    override fun onResume() {
+//        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
+//        super.onResume()
+//    }
+//
+//    override fun onPause() {
+//        profileActivityViewModel.write2database()
+//        super.onPause()
+//    }
+//
+//    override fun onStart() {
+//        profileActivityViewModel.refresh()
+//        super.onStart()
+//    }
+
 
     companion object {
         /**

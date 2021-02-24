@@ -28,6 +28,9 @@ class QuestActivity : AppCompatActivity() {
         profileDb = ProfileDB.getInstace(this)
         tv_level = findViewById(R.id.tv_level)
         tv_level.text = "   레벨 "+ profileDb?.profileDao()?.getLevel()!!
+        findViewById<TextView>(R.id.tv_go_back).setOnClickListener{
+            onBackPressed()
+        }
         var mAdapter = QuestAdapter(this, questList)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val qRecyclerView = findViewById<RecyclerView>(R.id.qRecyclerView)

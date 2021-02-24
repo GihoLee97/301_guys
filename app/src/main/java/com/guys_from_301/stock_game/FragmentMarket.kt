@@ -101,6 +101,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
     override fun onResume() {
         tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
+        loadad()
         super.onResume()
     }
 
