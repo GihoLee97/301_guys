@@ -4,22 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/prac.xml"
     app:startDestination="@id/page_home">
-
     <fragment
         android:id="@+id/page_home"
         android:name="com.guys_from_301.stock_game.FragmentHome"
         android:label="page_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/page_ranking_local"
-        android:name="com.guys_from_301.stock_game.FragmentRankingLocal"
+        android:id="@+id/page_ranking"
+        android:name="com.guys_from_301.stock_game.FragmentRanking"
         android:label="page_ranking"
-        tools:layout="@layout/fragment_rankinglocal" />
-    <fragment
-        android:id="@+id/page_ranking_kakao"
-        android:name="com.guys_from_301.stock_game.FragmentRankingKakao"
-        android:label="page_ranking"
-        tools:layout="@layout/fragment_rankingkakao" />
+        tools:layout="@layout/fragment_ranking" />
     <fragment
         android:id="@+id/page_market"
         android:name="com.guys_from_301.stock_game.FragmentMarket"

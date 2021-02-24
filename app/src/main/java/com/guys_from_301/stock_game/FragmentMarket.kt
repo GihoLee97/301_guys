@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
@@ -41,13 +41,12 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     // 보상형 광고 관련 코드
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     // Button
-    private lateinit var btn_ad : Button
-    private lateinit var btn_purchase : Button
-    private lateinit var btn_receipt : Button
+    private lateinit var cl_todayStack : ConstraintLayout
+    private lateinit var tv_marketReceipt : TextView
 
     private var profileDb: ProfileDB? = null
     //TextView
-    private lateinit var tv_stack : TextView
+    private lateinit var tv_mountOfStack : TextView
     var isLoading = false
     var money: Int = 0
     var value1: Int = 0
@@ -73,12 +72,12 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         profileDb = ProfileDB.getInstace(mContext)
 
         //btn
-        btn_ad = v.findViewById(R.id.btn_ad)
-        btn_purchase = v.findViewById(R.id.btn_purchase)
-        btn_receipt = v.findViewById(R.id.btn_receipt)
+        cl_todayStack = v.findViewById(R.id.cl_todayStack)
+//        btn_purchase = v.findViewById(R.id.btn_purchase)
+        tv_marketReceipt = v.findViewById(R.id.tv_marketReceipt)
 
         //tv
-        tv_stack = v.findViewById(R.id.tv_stack)
+        tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
         mRewardedVideoAd.rewardedVideoAdListener = FragmentMarket()!!
@@ -89,10 +88,10 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         // billing Manager for purchase process
         billingManager = BillingManager(mContext as Activity)
 
-        btn_purchase.setOnClickListener {
-            billingManager.startConnection()
-        }
-        btn_receipt.setOnClickListener{
+//        btn_purchase.setOnClickListener {
+//            billingManager.startConnection()
+//        }
+        tv_marketReceipt.setOnClickListener{
             Toast.makeText(mContext, "구매 내역!", Toast.LENGTH_LONG).show()
 
         }
@@ -101,7 +100,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     }
 
     override fun onResume() {
-        tv_stack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
+        tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
         super.onResume()
     }
 
@@ -125,7 +124,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             }
     }
     fun initLayout(){
-        btn_ad.setOnClickListener{
+        cl_todayStack.setOnClickListener{
             if (mRewardedVideoAd.isLoaded) {
                 mRewardedVideoAd.show()
             }

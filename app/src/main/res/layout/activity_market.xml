@@ -40,7 +40,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/btn_marketReceipt"
+                        android:id="@+id/tv_marketReceipt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#F68A06"
@@ -152,7 +152,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
 
             <LinearLayout
                 android:clipToPadding="false"
