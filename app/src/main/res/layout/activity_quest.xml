@@ -1,42 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".QuestActivity">
+    android:background="#ffffff">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="#F68A06">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:textSize="40dp"
+                android:text="도전과제"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight="4" />
+            <Button
+                android:id="@+id/btn_receipt"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:text="버튼"
+                android:layout_weight="2"
+                android:background="#F68A06"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            />
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/qRecyclerView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="도전과제" />
-
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="   친구와 투자의 수익률로\n   경쟁해보세요!"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:text="   레벨"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <!-- 바 하나 필요함 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/qRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_goback"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_gravity="bottom"
         android:layout_height="60dp"
-        android:text="돌아가기"/>
+        android:orientation="horizontal"
+        android:background="@color/gray">
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_gravity="bottom"
+            android:layout_height="60dp"
+            android:text="홈"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_ranking"
+            android:layout_width="0dp"
+            android:layout_gravity="bottom"
+            android:layout_height="60dp"
+            android:text="랭킹"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_market"
+            android:layout_width="0dp"
+            android:layout_gravity="bottom"
+            android:layout_height="60dp"
+            android:text="상점"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_profile"
+            android:layout_width="0dp"
+            android:layout_gravity="bottom"
+            android:layout_height="60dp"
+            android:text="프로필"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </LinearLayout>

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".QuestActivity"></activity>
+        <activity android:name=".NewMainActivity"></activity>
+        <activity android:name=".QuestActivity" />
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />

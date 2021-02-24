@@ -35,6 +35,7 @@ var friendlevel = mutableListOf<Int>()
 var friendnick = mutableListOf<String>()
 var friendname = mutableListOf<String>()
 var frienduuid = mutableListOf<String>()
+var friendimage = mutableListOf<String>()
 
 class FriendActivity  : AppCompatActivity() {
     val coloroff = "#FF808080"
