@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#F68A06">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_weight="2"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="40dp"
+                    android:text="상점"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_weight="4"
+                    />
+                <Button
+                    android:id="@+id/btn_receipt"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:text="구매내역"
+                    android:layout_weight="2"
+                    android:background="#F68A06"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"/>
+                <!--      돈 이미지 넣을 자리-->
+
+                <TextView
+                    android:id="@+id/tv_stack"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="40dp"
+                    android:text="1,000"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:gravity="center|left"
+                    android:layout_weight="4"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:text="   초기 투자 금액"
+                android:textStyle="bold"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="   초기 자산"
+                    android:textStyle="bold"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="$15,000"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="   월급"
+                    android:textStyle="bold"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="$1,200"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="연봉인상률"
+                    android:textStyle="bold"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="2.0%"
+                    android:textStyle="bold"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_ad"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="#F96209"
+                    android:text="  오늘의 스택    광고보고스택얻기!  "
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="20dp"
+                    android:text="   투자 업그레이드"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:id="@+id/btn_purchase"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:text="초기자산"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="월급"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="연봉 인상률"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="20dp"
+                    android:text="   스택 구매"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:text="100스택"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="200스택"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="1000스택"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textSize="20dp"
+                    android:text="   피로도 충전"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:text="10%"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="20%"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="100%"/>
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</FrameLayout>

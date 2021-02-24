@@ -7,7 +7,7 @@
         android:title="home"/>
 
     <item
-        android:id="@+id/page_ranking"
+        android:id="@+id/page_ranking_local"
         android:enabled="true"
         android:icon="@drawable/ic_ranking"
         android:title="ranking"/>

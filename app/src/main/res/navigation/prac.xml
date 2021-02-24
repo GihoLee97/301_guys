@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/prac.xml"
+    app:startDestination="@id/page_home">
+
+    <fragment
+        android:id="@+id/page_home"
+        android:name="com.guys_from_301.stock_game.FragmentHome"
+        android:label="page_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/page_ranking_local"
+        android:name="com.guys_from_301.stock_game.FragmentRankingLocal"
+        android:label="page_ranking"
+        tools:layout="@layout/fragment_rankinglocal" />
+    <fragment
+        android:id="@+id/page_ranking_kakao"
+        android:name="com.guys_from_301.stock_game.FragmentRankingKakao"
+        android:label="page_ranking"
+        tools:layout="@layout/fragment_rankingkakao" />
+    <fragment
+        android:id="@+id/page_market"
+        android:name="com.guys_from_301.stock_game.FragmentMarket"
+        android:label="fragment_market"
+        tools:layout="@layout/fragment_market" />
+    <fragment
+        android:id="@+id/page_profile"
+        android:name="com.guys_from_301.stock_game.FragmentProfile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

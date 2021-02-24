@@ -1,22 +1,47 @@
-package com.guys_from_301.stock_game.fragment
+package com.guys_from_301.stock_game
 
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.view.Gravity
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.guys_from_301.stock_game.*
-import com.guys_from_301.stock_game.data.Quest
+import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.fragment.Fragment_ranking_kakao
+import com.guys_from_301.stock_game.fragment.Fragment_ranking_local
+import com.kakao.sdk.user.UserApiClient
+import androidx.fragment.app.FragmentManager.*
 
+var realkakaoplayer = mutableListOf<Dataclass_kakao>()
+var arrayll = mutableListOf<Int>()
+var arraytvname = mutableListOf<Int>()
+var arraytvmoney = mutableListOf<Int>()
+var arrayimage = mutableListOf<Int>()
 
-class Fragment_ranking_kakao : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var v : View = inflater.inflate(R.layout.fragment_ranking_kakao, container, false)
+class FragmentRankingKakao : Fragment() {
+
+    var profileDb : ProfileDB? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        var v : View = inflater.inflate(R.layout.fragment_rankingkakao, container, false)
+        profileDb = ProfileDB.getInstace(_MainActivity!!)
+        if(profileDb?.profileDao()?.getLogin()!! != 4 ){
+            v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
+        }
 
         if(arrayll !=null || arraytvname != null || arraytvmoney != null){
             arrayll.clear()
@@ -85,7 +110,26 @@ class Fragment_ranking_kakao : Fragment() {
                 v.findViewById<LinearLayout>(arrayll[i-1]).visibility = View.GONE
             }
         }
+        v.findViewById<TextView>(R.id.tv_localRanking).setOnClickListener{(activity as MainActivity).goRankingLocal()}
+
         return v
     }
 
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment BlankFragment2.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            FragmentRankingKakao().apply {
+                arguments = Bundle().apply {
+                }
+            }
+    }
 }

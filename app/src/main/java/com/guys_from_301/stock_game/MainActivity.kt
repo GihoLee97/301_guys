@@ -9,8 +9,17 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
@@ -43,6 +52,8 @@ var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :Strin
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
 
 class MainActivity : AppCompatActivity() {
+    // fragment 관련
+    val manager = supportFragmentManager
     private var gameSetDb: GameSetDB? = null
     var itemDb: ItemDB? = null
     val mContext: Context = this
@@ -63,7 +74,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_pushAlarm: Button
     private lateinit var btn_captureViewAndShareWithKakao: Button
     private lateinit var btn_captureViewAndShareWithOthers: Button
-    private lateinit var btn_goToNewMain: Button
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,15 +82,16 @@ class MainActivity : AppCompatActivity() {
         questDb = QuestDB.getInstance(mContext!!)
         tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("게임 플레이하기")
-
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var t : BottomNavigationView = findViewById(R.id.main_bottom_navigation)
+        NavigationUI.setupWithNavController(t, findNavController(R.id.nav_host))
         gameSetDb = GameSetDB.getInstace(this)
         // 광고 관련 코드
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+//        mAdView = findViewById(R.id.adView)
+//        val adRequest = AdRequest.Builder().build()
+//        mAdView.loadAd(adRequest)
         //푸쉬알람 관련 코드
         // Logging set to help debug issues, remove before releasing your app.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
@@ -123,150 +134,145 @@ class MainActivity : AppCompatActivity() {
                 friendInfo(friendid, friendscount)
             }
         }
-        btn_profile = findViewById(R.id.btn_profile)
-        btn_setting = findViewById(R.id.btn_setting)
-        btn_quest = findViewById(R.id.btn_quest)
-        btn_game =  findViewById(R.id.btn_game)
-        btn_market = findViewById(R.id.btn_market)
-        btn_ranking = findViewById(R.id.btn_ranking)
-        btn_friend = findViewById(R.id.btn_friend)
-        btn_sendKakaoMessageMyself = findViewById(R.id.btn_sendKakaoMessageMyself)
-        btn_sendKakaoMessageToOthers = findViewById(R.id.btn_sendKakaoMessageToOthers)
-        btn_shareText = findViewById(R.id.btn_shareText)
-        btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
-        btn_captureViewAndShareWithKakao = findViewById(R.id.btn_captureViewAndShareWithKakao)
-        btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
-        btn_goToNewMain = findViewById(R.id.btn_goToNewMain)
-        btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
+//        btn_profile = findViewById(R.id.btn_profile)
+//        btn_setting = findViewById(R.id.btn_setting)
+//        btn_quest = findViewById(R.id.btn_quest)
+//        btn_game =  findViewById(R.id.btn_game)
+//        btn_market = findViewById(R.id.btn_market)
+//        btn_ranking = findViewById(R.id.btn_ranking)
+//        btn_friend = findViewById(R.id.btn_friend)
+//        btn_sendKakaoMessageMyself = findViewById(R.id.btn_sendKakaoMessageMyself)
+//        btn_sendKakaoMessageToOthers = findViewById(R.id.btn_sendKakaoMessageToOthers)
+//        btn_shareText = findViewById(R.id.btn_shareText)
+//        btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
+//        btn_captureViewAndShareWithKakao = findViewById(R.id.btn_captureViewAndShareWithKakao)
+//        btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
+     //   btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
 
-
-        //업적 달성하기 tmp
-        findViewById<Button>(R.id.btn_quest_tmp).setOnClickListener{
-            val dialog = Dialog_quest(this@MainActivity)
-            dialog.start()
-        }
-        //
-
-        // 카카오 로그인 시에만 친구 창 뜨게 하기
-        if(profileDb?.profileDao()?.getLogin()==4){
-            btn_friend.visibility = View.VISIBLE
-        }
-
-        btn_friend.setOnClickListener{
-            val intent = Intent(this,FriendActivity::class.java)
-            startActivity(intent)
-        }
-
-
-        btn_profile.setOnClickListener{
-            val intent = Intent(this,ProfileActivity::class.java)
-            startActivity(intent)
-        }
-
-        btn_setting.setOnClickListener {
-            val intent = Intent(this,SettingActivity::class.java)
-            startActivity(intent)
-        }
-
-        btn_quest.setOnClickListener {
-            val intent = Intent(this, QuestActivity::class.java)
-            startActivity(intent)
-        }
-
-        btn_game.setOnClickListener{
-            var profileDb: ProfileDB? = null
-            profileDb = ProfileDB.getInstace(this)
-            var money = profileDb?.profileDao()?.getMoney()!!
-
-            if(money <= 0){
-                Toast.makeText(this, "현금이 없습니다.", Toast.LENGTH_LONG).show()
-            }
-            else{
-                val dialog = Dialog_loading(this@MainActivity)
-                dialog.show()
-                val intentgame = Intent(this, PickGameActivity::class.java)
-                val intent = Intent(this,GameNormalActivity::class.java)
-                if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
-                    val addRunnable = Runnable {
-                        val newGameSetDB = GameSet()
-                        setId = 1
-                        newGameSetDB.id = 1
-                        newGameSetDB.setcash = START_CASH
-                        newGameSetDB.setgamelength = START_GAME_LENGTH
-                        newGameSetDB.setgamespeed = START_GAME_SPEED
-                        newGameSetDB.setmonthly = START_MONTHLY
-                        newGameSetDB.setsalaryraise = START_SALARY_RAISE
-                        gameSetDb?.gameSetDao()?.insert(newGameSetDB)
-                    }
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
-                    startActivity(intent)
-                    dialog.dismiss()
-                }
-                else {
-//                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
-//                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
-//                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
-//                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
-                    startActivity(intentgame)
-                    dialog.dismiss()
-                }
-            }
-        }
-
-        btn_market.setOnClickListener {
-            val intent = Intent(this,MarketActivity::class.java)
-            startActivity(intent)
-        }
-        btn_ranking.setOnClickListener{
-            val intent = Intent(this, RankingActivity::class.java)
-            startActivity(intent)
-        }
-        btn_sendKakaoMessageMyself.setOnClickListener {
-            kakaoMessageManager.sendMessageMyself()
-        }
-        btn_sendKakaoMessageToOthers.setOnClickListener {
-            kakaoMessageManager.sendMessage()
-        }
-        btn_shareText.setOnClickListener {
-            shareManager.shareText(this,"텍스트 공유하기 성공~")
-        }
-        btn_pushAlarm.setOnClickListener {
-            pushAlarmManager.generateAndPushAlarm(this)
-        }
-        btn_captureViewAndShareWithKakao.setOnClickListener {
-            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.textView2))
-            shareManager.shareBinaryWithKakao(this,path)
-        }
-        btn_captureViewAndShareWithOthers.setOnClickListener {
-            val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
-            shareManager.shareBinaryWithOthers(this,uri.toString())
-        }
-        btn_goToNewMain.setOnClickListener{
-            val intent = Intent(this, NewMainActivity::class.java)
-            startActivity(intent)
-        }
-
-        findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
-        findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
-
-        // 피로도 저감 코드
-        CoroutineScope(Dispatchers.IO).launch {
-            val job1 = launch {
-                value1reduc()
-            }
-        }
-
-        while (true) {
-            if (loadcomp) {
-                btn_game.isEnabled = true
-                btn_game.text = "게임"
-                break
-            }
-            Thread.sleep(50)
-        }
-        ranking("a")
+//
+//        //업적 달성하기 tmp
+//        findViewById<Button>(R.id.btn_quest_tmp).setOnClickListener{
+//            val dialog = Dialog_quest(this@MainActivity)
+//            dialog.start()
+//        }
+//        //
+//
+//        // 카카오 로그인 시에만 친구 창 뜨게 하기
+//        if(profileDb?.profileDao()?.getLogin()==4){
+//            btn_friend.visibility = View.VISIBLE
+//        }
+//
+//        btn_friend.setOnClickListener{
+//            val intent = Intent(this,FriendActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//
+//        btn_profile.setOnClickListener{
+//            val intent = Intent(this,ProfileActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        btn_setting.setOnClickListener {
+//            val intent = Intent(this,SettingActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        btn_quest.setOnClickListener {
+//            val intent = Intent(this, QuestActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        btn_game.setOnClickListener{
+//            var profileDb: ProfileDB? = null
+//            profileDb = ProfileDB.getInstace(this)
+//            var money = profileDb?.profileDao()?.getMoney()!!
+//
+//            if(money <= 0){
+//                Toast.makeText(this, "현금이 없습니다.", Toast.LENGTH_LONG).show()
+//            }
+//            else{
+//                val dialog = Dialog_loading(this@MainActivity)
+//                dialog.show()
+//                val intentgame = Intent(this, PickGameActivity::class.java)
+//                val intent = Intent(this,GameNormalActivity::class.java)
+//                if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
+//                    val addRunnable = Runnable {
+//                        val newGameSetDB = GameSet()
+//                        setId = 1
+//                        newGameSetDB.id = 1
+//                        newGameSetDB.setcash = START_CASH
+//                        newGameSetDB.setgamelength = START_GAME_LENGTH
+//                        newGameSetDB.setgamespeed = START_GAME_SPEED
+//                        newGameSetDB.setmonthly = START_MONTHLY
+//                        newGameSetDB.setsalaryraise = START_SALARY_RAISE
+//                        gameSetDb?.gameSetDao()?.insert(newGameSetDB)
+//                    }
+//                    val addThread = Thread(addRunnable)
+//                    addThread.start()
+//                    startActivity(intent)
+//                    dialog.dismiss()
+//                }
+//                else {
+////                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
+////                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
+////                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
+////                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+//                    startActivity(intentgame)
+//                    dialog.dismiss()
+//                }
+//            }
+//        }
+//
+//        btn_market.setOnClickListener {
+//            val intent = Intent(this,MarketActivity::class.java)
+//            startActivity(intent)
+//        }
+//        btn_ranking.setOnClickListener{
+//            val intent = Intent(this, RankingActivity::class.java)
+//            startActivity(intent)
+//        }
+//        btn_sendKakaoMessageMyself.setOnClickListener {
+//            kakaoMessageManager.sendMessageMyself()
+//        }
+//        btn_sendKakaoMessageToOthers.setOnClickListener {
+//            kakaoMessageManager.sendMessage()
+//        }
+//        btn_shareText.setOnClickListener {
+//            shareManager.shareText(this,"텍스트 공유하기 성공~")
+//        }
+//        btn_pushAlarm.setOnClickListener {
+//            pushAlarmManager.generateAndPushAlarm(this)
+//        }
+//        btn_captureViewAndShareWithKakao.setOnClickListener {
+//            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.textView2))
+//            shareManager.shareBinaryWithKakao(this,path)
+//        }
+//        btn_captureViewAndShareWithOthers.setOnClickListener {
+//            val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
+//            shareManager.shareBinaryWithOthers(this,uri.toString())
+//        }
+//
+//        findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
+//        findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
+//
+//        // 피로도 저감 코드
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val job1 = launch {
+//                value1reduc()
+//            }
+//        }
+//
+//        while (true) {
+//            if (loadcomp) {
+//                btn_game.isEnabled = true
+//                btn_game.text = "게임"
+//                break
+//            }
+//            Thread.sleep(50)
+//        }
+//        ranking("a")
     }
 
     override fun onStart() {
@@ -542,4 +548,20 @@ class MainActivity : AppCompatActivity() {
             dlgQuest.start()
         }
     }
+
+    public fun goRankingKaKao(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentRankingKakao()
+        transaction.replace(R.id.nav_host,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+    public fun goRankingLocal(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentRankingLocal()
+        transaction.replace(R.id.nav_host,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
 }
