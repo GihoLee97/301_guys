@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.guys_from_301.stock_game.data.ProfileDB
+import com.kakao.sdk.user.UserApiClient
 
 
 var realkakaoplayer = mutableListOf<Dataclass_kakao>()
@@ -24,6 +22,9 @@ class FragmentRanking : Fragment() {
     val coloron = "#F68A06"
     val coloroff = "#FFFFFF"
     var profileDb : ProfileDB? = null
+    private lateinit var tv_my_level: TextView
+    private lateinit var tv_my_stack: TextView
+    private lateinit var tv_my_nick: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -36,11 +37,16 @@ class FragmentRanking : Fragment() {
     ): View? {
         var v : View = inflater.inflate(R.layout.fragment_ranking, container, false)
         profileDb = ProfileDB.getInstace(_MainActivity!!)
+
+
         if(profileDb?.profileDao()?.getLogin()!! != 4 ){
             v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
         }
+        v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
+        v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
         v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
         v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
+
         v.findViewById<TextView>(R.id.tv_kakaoRanking).setOnClickListener{
             v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
             v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
@@ -77,6 +83,25 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money
 
         // kakao ranking
+        friendsort()
+        if(profileDb?.profileDao()?.getLogin() != 4){
+            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+        }
+        else{
+            UserApiClient.instance.me { user, error ->
+                if (error!=null)
+                    Toast.makeText(_MainActivity,"사용자 정보 요청 실패(카카오)", Toast.LENGTH_SHORT)
+                else if (user!=null) {
+                    Glide.with(_MainActivity!!).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(v.findViewById<ImageView>(R.id.iv_my_image))
+                }
+            }
+        }
+        tv_my_level = v.findViewById(R.id.tv_my_level)
+        tv_my_nick =  v.findViewById(R.id.tv_my_nick)
+        tv_my_stack = v.findViewById(R.id.tv_my_stack)
+        tv_my_stack.text = profileDb?.profileDao()?.getMoney()!!.toString()+"   "
+        tv_my_nick.text = "   "+profileDb?.profileDao()?.getNickname()!!
+        tv_my_level.text = "   레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
         if(arrayll !=null || arraytvname != null || arraytvmoney != null){
             arrayll.clear()
             arraytvmoney.clear()
@@ -163,5 +188,24 @@ class FragmentRanking : Fragment() {
                 arguments = Bundle().apply {
                 }
             }
+    }
+    fun friendsort(){
+        if(realkakaoplayer!=null){
+            realkakaoplayer.clear()
+        }
+        for (cnt in 1..friendlevel.size){
+            if(friendlevel[cnt-1] != -1){
+                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", 0, 0, "c")
+                friendlevel[cnt-1]
+                tmp?.NAME = friendname[cnt-1];
+                tmp?.NICKNAME = friendnick[cnt-1];
+                tmp?.MONEY = friendmoney[cnt-1];
+                tmp?.LEVEL = friendlevel[cnt-1]
+                tmp?.IMAGE = friendimage[cnt-1]
+                realkakaoplayer.add(tmp)
+            }
+        }
+        //sort
+        realkakaoplayer.sortByDescending { it.MONEY }
     }
 }

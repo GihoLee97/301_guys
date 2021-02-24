@@ -33,7 +33,6 @@
 //    private lateinit var tv_kakao_space : TextView
 //    private lateinit var tv_local_space : TextView
 //
-//
 //    //색깔
 //    var coloron = "#F68A06"
 //    var coloroff = "#FFFFFF"
