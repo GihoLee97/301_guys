@@ -1,41 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="360">
     <item android:id="@android:id/background">
-        <rotate>
-            <shape
-                android:innerRadiusRatio="7"
-                android:shape="ring"
-                android:thicknessRatio="25.0"
-                android:useLevel="false">
-
-                <gradient
-                    android:angle="0"
-                    android:startColor="#ffffff"
-                    android:centerColor="#ffffff"
-                    android:endColor="#ffffff"/>
-            </shape>
-        </rotate>
+        <shape
+            android:innerRadiusRatio="3.5"
+            android:shape="ring"
+            android:useLevel="false"
+            android:angle="0"
+            android:type="sweep"
+            android:thicknessRatio="10.0">
+            <solid android:color="#ffffff"/>
+        </shape>
     </item>
 
     <item android:id="@android:id/progress">
-        <rotate
-            android:fromDegrees="0"
-            android:toDegrees="360"
-            android:pivotX="50%"
-            android:pivotY="50%" >
-            <shape
-                android:innerRadiusRatio="6.5"
-                android:shape="ring"
-                android:thicknessRatio="60.0"
-                android:useLevel="false">
-
-                <gradient
-                    android:angle="0"
-                    android:startColor="@color/color_style_3"
-                    android:centerColor="@color/color_style_3"
-                    android:endColor="@color/color_style_3"/>
-
-            </shape>
-        </rotate>
+        <shape
+            android:innerRadiusRatio="3.15"
+            android:shape="ring"
+            android:useLevel="false"
+            android:angle="0"
+            android:type="sweep"
+            android:thicknessRatio="25.0">
+            <solid android:color="@color/color_style_3"/>
+        </shape>
     </item>
 </layer-list>

@@ -211,6 +211,29 @@
                                 android:lineSpacingExtra="4dp"
                                 android:gravity="left"
                                 android:textAppearance="@style/main_dashboardHistory" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginBottom="53dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                android:text="예상 수익율"
+                                android:textAppearance="@style/main_dashboardTipDescription" />
+
+
+                            <TextView
+                                android:id="@+id/tv_predictedProfitRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginBottom="14dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                android:text="6.2%"
+                                android:textAppearance="@style/main_dashboardPredictedProfitRate" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -229,7 +252,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 android:text="팁"
-                                android:textAppearance="@style/main_dashboardTip" />
+                                android:textAppearance="@style/main_dashboardTip"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -248,8 +271,9 @@
                                 android:layout_marginBottom="17dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
-                                android:text="투자기록 확인  >"
+                                android:text="보러가기  >"
                                 android:textAppearance="@style/main_dashboardHistoryToGo" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
@@ -321,7 +345,7 @@
                                         android:id="@+id/pb_quest1"
                                         android:layout_width="35dp"
                                         android:layout_height="35dp"
-                                        android:progressDrawable="@drawable/custom_progressbar_ring"
+                                        android:progressDrawable="@drawable/custom_progressbar_rotating"
                                         android:layout_marginRight="0dp"
                                         android:layout_marginBottom="0dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
@@ -362,7 +386,7 @@
                                         android:id="@+id/pb_quest2"
                                         android:layout_width="35dp"
                                         android:layout_height="35dp"
-                                        android:progressDrawable="@drawable/custom_progressbar_ring"
+                                        android:progressDrawable="@drawable/custom_progressbar_rotating"
                                         android:layout_marginRight="0dp"
                                         android:layout_marginBottom="0dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
@@ -420,7 +444,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="26dp"
                 android:layout_marginTop="52dp"/>
         </LinearLayout>
 
@@ -432,6 +456,16 @@
         android:layout_width="match_parent"
         android:layout_height="76dp"
         app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_navigationbar_background"
+            app:menu="@menu/bottom_navigation_menu"
+            app:itemIconTint="@drawable/menu_selector_color"
+            app:itemTextColor="@drawable/menu_selector_color"
+            android:hapticFeedbackEnabled="true" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

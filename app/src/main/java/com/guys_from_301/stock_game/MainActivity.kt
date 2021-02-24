@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btn_pushAlarm: Button
     private lateinit var btn_captureViewAndShareWithKakao: Button
     private lateinit var btn_captureViewAndShareWithOthers: Button
+    private lateinit var btn_goToNewMain: Button
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         btn_pushAlarm = findViewById(R.id.btn_pushAlarm)
         btn_captureViewAndShareWithKakao = findViewById(R.id.btn_captureViewAndShareWithKakao)
         btn_captureViewAndShareWithOthers = findViewById(R.id.btn_captureViewAndShareWithOthers)
+        btn_goToNewMain = findViewById(R.id.btn_goToNewMain)
         btn_game.isEnabled = false // 로딩 미완료 상태일 때 게임 버튼 비활성화
 
 
@@ -240,6 +242,10 @@ class MainActivity : AppCompatActivity() {
         btn_captureViewAndShareWithOthers.setOnClickListener {
             val uri = captureUtil.captureAndSaveView(findViewById(R.id.textView2))
             shareManager.shareBinaryWithOthers(this,uri.toString())
+        }
+        btn_goToNewMain.setOnClickListener{
+            val intent = Intent(this, NewMainActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
