@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,41 +42,142 @@
             android:gravity="center|left"
             android:text="  레벨 "/>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="공지사항"
-                android:gravity="center|left"
-                android:layout_weight="3"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="상세보기"
-                android:gravity="center|right"
-                android:layout_weight="1"/>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_withdraw"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="게임 탈퇴"
-                android:gravity="center|left"
-                android:layout_weight="3"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="상세보기"
-                android:gravity="center|right"
-                android:layout_weight="1"/>
-        </LinearLayout>
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_notice">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="공지사항"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_version_info">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="버전정보"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_game_option">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="게임설정"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="알림"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="아이템 구매 이력"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="고객센터 / 도움말"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_withdraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="게임 탈퇴"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="상세보기"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
 
     </LinearLayout>
 

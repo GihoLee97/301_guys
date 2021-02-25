@@ -1,5 +1,7 @@
 package com.guys_from_301.stock_game
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,9 +27,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class FragmentProfile : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
@@ -35,10 +34,6 @@ class FragmentProfile : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -65,6 +60,22 @@ class FragmentProfile : Fragment() {
                 }
             }
         }
+        v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
+            val dlg = Dialog_nick(_MainActivity!!, false, profileActivityViewModel)
+            dlg.start(profileDb)
+        }
+        v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
+            //TODO: 공지사항
+            Toast.makeText(_MainActivity, "공지사항 구현해야 함", Toast.LENGTH_LONG).show()
+        }
+        v.findViewById<LinearLayout>(R.id.ll_version_info).setOnClickListener{
+            //TODO: 버전정보
+            Toast.makeText(_MainActivity, "버전정보 구현해야 함", Toast.LENGTH_LONG).show()
+        }
+        v.findViewById<LinearLayout>(R.id.ll_game_option).setOnClickListener{
+            val intent = Intent(_MainActivity, SettingActivity::class.java)
+            startActivity(intent)
+        }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
             if(profileDb?.profileDao()?.getLogin()!! == 1){
                 val dlg_delete = Dialog_DeleteAlert(_MainActivity!!)
@@ -75,10 +86,9 @@ class FragmentProfile : Fragment() {
                 dlg_delete.start()
             }
         }
-        v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
-            val dlg = Dialog_nick(_MainActivity!!, false, profileActivityViewModel)
-            dlg.start(profileDb)
-        }
+
+
+
 
         return v
     }
@@ -107,14 +117,6 @@ class FragmentProfile : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment BlankFragment2.
          */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentProfile().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
     }
 }
