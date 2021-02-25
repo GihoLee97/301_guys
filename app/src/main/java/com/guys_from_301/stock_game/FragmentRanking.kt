@@ -53,12 +53,16 @@ class FragmentRanking : Fragment() {
             v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.VISIBLE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.GONE
+            v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
+            v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
         }
         v.findViewById<TextView>(R.id.tv_localRanking).setOnClickListener {
             v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
             v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
+            v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
+            v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
         }
         // local ranking
         v.findViewById<TextView>(R.id.tv_user1_nickname_local).text = rank1_nick
@@ -100,9 +104,9 @@ class FragmentRanking : Fragment() {
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
         tv_my_stack = v.findViewById(R.id.tv_my_stack)
-        tv_my_stack.text = profileDb?.profileDao()?.getMoney()!!.toString()+"   "
-        tv_my_nick.text = "   "+profileDb?.profileDao()?.getNickname()!!
-        tv_my_level.text = "   레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
+        tv_my_stack.text = profileDb?.profileDao()?.getMoney()!!.toString()
+        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
+        tv_my_level.text = "레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
         if(arrayll !=null || arraytvname != null || arraytvmoney != null){
             arrayll.clear()
             arraytvmoney.clear()
@@ -165,12 +169,18 @@ class FragmentRanking : Fragment() {
                 v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
                 v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                 Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                if(i==4){
+                    v.findViewById<LinearLayout>(R.id.ll_kakaoUser4to10).visibility = View.VISIBLE
+                }
             }
             for(i in realkakaoplayer.size+1..10){
                 if(i<4){
                     v.findViewById<ConstraintLayout>(arrayll[i-1]).visibility = View.GONE
                 }
                 else{
+                    if(i==4){
+                        v.findViewById<LinearLayout>(R.id.ll_kakaoUser4to10).visibility = View.GONE
+                    }
                     v.findViewById<LinearLayout>(arrayll[i-1]).visibility = View.GONE
                 }
             }
