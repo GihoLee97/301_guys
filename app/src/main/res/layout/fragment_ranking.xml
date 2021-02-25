@@ -5,10 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="#ffffff"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ll_myProfile_ranking"
         android:orientation="vertical">
 
         <LinearLayout
@@ -73,7 +80,7 @@
                     android:layout_weight="1"
                     android:text="카카오 랭킹"
                     android:textAlignment="center"
-                    android:textAppearance="@style/ranking_scope_checked" />
+                    android:textAppearance="@style/ranking_scope_unchecked" />
 
                 <TextView
                     android:id="@+id/tv_localRanking"
@@ -83,7 +90,7 @@
                     android:layout_weight="1"
                     android:text="로컬 랭킹"
                     android:textAlignment="center"
-                    android:textAppearance="@style/ranking_scope_unchecked" />
+                    android:textAppearance="@style/ranking_scope_checked" />
             </LinearLayout>
 
             <LinearLayout
@@ -719,7 +726,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="25dp"
+                            android:layout_marginLeft="17dp"
                             android:text="10"
                             android:textAppearance="@style/ranking_rank_num"/>
 
@@ -1128,6 +1135,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_kakaoUser4to10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="24dp"
@@ -1381,7 +1389,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="25dp"
+                            android:layout_marginLeft="17dp"
                             android:text="10"
                             android:textAppearance="@style/ranking_rank_num"/>
 
@@ -1414,63 +1422,82 @@
             </LinearLayout>
         </ScrollView>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_myProfile_ranking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/ic_ranking_my_box">
+
+        <ImageView
+            android:id="@+id/iv_my_image"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_profile_image_templete"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_my_image"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
+            <TextView
+                android:id="@+id/tv_my_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="레벨 "
+                android:textAppearance="@style/ranking_levelAndProfit"/>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_my_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center|left"
+                android:text="닉네임 "
+                android:textAppearance="@style/ranking_nicknameAndProfitValue"/>
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_my_level"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="레벨 " />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_my_nick"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center|left"
-                    android:text="닉네임 " />
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="24dp"
+                android:text="현재 스택"
+                android:textAppearance="@style/ranking_levelAndProfit"/>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center|right"
-                    android:text="현재 스택   " />
-
-                <TextView
-                    android:id="@+id/tv_my_stack"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:gravity="center|right"
-                    android:text="0원" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_my_stack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center|right"
+                android:text="26.08%"
+                android:textAppearance="@style/ranking_nicknameAndProfitValue"/>
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

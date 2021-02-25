@@ -176,7 +176,7 @@
         <item name="android:textColor">#F8FAFB</item>
     </style>
     <style name="ranking_scope_checked">
-        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
@@ -214,5 +214,15 @@
         <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="ranking_levelAndProfit">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="ranking_nicknameAndProfitValue">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4B586B</item>
     </style>
 </resources>
