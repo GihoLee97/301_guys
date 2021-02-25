@@ -221,6 +221,7 @@
                     android:weightSum="3">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_upgrade_1"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_weight="1"

@@ -6,7 +6,7 @@
 
             android:thicknessRatio="8"
             android:useLevel="false">
-            <solid android:color="#FFFFFF" />
+            <solid android:color="@color/color_style_3" />
         </shape>
     </item>
     <item>
@@ -19,8 +19,8 @@
                 android:thicknessRatio="25"
                 android:useLevel="true">
                 <gradient
-                    android:endColor="@color/color_style_3"
-                    android:startColor="@color/color_style_3"
+                    android:endColor="#FFFFFF"
+                    android:startColor="#FFFFFF"
                     android:type="sweep" />
             </shape>
         </rotate>

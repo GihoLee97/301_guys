@@ -13,7 +13,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import java.text.DecimalFormat
 
 class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     // 결제 객체
@@ -21,8 +20,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     // 보상형 광고 관련 코드
     private lateinit var mRewardedVideoAd: RewardedVideoAd
     // Button
-    private lateinit var btn_ad : Button
-    private lateinit var btn_purchase : Button
+    private lateinit var cl_todayStack : Button
+    private lateinit var cl_upgrade_1 : Button
     private lateinit var btn_home : Button
     private lateinit var btn_ranking : Button
     private lateinit var btn_market : Button
@@ -31,7 +30,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     private var profileDb: ProfileDB? = null
     //TextView
-    private lateinit var tv_stack : TextView
+    private lateinit var tv_mountOfStack : TextView
     var isLoading = false
     var money: Int = 0
     var value1: Int = 0
@@ -44,8 +43,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         profileDb = ProfileDB.getInstace(this)
 
         //btn
-        btn_ad = findViewById(R.id.btn_ad)
-        btn_purchase = findViewById(R.id.btn_purchase)
+        cl_todayStack = findViewById(R.id.cl_todayStack)
+        cl_upgrade_1 = findViewById(R.id.cl_upgrade_1)
         btn_home = findViewById(R.id.btn_home)
         btn_ranking = findViewById(R.id.btn_ranking)
         btn_market = findViewById(R.id.btn_market)
@@ -53,8 +52,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         btn_receipt = findViewById(R.id.btn_receipt)
 
         //tv
-        tv_stack = findViewById(R.id.tv_stack)
-        tv_stack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
+        tv_mountOfStack = findViewById(R.id.tv_mountOfStack)
+        tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
@@ -64,7 +63,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         // billing Manager for purchase process
         billingManager = BillingManager(this)
 
-        btn_purchase.setOnClickListener {
+        cl_upgrade_1.setOnClickListener {
             billingManager.startConnection()
         }
 
@@ -89,7 +88,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     }
 
     fun initLayout(){
-        btn_ad.setOnClickListener{
+        cl_todayStack.setOnClickListener{
             if (mRewardedVideoAd.isLoaded) {
                 mRewardedVideoAd.show()
             }
