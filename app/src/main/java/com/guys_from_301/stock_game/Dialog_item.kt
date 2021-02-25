@@ -263,6 +263,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             }
         }
 
+
         btnItem2ok.setOnClickListener {
             if (item2speed == setGamespeed) {
                 Toast.makeText(dlg.context, "변경할 시간 진행 빠르기를 선택하세요", Toast.LENGTH_SHORT).show()
@@ -367,7 +368,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
                     nowmoney, nowvalue1, profileDb?.profileDao()?.getNickname()!!,
-                    profileDb?.profileDao()?.getProfit()!!,
+                    profileDb?.profileDao()?.getRelativeProfitRate()!!,
                     profileDb?.profileDao()?.getRoundCount()!!,
                     profileDb?.profileDao()?.getHistory()!!,
                     profileDb?.profileDao()?.getLevel()!!
@@ -383,7 +384,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             newProfile.login = profileDb?.profileDao()?.getLogin()!!
             newProfile.money = nowmoney
             newProfile.value1 = nowvalue1
-            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
             profileDb?.profileDao()?.update(newProfile)

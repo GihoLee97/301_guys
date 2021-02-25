@@ -29,7 +29,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-const val START_SNP_VAL:Float = 100000F
+const val START_SNP_VAL:Float = 100F
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 자산 관련 변수들 생성
 var asset: Float = 0F // 총 자산
@@ -70,10 +70,10 @@ var buylim3x: Float = 0F // 3x 매수 한계 수량
 var buyliminv1x: Float = 0F // -1x 매수 한계 수량
 var buyliminv3x: Float = 0F // -3x 매수 한계 수량
 
-var price1x: Float = 100000F // 1x 현재가
-var price3x: Float = 100000F // 3x 현재가
-var priceinv1x: Float = 100000F // -1x 현재가
-var priceinv3x: Float = 100000F // -3x 현재가
+var price1x: Float = 100F // 1x 현재가
+var price3x: Float = 100F // 3x 현재가
+var priceinv1x: Float = 100F // -1x 현재가
+var priceinv3x: Float = 100F // -3x 현재가
 
 var val1x: Float = 0F // 1x 현재가치
 var val3x: Float = 0F // 3x 현재가치
@@ -160,7 +160,6 @@ class GameNormalActivity : AppCompatActivity() {
     private var questList: List<Quest>? = null
     private var relativeQuestList: List<Quest>? = null
     private var surplusQuestList: List<Quest>? = null
-    private var gameHistory = listOf<GameNormal>()
     private var gameSetDb: GameSetDB? = null
     private var gl: Int = 0
 
@@ -328,10 +327,12 @@ class GameNormalActivity : AppCompatActivity() {
 
         questDb = QuestDB.getInstance(this)
         gameSetDb = GameSetDB.getInstace(this)
-        questList = questDb?.questDao()?.getQuestByTheme("게임 내 수익률")!!
-        relativeQuestList = questDb?.questDao()?.getQuestByTheme("시장대비 평균수익률")!!
+        //달성할 도전과제 불러오기
+        questList = questDb?.questDao()?.getQuestByTheme("수익률")!!
+        relativeQuestList = questDb?.questDao()?.getQuestByTheme("시장대비 수익률")!!
         surplusQuestList = questDb?.questDao()?.getQuestByTheme("연속 흑자")
-        val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(0)
+        var gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
         //setId = gameSetDb?.gameSetDao()?.getId()!!
         if (gameset != null) { gl = 250 * gameset.setgamelength }
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
@@ -339,8 +340,6 @@ class GameNormalActivity : AppCompatActivity() {
         // 값 표준화: 시작일(sp)을 100으로
         var criteria: Float = 100 / (snp_val[sp].toFloat())
         tradeday = 0
-
-
 
         gameNormalDb = GameNormalDB.getInstace(this)
 
@@ -356,13 +355,23 @@ class GameNormalActivity : AppCompatActivity() {
             criteria = 1F
         }
         else {
-            asset = START_CASH
-            cash = START_CASH
-            input = START_CASH
-            setGamelength = START_GAME_LENGTH
-            setGamespeed = START_GAME_SPEED
-            setMonthly = START_MONTHLY
-            setSalaryraise = START_SALARY_RAISE
+            if (gameset != null) {
+                if (initialgameset != null) {
+                    gameset.setcash = initialgameset.setcash
+                    gameset.setmonthly = initialgameset.setmonthly
+                    gameset.setsalaryraise = initialgameset.setsalaryraise
+                    gameset.setgamelength = initialgameset.setgamelength
+                    gameset.setgamespeed = initialgameset.setgamespeed
+                }
+                gameSetDb?.gameSetDao()?.insert(gameset)
+            }
+            asset = setCash
+            cash = setCash
+            input = setCash
+            setGamelength = setGamelength
+            setGamespeed = setGamespeed
+            setMonthly = setMonthly
+            setSalaryraise = setSalaryraise
             bought = 0F // 총 매수금액
             sold = 0F // 총 매도금액
             evaluation = 0F// 평가금액
@@ -391,10 +400,10 @@ class GameNormalActivity : AppCompatActivity() {
             buyliminv1x = 0F // -1x 매수 한계 수량
             buyliminv3x = 0F // -3x 매수 한계 수량
 
-            price1x = 100000F // 1x 현재가
-            price3x = 100000F // 3x 현재가
-            priceinv1x = 100000F // -1x 현재가
-            priceinv3x = 100000F // -3x 현재가
+            price1x = 100F // 1x 현재가
+            price3x = 100F // 3x 현재가
+            priceinv1x = 100F // -1x 현재가
+            priceinv3x = 100F // -3x 현재가
 
             val1x = 0F // 1x 현재가치
             val3x = 0F // 3x 현재가치
@@ -1268,7 +1277,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     val addRunnable = Runnable {
                                         val newGameNormalDB = GameNormal()
                                         newGameNormalDB.id = localdatatime
-                                        newGameNormalDB.buyorsell = "매수"
+                                        newGameNormalDB.buyorsell = "자동매수"
                                         newGameNormalDB.select = 1
                                         newGameNormalDB.price = price1x
                                         newGameNormalDB.volume = auto1xquant * price1x
@@ -2273,6 +2282,7 @@ class GameNormalActivity : AppCompatActivity() {
                 newGameSetDB.setgamespeed = setGamespeed
                 newGameSetDB.setmonthly = gameset.setmonthly
                 newGameSetDB.setsalaryraise = gameset.setsalaryraise
+                newGameSetDB.profitrate = profitrate
                 gameDb?.gameSetDao()?.update(newGameSetDB)
             }
             val updateSettingThread = Thread(updateSettingRunnable)
@@ -2327,7 +2337,7 @@ class GameNormalActivity : AppCompatActivity() {
                         newProfile.login = profileDb?.profileDao()?.getLogin()!!
                         newProfile.money = profileDb?.profileDao()?.getMoney()!!
                         newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
-                        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                        newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
                         newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                         newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                         profileDb?.profileDao()?.update(newProfile)
@@ -2342,49 +2352,70 @@ class GameNormalActivity : AppCompatActivity() {
         for (i in 0..questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0-> if(profitrate>=50F){
+                    0-> if(profitrate>=10F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(profitrate>=100F){
+                    1-> if(profitrate>=20F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(profitrate>=200F){
+                    2-> if(profitrate>=30F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    3-> if(profitrate>=300F){
+                    3-> if(profitrate>=50F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    4-> if(profitrate>=400F){
+                    4-> if(profitrate>=100F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    5-> if(profitrate>=500F){
+                    5-> if(profitrate>=200F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    6-> if(profitrate>=1000F){
+                    6-> if(profitrate>=300F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    7-> if(profitrate>=400F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    8-> if(profitrate>=500F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    9-> if(profitrate>=1000F){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
@@ -2429,6 +2460,13 @@ class GameNormalActivity : AppCompatActivity() {
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
+                    4-> if(relativeprofitrate>=200F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
 
                 }
             }
@@ -2439,21 +2477,35 @@ class GameNormalActivity : AppCompatActivity() {
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0-> if(surplusCount>=5){
+                    0-> if(surplusCount>=10){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(surplusCount>=10){
+                    1-> if(surplusCount>=20){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(surplusCount>=20){
+                    2-> if(surplusCount>=30){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    3-> if(surplusCount>=40){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    4-> if(surplusCount>=50){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)

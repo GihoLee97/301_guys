@@ -47,7 +47,7 @@ class ProfileActivity : AppCompatActivity() {
         lateinit var changenick: String
         var count:Int = 0
 
-        profitrate_textView.text = "시장대비 평균수익률: "+profileDb?.profileDao()?.getProfit()!!
+        profitrate_textView.text = "시장대비 평균수익률: "+profileDb?.profileDao()?.getRelativeProfitRate()!!
         level_textView.text = "레벨: "+profileDb?.profileDao()?.getLevel()!!
         money_textView.text = "현금: "+profileDb?.profileDao()?.getMoney()!!
         value1_textView.text = "피로도: "+profileDb?.profileDao()?.getValue1()!!

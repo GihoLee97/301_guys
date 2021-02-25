@@ -46,7 +46,7 @@ class FriendActivity  : AppCompatActivity() {
         setContentView(R.layout.activity_friend)
         var cnt = 0
         questDb = QuestDB.getInstance(this)
-        var friendquest = questDb?.questDao()?.getQuestByTheme("친구 초대하기")?.get(0)
+        var friendquest = questDb?.questDao()?.getQuestByTheme("초대하기")?.get(0)
         while(cnt < friendlevel.size){
             if (friendquest != null) {
                 addlayout(cnt, friendquest)

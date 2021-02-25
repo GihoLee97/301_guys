@@ -16,6 +16,7 @@ class PickGameActivity : AppCompatActivity() {
 
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
+    private var gameNormalDB: GameNormalDB? = null
     private var game = listOf<GameSet>()
     lateinit var mAdapter: PickAdapter
 
@@ -24,18 +25,31 @@ class PickGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_pick)
         //기본설정(data 불러오기 및 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(this)
-        mAdapter = PickAdapter(this, game){
-            game -> setId = game.id
-        }
+        gameNormalDB = GameNormalDB.getInstace(this)
+        mAdapter = gameNormalDB?.let {
+            PickAdapter(this, game, it){ game -> setId = game.id }
+        }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val pRecyclerView = findViewById<RecyclerView>(R.id.pRecyclerView)
-        val btnadd = findViewById<Button>(R.id.btnadd)
         pRecyclerView.layoutManager = layoutManager
         val r = Runnable {
             try{
-                game = gameDb?.gameSetDao()?.getAll()!!
-                mAdapter = PickAdapter(this, game){
-                        game -> setId = game.id
+                //초기자산값 변수
+                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+                if (initialgameset != null) {
+                    setCash = initialgameset.setcash
+                    setMonthly = initialgameset.setmonthly
+                    setSalaryraise = initialgameset.setsalaryraise
+                    setGamelength = initialgameset.setgamelength
+                    setGamespeed = initialgameset.setgamespeed
+                }
+                game = gameDb?.gameSetDao()?.getPick()!!
+                for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
+                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getPick()!![i].id).isNullOrEmpty()) {
+                    }
+                }
+                mAdapter = PickAdapter(this, game, gameNormalDB!!){
+                        gameUnit -> setId = gameUnit.id
                     val intent = Intent(this, GameNormalActivity::class.java)
                     startActivity(intent)
                 }
@@ -54,36 +68,6 @@ class PickGameActivity : AppCompatActivity() {
         val thread = Thread(r)
         thread.start()
 
-        //새 게임 추가 버튼
-        btnadd.setOnClickListener {
-            if(mAdapter.itemCount>=3){ Toast.makeText(this, "투자는 동시에 3개까지 진행할 수 있습니다.", Toast.LENGTH_LONG).show() }
-            else{
-                val intent = Intent(this, GameNormalActivity::class.java)
-                val addRunnable = Runnable {
-                    val newGameSetDB = GameSet()
-                    if(mAdapter.itemCount == 1){
-                        if(game.last().id==1) newGameSetDB.id = 2
-                        else if(game.last().id==2) newGameSetDB.id = 3
-                        else if(game.last().id==3) newGameSetDB.id = 1
-                    }
-                    else if(mAdapter.itemCount == 2 ){
-                        if(game[0].id+game[1].id == 3) newGameSetDB.id = 3
-                        if(game[0].id+game[1].id == 4) newGameSetDB.id = 2
-                        if(game[0].id+game[1].id == 5) newGameSetDB.id = 1
-                    }
-                    setId = newGameSetDB.id
-                    newGameSetDB.setcash = START_CASH
-                    newGameSetDB.setgamelength = START_GAME_LENGTH
-                    newGameSetDB.setgamespeed = START_GAME_SPEED
-                    newGameSetDB.setmonthly = START_MONTHLY
-                    newGameSetDB.setsalaryraise = START_SALARY_RAISE
-                    gameDb?.gameSetDao()?.insert(newGameSetDB)
-                }
-                val addThread = Thread(addRunnable)
-                addThread.start()
-                startActivity(intent)
-            }
-        }
     }
 
     override fun onDestroy() {

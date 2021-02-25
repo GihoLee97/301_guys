@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.guys_from_301.stock_game.data.GameNormal
+import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.GameSet
 
-class PickAdapter (val context: Context, var game: List<GameSet>, val itemClick: (GameSet) -> Unit): RecyclerView.Adapter<PickAdapter.MyViewHolder>(){
+class PickAdapter (val context: Context, var game: List<GameSet>,var gameNormalDB: GameNormalDB,val itemClick: (GameSet) -> Unit): RecyclerView.Adapter<PickAdapter.MyViewHolder>(){
     inner class MyViewHolder(itemView: View, itemClick: (GameSet) -> Unit): RecyclerView.ViewHolder(itemView) {
         var view: View = itemView
         val name = itemView.findViewById<TextView>(R.id.gameName)
-        fun bind(game : GameSet){
-            name.text = game.id.toString()
-            itemView.setOnClickListener{ itemClick(game) }
+        fun bind(gameUnit : GameSet){
+            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id).isNullOrEmpty()) name.text = "새 게임 추가하기"
+            else name.text = gameUnit.endtime
+            itemView.setOnClickListener{ itemClick(gameUnit) }
         }
     }
 

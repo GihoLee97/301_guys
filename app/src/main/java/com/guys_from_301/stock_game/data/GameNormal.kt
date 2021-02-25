@@ -74,7 +74,7 @@ data class GameNormal(
     @ColumnInfo(name = "snpdiff") var snpdiff: Float,
     @ColumnInfo(name = "setId") var setId: Int,
     @ColumnInfo(name = "relativeprofitrate") var relativeprofitrate: Float,
-    @ColumnInfo(name = "endtime") var endtime: String
+    @ColumnInfo(name = "endtime") var endtime: String //게임 종료 현재 시각
 )
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,

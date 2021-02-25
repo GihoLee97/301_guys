@@ -3,6 +3,9 @@ package com.guys_from_301.stock_game.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.guys_from_301.stock_game.RAISE_SET_CASH
+import com.guys_from_301.stock_game.RAISE_SET_MONTHLY
+import com.guys_from_301.stock_game.RAISE_SET_SALARY_RAISE
 
 @Entity
 data class GameSet(@PrimaryKey(autoGenerate = false ) var id: Int,
@@ -11,8 +14,11 @@ data class GameSet(@PrimaryKey(autoGenerate = false ) var id: Int,
                    @ColumnInfo(name="setmonthly") var setmonthly: Float,
                    @ColumnInfo(name = "setsalaryraise") var setsalaryraise: Float,
                    @ColumnInfo(name = "setgamelength") var setgamelength: Int,
-                   @ColumnInfo(name = "setgamespeed") var setgamespeed: Int
+                   @ColumnInfo(name = "setgamespeed") var setgamespeed: Int,
+                   @ColumnInfo(name = "profitrate") var profitrate: Float,
+                   @ColumnInfo(name = "endtime") var endtime: String
 
 ) {
-    constructor(): this(0,0F,0F,0F,0,0)
+    constructor(): this(0,0F,0F,0F,0,0,0F, "")
+
 }
