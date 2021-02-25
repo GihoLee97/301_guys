@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
@@ -166,7 +167,12 @@ class FragmentRanking : Fragment() {
                 Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
             }
             for(i in realkakaoplayer.size+1..10){
-                v.findViewById<LinearLayout>(arrayll[i-1]).visibility = View.GONE
+                if(i<4){
+                    v.findViewById<ConstraintLayout>(arrayll[i-1]).visibility = View.GONE
+                }
+                else{
+                    v.findViewById<LinearLayout>(arrayll[i-1]).visibility = View.GONE
+                }
             }
         }
         return v

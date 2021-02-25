@@ -21,6 +21,6 @@
     <item
         android:id="@+id/page_profile"
         android:enabled="true"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_profile_unselected"
         android:title="profile"/>
 </menu>
