@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -20,11 +17,8 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
 import org.w3c.dom.Text
+import com.guys_from_301.stock_game.data.Profile
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -33,10 +27,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class FragmentProfile : Fragment() {
 
+
     private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
     var profileDb: ProfileDB? = null
-
+    var loginMethod : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,8 +46,8 @@ class FragmentProfile : Fragment() {
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
         tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
-        v.findViewById<TextView>(R.id.tv_my_level).text = "   레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
-
+        v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
+        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDb?.profileDao()?.getExp()!!
         if(profileDb?.profileDao()?.getLogin()!! != 4){
             v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
         }
@@ -81,6 +76,20 @@ class FragmentProfile : Fragment() {
         }
         v.findViewById<LinearLayout>(R.id.ll_game_option).setOnClickListener{
             val intent = Intent(_MainActivity, SettingActivity::class.java)
+            startActivity(intent)
+        }
+        v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
+            if(profileDb?.profileDao()?.getLogin()!! == 1){
+                loginMethod = "GENERAL"
+            }
+            else if(profileDb?.profileDao()?.getLogin()!! == 2){
+                loginMethod = "GOOGLE"
+            }
+            else if(profileDb?.profileDao()?.getLogin()!! == 4){
+                loginMethod =  "KAKAO"
+            }
+            updatelogOutInFo2DB(loginMethod!!)
+            val intent = Intent(_MainActivity,InitialActivity::class.java)
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
@@ -188,5 +197,28 @@ class FragmentProfile : Fragment() {
         paint.strokeWidth = borderSize
         canvas.drawCircle(centerX, centerY, circleRadius, paint)
         return newBitmap
+    }
+    fun updatelogOutInFo2DB(method : String){
+        var loginMethod = 0
+        if(method=="GENERAL") loginMethod = 1
+        else if(method=="GOOGLE") loginMethod = 2
+        else if(method=="KAKAO") loginMethod = 4
+        profileDb = ProfileDB?.getInstace(_MainActivity!!)
+        if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
+            val setRunnable = Runnable {
+                val newProfile = Profile()
+                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+                newProfile.history = profileDb?.profileDao()?.getHistory()!!
+                newProfile.level = profileDb?.profileDao()?.getLevel()!!
+                newProfile.login = profileDb?.profileDao()?.getLogin()!!-loginMethod
+                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+                profileDb?.profileDao()?.update(newProfile)
+            }
+            var setThread = Thread(setRunnable)
+            setThread.start()
+        }
     }
 }

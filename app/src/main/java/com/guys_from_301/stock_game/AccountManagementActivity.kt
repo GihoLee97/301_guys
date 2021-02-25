@@ -154,7 +154,7 @@ class AccountManagementActivity : AppCompatActivity() {
         }
     }
 
-    private fun updatelogOutInFo2DB(method : String){
+    fun updatelogOutInFo2DB(method : String){
         var loginMethod = 0
         if(method=="GENERAL") loginMethod = 1
         else if(method=="GOOGLE") loginMethod = 2

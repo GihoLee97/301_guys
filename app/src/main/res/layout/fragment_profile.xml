@@ -10,38 +10,65 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:layout_height="201dp"
+            android:clipToPadding="false">
 
             <TextView
                 android:id="@+id/tv_my_nick"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"/>
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="64dp"
+                android:text="전성원"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAppearance="@style/profile_nickname" />
             <TextView
                 android:id="@+id/tv_nickname_change"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="닉네임 변경"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tv_my_nick"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="79dp"
+                android:textAppearance="@style/profile_nickname_change"
+                android:text="닉네임 변경 > "/>
             <ImageView
                 android:id="@+id/iv_my_image"
-                android:layout_gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="60dp">
             </ImageView>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tv_my_level"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="center|left"
-            android:text="  레벨 "/>
+            <TextView
+                android:id="@+id/tv_my_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="레벨"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="134dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAppearance="@style/proflie_level"/>
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:id="@+id/pb_exp_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="161dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:progress="50"
+                android:progressDrawable="@drawable/custom_progressbar_horizontal" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -52,76 +79,88 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal"
                     android:id="@+id/ll_notice">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="공지사항"
+                        android:layout_marginLeft="24dp"
                         android:textColor="#6C7B8E"
+                        android:textAppearance="@style/profile_letter"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
                     <TextView
                         android:layout_width="0dp"
-                        android:gravity="center"
                         android:text=">"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center|right"
+                        android:textAppearance="@style/profile_letter"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal"
                     android:id="@+id/ll_version_info">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="24dp"
                         android:text="버전정보"
+                        android:textAppearance="@style/profile_letter"
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="상세보기"
-                        android:textColor="#6C7B8E"
+                        android:text=">"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginRight="20dp"
                         android:gravity="center|right"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="26dp"
                     android:background="#EAEEEF"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal"
                     android:id="@+id/ll_game_option">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="24dp"
                         android:text="게임설정"
+                        android:textAppearance="@style/profile_letter"
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="상세보기"
-                        android:textColor="#6C7B8E"
+                        android:text=">"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginRight="20dp"
                         android:gravity="center|right"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginLeft="24dp"
                         android:text="알림"
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
@@ -129,70 +168,99 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="상세보기"
-                        android:textColor="#6C7B8E"
+                        android:text=">"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginRight="20dp"
                         android:gravity="center|right"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginLeft="24dp"
                         android:text="아이템 구매 이력"
-                        android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="상세보기"
-                        android:textColor="#6C7B8E"
+                        android:text=">"
+                        android:textAppearance="@style/profile_letter"
+                        android:layout_marginRight="20dp"
                         android:gravity="center|right"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="26dp"
                     android:background="#EAEEEF"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="24dp"
                         android:text="고객센터 / 도움말"
+                        android:textAppearance="@style/profile_letter"
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="상세보기"
+                        android:text=">"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center|right"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_sign_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="24dp"
+                        android:text="로그아웃"
+                        android:textAppearance="@style/profile_letter"
                         android:textColor="#6C7B8E"
+                        android:gravity="center|left"
+                        android:layout_weight="3"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text=">"
+                        android:layout_marginRight="20dp"
                         android:gravity="center|right"
                         android:layout_weight="1"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_withdraw"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="24dp"
                         android:text="게임 탈퇴"
+                        android:textAppearance="@style/profile_withdraw"
                         android:gravity="center|left"
-                        android:textColor="#F94001"
                         android:layout_weight="3"/>
                     <TextView
                         android:id="@+id/path_72"
                         android:layout_width="0dp"
-                        android:gravity="center"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center|right"
                         android:layout_height="match_parent"
                         android:text=">"
                         android:layout_weight="1"/>
