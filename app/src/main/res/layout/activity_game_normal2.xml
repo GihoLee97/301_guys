@@ -2,556 +2,1115 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".GameNormalActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="12">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="#E5E5E5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="게임 1"
-                android:fontFamily="@font/paybooc_otf_bold"
-                android:textSize="20sp">
-            </TextView>
-        </LinearLayout>
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_assetInfo"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_weight="5"
-            android:background="#E5E5E5">
+            android:layout_height="236dp"
+            android:elevation="10dp"
+            android:background="#ED9D0B"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_marginLeft="24dp"
+                    android:layout_width="8dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/btn_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </Button>
+
+                <TextView
+
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="게임 1"
+                    android:textAppearance="@style/game_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </TextView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
                 android:layout_weight="3"
-                android:weightSum="3"
-                >
+                android:orientation="vertical"
+                android:weightSum="3">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="24dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="총 자산은"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:textSize="18sp">
+                    android:text="총 자산"
+                    android:textAppearance="@style/game_asset">
                 </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="&#xffe6; 149,925,000 입니다"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:textSize="18sp">
-                </TextView>
+
                 <LinearLayout
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
                     android:layout_weight="1"
-                    android:weightSum="4">
-
+                    android:background="@drawable/borderlineasset">
                     <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="수익률"
-                        android:fontFamily="@font/paybooc_otf_extrabold"
-                        android:textSize="14sp">
-                    </TextView>
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="56.2 %"
-                        android:fontFamily="@font/paybooc_otf_extrabold"
-                        android:textSize="14sp">
-                    </TextView>
-                    <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="총 손익"
-                        android:fontFamily="@font/paybooc_otf_extrabold"
-                        android:textSize="14sp">
-                    </TextView>
-                    <TextView
-                        android:layout_width="110dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:layout_marginRight="20dp"
-                        android:gravity="right"
-                        android:text="&#xffe6; 52,463,000"
-                        android:fontFamily="@font/paybooc_otf_extrabold"
-                        android:textSize="14sp">
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="$ 123,340"
+                        android:textAppearance="@style/game_assetnum">
                     </TextView>
                 </LinearLayout>
             </LinearLayout>
-
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/cht_snp"
+            
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_weight="6">
-            </com.github.mikephil.charting.charts.LineChart>
+                android:layout_height="36dp"
+                android:layout_weight="1">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="24dp"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:gravity="left"
-                    android:text="S&amp;P 500 Index"
-                    android:fontFamily="@font/paybooc_otf_extrabold"
-                    android:textSize="14sp">
+                    android:text="수익률"
+                    android:textAppearance="@style/game_profitrate">
                 </TextView>
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
                     android:gravity="right"
-                    android:text="120.13"
-                    android:fontFamily="@font/paybooc_otf_extrabold"
-                    android:textSize="14sp">
+                    android:text="56.2 %"
+                    android:textAppearance="@style/game_profitratenum">
+                </TextView>
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="총 손익"
+                    android:textAppearance="@style/game_profit">
+                </TextView>
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="24dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="$ 64,400"
+                    android:textAppearance="@style/game_profitnum">
                 </TextView>
             </LinearLayout>
         </LinearLayout>
 
-        <ScrollView
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:layout_weight="5">
+            android:layout_height="414dp"
+            android:elevation="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="570dp"
-                android:orientation="vertical"
-                android:weightSum="18">
+                android:layout_height="64dp"
+                android:elevation="10dp"
+                android:background="#ED9D0B">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="64dp"
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:elevation="10dp"
+                android:background="@drawable/scroll_gradation">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:elevation="10dp"
+                android:weightSum="1">
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/paybooc_otf_extrabold"
-                        android:gravity="center"
-                        android:text="ETF 종목"
-                        android:textSize="15sp">
-                    </TextView>
-
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent">
                 </LinearLayout>
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_weight="6">
-
-
-                    <LinearLayout
-                        android:layout_width="120dp"
-                        android:layout_height="150dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/borderline"
-                        android:orientation="vertical"
-                        android:elevation="10dp">
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/paybooc_otf_extrabold"
-                            android:gravity="left"
-                            android:text="1X"
-                            android:textSize="14sp">
-                        </TextView>
-                    </LinearLayout>
-                    
-                </HorizontalScrollView>
-
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_width="340dp"
+                    android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:layout_marginTop="5dp">
-                    <View
-                        android:layout_width="375dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center"
-                        android:background="@color/black">
-                    </View>
-                    <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="28dp"
-                        android:gravity="center"
-                        android:text="뉴스"
-                        android:fontFamily="@font/paybooc_otf_bold"
-                        android:textSize="14sp">
-                    </TextView>
-                    <View
-                        android:layout_width="375dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center"
-                        android:background="@color/black">
-                    </View>
-                </LinearLayout>
-
-                <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:layout_weight="10"
-                    android:weightSum="11">
+                    android:background="@drawable/borderline_chart">
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_snp"
+                        android:layout_width="match_parent"
+                        android:layout_height="119dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.github.mikephil.charting.charts.LineChart>
 
                     <LinearLayout
-                        android:orientation="horizontal"
+                        android:layout_marginTop="13dp"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="1">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/paybooc_otf_extrabold"
-                            android:gravity="center"
-                            android:text="주요 경제 지표"
-                            android:textSize="15sp">
-                        </TextView>
-                    </LinearLayout>
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="7">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:weightSum="12">
                         <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="5"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="S&amp;P 500"
+                            android:textAppearance="@style/game_snp"
                             android:gravity="left"
-                            android:text="연방준비은행 기금 금리"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
+                            android:layout_weight="2">
                         </TextView>
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_fund"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
+                        <LinearLayout
+                            android:layout_width="132dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="3">
-                        </com.github.mikephil.charting.charts.LineChart>
+                        </LinearLayout>
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="2"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="120.4"
+                            android:textAppearance="@style/game_snpval"
                             android:gravity="right"
-                            android:text="1.9 %"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
+                            android:layout_weight="2">
                         </TextView>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:weightSum="12">
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="5"
-                            android:gravity="left"
-                            android:text="10년 만기 국채 이율"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_bond"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="3">
-                        </com.github.mikephil.charting.charts.LineChart>
-                        <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="2"
-                            android:gravity="right"
-                            android:text="1.9 %"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:weightSum="12">
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="5"
-                            android:gravity="left"
-                            android:text="산업생산량"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_indpro"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="3">
-                        </com.github.mikephil.charting.charts.LineChart>
-                        <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="2"
-                            android:gravity="right"
-                            android:text="1.9 %"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:weightSum="12">
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="5"
-                            android:gravity="left"
-                            android:text="실업률"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_unem"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="3">
-                        </com.github.mikephil.charting.charts.LineChart>
-                        <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="2"
-                            android:gravity="right"
-                            android:text="1.9 %"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_weight="2"
-                        android:weightSum="12">
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="5"
-                            android:gravity="left"
-                            android:text="인플레이션"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_inf"
-                            android:layout_width="90dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="60dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:layout_weight="3">
-                        </com.github.mikephil.charting.charts.LineChart>
-                        <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_weight="2"
-                            android:gravity="right"
-                            android:text="1.9 %"
-                            android:fontFamily="@font/paybooc_otf_extrabold">
-                        </TextView>
-                    </LinearLayout>
-
-
-
-
                 </LinearLayout>
-
-
+                <LinearLayout
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
             </LinearLayout>
 
 
-        </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="64dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical"
+                    android:weightSum="18">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="184dp"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_marginLeft="24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="보유 ETF"
+                            android:textAppearance="@style/game_etfs">
+                        </TextView>
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="128dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="24dp"
+                                android:background="@drawable/borderline_etf"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="18dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="x1 일반"
+                                        android:textAppearance="@style/game_etftitle">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="15dp"
+                                    android:layout_marginTop="4dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="$ 102"
+                                        android:textAppearance="@style/game_etfprice">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="1dp"
+                                    android:gravity="right"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:text="1124 주"
+                                        android:textAppearance="@style/game_etfquant">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:background="@drawable/ic_polygon_2">
+                                    </View>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="8dp"
+                                        android:gravity="right"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_etfdiff2">
+                                    </TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@color/white"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 레버리지"
+                                            android:textAppearance="@style/game_etftitle">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="15dp"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="$ 102"
+                                            android:textAppearance="@style/game_etfprice">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:text=""
+                                        android:textAppearance="@style/game_etfquant">
+                                    </TextView>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="1dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text=""
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="1124 주"
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="4dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="12dp"
+                                            android:layout_height="12dp"
+                                            android:background="@drawable/ic_polygon_2">
+                                        </View>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="8dp"
+                                            android:gravity="right"
+                                            android:text="2.08 %"
+                                            android:textAppearance="@style/game_etfdiff2">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_lock"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 레버리지"
+                                            android:textAppearance="@style/game_etftitlelock">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:layout_marginTop="38dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="잠김"
+                                            android:textAppearance="@style/game_etflock">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </FrameLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/borderline_etf"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="18dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="x1 인버스 "
+                                        android:textAppearance="@style/game_etftitle">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="15dp"
+                                    android:layout_marginTop="4dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="$ 97"
+                                        android:textAppearance="@style/game_etfprice">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="1dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:text="14 주"
+                                        android:textAppearance="@style/game_etfquant">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:background="@drawable/ic_polygon_3">
+                                    </View>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="8dp"
+                                        android:gravity="right"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_etfdiff3">
+                                    </TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                            <FrameLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:background="@color/white"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 인버스"
+                                            android:textAppearance="@style/game_etftitle">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="15dp"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="$ 102"
+                                            android:textAppearance="@style/game_etfprice">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="1dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text=""
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="1124 주"
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="4dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="12dp"
+                                            android:layout_height="12dp"
+                                            android:background="@drawable/ic_polygon_2">
+                                        </View>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="8dp"
+                                            android:gravity="right"
+                                            android:text="2.08 %"
+                                            android:textAppearance="@style/game_etfdiff2">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_lock"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 인버스"
+                                            android:textAppearance="@style/game_etftitlelock">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:layout_marginTop="38dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="잠김"
+                                            android:textAppearance="@style/game_etflock">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </FrameLayout>
+
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_width="312dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1"
+                                android:background="#4B586B"
+                                android:layout_gravity="center">
+                            </View>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:orientation="horizontal"
+                            android:background="@color/white">
+                            <LinearLayout
+                                android:layout_width="44dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="뉴스"
+                                android:textAppearance="@style/game_newstitle"
+                                android:layout_weight="23">
+                            </TextView>
+                            <LinearLayout
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="229dp"
+                                android:layout_height="match_parent"
+                                android:text="뉴스스스스스스스스스스"
+                                android:textAppearance="@style/game_news"
+                                android:background="#1AFF0000"
+                                android:layout_weight="229">
+                            </TextView>
+                            <LinearLayout
+                                android:layout_width="44dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_width="312dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1"
+                                android:background="#4B586B"
+                                android:layout_gravity="center">
+                            </View>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="322dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="24dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"></LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="경제 지표"
+                                android:textAppearance="@style/game_ecoindextitle"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="268dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="180dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="180"
+                                android:orientation="vertical">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/borderline_ecotop"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="연준 기금 금리"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="10년 만기 국채 이율"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="산업생산량"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="실업률"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecobottom"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="인플레이션"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="180dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="180"
+                                android:orientation="vertical">
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="196dp"
+                                    android:layout_marginRight="24dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/borderline_ecobig"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="20dp"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:text="금리"
+                                        android:textAppearance="@style/game_ecoindextitlebig">
+                                    </TextView>
+                                    <com.github.mikephil.charting.charts.LineChart
+                                        android:id="@+id/cht_fund"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:layout_marginTop="52dp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </com.github.mikephil.charting.charts.LineChart>
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_weight="1"
+            android:layout_height="88dp"
+            android:orientation="vertical"
             android:weightSum="3">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="56dp"
                 android:layout_weight="2"
+                android:orientation="horizontal"
                 android:weightSum="6">
+
                 <Button
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="아이템"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:textSize="13sp"
-                    android:textColor="@color/white"
+                    android:background="#666666"
                     android:backgroundTint="#666666"
-                    android:background="#666666">
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:text="아이템"
+                    android:textColor="@color/white"
+                    android:textSize="13sp">
                 </Button>
+
                 <Button
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
-                    android:text="거래하기"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"
+                    android:background="#F68A06"
                     android:backgroundTint="#F68A06"
-                    android:background="#F68A06">
+                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:text="거래하기"
+                    android:textColor="@color/white"
+                    android:textSize="18sp">
                 </Button>
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_weight="1"
                 android:background="#E5E5E5"
+                android:orientation="horizontal"
                 android:weightSum="6">
+
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/paybooc_otf_bold"
                     android:gravity="center"
                     android:text="피로도"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:textSize="14sp"
-                    android:layout_weight="1">
+                    android:textSize="14sp">
                 </TextView>
+
                 <ProgressBar
                     android:id="@+id/progress_value1"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="290dp"
                     android:layout_height="15dp"
-                    android:layout_marginRight="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="5"
                     android:indeterminateOnly="false"
                     android:max="10000"
-                    android:progress="0"
-                    android:indeterminateTint="#ff0000">
+                    android:progress="0">
                 </ProgressBar>
             </LinearLayout>
 
 
         </LinearLayout>
 
-        
-    </LinearLayout>
 
+    </LinearLayout>
 
 
 </FrameLayout>
