@@ -28,8 +28,6 @@ class FragmentRanking : Fragment() {
     private lateinit var tv_my_nick: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
     }
 
     override fun onCreateView(
@@ -189,23 +187,6 @@ class FragmentRanking : Fragment() {
         return v
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BlankFragment2.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentRanking().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
     fun friendsort(){
         if(realkakaoplayer!=null){
             realkakaoplayer.clear()
@@ -222,7 +203,12 @@ class FragmentRanking : Fragment() {
                 realkakaoplayer.add(tmp)
             }
         }
+
         //sort
         realkakaoplayer.sortByDescending { it.MONEY }
+        println("---1: "+ realkakaoplayer[0])
+        println("---2: "+ realkakaoplayer[1])
+        println("---3: "+ realkakaoplayer[2])
+
     }
 }

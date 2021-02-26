@@ -26,6 +26,7 @@ import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitFriend
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import com.kakao.sdk.talk.TalkApiClient
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -51,6 +52,7 @@ var rank5_nick :String = ""; var rank5_money :String = ""; var rank6_nick :Strin
 var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :String = ""; var rank8_money :String = ""
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
 
+var my_name: String = ""; var my_image: String = ""
 class MainActivity : AppCompatActivity() {
     // fragment 관련
     val manager = supportFragmentManager
@@ -98,7 +100,15 @@ class MainActivity : AppCompatActivity() {
         // OneSignal Initialization
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
-
+        //내 정보
+        UserApiClient.instance.me { user, error ->
+            if (error!=null)
+                Toast.makeText(_MainActivity,"사용자 정보 요청 실패(카카오)", Toast.LENGTH_SHORT)
+            else if (user!=null) {
+                my_image = user?.kakaoAccount?.profile?.thumbnailImageUrl!!
+                my_name = user?.kakaoAccount?.profile?.nickname!!
+            }
+        }
         //친구 정보 코드
         TalkApiClient.instance.profile { profile, error ->
             if (error != null) {
@@ -430,6 +440,11 @@ class MainActivity : AppCompatActivity() {
                             friendnick.add(data[i].NICKNAME)
                         }
                     }
+                    friendname.add(my_name)
+                    friendnick.add(profileDb?.profileDao()?.getNickname()!!)
+                    friendmoney.add(profileDb?.profileDao()?.getMoney()!!)
+                    friendlevel.add(profileDb?.profileDao()?.getLevel()!!)
+                    friendimage.add(my_image!!)
                 }
             }
         })
