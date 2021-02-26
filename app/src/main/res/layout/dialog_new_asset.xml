@@ -1,213 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="자산 보유 현황"
-        android:textAppearance="@style/game_dialog_asset_title"/>
+        android:orientation="vertical"
+        android:background="@drawable/borderline6"
+        android:paddingBottom="16dp"
+        android:elevation="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="12dp">
-
-        <ProgressBar
-            android:id="@+id/pb_currentAssetState"
-            style="?android:attr/progressBarStyleHorizontal"
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="2dp"
-            android:progress="20"
-            android:progressDrawable="@drawable/custom_progressbar_horizontal2" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="00%"
-            android:textAppearance="@style/game_dialog_asset_cashAndStockRatio"
-            android:textColor="#B7B1B3"
-            android:layout_marginLeft="5dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="26dp"
+            android:text="자산 보유 현황"
+            android:textAppearance="@style/game_dialog_asset_title" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="12dp">
+
+            <ProgressBar
+                android:id="@+id/pb_currentAssetState"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                android:progress="20"
+                android:progressDrawable="@drawable/custom_progressbar_horizontal2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="00%"
+                android:textAppearance="@style/game_dialog_asset_cashAndStockRatio"
+                android:textColor="#B7B1B3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="00%"
+                android:textAppearance="@style/game_dialog_asset_cashAndStockRatio"
+                android:textColor="#F8FAFB"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00%"
-            android:textAppearance="@style/game_dialog_asset_cashAndStockRatio"
-            android:textColor="#F8FAFB"
-            android:layout_marginRight="5dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="현금"
+                android:textAppearance="@style/game_dialog_asset_cashAndStock" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="현금"
-            android:textAppearance="@style/game_dialog_asset_cashAndStock"
-            android:layout_alignParentLeft="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="주식"
-            android:textAppearance="@style/game_dialog_asset_cashAndStock"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="주식"
+                android:textAppearance="@style/game_dialog_asset_cashAndStock" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="147dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:text="O"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
                     android:text="배당"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
+                    android:textAppearance="@style/game_dialog_asset_eventTitleUp"/>
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:text="배당금 $1,200 입금"
-                    android:background="@color/white"
-                    android:layout_weight="3"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당금 $1,000 입금"
+                    android:textAppearance="@style/game_dialog_asset_eventDescription"/>
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:text="O"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:text="월급"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:text="월급 $1,200 입금"
-                    android:background="@color/white"
-                    android:layout_weight="3"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:text="O"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
                     android:text="배당"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
+                    android:textAppearance="@style/game_dialog_asset_eventTitleDown"/>
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:text="배당금 $1,200 입금"
-                    android:background="@color/white"
-                    android:layout_weight="3"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당금 $1,000 입금"
+                    android:textAppearance="@style/game_dialog_asset_eventDescription"/>
+
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="40dp"
-                    android:text="O"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
                     android:text="배당"
-                    android:background="@color/white"
-                    android:layout_weight="1"/>
+                    android:textAppearance="@style/game_dialog_asset_eventTitleUp"/>
+
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:text="배당금 $1,200 입금"
-                    android:background="@color/white"
-                    android:layout_weight="3"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당금 $1,000 입금"
+                    android:textAppearance="@style/game_dialog_asset_eventDescription"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당"
+                    android:textAppearance="@style/game_dialog_asset_eventTitleDown"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당금 $1,000 입금"
+                    android:textAppearance="@style/game_dialog_asset_eventDescription"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당"
+                    android:textAppearance="@style/game_dialog_asset_eventTitleUp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="배당금 $1,000 입금"
+                    android:textAppearance="@style/game_dialog_asset_eventDescription"/>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -215,11 +214,10 @@
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="36dp"
+        android:background="@drawable/ic_asset_dialog_close_button"
         android:gravity="center"
-        android:text="닫기"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        android:backgroundTint="@color/blue"/>
+        android:text="창 닫기"
+        android:textAppearance="@style/game_dialog_asset_close"/>
 
 </LinearLayout>
