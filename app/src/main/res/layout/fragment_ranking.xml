@@ -69,14 +69,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="26dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_kakaoRanking"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="16dp"
                     android:layout_weight="1"
                     android:text="카카오 랭킹"
                     android:textAlignment="center"
@@ -86,7 +86,7 @@
                     android:id="@+id/tv_localRanking"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:paddingVertical="16dp"
                     android:layout_weight="1"
                     android:text="로컬 랭킹"
                     android:textAlignment="center"
@@ -491,7 +491,7 @@
                     android:layout_margin="24dp"
                     android:background="@drawable/borderline2"
                     android:elevation="10dp"
-                    android:paddingTop="20dp"
+                    android:paddingVertical="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -1141,7 +1141,7 @@
                     android:layout_margin="24dp"
                     android:background="@drawable/borderline2"
                     android:elevation="10dp"
-                    android:paddingTop="20dp"
+                    android:paddingVertical="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout

@@ -43,22 +43,22 @@ class FragmentRanking : Fragment() {
         if(profileDb?.profileDao()?.getLogin()!! != 4 ){
             v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
         }
-        v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
-        v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
+        v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
+        v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
         v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
         v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
 
         v.findViewById<TextView>(R.id.tv_kakaoRanking).setOnClickListener{
-            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
-            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
+            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
+            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.VISIBLE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.GONE
             v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
             v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
         }
         v.findViewById<TextView>(R.id.tv_localRanking).setOnClickListener {
-            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
-            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloron))
+            v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
+            v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
             v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
             v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
@@ -90,7 +90,8 @@ class FragmentRanking : Fragment() {
         // kakao ranking
         friendsort()
         if(profileDb?.profileDao()?.getLogin() != 4){
-            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+//            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE TODO!! check
+            v.findViewById<TextView>(R.id.tv_local_space).visibility=View.GONE
         }
         else{
             UserApiClient.instance.me { user, error ->
@@ -175,7 +176,7 @@ class FragmentRanking : Fragment() {
             }
             for(i in realkakaoplayer.size+1..10){
                 if(i<4){
-                    v.findViewById<ConstraintLayout>(arrayll[i-1]).visibility = View.GONE
+                    v.findViewById<ConstraintLayout>(arrayll[i-1]).visibility = View.INVISIBLE
                 }
                 else{
                     if(i==4){
