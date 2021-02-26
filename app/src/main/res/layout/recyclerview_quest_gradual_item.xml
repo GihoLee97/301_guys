@@ -2,16 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:clipToPadding="false"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="0dp"
         android:background="@drawable/borderline2"
-        android:elevation="10dp"
+        android:elevation="5dp"
+        app:layout_constraintDimensionRatio="148:96"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
