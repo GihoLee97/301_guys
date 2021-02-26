@@ -9,6 +9,23 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
+    <style name="game_dialog_bottom_sheet_item_titleSmall">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="game_dialog_bottom_sheet_item_buttonActivated">
+        <item name="android:background">@drawable/ic_dialog_bottom_sheet_item_button_unactivated</item>
+    </style>
+    <style name="game_dialog_bottom_sheet_item_buttonUnactivated">
+        <item name="android:background">@drawable/ic_dialog_bottom_sheet_item_button_activated</item>
+    </style>
+    <style name="game_dialog_bottom_sheet_useItem">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+
 
     <!--main activity-->
     <style name="main_userName">
@@ -250,6 +267,11 @@
         <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="game_dialog_bottom_sheet_item_titleRarge">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F4730B</item>
     </style>
 
     <!-- Game Normal Activity -->
