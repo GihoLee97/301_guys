@@ -26,11 +26,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
 var _MainActivity : Context? = null
-const val START_CASH = 10000000F
-const val START_MONTHLY = 1000000F
+const val START_CASH = 10000F
+const val START_MONTHLY = 1000F
 const val START_SALARY_RAISE = 6F
 const val START_GAME_LENGTH = 30
 const val START_GAME_SPEED = 3
@@ -41,12 +42,15 @@ var rank3_nick :String = ""; var rank3_money :String = ""; var rank4_nick :Strin
 var rank5_nick :String = ""; var rank5_money :String = ""; var rank6_nick :String = ""; var rank6_money :String = ""
 var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :String = ""; var rank8_money :String = ""
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
+//gameset update 여부
+var updateGameSet: Boolean = false
 
 class MainActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     var itemDb: ItemDB? = null
     val mContext: Context = this
     var profileDb : ProfileDB? = null
+    var gameNormalDb: GameNormalDB? = null
     var questDb: QuestDB? = null
     private var tradedayQuestList:List<Quest>? = null
     private var countGameQuestList:List<Quest>? = null
@@ -71,12 +75,13 @@ class MainActivity : AppCompatActivity() {
         profileDb = ProfileDB?.getInstace(mContext!!)
         questDb = QuestDB.getInstance(mContext!!)
         tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
-        countGameQuestList = questDb?.questDao()?.getQuestByTheme("게임 플레이하기")
+        countGameQuestList = questDb?.questDao()?.getQuestByTheme("투자 경험")
 
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         gameSetDb = GameSetDB.getInstace(this)
+        gameNormalDb = GameNormalDB.getInstace(this)
         // 광고 관련 코드
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
@@ -87,6 +92,62 @@ class MainActivity : AppCompatActivity() {
         // OneSignal Initialization
         OneSignal.initWithContext(this)
         OneSignal.setAppId(ONESIGNAL_APP_ID)
+
+        //초기자산값 변수
+        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(0)
+
+        //게임 저장시 gmaeset 업데이트
+        if(updateGameSet){
+            val dialog = Dialog_loading(this@MainActivity)
+            dialog.show()
+            var localDateTime = LocalDateTime.now()
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+            if (newGameSet != null) {
+                newGameSet.endtime = localDateTime.toString()
+                newGameSet.profitrate = profitrate
+                gameSetDb?.gameSetDao()?.insert(newGameSet)
+            }
+            updateGameSet = false
+            dialog.dismiss()
+        }
+        //새로운 빈 게임 생성
+        var gamesetList = gameSetDb?.gameSetDao()?.getPick()
+        var existence = false   //새 게임 존재 여부
+        for (i in 0..gameSetDb?.gameSetDao()?.getPick()?.size!!-1) {
+            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick()!![i].id).isNullOrEmpty()) {
+                existence = true
+            }
+        }
+        if (gamesetList != null) {
+            if (!existence && gamesetList.size < 3) {
+                val newGameSet = GameSet()
+
+                if (gamesetList.size == 1) {
+                    if (gamesetList.last().id == 1) newGameSet.id = 2
+                    else if (gamesetList.last().id == 2) newGameSet.id = 3
+                    else if (gamesetList.last().id == 3) newGameSet.id = 1
+                } else if (gamesetList.size == 2) {
+                    if (gamesetList[0].id + gamesetList[1].id == 3) newGameSet.id = 3
+                    if (gamesetList[0].id + gamesetList[1].id == 4) newGameSet.id = 2
+                    if (gamesetList[0].id + gamesetList[1].id == 5) newGameSet.id = 1
+                } else if (gamesetList.size == 0){
+                    newGameSet.id = 1
+                }
+                //예전거 누적
+                if (initialgameset != null) {
+                    newGameSet.setcash = initialgameset.setcash
+                    newGameSet.setmonthly = initialgameset.setmonthly
+                    newGameSet.setsalaryraise = initialgameset.setsalaryraise
+                    newGameSet.setgamespeed = initialgameset.setgamespeed
+                    newGameSet.setgamelength = initialgameset.setgamelength
+                }
+                newGameSet.endtime = ""
+                gameSetDb?.gameSetDao()?.insert(newGameSet)
+            }
+        }
+
+
+
 
         //친구 정보 코드
         TalkApiClient.instance.profile { profile, error ->
@@ -179,6 +240,7 @@ class MainActivity : AppCompatActivity() {
             profileDb = ProfileDB.getInstace(this)
             var money = profileDb?.profileDao()?.getMoney()!!
 
+
             if(money <= 0){
                 Toast.makeText(this, "현금이 없습니다.", Toast.LENGTH_LONG).show()
             }
@@ -186,32 +248,12 @@ class MainActivity : AppCompatActivity() {
                 val dialog = Dialog_loading(this@MainActivity)
                 dialog.show()
                 val intentgame = Intent(this, PickGameActivity::class.java)
-                val intent = Intent(this,GameNormalActivity::class.java)
-                if(gameSetDb?.gameSetDao()?.getAll()?.isEmpty() == true)    {
-                    val addRunnable = Runnable {
-                        val newGameSetDB = GameSet()
-                        setId = 1
-                        newGameSetDB.id = 1
-                        newGameSetDB.setcash = START_CASH
-                        newGameSetDB.setgamelength = START_GAME_LENGTH
-                        newGameSetDB.setgamespeed = START_GAME_SPEED
-                        newGameSetDB.setmonthly = START_MONTHLY
-                        newGameSetDB.setsalaryraise = START_SALARY_RAISE
-                        gameSetDb?.gameSetDao()?.insert(newGameSetDB)
-                    }
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
-                    startActivity(intent)
-                    dialog.dismiss()
-                }
-                else {
 //                    setCash = gameSetDb?.gameSetDao()?.getSetCash()!!
 //                    setMonthly = gameSetDb?.gameSetDao()?.getSetMonthly()!!
 //                    setSalaryraise = gameSetDb?.gameSetDao()?.getSetSalaryRaise()!!
 //                    setGamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
-                    startActivity(intentgame)
-                    dialog.dismiss()
-                }
+                startActivity(intentgame)
+                dialog.dismiss()
             }
         }
 
@@ -282,7 +324,7 @@ class MainActivity : AppCompatActivity() {
             profileDb?.profileDao()?.getMoney()!!,
             profileDb?.profileDao()?.getValue1()!!,
             profileDb?.profileDao()?.getNickname()!!,
-            profileDb?.profileDao()?.getProfit()!!,
+            profileDb?.profileDao()?.getRelativeProfitRate()!!,
             profileDb?.profileDao()?.getRoundCount()!!,
             profileDb?.profileDao()?.getHistory()!!,
             profileDb?.profileDao()?.getLevel()!!
@@ -366,7 +408,7 @@ class MainActivity : AppCompatActivity() {
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.money = profileDb?.profileDao()?.getMoney()!!
                 newProfile.value1 = nowvalue1
-                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
@@ -443,7 +485,7 @@ class MainActivity : AppCompatActivity() {
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(tradeday>=30000){
+                    1-> if(tradeday>=20000){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = kotlinx.coroutines.Runnable {
                             questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
@@ -452,7 +494,7 @@ class MainActivity : AppCompatActivity() {
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(tradeday>=50000){
+                    2-> if(tradeday>=30000){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = kotlinx.coroutines.Runnable {
                             questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
@@ -461,7 +503,16 @@ class MainActivity : AppCompatActivity() {
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    3-> if(tradeday>=100000){
+                    3-> if(tradeday>=50000){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    4-> if(tradeday>=100000){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = kotlinx.coroutines.Runnable {
                             questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
@@ -489,7 +540,16 @@ class MainActivity : AppCompatActivity() {
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(countGame>=10){
+                    1-> if(countGame>=5){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questList?.get(i)?.let { questDb?.questDao()?.insert(it) }
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        questAchieved.add(questList[i])
+                    }
+                    2-> if(countGame>=10){
                         questList?.get(i)?.achievement = 1
                         val addRunnable = kotlinx.coroutines.Runnable {
                             questList?.get(i)?.let { questDb?.questDao()?.insert(it) }

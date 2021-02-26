@@ -5,10 +5,10 @@ import androidx.room.*
 
 @Dao
 interface GameNormalDao {
-    @Query("SELECT * FROM GameNormal ORDER BY id ASC")
+    @Query("SELECT * FROM GameNormal WHERE buyorsell IS NOT '최종' ORDER BY id ASC")
     fun getAll(): List<GameNormal>
 
-    @Query("SELECT * FROM GameNormal WHERE setId = :setId ORDER BY id ASC")
+    @Query("SELECT * FROM GameNormal WHERE setId = :setId AND buyorsell IS NOT '최종' ORDER BY id ASC")
     fun getSetWithNormal(setId: Int): List<GameNormal>
 
     @Query("SELECT profittot FROM GameNormal")

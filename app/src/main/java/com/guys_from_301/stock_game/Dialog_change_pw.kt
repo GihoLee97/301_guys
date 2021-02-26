@@ -101,7 +101,7 @@ class Dialog_change_pw(context: Context) {
             newProfile.exp = profileDb?.profileDao()?.getExp()!!
             newProfile.rank = profileDb?.profileDao()?.getRank()!!
             newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = pw
             profileDb?.profileDao()?.update(newProfile)

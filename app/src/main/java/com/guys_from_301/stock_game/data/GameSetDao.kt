@@ -13,6 +13,9 @@ interface GameSetDao {
     @Query("SELECT id FROM GameSet")
     fun getId(): Int
 
+    @Query("SELECT * FROM gameset WHERE id > 0 ORDER BY endtime")
+    fun getPick(): List<GameSet>
+
     @Query("SELECT * FROM GameSet WHERE id = :id")
     fun getSetWithId(id: Int): GameSet
 
@@ -34,7 +37,7 @@ interface GameSetDao {
     @Query("DELETE FROM GameSet WHERE id IS :id")
     fun deleteId(id: Int)
 
-    @Insert
+    @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(gameSet: GameSet)
 
     @Update

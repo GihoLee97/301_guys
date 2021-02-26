@@ -100,7 +100,7 @@ class WelcomeActivity : AppCompatActivity() {
             var level: Int = profileDb?.profileDao()?.getLevel()!!
             var money :Int = 1000000
             var value1: Int = 10
-            var profit: Float = profileDb?.profileDao()?.getProfit()!!
+            var relativeprofitrate: Float = profileDb?.profileDao()?.getRelativeProfitRate()!!
             var roundcount: Int = profileDb?.profileDao()?.getRoundCount()!!
             var funnickcheck: RetrofitNickcheck? = null
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
@@ -144,13 +144,13 @@ class WelcomeActivity : AppCompatActivity() {
                                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
                                 newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
                                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                                 profileDb?.profileDao()?.update(newProfile)
                                 update(getHash(login_id).toString().trim(), getHash(login_pw).toString().trim(),
-                                        money, value1, nickname, profit, roundcount, history, level)
+                                        money, value1, nickname, relativeprofitrate, roundcount, history, level)
                                 //
                                 profileActivityViewModel.setnWriteNickname(inputStr)
                                 step = "Nickname Setting Complished"

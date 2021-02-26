@@ -95,6 +95,7 @@
                         android:textAppearance="@style/market_defaultSettingItemTitle"/>
 
                     <TextView
+                        android:id="@+id/tv_initial_asset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -124,6 +125,7 @@
                             android:textAppearance="@style/market_defaultSettingItemTitle"/>
 
                         <TextView
+                            android:id="@+id/tv_initial_monthly"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="47dp"
@@ -143,6 +145,7 @@
                             android:textAppearance="@style/market_defaultSettingItemTitle"/>
 
                         <TextView
+                            android:id="@+id/tv_initial_salary_raise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
@@ -221,7 +224,7 @@
                     android:weightSum="3">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_upgrade_1"
+                        android:id="@+id/cl_upgrade_asset"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_weight="1"
@@ -282,6 +285,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_upgrade_monthly"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_weight="1"
@@ -342,6 +346,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_upgrade_salary_raise"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_weight="1"
@@ -421,6 +426,7 @@
                     android:weightSum="3">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_buy_stack1"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_weight="1"
@@ -472,6 +478,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_buy_stack2"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_marginLeft="12dp"
@@ -524,6 +531,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_buy_stack3"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:layout_marginLeft="12dp"

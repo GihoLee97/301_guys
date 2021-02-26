@@ -9,6 +9,7 @@ data class Item(@PrimaryKey(autoGenerate = true) var id: Long?,
 
     @ColumnInfo(name = "lasttime") var lasttime: Long // 피로도 저감 마지막 시점 저장
 
+
 ) {
     constructor() : this(null, 0L)
 }

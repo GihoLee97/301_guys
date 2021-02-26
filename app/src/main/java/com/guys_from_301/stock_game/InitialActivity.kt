@@ -33,11 +33,11 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
 
-const val IN_GAME_PROFIT = 7
-const val RELATIVE_PROFIT = IN_GAME_PROFIT+4
-const val CUMULATIVE_TRADING_DAY = RELATIVE_PROFIT+4
-const val CONTINUOUS_SURPLUS = CUMULATIVE_TRADING_DAY+3
-const val PLAY_GAME = CONTINUOUS_SURPLUS+4
+const val IN_GAME_PROFIT = 10
+const val RELATIVE_PROFIT = IN_GAME_PROFIT+5
+const val CUMULATIVE_TRADING_DAY = RELATIVE_PROFIT+5
+const val CONTINUOUS_SURPLUS = CUMULATIVE_TRADING_DAY+5
+const val PLAY_GAME = CONTINUOUS_SURPLUS+5
 const val INVITE = PLAY_GAME+1
 
 class InitialActivity : AppCompatActivity() {
@@ -49,30 +49,40 @@ class InitialActivity : AppCompatActivity() {
     // questDb
     private var questDb: QuestDB? = null
     private var questList = arrayListOf<String>(
-        "게임 내 수익률 50% 달성",
-        "게임 내 수익률 100% 달성",
-        "게임 내 수익률 200% 달성",
-        "게임 내 수익률 300% 달성",
-        "게임 내 수익률 400% 달성",
-        "게임 내 수익률 500% 달성",
-        "게임 내 수익률 1000% 달성",
-        "시장대비 평균수익률 10% 달성",
-        "시장대비 평균수익률 20% 달성",
-        "시장대비 평균수익률 50% 달성",
-        "시장대비 평균수익률 100% 달성",
-        "게임 누적 거래일 10000일 달성",
-        "게임 누적 거래일 30000일 달성",
-        "게임 누적 거래일 50000일 달성",
-        "게임 누적 거래일 100000일 달성",
-        "5 거래일 연속 흑자",
-        "10 거래일 연속 흑자",
-        "20 거래일 연속 흑자",
-        "게임 1번 플레이하기",
-        "게임 10번 플레이하기",
-        "게임 50번 플레이하기",
-        "게임 100번 플레이하기",
-        "친구 초대하기"
+            "게임 내 수익률 10% 달성",
+            "게임 내 수익률 20% 달성",
+            "게임 내 수익률 30% 달성",
+            "게임 내 수익률 50% 달성",
+            "게임 내 수익률 100% 달성",
+            "게임 내 수익률 200% 달성",
+            "게임 내 수익률 300% 달성",
+            "게임 내 수익률 400% 달성",
+            "게임 내 수익률 500% 달성",
+            "게임 내 수익률 1000% 달성",
+            "시장대비 평균수익률 10% 달성",
+            "시장대비 평균수익률 20% 달성",
+            "시장대비 평균수익률 50% 달성",
+            "시장대비 평균수익률 100% 달성",
+            "시장대비 평균수익률 200% 달성",
+            "게임 누적 거래일 10000일 달성",
+            "게임 누적 거래일 20000일 달성",
+            "게임 누적 거래일 30000일 달성",
+            "게임 누적 거래일 50000일 달성",
+            "게임 누적 거래일 100000일 달성",
+            "10 거래일 연속 흑자",
+            "20 거래일 연속 흑자",
+            "30 거래일 연속 흑자",
+            "40 거래일 연속 흑자",
+            "50 거래일 연속 흑자",
+            "게임 1번 플레이하기",
+            "게임 5번 플레이하기",
+            "게임 10번 플레이하기",
+            "게임 50번 플레이하기",
+            "게임 100번 플레이하기",
+            "친구 초대하기"
     )
+    //gameSetDb
+    private var gameSetDb: GameSetDB? = null
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -202,15 +212,33 @@ class InitialActivity : AppCompatActivity() {
         if (questDb?.questDao()?.getAll().isNullOrEmpty()) {
             for (i in 1..questList.size){
                 val newQuest = Quest(i, "" ,questList[i-1], 0)
-                if(i<= IN_GAME_PROFIT) newQuest.theme = "게임 내 수익률"
-                else if(i<= RELATIVE_PROFIT) newQuest.theme = "시장대비 평균수익률"
+                if(i<= IN_GAME_PROFIT) newQuest.theme = "수익률"
+                else if(i<= RELATIVE_PROFIT) newQuest.theme = "시장대비 수익률"
                 else if(i<= CUMULATIVE_TRADING_DAY) newQuest.theme = "누적 거래일"
                 else if(i<= CONTINUOUS_SURPLUS) newQuest.theme = "연속 흑자"
-                else if(i<= PLAY_GAME) newQuest.theme = "게임 플레이하기"
-                else if(i== INVITE) newQuest.theme = "친구 초대하기"
+                else if(i<= PLAY_GAME) newQuest.theme = "투자 경험"
+                else if(i== INVITE) newQuest.theme = "초대하기"
                 questDb?.questDao()?.insert(newQuest)
             }
         }
+
+        //초기 게임 setting 저장
+        gameSetDb = GameSetDB.getInstace(this)
+        val r = Runnable {
+            val newGameSet = GameSet()
+            setId = 1
+            newGameSet.id = 1
+            newGameSet.setcash = START_CASH
+            newGameSet.setgamelength = START_GAME_LENGTH
+            newGameSet.setgamespeed = START_GAME_SPEED
+            newGameSet.setmonthly = START_MONTHLY
+            newGameSet.setsalaryraise = START_SALARY_RAISE
+            gameSetDb?.gameSetDao()?.insert(newGameSet)
+            newGameSet.id = 0
+            gameSetDb?.gameSetDao()?.insert(newGameSet)
+        }
+        val t = Thread(r)
+        t.start()
     }
 
     // general signup
@@ -406,7 +434,7 @@ class InitialActivity : AppCompatActivity() {
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            val newProfile = Profile(1, "#########first_login##########",0,0, 0F, 0, 0, 1,0,0, temp, "a", "")
+            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "")
             profileDb?.profileDao()?.insert(newProfile)
         } else {
             profileDb = ProfileDB?.getInstace(this)
@@ -424,7 +452,7 @@ class InitialActivity : AppCompatActivity() {
             newProfile.login = temp
             newProfile.money = profileDb?.profileDao()?.getMoney()!!
             newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
-            newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
             newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
             newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
             profileDb?.profileDao()?.update(newProfile)
@@ -480,7 +508,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.login = profileDb?.profileDao()?.getLogin()!!
                     newProfile.money = data?.MONEY!!
                     newProfile.value1 = data?.VALUE1!!
-                    newProfile.profit = data?.PROFIT!!
+                    newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
                     newProfile.roundcount = data?.ROUNDCOUNT!!
                     newProfile.login_id = u_id
                     newProfile.login_pw = u_pw

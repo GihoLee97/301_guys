@@ -19,8 +19,11 @@ interface ProfileDao {
     @Query("SELECT value1 FROM Profile")
     fun getValue1(): Int
 
-    @Query("SELECT profit FROM Profile")
-    fun getProfit(): Float
+    @Query("SELECT profitrate FROM Profile")
+    fun getProfitRate(): Float
+
+    @Query("SELECT relativeprofitrate FROM Profile")
+    fun getRelativeProfitRate(): Float
 
     @Query("SELECT roundcount FROM Profile")
     fun getRoundCount(): Int

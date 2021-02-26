@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/gameName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -25,6 +26,7 @@
             android:textAppearance="@style/rv_games_item_name"/>
 
         <TextView
+            android:id="@+id/endtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -35,6 +37,7 @@
             android:textAppearance="@style/rv_games_item_date"/>
 
         <TextView
+            android:id="@+id/profitrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"

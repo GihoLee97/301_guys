@@ -17,7 +17,8 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var nickname = MutableLiveData<String>()
     private var money = MutableLiveData<Int>()
     private var value1 = MutableLiveData<Int>()
-    private var profit = MutableLiveData<Float>()
+    private var relativeprofitrate = MutableLiveData<Float>()
+    private var profitrate = MutableLiveData<Float>()
     private var roundcount = MutableLiveData<Int>()
     private var history = MutableLiveData<Int>()
     private var level = MutableLiveData<Int>()
@@ -33,7 +34,8 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
         value1.value = profileDb?.profileDao()?.getValue1()
-        profit.value = profileDb?.profileDao()?.getProfit()
+        profitrate.value = profileDb?.profileDao()?.getProfitRate()
+        relativeprofitrate.value = profileDb?.profileDao()?.getRelativeProfitRate()
         roundcount.value = profileDb?.profileDao()?.getRoundCount()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
@@ -50,7 +52,8 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         nickname.value = profileDb?.profileDao()?.getNickname()
         money.value = profileDb?.profileDao()?.getMoney()
         value1.value = profileDb?.profileDao()?.getValue1()
-        profit.value = profileDb?.profileDao()?.getProfit()
+        profitrate.value = profileDb?.profileDao()?.getProfitRate()
+        relativeprofitrate.value = profileDb?.profileDao()?.getRelativeProfitRate()
         roundcount.value = profileDb?.profileDao()?.getRoundCount()
         history.value = profileDb?.profileDao()?.getHistory()
         level.value = profileDb?.profileDao()?.getLevel()
@@ -64,7 +67,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun write2database(){
         var write = Runnable {
             profileDb = ProfileDB.getInstace(profileActivity)
-            var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,value1.value!!,profit.value!!,roundcount.value!!,history.value!!,
+            var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,value1.value!!,profitrate.value!!,relativeprofitrate.value!!,roundcount.value!!,history.value!!,
                     level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
             profileDb?.profileDao()?.update(newProfile)
         }
@@ -77,7 +80,8 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setNickname(newNickname : String){ nickname.value = newNickname }
     fun setMoney(newMoney : Int){ money.value = newMoney}
     fun setValue1(newMoney : Int){ value1.value = newMoney}
-    fun setProfit(newProfit : Float){ profit.value = newProfit }
+    fun setProfitRate(newProfitRate: Float){profitrate.value = newProfitRate}
+    fun setRelativeProfit(newRelativeProfit : Float){ relativeprofitrate.value = newRelativeProfit }
     fun setRoundCount(newRoundCount : Int){ roundcount.value = newRoundCount}
     fun setHistory(newHistory : Int){ history.value = newHistory }
     fun setLevel(newLevel : Int){ level.value = newLevel }
@@ -100,8 +104,11 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setnWriteValue1(newValue1: Int){
         value1.value = newValue1
         write2database() }
-    fun setnWriteProfit(newProfit : Float){
-        profit.value = newProfit
+    fun setWriteProfit(newProfitRate: Float){
+        profitrate.value = newProfitRate
+    }
+    fun setnWriteRelativeProfit(newRelativeProfit: Float){
+        relativeprofitrate.value = newRelativeProfit
         write2database() }
     fun setnWriteRoundCount(newRoundCount: Int ){
         roundcount.value = newRoundCount
@@ -133,7 +140,8 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getNickname(): LiveData<String> { return nickname }
     fun getMoney(): LiveData<Int> {return money}
     fun getValue1(): LiveData<Int> {return value1}
-    fun getProfit(): LiveData<Float> { return profit }
+    fun getProfitRate(): LiveData<Float> {return profitrate}
+    fun getRelativeProfit(): LiveData<Float> { return relativeprofitrate }
     fun getRoundCount(): LiveData<Int> {return roundcount}
     fun getHistory(): LiveData<Int> { return history }
     fun setLevel(): LiveData<Int> { return level }
