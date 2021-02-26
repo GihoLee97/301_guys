@@ -16,6 +16,7 @@
             android:id="@+id/ll_assetInfo"
             android:layout_width="match_parent"
             android:layout_height="236dp"
+            android:layout_weight="236"
             android:elevation="10dp"
             android:background="#ED9D0B"
             android:orientation="vertical">
@@ -149,6 +150,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="414dp"
+            android:layout_weight="414"
             android:elevation="10dp">
 
             <LinearLayout
@@ -1023,8 +1025,14 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent">
                                     </com.github.mikephil.charting.charts.LineChart>
-
-
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="25dp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_ecoindexvalbig2">
+                                    </TextView>
                                 </androidx.constraintlayout.widget.ConstraintLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -1038,71 +1046,92 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:orientation="vertical"
-            android:weightSum="3">
+            android:layout_weight="88"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="6">
+                android:layout_weight="56"
+                android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="60dp"
+                <LinearLayout
+                    android:layout_width="56dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#666666"
-                    android:backgroundTint="#666666"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:text="아이템"
-                    android:textColor="@color/white"
-                    android:textSize="13sp">
-                </Button>
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="56">
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:layout_width="12dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_vector_time">
+                    </View>
+                    <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="13dp"
+                        android:gravity="center"
+                        android:text="아이템"
+                        android:textAppearance="@style/game_item">
+                    </TextView>
+                </LinearLayout>
 
-                <Button
-                    android:layout_width="300dp"
+                <LinearLayout
+                    android:layout_width="304dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:background="#F68A06"
-                    android:backgroundTint="#F68A06"
-                    android:fontFamily="@font/paybooc_otf_bold"
-                    android:text="거래하기"
-                    android:textColor="@color/white"
-                    android:textSize="18sp">
-                </Button>
-
+                    android:orientation="vertical"
+                    android:layout_weight="304"
+                    android:gravity="center"
+                    android:background="#F4730B">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="11dp"
+                        android:text="거래하기"
+                        android:textAppearance="@style/game_trade">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="13dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="(길게 눌러 자동 매매하기)"
+                        android:textAppearance="@style/game_tradelong">
+                    </TextView>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="#E5E5E5"
+                android:layout_weight="32"
                 android:orientation="horizontal"
-                android:weightSum="6">
+                android:background="#EAEEEF">
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/paybooc_otf_bold"
+                    android:layout_weight="56"
                     android:gravity="center"
                     android:text="피로도"
-                    android:textSize="14sp">
+                    android:textAppearance="@style/game_fatigue">
                 </TextView>
 
                 <ProgressBar
-                    android:id="@+id/progress_value1"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="290dp"
-                    android:layout_height="15dp"
+                android:id="@+id/pb_fatigue"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="304dp"
+                android:layout_height="16dp"
+                    android:layout_weight="304"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="5"
-                    android:indeterminateOnly="false"
-                    android:max="10000"
-                    android:progress="0">
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="12dp"
+                android:layout_marginTop="7.5dp"
+                    android:layout_marginBottom="7.5dp"
+                android:progress="50"
+                android:progressDrawable="@drawable/custom_progressbar_horizontal">
                 </ProgressBar>
             </LinearLayout>
 
