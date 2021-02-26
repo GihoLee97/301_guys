@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#F1F5F5">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="6dp"
+            android:background="@drawable/ic_path_down"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="16dp"/>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fl_choose_buyandsell_option"
+        android:layout_width="match_parent"
+        android:layout_height="154dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <Button
+                    android:layout_width="133dp"
+                    android:layout_height="31dp"
+                    android:text="매수"
+                    android:textAppearance="@style/game_buyandsell"
+                    android:background="@drawable/game_buyandsell_choose"/>
+                <TextView
+                    android:layout_width="6dp"
+                    android:layout_height="31dp"/>
+                <Button
+                    android:layout_width="133dp"
+                    android:layout_height="31dp"
+                    android:gravity="center"
+                    android:text="매도"
+                    android:textAppearance="@style/game_buyandsell"
+                    android:background="@drawable/game_buyandsell_unchoosen"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="23dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="x1\n일반"
+                    android:textAppearance="@style/game_buyandsell_option"
+                    android:background="@drawable/game_buyandsell_option"/>
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="x3\n레버리지"
+                    android:textAppearance="@style/game_buyandsell_option"
+                    android:background="@drawable/game_buyandsell_option"/>
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="x1\n인버스"
+                    android:textAppearance="@style/game_buyandsell_option"
+                    android:background="@drawable/game_buyandsell_option"/>
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="잠김"
+                    android:textAppearance="@style/game_buyandsell_lock"
+                    android:background="@drawable/game_buyandsell_option_lock"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="36dp"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/fl_choose_buyandsell_number"
+        android:layout_width="match_parent"
+        android:layout_height="154dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center|left">
+                <ImageView
+                    android:layout_width="6dp"
+                    android:layout_height="12dp"
+                    android:background="@drawable/ic_path_left_orange"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  x1 일반 매수하기"
+                    android:textAppearance="@style/game_buyandsell_title"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="현재가"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="76dp"
+                    android:layout_height="25dp"
+                    android:text="$ 0,000"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:text="수치 변경하는 칸"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+    
+    <TextView
+        android:id="@+id/tv_bargain"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#B7B1B3"
+        android:text="거래하기"
+        android:gravity="center"
+        android:textAppearance="@style/game_bargain"/>
+
+</LinearLayout>

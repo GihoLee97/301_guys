@@ -5,10 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -633,6 +630,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 거래하기
         ll_trade.setOnClickListener {
+//            val dialog = Dialog_new_buyandsell()
+//            dialog.show(supportFragmentManager, " ")
             val dlgBuy = Dialog_buy(this)
             dlgBuy.start()
             click = !click /////////////////////////////////////////////////////////////////////////
