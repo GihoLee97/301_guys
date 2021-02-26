@@ -1,955 +1,1116 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".GameNormalActivity">
 
     <LinearLayout
-        android:id="@+id/Layout_fund"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:gravity="center|top">
-        <TextView
-            android:layout_marginVertical="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_fund"
-            android:background="@color/gray"
-            android:textColor="@color/white"
-            android:textSize="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/Layout_bond"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center|top"
-        android:visibility="invisible"
-        >
-        <TextView
-            android:layout_marginVertical="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_bond"
-            android:background="@color/gray"
-            android:textColor="@color/white"
-            android:textSize="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/Layout_indpro"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center|top"
-        android:visibility="invisible"
-        >
-        <TextView
-            android:layout_marginVertical="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_indpro"
-            android:background="@color/gray"
-            android:textColor="@color/white"
-            android:textSize="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/Layout_unem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:gravity="center|top">
-        <TextView
-            android:layout_marginVertical="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_unem"
-            android:background="@color/gray"
-            android:textColor="@color/white"
-            android:textSize="20dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/Layout_inf"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:gravity="center|top">
-        <TextView
-            android:layout_marginVertical="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_inf"
-            android:background="@color/gray"
-            android:textColor="@color/white"
-            android:textSize="20dp"/>
-    </LinearLayout>
-
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawerLayout_GameNormalActivity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_assetInfo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="236dp"
+            android:layout_weight="236"
+            android:elevation="10dp"
+            android:background="#ED9D0B"
             android:orientation="vertical">
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                app:layout_constraintBottom_toTopOf="@+id/cht_snp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                <Button
+                    android:id="@+id/btn_gameBack"
+                    android:layout_marginLeft="24dp"
+                    android:layout_width="8dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/btn_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/layout_btn_fund"
-                        app:layout_constraintTop_toTopOf="parent">
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_fund"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/layout_btn_bond"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_bond"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/layout_btn_indpro"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_indpro"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/layout_btn_unem"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_unem"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/layout_btn_inf"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/cht_inf"
-                            android:layout_width="150dp"
-                            android:layout_height="100dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </LinearLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/cht_snp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum = "10">
-                <ScrollView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight = "9"
-                    >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        >
-                        <TextView
-                            android:id="@+id/news1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="뉴스1">
-                        </TextView>
-                        <TextView
-                            android:id="@+id/news2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="뉴스2">
-                        </TextView>
-                        <TextView
-                            android:id="@+id/news3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="뉴스3">
-                        </TextView>
-                        <TextView
-                            android:id="@+id/news4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="뉴스4">
-                        </TextView>
-                        <TextView
-                            android:id="@+id/news5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="뉴스5">
-                        </TextView>
-                    </LinearLayout>
-
-                </ScrollView>
-                <LinearLayout
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight = "1"
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="투자경력"
-                        android:textSize="15sp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_year"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0 년"
-                        android:textSize="20sp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0 개월"
-                        android:textSize="15sp">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="남은 기간"
-                        android:textSize="15sp">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/left_year_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0 년 0 개월"
-                        android:textSize="15sp">
-                    </TextView>
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp">
+                </Button>
 
                 <TextView
-                    android:id="@+id/tv_notification"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:text="알림: chart data loading...!"
-                    android:textSize="15sp"></TextView>
+                    android:id="@+id/tv_gameName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="게임 1"
+                    android:textAppearance="@style/game_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </TextView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginBottom="0dp"
-                android:orientation="horizontal"
-                android:weightSum="13">
-                <LinearLayout
+                android:layout_height="86dp"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="24dp"
                     android:layout_weight="1"
-                    android:weightSum="6"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="현재가"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="평균단가"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="보유수량"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="평가금액"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="수익률"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                </LinearLayout>
+                    android:gravity="center"
+                    android:text="총 자산"
+                    android:textAppearance="@style/game_asset">
+                </TextView>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:weightSum="6"
-                    android:orientation="vertical">
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderlineasset">
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="1x"
+                        android:id="@+id/tv_assetTot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
                         android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_price1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_aver1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_quant1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_val1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_profit1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0 %"
-                        android:gravity="right"
-                        android:layout_weight="1">
+                        android:text="$ 123,340"
+                        android:textAppearance="@style/game_assetnum">
                     </TextView>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:weightSum="6"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="3x"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_price3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_aver3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_quant3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_val3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_profit3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0 %"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:weightSum="6"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="-1x"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_priceinv1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_averinv1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_quantinv1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_valinv1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_profitinv1x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0 %"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:weightSum="6"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="-3x"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_priceinv3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_averinv3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_quantinv3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_valinv3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                    <TextView
-                        android:id="@+id/tv_profitinv3x"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="0 %"
-                        android:gravity="right"
-                        android:layout_weight="1">
-                    </TextView>
-                </LinearLayout>
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="1">
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginBottom="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4.5">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_asset"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="총 자산:    " />
-
-                        <TextView
-                            android:id="@+id/tv_cash"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="보유 현금:     " />
-
-                        <TextView
-                            android:id="@+id/tv_tax"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="납부할 세금:  " />
-
-                        <TextView
-                            android:id="@+id/tv_profityear"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="당해 실현수익:  " />
-
-                        <TextView
-                            android:id="@+id/tv_taxtot"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="세금 합계:  " />
-
-                        <TextView
-                            android:id="@+id/tv_tradecomtot"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="수수료 합계:  " />
-
-                        <TextView
-                            android:id="@+id/tv_value1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="피로도: ">
-                        </TextView>
-                        <ProgressBar
-                            android:id="@+id/progress_value1"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:indeterminateOnly="false"
-                            android:max="10000"
-                            android:progress="0"
-                            android:indeterminateTint="#ff0000"/>
-
-
-
-                    </LinearLayout>
-                </ScrollView>
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5.5">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_evaluation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="평가금:    " />
-
-                        <TextView
-                            android:id="@+id/tv_dividend"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="배당내역:  " />
-
-                        <TextView
-                            android:id="@+id/tv_profit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="순손익:  " />
-
-
-                        <TextView
-                            android:id="@+id/tv_profitrate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="수익률:  " />
-
-                        <TextView
-                            android:id="@+id/tv_item1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="아이템1:  " />
-
-                        <TextView
-                            android:id="@+id/tv_item2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="아이템2:  " />
-
-                        <TextView
-                            android:id="@+id/tv_item3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="아이템3:  " />
-
-                    </LinearLayout>
-                </ScrollView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_height="20dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
-                <Button
-                    android:id="@+id/btn_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="24dp"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="매수"
-                    android:textColor="@android:color/holo_red_light" />
-
-                <Button
-                    android:id="@+id/btn_sell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:gravity="left"
+                    android:text="수익률"
+                    android:textAppearance="@style/game_profitrate">
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_profitRate"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="매도"
-                    android:textColor="@android:color/holo_blue_bright" />
-
-                <Button
-                    android:id="@+id/btn_auto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:gravity="right"
+                    android:text="56.2 %"
+                    android:textAppearance="@style/game_profitratenum">
+                </TextView>
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="자동"
-                    android:textColor="@color/black" />
-
-                <Button
-                    android:id="@+id/btn_item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:gravity="left"
+                    android:text="총 손익"
+                    android:textAppearance="@style/game_profit">
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_profitTot"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="24dp"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:text="아이템"
-                    android:textColor="@color/black" />
-
+                    android:gravity="right"
+                    android:text="$ 64,400"
+                    android:textAppearance="@style/game_profitnum">
+                </TextView>
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout_myAssetState"
-            android:layout_width="320dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@color/purple_200"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_myAssetStateDrawerClose"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:text=">" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="414dp"
+            android:layout_weight="414"
+            android:elevation="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="64dp"
+                android:elevation="10dp"
+                android:background="#ED9D0B">
+            </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:text="내 자산 현황"
-                    android:textSize="20dp" />
+            <LinearLayout
+                android:layout_marginTop="64dp"
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:elevation="10dp"
+                android:background="@drawable/scroll_gradation">
+            </LinearLayout>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/cht_assetsDrawer"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:elevation="10dp"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent">
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="340dp"
                     android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/borderline_chart">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/cht_snp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="총 자산"
-                        android:textSize="15dp" />
+                        android:layout_height="119dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                    </com.github.mikephil.charting.charts.LineChart>
 
-                    <TextView
-                        android:id="@+id/textView_assetsDrawer"
+                    <LinearLayout
+                        android:layout_marginTop="13dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="00000"
-                        android:textSize="15dp" />
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="7">
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="S&amp;P 500"
+                            android:textAppearance="@style/game_snp"
+                            android:gravity="left"
+                            android:layout_weight="2">
+                        </TextView>
+                        <LinearLayout
+                            android:layout_width="132dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3">
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_snp"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="120.4"
+                            android:textAppearance="@style/game_snpval"
+                            android:gravity="right"
+                            android:layout_weight="2">
+                        </TextView>
+                    </LinearLayout>
                 </LinearLayout>
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="현금"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/textView_cashDrawer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="00000"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="매입금액"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/textView_purchaseDrawer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="00000"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="원화평가금액"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/textView_evaluationDrawer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="00000"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="수익율"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/textView_profitDrawer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="00000"
-                        android:textSize="15dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent">
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <View
-            android:id="@+id/buy_dialog_view"
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="64dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="570dp"
+                    android:orientation="vertical"
+                    android:weightSum="18">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="184dp"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_marginLeft="24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="보유 ETF"
+                            android:textAppearance="@style/game_etfs">
+                        </TextView>
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="128dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="24dp"
+                                android:background="@drawable/borderline_etf"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="18dp"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="x1 일반"
+                                        android:textAppearance="@style/game_etftitle">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="15dp"
+                                    android:layout_marginTop="4dp"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tv_price1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="$ 102"
+                                        android:textAppearance="@style/game_etfprice">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="1dp"
+                                    android:gravity="right"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tv_quant1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:text="1124 주"
+                                        android:textAppearance="@style/game_etfquant">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+                                    <View
+                                        android:id="@+id/v_diff1x"
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:background="@drawable/ic_polygon_2">
+                                    </View>
+                                    <TextView
+                                        android:id="@+id/tv_diff1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="8dp"
+                                        android:gravity="right"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_etfdiff2">
+                                    </TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@color/white"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 레버리지"
+                                            android:textAppearance="@style/game_etftitle">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/tv_price3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="15dp"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="$ 102"
+                                            android:textAppearance="@style/game_etfprice">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="1dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+                                        <TextView
+                                            android:id="@+id/tv_quant3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="1124 주"
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="4dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+                                        <View
+                                            android:id="@+id/v_diff3x"
+                                            android:layout_width="12dp"
+                                            android:layout_height="12dp"
+                                            android:background="@drawable/ic_polygon_2">
+                                        </View>
+                                        <TextView
+                                            android:id="@+id/tv_diff3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="8dp"
+                                            android:gravity="right"
+                                            android:text="2.08 %"
+                                            android:textAppearance="@style/game_etfdiff2">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_hide3x"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_lock3x"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_lock"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 레버리지"
+                                            android:textAppearance="@style/game_etftitlelock">
+                                        </TextView>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:layout_marginTop="38dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="잠김"
+                                            android:textAppearance="@style/game_etflock">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </FrameLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:background="@drawable/borderline_etf"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="18dp"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="x1 인버스 "
+                                        android:textAppearance="@style/game_etftitle">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="15dp"
+                                    android:layout_marginTop="4dp"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tv_priceinv1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:text="$ 97"
+                                        android:textAppearance="@style/game_etfprice">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="1dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/tv_quantinv1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="right"
+                                        android:text="14 주"
+                                        android:textAppearance="@style/game_etfquant">
+                                    </TextView>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="right"
+                                    android:orientation="horizontal">
+                                    <View
+                                        android:id="@+id/v_diffinv1x"
+                                        android:layout_width="12dp"
+                                        android:layout_height="12dp"
+                                        android:background="@drawable/ic_polygon_3">
+                                    </View>
+                                    <TextView
+                                        android:id="@+id/tv_diffinv1x"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="8dp"
+                                        android:gravity="right"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_etfdiff3">
+                                    </TextView>
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                            <FrameLayout
+                                android:layout_width="96dp"
+                                android:layout_height="96dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:background="@color/white"
+                                android:elevation="10dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 인버스"
+                                            android:textAppearance="@style/game_etftitle">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="15dp"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/tv_priceinv3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="15dp"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="$ 102"
+                                            android:textAppearance="@style/game_etfprice">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="1dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+                                        <TextView
+                                            android:id="@+id/tv_quantinv3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="1124 주"
+                                            android:textAppearance="@style/game_etfquant">
+                                        </TextView>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="20dp"
+                                        android:layout_marginTop="4dp"
+                                        android:gravity="right"
+                                        android:orientation="horizontal">
+                                        <View
+                                            android:id="@+id/v_diffinv3x"
+                                            android:layout_width="12dp"
+                                            android:layout_height="12dp"
+                                            android:background="@drawable/ic_polygon_2">
+                                        </View>
+                                        <TextView
+                                            android:id="@+id/tv_diffinv3x"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginLeft="8dp"
+                                            android:gravity="right"
+                                            android:text="2.08 %"
+                                            android:textAppearance="@style/game_etfdiff2">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_hideinv3x"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/borderline_etf"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical">
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_lockinv3x"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/ic_lock"
+                                    android:elevation="10dp"
+                                    android:orientation="vertical"
+                                    android:padding="8dp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="x3 인버스"
+                                            android:textAppearance="@style/game_etftitlelock">
+                                        </TextView>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="18dp"
+                                        android:layout_marginTop="38dp"
+                                        android:orientation="vertical">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left"
+                                            android:text="잠김"
+                                            android:textAppearance="@style/game_etflock">
+                                        </TextView>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_width="312dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1"
+                                android:background="#4B586B"
+                                android:layout_gravity="center">
+                            </View>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:orientation="horizontal"
+                            android:background="@color/white">
+                            <LinearLayout
+                                android:layout_width="44dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="뉴스"
+                                android:textAppearance="@style/game_newstitle"
+                                android:layout_weight="23">
+                            </TextView>
+                            <LinearLayout
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_news"
+                                android:layout_width="229dp"
+                                android:layout_height="match_parent"
+                                android:text="뉴스스스스스스스스스스"
+                                android:textAppearance="@style/game_news"
+                                android:background="#1AFF0000"
+                                android:layout_weight="229">
+                            </TextView>
+                            <LinearLayout
+                                android:layout_width="44dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginTop="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:orientation="horizontal">
+                            <View
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_width="312dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1"
+                                android:background="#4B586B"
+                                android:layout_gravity="center">
+                            </View>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="322dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="24dp"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"></LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="경제 지표"
+                                android:textAppearance="@style/game_ecoindextitle"></TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="268dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="180dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="180"
+                                android:orientation="vertical">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/borderline_ecotop"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="연준 기금 금리"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:id="@+id/tv_fund"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="10년 만기 국채 이율"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:id="@+id/tv_bond"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="산업생산량"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:id="@+id/tv_indpro"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecomiddle"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="실업률"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:id="@+id/tv_unem"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:layout_marginLeft="24dp"
+                                    android:layout_marginRight="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:background="@drawable/borderline_ecobottom"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="인플레이션"
+                                        android:textAppearance="@style/game_ecoindex"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                    <TextView
+                                        android:id="@+id/tv_inf"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="right"
+                                        android:text="1.39 %"
+                                        android:textAppearance="@style/game_ecoindexval2"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="180dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="180"
+                                android:orientation="vertical">
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="196dp"
+                                    android:layout_marginRight="24dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/borderline_ecobig"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/tv_ecoindex"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="20dp"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:text="금리"
+                                        android:textAppearance="@style/game_ecoindextitlebig">
+                                    </TextView>
+                                    <com.github.mikephil.charting.charts.LineChart
+                                        android:id="@+id/cht_eco"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:layout_marginTop="52dp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+                                    </com.github.mikephil.charting.charts.LineChart>
+                                    <TextView
+                                        android:id="@+id/tv_ecoval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="25dp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        android:text="2.08 %"
+                                        android:textAppearance="@style/game_ecoindexvalbig2">
+                                    </TextView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </FrameLayout>
+
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="88dp"
+            android:layout_weight="88"
+            android:orientation="vertical">
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_weight="56"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="56">
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:layout_width="12dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_vector_time">
+                    </View>
+                    <TextView
+                        android:id="@+id/ll_item"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="13dp"
+                        android:gravity="center"
+                        android:text="아이템"
+                        android:textAppearance="@style/game_item">
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_trade"
+                    android:layout_width="304dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="304"
+                    android:gravity="center"
+                    android:background="#F4730B">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="11dp"
+                        android:text="거래하기"
+                        android:textAppearance="@style/game_trade">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="13dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="(길게 눌러 자동 매매하기)"
+                        android:textAppearance="@style/game_tradelong">
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_weight="32"
+                android:orientation="horizontal"
+                android:background="#EAEEEF">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="56"
+                    android:gravity="center"
+                    android:text="피로도"
+                    android:textAppearance="@style/game_fatigue">
+                </TextView>
+
+                <ProgressBar
+                android:id="@+id/pb_fatigue"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="304dp"
+                android:layout_height="16dp"
+                    android:layout_weight="304"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="12dp"
+                android:layout_marginTop="7.5dp"
+                    android:layout_marginBottom="7.5dp"
+                android:progress="5000"
+                    android:max="10000"
+                android:progressDrawable="@drawable/custom_progressbar_horizontal">
+                </ProgressBar>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>
