@@ -1,86 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="#F68A06">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tv_go_back"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_weight="2"
-                android:text="뒤로"
-                />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:textSize="40dp"
-                android:text="도전과제"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_weight="4" />
-            <Button
-                android:id="@+id/btn_receipt"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:text="버튼"
-                android:layout_weight="2"
-                android:background="#F68A06"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            />
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="8dp"
+            android:text="도전과제"
+            android:textAppearance="@style/quest_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginBottom="3dp"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:src="@drawable/ic_path_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_tiredness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:text="   친구와 투자의 수익률로\n   경쟁해보세요!"
-            android:textColor="@color/white"
-            />
-        <TextView
-            android:id="@+id/tv_level"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:text="   레벨"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-    <!-- 바 하나 필요함 -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/qRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_marginTop="59dp"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="레벨 8"
+                    android:textAppearance="@style/quest_level"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/pb_experience"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progressbar_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="다음 레벨까지 300,000 포인트 남았습니다."
+                    android:textAppearance="@style/quest_levelDescription" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginTop="40dp"
+                android:background="#EAEEEF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="32dp"
+                android:text="적립형 도전 과제"
+                android:textAppearance="@style/main_moduleTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="32dp"
+                android:text="적립형 도전 과제"
+                android:textAppearance="@style/main_moduleTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qRecyclerView_oneshot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:background="#FFFFFF" />
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

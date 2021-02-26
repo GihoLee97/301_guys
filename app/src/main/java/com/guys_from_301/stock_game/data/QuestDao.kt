@@ -10,6 +10,9 @@ interface QuestDao {
     @Query("SELECT * FROM Quest WHERE theme IS :theme ORDER BY id ASC")
     fun getQuestByTheme(theme: String): List<Quest>
 
+    @Query("SELECT * FROM Quest WHERE theme IS :theme AND achievement IS 0 ORDER BY id ASC")
+    fun getQuestToAdapterByTheme(theme: String): List<Quest>
+
     @Query("SELECT * FROM Quest WHERE id IS :id")
     fun getQusetById(id: Int): List<Quest>
 
