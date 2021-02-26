@@ -83,7 +83,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll_notice">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:text="공지사항"
                         android:layout_marginLeft="24dp"
@@ -91,14 +91,14 @@
                         android:textAppearance="@style/profile_letter"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:text=">"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:textAppearance="@style/profile_letter"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll_version_info">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:text="버전정보"
@@ -114,14 +114,14 @@
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:textAppearance="@style/profile_letter"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
 
                 <TextView
@@ -135,7 +135,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll_game_option">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:text="게임설정"
@@ -143,21 +143,21 @@
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:textAppearance="@style/profile_letter"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:textAppearance="@style/profile_letter"
                         android:layout_marginLeft="24dp"
@@ -165,35 +165,35 @@
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:textAppearance="@style/profile_letter"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:textAppearance="@style/profile_letter"
                         android:layout_marginLeft="24dp"
                         android:text="아이템 구매 이력"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:textAppearance="@style/profile_letter"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
@@ -205,7 +205,7 @@
                     android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:text="고객센터 / 도움말"
@@ -213,13 +213,14 @@
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_sign_out"
@@ -227,7 +228,7 @@
                     android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:text="로그아웃"
@@ -235,13 +236,14 @@
                         android:textColor="#6C7B8E"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_withdraw"
@@ -249,21 +251,21 @@
                     android:layout_height="52dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="24dp"
                         android:text="게임 탈퇴"
                         android:textAppearance="@style/profile_withdraw"
                         android:gravity="center|left"
                         android:layout_weight="3"/>
-                    <TextView
-                        android:id="@+id/path_72"
-                        android:layout_width="0dp"
-                        android:layout_marginRight="20dp"
+                    <ImageButton
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
                         android:gravity="center|right"
-                        android:layout_height="match_parent"
-                        android:text=">"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_path"/>
                 </LinearLayout>
 
             </LinearLayout>
