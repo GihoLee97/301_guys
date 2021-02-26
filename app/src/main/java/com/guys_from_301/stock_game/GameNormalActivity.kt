@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -356,6 +357,12 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var tv_unem: TextView
     private lateinit var tv_inf: TextView
 
+    private lateinit var cl_fund: ConstraintLayout
+    private lateinit var cl_bond: ConstraintLayout
+    private lateinit var cl_indpro: ConstraintLayout
+    private lateinit var cl_unem: ConstraintLayout
+    private lateinit var cl_inf: ConstraintLayout
+
     private lateinit var tv_ecoindex: TextView
     private lateinit var tv_ecoval: TextView
 
@@ -392,8 +399,8 @@ class GameNormalActivity : AppCompatActivity() {
         tv_quant3x = findViewById(R.id.tv_quant3x)
         v_diff3x = findViewById(R.id.v_diff3x)
         tv_diff3x = findViewById(R.id.tv_diff3x)
-        ll_hide3x = findViewById(R.id.ll_hide3x) // 언락시 elevation 0dp 로 변경
-        ll_lock3x = findViewById(R.id.ll_lock3x) // 언락시 elevation 0dp 로 변경
+        ll_hide3x = findViewById(R.id.ll_hide3x) // 언락시 invisible 로 변경
+        ll_lock3x = findViewById(R.id.ll_lock3x) // 언락시 invisible 로 변경
 
         tv_priceinv1x = findViewById(R.id.tv_priceinv1x)
         tv_quantinv1x = findViewById(R.id.tv_quantinv1x)
@@ -404,14 +411,20 @@ class GameNormalActivity : AppCompatActivity() {
         tv_quantinv3x = findViewById(R.id.tv_quantinv3x)
         v_diffinv3x = findViewById(R.id.v_diffinv3x)
         tv_diffinv3x = findViewById(R.id.tv_diffinv3x)
-        ll_hideinv3x = findViewById(R.id.ll_hideinv3x) // 언락시 elevation 0dp 로 변경
-        ll_lockinv3x = findViewById(R.id.ll_lockinv3x) // 언락시 elevation 0dp 로 변경
+        ll_hideinv3x = findViewById(R.id.ll_hideinv3x) // 언락시 invisible 로 변경
+        ll_lockinv3x = findViewById(R.id.ll_lockinv3x) // 언락시 invisible 로 변경
 
         tv_fund = findViewById(R.id.tv_fund)
         tv_bond = findViewById(R.id.tv_bond)
         tv_indpro = findViewById(R.id.tv_indpro)
         tv_unem = findViewById(R.id.tv_unem)
         tv_inf = findViewById(R.id.tv_inf)
+
+        cl_fund = findViewById(R.id.cl_fund)
+        cl_bond = findViewById(R.id.cl_bond)
+        cl_indpro = findViewById(R.id.cl_indpro)
+        cl_unem = findViewById(R.id.cl_unem)
+        cl_inf = findViewById(R.id.cl_inf)
 
         tv_ecoindex = findViewById(R.id.tv_ecoindex)
         tv_ecoval = findViewById(R.id.tv_ecoval)
@@ -655,6 +668,11 @@ class GameNormalActivity : AppCompatActivity() {
             click = !click ///////////////////////////////////////////////////////////////////////
         }
 
+        // 경제 지표 차트
+        cl_fund.setOnClickListener {
+
+        }
+
 
         // 차트 코루틴 시작
         CoroutineScope(Dispatchers.Default).launch {
@@ -846,8 +864,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         legend_eco.isEnabled = false
         x_eco.isEnabled = false
-        yl_snp.isEnabled = false
-        yr_snp.isEnabled = false
+        yl_eco.isEnabled = false
+        yr_eco.isEnabled = false
 
         fundDs.color = Color.parseColor(ecoLineColor)
         fundDs.setDrawCircles(false) // 지점마다 원 표시

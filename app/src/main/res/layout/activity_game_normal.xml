@@ -269,8 +269,7 @@
 
                     <HorizontalScrollView
                         android:layout_width="wrap_content"
-                        android:layout_height="128dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_height="148dp"
                         android:background="@color/white"
                         android:scrollbars="none">
 
@@ -279,6 +278,7 @@
                             android:layout_height="match_parent">
 
                             <LinearLayout
+                                android:layout_marginTop="20dp"
                                 android:layout_width="96dp"
                                 android:layout_height="96dp"
                                 android:layout_marginLeft="24dp"
@@ -358,6 +358,7 @@
                             </LinearLayout>
 
                             <FrameLayout
+                                android:layout_marginTop="20dp"
                                 android:layout_width="96dp"
                                 android:layout_height="96dp"
                                 android:layout_marginLeft="12dp"
@@ -484,6 +485,7 @@
 
 
                             <LinearLayout
+                                android:layout_marginTop="20dp"
                                 android:layout_width="96dp"
                                 android:layout_height="96dp"
                                 android:layout_marginLeft="12dp"
@@ -564,6 +566,7 @@
 
 
                             <FrameLayout
+                                android:layout_marginTop="20dp"
                                 android:layout_width="96dp"
                                 android:layout_height="96dp"
                                 android:layout_marginLeft="12dp"
@@ -805,6 +808,7 @@
                                 android:orientation="vertical">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_fund"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:layout_marginLeft="24dp"
@@ -834,6 +838,7 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_bond"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:layout_marginLeft="24dp"
@@ -863,6 +868,7 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_indpro"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:layout_marginLeft="24dp"
@@ -892,6 +898,7 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_unem"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:layout_marginLeft="24dp"
@@ -921,6 +928,7 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_inf"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:layout_marginLeft="24dp"
