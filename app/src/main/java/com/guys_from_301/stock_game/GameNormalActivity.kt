@@ -317,6 +317,53 @@ class GameNormalActivity : AppCompatActivity() {
 
     //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
+    private lateinit var btn_gameBack: Button
+    private lateinit var tv_gameName: TextView
+    private lateinit var tv_assetTot: TextView
+    private lateinit var tv_profitRate: TextView
+    private lateinit var tv_profitTot: TextView
+
+    private lateinit var tv_price1x: TextView
+    private lateinit var tv_quant1x: TextView
+    private lateinit var v_diff1x: View
+    private lateinit var tv_diff1x: TextView
+
+    private lateinit var tv_price3x: TextView
+    private lateinit var tv_quant3x: TextView
+    private lateinit var v_diff3x: View
+    private lateinit var tv_diff3x: TextView
+    private lateinit var ll_hide3x: LinearLayout // 언락시 elevation 0dp 로 변경
+    private lateinit var ll_lock3x: LinearLayout // 언락시 elevation 0dp 로 변경
+
+    private lateinit var tv_priceinv1x: TextView
+    private lateinit var tv_quantinv1x: TextView
+    private lateinit var v_diffinv1x: View
+    private lateinit var tv_diffinv1x: TextView
+
+    private lateinit var tv_priceinv3x: TextView
+    private lateinit var tv_quantinv3x: TextView
+    private lateinit var v_diffinv3x: View
+    private lateinit var tv_diffinv3x: TextView
+    private lateinit var ll_hideinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
+    private lateinit var ll_lockinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
+
+    private lateinit var tv_fund: TextView
+    private lateinit var tv_bond: TextView
+    private lateinit var tv_indpro: TextView
+    private lateinit var tv_unem: TextView
+    private lateinit var tv_inf: TextView
+
+    private lateinit var tv_ecoindex: TextView
+    private lateinit var tv_ecoval: TextView
+
+    private lateinit var cht_snp: LineChart
+    private lateinit var cht_eco: LineChart
+
+    private lateinit var ll_item: LinearLayout
+    private lateinit var ll_trade: LinearLayout
+    private lateinit var pb_fatigue: ProgressBar
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
@@ -324,6 +371,53 @@ class GameNormalActivity : AppCompatActivity() {
         val dialog = Dialog_loading(this@GameNormalActivity)
         dialog.show()
 
+        btn_gameBack = findViewById(R.id.btn_gameBack)
+        tv_gameName = findViewById(R.id.tv_gameName)
+        tv_assetTot = findViewById(R.id.tv_assetTot)
+        tv_profitRate = findViewById(R.id.tv_profitRate)
+        tv_profitTot = findViewById(R.id.tv_profitTot)
+
+        tv_price1x = findViewById(R.id.tv_price1x)
+        tv_quant1x = findViewById(R.id.tv_quant1x)
+        v_diff1x = findViewById(R.id.v_diff1x)
+        tv_diff1x = findViewById(R.id.tv_diff1x)
+
+        tv_price3x = findViewById(R.id.tv_price3x)
+        tv_quant3x = findViewById(R.id.tv_quant3x)
+        v_diff3x = findViewById(R.id.v_diff3x)
+        tv_diff3x = findViewById(R.id.tv_diff3x)
+        ll_hide3x = findViewById(R.id.ll_hide3x) // 언락시 elevation 0dp 로 변경
+        ll_lock3x = findViewById(R.id.ll_lock3x) // 언락시 elevation 0dp 로 변경
+
+        tv_priceinv1x = findViewById(R.id.tv_priceinv1x)
+        tv_quantinv1x = findViewById(R.id.tv_quantinv1x)
+        v_diffinv1x = findViewById(R.id.v_diffinv1x)
+        tv_diffinv1x = findViewById(R.id.tv_diffinv1x)
+
+        tv_priceinv3x = findViewById(R.id.tv_priceinv3x)
+        tv_quantinv3x = findViewById(R.id.tv_quantinv3x)
+        v_diffinv3x = findViewById(R.id.v_diffinv3x)
+        tv_diffinv3x = findViewById(R.id.tv_diffinv3x)
+        ll_hideinv3x = findViewById(R.id.ll_hideinv3x) // 언락시 elevation 0dp 로 변경
+        ll_lockinv3x = findViewById(R.id.ll_lockinv3x) // 언락시 elevation 0dp 로 변경
+
+        tv_fund = findViewById(R.id.tv_fund)
+        tv_bond = findViewById(R.id.tv_bond)
+        tv_indpro = findViewById(R.id.tv_indpro)
+        tv_unem = findViewById(R.id.tv_unem)
+        tv_inf = findViewById(R.id.tv_inf)
+
+        tv_ecoindex = findViewById(R.id.tv_ecoindex)
+        tv_ecoval = findViewById(R.id.tv_ecoval)
+
+        cht_snp = findViewById(R.id.cht_snp)
+        cht_eco = findViewById(R.id.cht_eco)
+
+        ll_item = findViewById(R.id.ll_item)
+        ll_trade = findViewById(R.id.ll_trade)
+        pb_fatigue = findViewById(R.id.pb_fatigue)
+
+        // findViewById<Button>(R.id.btn_auto).setBackgroundResource(R.drawable.ic_check_intersection)
 
         questDb = QuestDB.getInstance(this)
         gameSetDb = GameSetDB.getInstace(this)

@@ -28,6 +28,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btn_gameBack"
                     android:layout_marginLeft="24dp"
                     android:layout_width="8dp"
                     android:layout_height="16dp"
@@ -39,8 +40,7 @@
                 </Button>
 
                 <TextView
-
-                    android:id="@+id/textView"
+                    android:id="@+id/tv_gameName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -86,6 +86,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/borderlineasset">
                     <TextView
+                        android:id="@+id/tv_assetTot"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:gravity="center"
@@ -118,6 +119,7 @@
                     android:textAppearance="@style/game_profitrate">
                 </TextView>
                 <TextView
+                    android:id="@+id/tv_profitRate"
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -135,6 +137,7 @@
                     android:textAppearance="@style/game_profit">
                 </TextView>
                 <TextView
+                    android:id="@+id/tv_profitTot"
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="24dp"
@@ -285,7 +288,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="18dp"
                                     android:orientation="vertical">
-
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -301,8 +303,8 @@
                                     android:layout_height="15dp"
                                     android:layout_marginTop="4dp"
                                     android:orientation="vertical">
-
                                     <TextView
+                                        android:id="@+id/tv_price1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
                                         android:layout_weight="1"
@@ -318,8 +320,8 @@
                                     android:layout_marginTop="1dp"
                                     android:gravity="right"
                                     android:orientation="vertical">
-
                                     <TextView
+                                        android:id="@+id/tv_quant1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -335,14 +337,14 @@
                                     android:layout_marginTop="4dp"
                                     android:gravity="right"
                                     android:orientation="horizontal">
-
                                     <View
+                                        android:id="@+id/v_diff1x"
                                         android:layout_width="12dp"
                                         android:layout_height="12dp"
                                         android:background="@drawable/ic_polygon_2">
                                     </View>
-
                                     <TextView
+                                        android:id="@+id/tv_diff1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="8dp"
@@ -372,7 +374,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="18dp"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -388,8 +389,8 @@
                                         android:layout_height="15dp"
                                         android:layout_marginTop="4dp"
                                         android:orientation="vertical">
-
                                         <TextView
+                                            android:id="@+id/tv_price3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="15dp"
                                             android:layout_weight="1"
@@ -399,32 +400,14 @@
                                         </TextView>
                                     </LinearLayout>
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:gravity="right"
-                                        android:text=""
-                                        android:textAppearance="@style/game_etfquant">
-                                    </TextView>
-
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="20dp"
                                         android:layout_marginTop="1dp"
                                         android:gravity="right"
                                         android:orientation="horizontal">
-
                                         <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                            android:gravity="right"
-                                            android:text=""
-                                            android:textAppearance="@style/game_etfquant">
-                                        </TextView>
-
-                                        <TextView
+                                            android:id="@+id/tv_quant3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -440,14 +423,14 @@
                                         android:layout_marginTop="4dp"
                                         android:gravity="right"
                                         android:orientation="horizontal">
-
                                         <View
+                                            android:id="@+id/v_diff3x"
                                             android:layout_width="12dp"
                                             android:layout_height="12dp"
                                             android:background="@drawable/ic_polygon_2">
                                         </View>
-
                                         <TextView
+                                            android:id="@+id/tv_diff3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:layout_marginLeft="8dp"
@@ -458,8 +441,8 @@
                                     </LinearLayout>
                                 </LinearLayout>
 
-
                                 <LinearLayout
+                                    android:id="@+id/ll_hide3x"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/borderline_etf"
@@ -468,18 +451,17 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_lock3x"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/ic_lock"
                                     android:elevation="10dp"
                                     android:orientation="vertical"
                                     android:padding="8dp">
-
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="18dp"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -489,13 +471,11 @@
                                             android:textAppearance="@style/game_etftitlelock">
                                         </TextView>
                                     </LinearLayout>
-
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="18dp"
                                         android:layout_marginTop="38dp"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -521,7 +501,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="18dp"
                                     android:orientation="vertical">
-
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
@@ -537,8 +516,8 @@
                                     android:layout_height="15dp"
                                     android:layout_marginTop="4dp"
                                     android:orientation="vertical">
-
                                     <TextView
+                                        android:id="@+id/tv_priceinv1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="15dp"
                                         android:layout_weight="1"
@@ -554,8 +533,8 @@
                                     android:layout_marginTop="1dp"
                                     android:gravity="right"
                                     android:orientation="horizontal">
-
                                     <TextView
+                                        android:id="@+id/tv_quantinv1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -571,14 +550,14 @@
                                     android:layout_marginTop="4dp"
                                     android:gravity="right"
                                     android:orientation="horizontal">
-
                                     <View
+                                        android:id="@+id/v_diffinv1x"
                                         android:layout_width="12dp"
                                         android:layout_height="12dp"
                                         android:background="@drawable/ic_polygon_3">
                                     </View>
-
                                     <TextView
+                                        android:id="@+id/tv_diffinv1x"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="8dp"
@@ -626,8 +605,8 @@
                                         android:layout_height="15dp"
                                         android:layout_marginTop="4dp"
                                         android:orientation="vertical">
-
                                         <TextView
+                                            android:id="@+id/tv_priceinv3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="15dp"
                                             android:layout_weight="1"
@@ -643,17 +622,8 @@
                                         android:layout_marginTop="1dp"
                                         android:gravity="right"
                                         android:orientation="horizontal">
-
                                         <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_weight="1"
-                                            android:gravity="right"
-                                            android:text=""
-                                            android:textAppearance="@style/game_etfquant">
-                                        </TextView>
-
-                                        <TextView
+                                            android:id="@+id/tv_quantinv3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -669,14 +639,14 @@
                                         android:layout_marginTop="4dp"
                                         android:gravity="right"
                                         android:orientation="horizontal">
-
                                         <View
+                                            android:id="@+id/v_diffinv3x"
                                             android:layout_width="12dp"
                                             android:layout_height="12dp"
                                             android:background="@drawable/ic_polygon_2">
                                         </View>
-
                                         <TextView
+                                            android:id="@+id/tv_diffinv3x"
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:layout_marginLeft="8dp"
@@ -687,8 +657,8 @@
                                     </LinearLayout>
                                 </LinearLayout>
 
-
                                 <LinearLayout
+                                    android:id="@+id/ll_hideinv3x"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/borderline_etf"
@@ -697,18 +667,17 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_lockinv3x"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/ic_lock"
                                     android:elevation="10dp"
                                     android:orientation="vertical"
                                     android:padding="8dp">
-
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="18dp"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -718,13 +687,11 @@
                                             android:textAppearance="@style/game_etftitlelock">
                                         </TextView>
                                     </LinearLayout>
-
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="18dp"
                                         android:layout_marginTop="38dp"
                                         android:orientation="vertical">
-
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
@@ -736,8 +703,6 @@
                                     </LinearLayout>
                                 </LinearLayout>
                             </FrameLayout>
-
-
                         </LinearLayout>
                     </HorizontalScrollView>
 
@@ -784,6 +749,7 @@
                                 android:orientation="horizontal">
                             </LinearLayout>
                             <TextView
+                                android:id="@+id/tv_news"
                                 android:layout_width="229dp"
                                 android:layout_height="match_parent"
                                 android:text="뉴스스스스스스스스스스"
@@ -872,6 +838,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </TextView>
                                     <TextView
+                                        android:id="@+id/tv_fund"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="right"
@@ -900,6 +867,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </TextView>
                                     <TextView
+                                        android:id="@+id/tv_bond"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="right"
@@ -928,6 +896,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </TextView>
                                     <TextView
+                                        android:id="@+id/tv_indpro"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="right"
@@ -956,6 +925,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </TextView>
                                     <TextView
+                                        android:id="@+id/tv_unem"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="right"
@@ -984,6 +954,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </TextView>
                                     <TextView
+                                        android:id="@+id/tv_inf"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="right"
@@ -1010,6 +981,7 @@
                                     android:elevation="10dp"
                                     android:orientation="horizontal">
                                     <TextView
+                                        android:id="@+id/tv_ecoindex"
                                         android:layout_width="wrap_content"
                                         android:layout_height="20dp"
                                         app:layout_constraintLeft_toLeftOf="parent"
@@ -1018,7 +990,7 @@
                                         android:textAppearance="@style/game_ecoindextitlebig">
                                     </TextView>
                                     <com.github.mikephil.charting.charts.LineChart
-                                        android:id="@+id/cht_fund"
+                                        android:id="@+id/cht_eco"
                                         android:layout_width="match_parent"
                                         android:layout_height="80dp"
                                         android:layout_marginTop="52dp"
@@ -1026,6 +998,7 @@
                                         app:layout_constraintTop_toTopOf="parent">
                                     </com.github.mikephil.charting.charts.LineChart>
                                     <TextView
+                                        android:id="@+id/tv_ecoval"
                                         android:layout_width="wrap_content"
                                         android:layout_height="25dp"
                                         app:layout_constraintEnd_toEndOf="parent"
@@ -1068,6 +1041,7 @@
                         android:background="@drawable/ic_vector_time">
                     </View>
                     <TextView
+                        android:id="@+id/ll_item"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="10dp"
                         android:layout_width="wrap_content"
@@ -1079,6 +1053,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_trade"
                     android:layout_width="304dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -1134,12 +1109,6 @@
                 android:progressDrawable="@drawable/custom_progressbar_horizontal">
                 </ProgressBar>
             </LinearLayout>
-
-
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 </FrameLayout>
