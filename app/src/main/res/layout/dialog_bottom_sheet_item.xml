@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="191">
+    android:weightSum="223">
 
     <ImageButton
         android:id="@+id/btn_closeItemUseDialog"
@@ -28,8 +28,8 @@
             android:orientation="horizontal"
             android:paddingTop="20dp"
             android:paddingBottom="35dp"
-            android:weightSum="360"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            android:weightSum="360">
 
             <View
                 android:layout_width="0dp"
@@ -99,32 +99,33 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_"
+            android:id="@+id/cl_turnBackTime"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
                     android:layout_width="26dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/ic_path_left_orange"
-                    android:backgroundTint="#F1F5F5"/>
+                    android:backgroundTint="#F1F5F5"
+                    android:src="@drawable/ic_path_left_orange" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="시간 되돌리기"
-                    android:textAppearance="@style/game_dialog_bottom_sheet_item_titleRarge"/>
+                    android:textAppearance="@style/game_dialog_bottom_sheet_item_titleLarge" />
 
             </LinearLayout>
 
@@ -133,14 +134,112 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="35dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:progressDrawable="@drawable/seek_bar"
                 android:progress="40"
-                android:thumb="@drawable/ic_thumb"/>
+                android:progressDrawable="@drawable/seek_bar"
+                android:thumb="@drawable/ic_thumb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <LinearLayout
+                android:layout_width="136dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/ic_discrete_box_large"
+                android:orientation="horizontal"
+                android:weightSum="136"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btn_minus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="36"
+                    android:background="@drawable/ic_discrete_box"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textAppearance="@style/game_dialog_bottom_sheet_item_plusMinus" />
+
+
+                <TextView
+                    android:id="@+id/tv_buyquant"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="64"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textAppearance="@style/game_dialog_bottom_sheet_item_number" />
+
+                <Button
+                    android:id="@+id/btn_plus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="36"
+                    android:background="@drawable/ic_discrete_box"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textAppearance="@style/game_dialog_bottom_sheet_item_plusMinus" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_adjustTimeSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:layout_width="26dp"
+                    android:layout_height="32dp"
+                    android:backgroundTint="#F1F5F5"
+                    android:src="@drawable/ic_path_left_orange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="인게임 속도 조절"
+                    android:textAppearance="@style/game_dialog_bottom_sheet_item_titleLarge" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="35dp"
+                android:progress="40"
+                android:progressDrawable="@drawable/seek_bar"
+                android:thumb="@drawable/ic_thumb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1초에 n일이 흘러갑니다"
+                android:textAppearance="@style/game_dialog_bottom_sheet_item_description"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="57dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </FrameLayout>
 
@@ -172,4 +271,31 @@
                 android:textAppearance="@style/game_dialog_bottom_sheet_useItem" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="32"
+        android:background="#EAEEEF"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:text="피로도"
+            android:textAppearance="@style/game_dialog_bottom_sheet_item_tiredness"/>
+
+        <ProgressBar
+            android:id="@+id/pb_tiredness"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="24dp"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progressbar_horizontal" />
+
+    </LinearLayout>
 </LinearLayout>
