@@ -17,6 +17,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".NewMainActivity"></activity>
         <activity android:name=".QuestActivity" />
+        <activity android:name=".Initial_set_id_Activity"/>
+        <activity android:name=".Initial_set_pw_Activity"/>
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />
