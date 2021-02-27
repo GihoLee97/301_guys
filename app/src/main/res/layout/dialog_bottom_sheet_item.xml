@@ -7,7 +7,7 @@
     android:weightSum="223">
 
     <ImageButton
-        android:id="@+id/btn_closeItemUseDialog"
+        android:id="@+id/ib_closeItemUseDialog"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="16"
@@ -37,6 +37,7 @@
                 android:layout_weight="60" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_goToTurnBackTime"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="110"
@@ -70,6 +71,7 @@
                 android:layout_weight="20" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_goToAdjustTimeSpeed"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="110"
@@ -115,6 +117,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
+                    android:id="@+id/ib_backToSelectItem_turnBackTime"
                     android:layout_width="26dp"
                     android:layout_height="32dp"
                     android:backgroundTint="#F1F5F5"
@@ -130,6 +133,7 @@
             </LinearLayout>
 
             <SeekBar
+                android:id="@+id/sb_turnBackTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
@@ -164,7 +168,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_buyquant"
+                    android:id="@+id/tv_day"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="64"
@@ -202,6 +206,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
+                    android:id="@+id/ib_backToSelectItem_adjustTimeSpeed"
                     android:layout_width="26dp"
                     android:layout_height="32dp"
                     android:backgroundTint="#F1F5F5"
@@ -217,11 +222,14 @@
             </LinearLayout>
 
             <SeekBar
+                android:id="@+id/sb_adjustTimeSpeed"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:max="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="35dp"
-                android:progress="40"
+                android:progress="5"
                 android:progressDrawable="@drawable/seek_bar"
                 android:thumb="@drawable/ic_thumb"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -244,6 +252,7 @@
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_useItem_time"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="56"
