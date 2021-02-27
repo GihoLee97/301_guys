@@ -5,29 +5,29 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.guys_from_301.stock_game.data.*
-import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.IndexOutOfBoundsException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
+
 
 const val START_SNP_VAL:Float = 100F
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,10 +209,10 @@ class GameNormalActivity : AppCompatActivity() {
     private var infIndex: Int = 0
 
     // 차트 설정
-    private val snpLineColor: String = "#1A237E" // S&P 선 색깔
+    private val snpLineColor: String = "#F4730B" // S&P 선 색깔
     private val snpFillColor: String = "#1565C0" // S&P 채움 색깔
     private val snpHighColor: String = "#B71C1C" // S&P 하이라이트 색깔
-    private val ecoLineColor: String = "#1A237E" // 경제 지표 선 색깔
+    private val ecoLineColor: String = "#F4730B" // 경제 지표 선 색깔
 
 
     // Count 값들 //////////////////////////////////////////////////////////////////////////////////
@@ -317,6 +317,55 @@ class GameNormalActivity : AppCompatActivity() {
 
     //변수 선언 ////////////////////////////////////////////////////////////////////////////////////
 
+    private lateinit var btn_gameBack: Button
+    private lateinit var tv_gameName: TextView
+    private lateinit var tv_assetTot: TextView
+    private lateinit var tv_profitRate: TextView
+    private lateinit var tv_profitTot: TextView
+
+    private lateinit var tv_price1x: TextView
+    private lateinit var tv_quant1x: TextView
+    private lateinit var v_diff1x: View
+    private lateinit var tv_diff1x: TextView
+
+    private lateinit var tv_price3x: TextView
+    private lateinit var tv_quant3x: TextView
+    private lateinit var v_diff3x: View
+    private lateinit var tv_diff3x: TextView
+    private lateinit var ll_hide3x: LinearLayout // 언락시 elevation 0dp 로 변경
+    private lateinit var ll_lock3x: LinearLayout // 언락시 elevation 0dp 로 변경
+
+    private lateinit var tv_priceinv1x: TextView
+    private lateinit var tv_quantinv1x: TextView
+    private lateinit var v_diffinv1x: View
+    private lateinit var tv_diffinv1x: TextView
+
+    private lateinit var tv_priceinv3x: TextView
+    private lateinit var tv_quantinv3x: TextView
+    private lateinit var v_diffinv3x: View
+    private lateinit var tv_diffinv3x: TextView
+    private lateinit var ll_hideinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
+    private lateinit var ll_lockinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
+
+    private lateinit var tv_fund: TextView
+    private lateinit var tv_bond: TextView
+    private lateinit var tv_indpro: TextView
+    private lateinit var tv_unem: TextView
+    private lateinit var tv_inf: TextView
+
+    private lateinit var tv_ecoindex: TextView
+    private lateinit var tv_ecoval: TextView
+
+    private lateinit var cht_snp: LineChart
+    private lateinit var cht_eco: LineChart
+
+    private lateinit var tv_snp: TextView
+    private lateinit var tv_news: TextView
+    private lateinit var ll_item: LinearLayout
+    private lateinit var ll_trade: LinearLayout
+    private lateinit var pb_fatigue: ProgressBar
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
@@ -324,6 +373,56 @@ class GameNormalActivity : AppCompatActivity() {
         val dialog = Dialog_loading(this@GameNormalActivity)
         dialog.show()
 
+        // view 연결
+        btn_gameBack = findViewById(R.id.btn_gameBack)
+        tv_gameName = findViewById(R.id.tv_gameName)
+        tv_assetTot = findViewById(R.id.tv_assetTot)
+        tv_profitRate = findViewById(R.id.tv_profitRate)
+        tv_profitTot = findViewById(R.id.tv_profitTot)
+
+        tv_price1x = findViewById(R.id.tv_price1x)
+        tv_quant1x = findViewById(R.id.tv_quant1x)
+        v_diff1x = findViewById(R.id.v_diff1x)
+        tv_diff1x = findViewById(R.id.tv_diff1x)
+
+        tv_price3x = findViewById(R.id.tv_price3x)
+        tv_quant3x = findViewById(R.id.tv_quant3x)
+        v_diff3x = findViewById(R.id.v_diff3x)
+        tv_diff3x = findViewById(R.id.tv_diff3x)
+        ll_hide3x = findViewById(R.id.ll_hide3x) // 언락시 elevation 0dp 로 변경
+        ll_lock3x = findViewById(R.id.ll_lock3x) // 언락시 elevation 0dp 로 변경
+
+        tv_priceinv1x = findViewById(R.id.tv_priceinv1x)
+        tv_quantinv1x = findViewById(R.id.tv_quantinv1x)
+        v_diffinv1x = findViewById(R.id.v_diffinv1x)
+        tv_diffinv1x = findViewById(R.id.tv_diffinv1x)
+
+        tv_priceinv3x = findViewById(R.id.tv_priceinv3x)
+        tv_quantinv3x = findViewById(R.id.tv_quantinv3x)
+        v_diffinv3x = findViewById(R.id.v_diffinv3x)
+        tv_diffinv3x = findViewById(R.id.tv_diffinv3x)
+        ll_hideinv3x = findViewById(R.id.ll_hideinv3x) // 언락시 elevation 0dp 로 변경
+        ll_lockinv3x = findViewById(R.id.ll_lockinv3x) // 언락시 elevation 0dp 로 변경
+
+        tv_fund = findViewById(R.id.tv_fund)
+        tv_bond = findViewById(R.id.tv_bond)
+        tv_indpro = findViewById(R.id.tv_indpro)
+        tv_unem = findViewById(R.id.tv_unem)
+        tv_inf = findViewById(R.id.tv_inf)
+
+        tv_ecoindex = findViewById(R.id.tv_ecoindex)
+        tv_ecoval = findViewById(R.id.tv_ecoval)
+
+        cht_snp = findViewById(R.id.cht_snp)
+        cht_eco = findViewById(R.id.cht_eco)
+
+        tv_snp = findViewById(R.id.tv_snp)
+        tv_news = findViewById(R.id.tv_news)
+        ll_item = findViewById(R.id.ll_item)
+        ll_trade = findViewById(R.id.ll_trade)
+        pb_fatigue = findViewById(R.id.pb_fatigue)
+
+        // findViewById<Button>(R.id.btn_auto).setBackgroundResource(R.drawable.ic_check_intersection)
 
         questDb = QuestDB.getInstance(this)
         gameSetDb = GameSetDB.getInstace(this)
@@ -459,99 +558,95 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         // Button 동작
-        // 지표 설명
-        layout_fund = findViewById(R.id.Layout_fund)
-        layout_bond = findViewById(R.id.Layout_bond)
-        layout_indpro = findViewById(R.id.Layout_indpro)
-        layout_unem = findViewById(R.id.Layout_unem)
-        layout_inf = findViewById(R.id.Layout_inf)
+//        // 지표 설명
+//        layout_fund = findViewById(R.id.Layout_fund)
+//        layout_bond = findViewById(R.id.Layout_bond)
+//        layout_indpro = findViewById(R.id.Layout_indpro)
+//        layout_unem = findViewById(R.id.Layout_unem)
+//        layout_inf = findViewById(R.id.Layout_inf)
+//
+//
+//        findViewById<LinearLayout>(R.id.layout_btn_fund).setOnClickListener{
+//            if(layout_fund.visibility == View.VISIBLE){
+//                layout_fund.visibility = View.GONE
+//            }
+//            else{
+//                layout_fund.visibility = View.VISIBLE
+//                layout_bond.visibility = View.GONE
+//                layout_indpro.visibility = View.GONE
+//                layout_unem.visibility = View.GONE
+//                layout_inf.visibility = View.GONE
+//            }
+//        }
+//        findViewById<LinearLayout>(R.id.layout_btn_bond).setOnClickListener{
+//            if(layout_bond.visibility == View.VISIBLE){
+//                layout_bond.visibility = View.GONE
+//            }
+//            else{
+//                layout_fund.visibility = View.GONE
+//                layout_bond.visibility = View.VISIBLE
+//                layout_indpro.visibility = View.GONE
+//                layout_unem.visibility = View.GONE
+//                layout_inf.visibility = View.GONE
+//            }
+//        }
+//        findViewById<LinearLayout>(R.id.layout_btn_indpro).setOnClickListener{
+//            if(layout_indpro.visibility == View.VISIBLE){
+//                layout_indpro.visibility = View.GONE
+//            }
+//            else{
+//                layout_fund.visibility = View.GONE
+//                layout_bond.visibility = View.GONE
+//                layout_indpro.visibility = View.VISIBLE
+//                layout_unem.visibility = View.GONE
+//                layout_inf.visibility = View.GONE
+//            }
+//        }
+//        findViewById<LinearLayout>(R.id.layout_btn_unem).setOnClickListener{
+//            if(layout_unem.visibility == View.VISIBLE){
+//                layout_unem.visibility = View.GONE
+//            }
+//            else{
+//                layout_fund.visibility = View.GONE
+//                layout_bond.visibility = View.GONE
+//                layout_indpro.visibility = View.GONE
+//                layout_unem.visibility = View.VISIBLE
+//                layout_inf.visibility = View.GONE
+//            }
+//        }
+//        findViewById<LinearLayout>(R.id.layout_btn_inf).setOnClickListener{
+//            if(layout_inf.visibility == View.VISIBLE){
+//                layout_inf.visibility = View.GONE
+//            }
+//            else{
+//                layout_fund.visibility = View.GONE
+//                layout_bond.visibility = View.GONE
+//                layout_indpro.visibility = View.GONE
+//                layout_unem.visibility = View.GONE
+//                layout_inf.visibility = View.VISIBLE
+//            }
+//        }
 
 
-        findViewById<LinearLayout>(R.id.layout_btn_fund).setOnClickListener{
-            if(layout_fund.visibility == View.VISIBLE){
-                layout_fund.visibility = View.GONE
-            }
-            else{
-                layout_fund.visibility = View.VISIBLE
-                layout_bond.visibility = View.GONE
-                layout_indpro.visibility = View.GONE
-                layout_unem.visibility = View.GONE
-                layout_inf.visibility = View.GONE
-            }
-        }
-        findViewById<LinearLayout>(R.id.layout_btn_bond).setOnClickListener{
-            if(layout_bond.visibility == View.VISIBLE){
-                layout_bond.visibility = View.GONE
-            }
-            else{
-                layout_fund.visibility = View.GONE
-                layout_bond.visibility = View.VISIBLE
-                layout_indpro.visibility = View.GONE
-                layout_unem.visibility = View.GONE
-                layout_inf.visibility = View.GONE
-            }
-        }
-        findViewById<LinearLayout>(R.id.layout_btn_indpro).setOnClickListener{
-            if(layout_indpro.visibility == View.VISIBLE){
-                layout_indpro.visibility = View.GONE
-            }
-            else{
-                layout_fund.visibility = View.GONE
-                layout_bond.visibility = View.GONE
-                layout_indpro.visibility = View.VISIBLE
-                layout_unem.visibility = View.GONE
-                layout_inf.visibility = View.GONE
-            }
-        }
-        findViewById<LinearLayout>(R.id.layout_btn_unem).setOnClickListener{
-            if(layout_unem.visibility == View.VISIBLE){
-                layout_unem.visibility = View.GONE
-            }
-            else{
-                layout_fund.visibility = View.GONE
-                layout_bond.visibility = View.GONE
-                layout_indpro.visibility = View.GONE
-                layout_unem.visibility = View.VISIBLE
-                layout_inf.visibility = View.GONE
-            }
-        }
-        findViewById<LinearLayout>(R.id.layout_btn_inf).setOnClickListener{
-            if(layout_inf.visibility == View.VISIBLE){
-                layout_inf.visibility = View.GONE
-            }
-            else{
-                layout_fund.visibility = View.GONE
-                layout_bond.visibility = View.GONE
-                layout_indpro.visibility = View.GONE
-                layout_unem.visibility = View.GONE
-                layout_inf.visibility = View.VISIBLE
-            }
-        }
-
-
-        // 매수
-        findViewById<Button>(R.id.btn_buy).setOnClickListener {
+        // 거래하기
+        ll_trade.setOnClickListener {
+//            val dialog = Dialog_new_buyandsell()
+//            dialog.show(supportFragmentManager, " ")
             val dlgBuy = Dialog_buy(this)
             dlgBuy.start()
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
-        //매도
-        findViewById<Button>(R.id.btn_sell).setOnClickListener {
-            val dlgSell = Dialog_sell(this)
-            dlgSell.start()
-            click = !click /////////////////////////////////////////////////////////////////////////
-        }
-
         // 자동
-        findViewById<Button>(R.id.btn_auto).setOnClickListener {
+        ll_trade.setOnLongClickListener {
             val dlgAuto = Dialog_auto(this)
             dlgAuto.start()
             click = !click ///////////////////////////////////////////////////////////////////////
+            true
         }
 
         // 아이템
-        findViewById<Button>(R.id.btn_item).setOnClickListener {
+        ll_item.setOnClickListener {
             profileDb = ProfileDB.getInstace(this)
 
             val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!, profileDb?.profileDao()?.getValue1()!!)
@@ -618,7 +713,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 전역 변수 초기화
-    private fun initialize(gamehistory: GameNormal, gameset:GameSet) {
+    private fun initialize(gamehistory: GameNormal, gameset: GameSet) {
         asset =  gamehistory?.assets!!// 총 자산
         cash = gamehistory?.cash!! // 보유 현금
         input = gamehistory?.input!! // 총 인풋
@@ -721,15 +816,37 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         // 차트 설정
+        // TODO
+        val legend_snp : Legend = cht_snp.legend
+        val x_snp : XAxis = cht_snp.xAxis
+        val yl_snp : YAxis = cht_snp.getAxis(YAxis.AxisDependency.LEFT)
+        val yr_snp : YAxis = cht_snp.getAxis(YAxis.AxisDependency.RIGHT)
+
+        legend_snp.isEnabled = false
+        x_snp.isEnabled = false
+        yl_snp.isEnabled = false
+        yr_snp.isEnabled = false
+
         snpDs.color = Color.parseColor(snpLineColor) // 차트 선
         snpDs.setDrawCircles(false)
         snpDs.setDrawValues(false) // 차트 지점마다 값 표시
         snpDs.lineWidth = 1.5F
-        snpDs.fillAlpha = 80 // 차트 스커트
-        snpDs.fillColor = Color.parseColor(snpFillColor)
-        snpDs.setDrawFilled(true)
+//        snpDs.fillAlpha = 80 // 차트 스커트
+//        snpDs.fillColor = Color.parseColor(snpFillColor)
+//        snpDs.setDrawFilled(true)
+//        snpDs.setDrawAxisLine(false)
         snpDs.highLightColor = Color.parseColor(snpHighColor) // 터치 시 하이라이트
         snpDs.highlightLineWidth = 1F
+
+        val legend_eco : Legend = cht_eco.getLegend()
+        val x_eco : XAxis = cht_eco.xAxis
+        val yl_eco : YAxis = cht_eco.getAxis(YAxis.AxisDependency.LEFT)
+        val yr_eco : YAxis = cht_eco.getAxis(YAxis.AxisDependency.RIGHT)
+
+        legend_eco.isEnabled = false
+        x_eco.isEnabled = false
+        yl_snp.isEnabled = false
+        yr_snp.isEnabled = false
 
         fundDs.color = Color.parseColor(ecoLineColor)
         fundDs.setDrawCircles(false) // 지점마다 원 표시
@@ -759,11 +876,11 @@ class GameNormalActivity : AppCompatActivity() {
 
         for (i in 0..(given - 1)) {
             snpD.addEntry(
-                Entry(
-                    (i + 1 - given).toFloat(),
-                    snp_val[start - given + 1 + i].toFloat() * criteria
-                ),
-                0
+                    Entry(
+                            (i + 1 - given).toFloat(),
+                            snp_val[start - given + 1 + i].toFloat() * criteria
+                    ),
+                    0
             )
 
             var sf = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식
@@ -814,10 +931,10 @@ class GameNormalActivity : AppCompatActivity() {
             }
             indproCount += 1
             indproD.addEntry(
-                Entry(
-                    (indproCount - 1250).toFloat(),
-                    indpro_val[indproIndex - 1].toFloat()
-                ), 0
+                    Entry(
+                            (indproCount - 1250).toFloat(),
+                            indpro_val[indproIndex - 1].toFloat()
+                    ), 0
             )
 
             while (unemC > 0) {
@@ -828,8 +945,8 @@ class GameNormalActivity : AppCompatActivity() {
             }
             unemCount += 1
             unemD.addEntry(
-                Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),
-                0
+                    Entry((unemCount - 1250).toFloat(), unem_val[unemIndex - 1].toFloat()),
+                    0
             )
 
             while (infC > 0) {
@@ -849,42 +966,55 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         // layout 에 배치된 lineChart 에 데이터 연결
-        findViewById<LineChart>(R.id.cht_snp).data = snpD
-        findViewById<LineChart>(R.id.cht_fund).data = fundD
-        findViewById<LineChart>(R.id.cht_bond).data = bondD
-        findViewById<LineChart>(R.id.cht_indpro).data = indproD
-        findViewById<LineChart>(R.id.cht_unem).data = unemD
-        findViewById<LineChart>(R.id.cht_inf).data = infD
+        cht_snp.data = snpD
+        cht_eco.data = fundD
+//        findViewById<LineChart>(R.id.cht_bond).data = bondD
+//        findViewById<LineChart>(R.id.cht_indpro).data = indproD
+//        findViewById<LineChart>(R.id.cht_unem).data = unemD
+//        findViewById<LineChart>(R.id.cht_inf).data = infD
 
 
         // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////
         runOnUiThread {
             // 차트 생성
-            findViewById<LineChart>(R.id.cht_snp).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_fund).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)
-            findViewById<LineChart>(R.id.cht_fund).setTouchEnabled(false)
-            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)
-            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)
-            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)
-            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)
-            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
-            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+            cht_snp.animateXY(1, 1)
+            cht_eco.animateXY(1, 1)
+//            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)
+//            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)
+//            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)
+//            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)
+            //TODO
+            cht_snp.setBackgroundColor(Color.parseColor("#1AFF0000"))
+            cht_snp.setDrawGridBackground(false)
+            cht_snp.setDrawBorders(false)
+//            cht_snp.setDrawAxisLines(false)
+
+
+            cht_eco.setBackgroundColor(Color.parseColor("#1AFF0000"))
+            cht_eco.setDrawGridBackground(false)
+            cht_eco.setDrawBorders(false)
+
+
+
+            cht_eco.setTouchEnabled(false)
+//            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)
+//            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)
+//            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)
+//            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)
+            cht_eco.setVisibleXRangeMaximum(1250F)
+//            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+//            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+//            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+//            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
         }
 
         // 추가분 반영
-        findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-        findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+        cht_snp.notifyDataSetChanged()
+        cht_eco.notifyDataSetChanged()
+//        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+//        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+//        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+//        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
 
         snpD.notifyDataChanged()
         fundD.notifyDataChanged()
@@ -901,9 +1031,9 @@ class GameNormalActivity : AppCompatActivity() {
             findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
         }
 
-        runOnUiThread {
-            findViewById<TextView>(R.id.tv_notification).text = "알림: 게임 시작...!"
-        }
+//        runOnUiThread {
+//            findViewById<TextView>(R.id.tv_notification).text = "알림: 게임 시작...!"
+//        }
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
@@ -1025,10 +1155,10 @@ class GameNormalActivity : AppCompatActivity() {
                         var inf_c = snpDate_sf.time - infDate_sf.time
 
                         snpD.addEntry(
-                            Entry(
-                                dayPlus.toFloat(),
-                                snp_val[start + dayPlus].toFloat() * criteria
-                            ), 0
+                                Entry(
+                                        dayPlus.toFloat(),
+                                        snp_val[start + dayPlus].toFloat() * criteria
+                                ), 0
                         )
 
 
@@ -1040,10 +1170,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         fundCount += 1
                         fundD.addEntry(
-                            Entry(
-                                (fundCount - 1250).toFloat(),
-                                fund_val[fundIndex].toFloat()
-                            ), 0
+                                Entry(
+                                        (fundCount - 1250).toFloat(),
+                                        fund_val[fundIndex].toFloat()
+                                ), 0
                         )
                         println("SNP x값 : " + dayPlus.toString() + "|" + "Fund x값 : " + (fundCount - 1250).toString())
 
@@ -1055,10 +1185,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         bondCount += 1
                         bondD.addEntry(
-                            Entry(
-                                (bondCount - 1250).toFloat(),
-                                bond_val[bondIndex].toFloat()
-                            ), 0
+                                Entry(
+                                        (bondCount - 1250).toFloat(),
+                                        bond_val[bondIndex].toFloat()
+                                ), 0
                         )
 
                         while (indpro_c > 0) {
@@ -1069,10 +1199,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         indproCount += 1
                         indproD.addEntry(
-                            Entry(
-                                (indproCount - 1250).toFloat(),
-                                indpro_val[indproIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (indproCount - 1250).toFloat(),
+                                        indpro_val[indproIndex - 1].toFloat()
+                                ), 0
                         )
 
                         while (unem_c > 0) {
@@ -1083,10 +1213,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         unemCount += 1
                         unemD.addEntry(
-                            Entry(
-                                (unemCount - 1250).toFloat(),
-                                unem_val[unemIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (unemCount - 1250).toFloat(),
+                                        unem_val[unemIndex - 1].toFloat()
+                                ), 0
                         )
 
                         while (inf_c > 0) {
@@ -1097,10 +1227,10 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         infCount += 1
                         infD.addEntry(
-                            Entry(
-                                (infCount - 1250).toFloat(),
-                                inf_val[infIndex - 1].toFloat()
-                            ), 0
+                                Entry(
+                                        (infCount - 1250).toFloat(),
+                                        inf_val[infIndex - 1].toFloat()
+                                ), 0
                         )
 
                         println("S&P : " + snp_date[start + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
@@ -1109,11 +1239,11 @@ class GameNormalActivity : AppCompatActivity() {
                         runOnUiThread {
                             // 차트에 DataSet 리프레쉬 통보
                             findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                            findViewById<LineChart>(R.id.cht_eco).notifyDataSetChanged()
+//                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
+//                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
+//                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
+//                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
                             snpD.notifyDataChanged()
                             fundD.notifyDataChanged()
                             bondD.notifyDataChanged()
@@ -1122,19 +1252,19 @@ class GameNormalActivity : AppCompatActivity() {
 
                             // 차트 축 최대 범위 설정
                             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-                            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+                            findViewById<LineChart>(R.id.cht_eco).setVisibleXRangeMaximum(1250F)
+//                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
+//                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
+//                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
+//                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
 
                             // 차트 축 이동
                             findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_fund).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
+                            findViewById<LineChart>(R.id.cht_eco).moveViewToX(dayPlus.toFloat())
+//                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
+//                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
+//                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
+//                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
                         }
 
 
@@ -1185,61 +1315,61 @@ class GameNormalActivity : AppCompatActivity() {
 
                         if(newssave.size==0){
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
+                                tv_news.text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
                             }
                         }
                         else if(newssave.size ==1){
                             var tmp0 = newssave[0]
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
-                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
-                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
+                                tv_news.text = news_information[tmp0]
+//                                findViewById<TextView>(R.id.news2).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news3).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news4).text = "뉴스 없음"
+//                                findViewById<TextView>(R.id.news5).text = "뉴스 없음"
                             }
                         }
                         else if(newssave.size ==2){
                             var tmp0 = newssave[0]; var tmp1 = newssave[1]
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
-                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
-                                findViewById<TextView>(R.id.news3).text ="뉴스 없음"
-                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
-                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                                tv_news.text = news_information[tmp0]
+//                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+//                                findViewById<TextView>(R.id.news3).text ="뉴스 없음"
+//                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
+//                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
                             }
                         }
                         else if(newssave.size ==3){
                             var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
-                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
-                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
-                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
-                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                                tv_news.text = news_information[tmp0]
+//                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+//                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+//                                findViewById<TextView>(R.id.news4).text ="뉴스 없음"
+//                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
                             }
                         }
                         else if(newssave.size ==4){
                             var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]; var tmp3 = newssave[3]
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
-                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
-                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
-                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
-                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
+                                tv_news.text = news_information[tmp0]
+//                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+//                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+//                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
+//                                findViewById<TextView>(R.id.news5).text ="뉴스 없음"
                             }
                         }
                         else if(newssave.size >= 5){
                             var tmp0 = newssave[0]; var tmp1 = newssave[1]; var tmp2 = newssave[2]; var tmp3 = newssave[3]; var tmp4 = newssave[4]
                             runOnUiThread {
-                                findViewById<TextView>(R.id.news1).text = news_information[tmp0]
-                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
-                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
-                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
-                                findViewById<TextView>(R.id.news5).text = news_information[tmp4]
+                                tv_news.text = news_information[tmp0]
+//                                findViewById<TextView>(R.id.news2).text = news_information[tmp1]
+//                                findViewById<TextView>(R.id.news3).text = news_information[tmp2]
+//                                findViewById<TextView>(R.id.news4).text = news_information[tmp3]
+//                                findViewById<TextView>(R.id.news5).text = news_information[tmp4]
                             }
                         }
                         newssave.clear()
@@ -1248,10 +1378,10 @@ class GameNormalActivity : AppCompatActivity() {
                         if (snpDate_sf.date >= 10 && monthToggle==0) {
                             cash += monthly // 월 투자금 현금으로 입금
                             input += monthly // 총 input 최신화
-                            runOnUiThread {
-                                findViewById<TextView>(R.id.tv_notification).text =
-                                    "알림: 월 투자금 " + dec.format(monthly) + " 원이 입금되었습니다"
-                            }
+//                            runOnUiThread {
+//                                findViewById<TextView>(R.id.tv_notification).text =
+//                                    "알림: 월 투자금 " + dec.format(monthly) + " 원이 입금되었습니다"
+//                            }
 
                             ////////////////////////////////////////////////////////////////////////
                             // 자동 매수
@@ -1357,37 +1487,37 @@ class GameNormalActivity : AppCompatActivity() {
                                     cash += val1x * dividendrate * 0.846F // 15.4% 세금 공제
                                     dividendtot += val1x * dividendrate
                                     taxtot += val1x * dividendrate * 0.154F // 세금 납부 내역 최신화
-                                    runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text =
-                                            "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
-                                    }
+//                                    runOnUiThread {
+//                                        findViewById<TextView>(R.id.tv_notification).text =
+//                                            "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
+//                                    }
                                 }
                             } else if ((snpDate_sf.month == 1) && (countYear >= 1)) {
                                 monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 연봉 인상으로 월 투자금 증가
-                                runOnUiThread {
-                                    findViewById<TextView>(R.id.tv_notification).text =
-                                        "알림: 연봉 " + per.format(setSalaryraise) + "% 인상으로 월 투자금이 " + dec.format(
-                                            monthly
-                                        ) + " 원이 되었습니다"
-                                }
+//                                runOnUiThread {
+//                                    findViewById<TextView>(R.id.tv_notification).text =
+//                                        "알림: 연봉 " + per.format(setSalaryraise) + "% 인상으로 월 투자금이 " + dec.format(
+//                                            monthly
+//                                        ) + " 원이 되었습니다"
+//                                }
                             }
 
                             if (tax > 0F && snpDate_sf.month != 0) {
                                 if (cash >= tax) {
                                     cash -= tax
-                                    runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text =
-                                            "알림: 세금 " + dec.format(tax) + " 원이 납부 되었습니다"
-                                    }
+//                                    runOnUiThread {
+//                                        findViewById<TextView>(R.id.tv_notification).text =
+//                                            "알림: 세금 " + dec.format(tax) + " 원이 납부 되었습니다"
+//                                    }
                                     taxtot += tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
                                 } else {
                                     tax *= (1.05F)
-                                    runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text =
-                                            "알림: 미납 세금이 매달 가산됩니다"
-                                    }
+//                                    runOnUiThread {
+//                                        findViewById<TextView>(R.id.tv_notification).text =
+//                                            "알림: 미납 세금이 매달 가산됩니다"
+//                                    }
                                 }
                             }
 
@@ -1396,19 +1526,19 @@ class GameNormalActivity : AppCompatActivity() {
                                 tax += (profityear - 2500000F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
                                 profityear = 0F // 연 수익률 초기화
                                 if (cash >= tax && tax > 0F) {
-                                    runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text =
-                                            "알림: 세금 " + dec.format(tax) + " 원이 납부됨"
-                                    }
+//                                    runOnUiThread {
+//                                        findViewById<TextView>(R.id.tv_notification).text =
+//                                            "알림: 세금 " + dec.format(tax) + " 원이 납부됨"
+//                                    }
                                     cash -= tax
                                     taxtot += tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
                                 } else if (cash < tax && tax > 0F) {
-                                    runOnUiThread {
-                                        findViewById<TextView>(R.id.tv_notification).text =
-                                            "알림: 현금이 부족해 세금을 낼 수 없습니다"
-                                    }
+//                                    runOnUiThread {
+//                                        findViewById<TextView>(R.id.tv_notification).text =
+//                                            "알림: 현금이 부족해 세금을 낼 수 없습니다"
+//                                    }
                                 }
                                 preYear = snpDate_sf.year
                             }
@@ -1476,77 +1606,82 @@ class GameNormalActivity : AppCompatActivity() {
                         surplusQuestList?.let { checkQuestSurplus(surplusCount, it) }
 
                         runOnUiThread {
-                            // 경과 기간 최신화
-                            findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
-                            findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
-                            // 남은 기간 최신화
-                            if(countMonth==0){
-                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
-                                        " 년 0 개월"
-                            }
-                            else {
-                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
-                                        " 년 ${12 - countMonth} 개월"
-                            }
-
                             // 자산 가치 관련 값들 최신화
-                            findViewById<TextView>(R.id.tv_asset).text =
-                                "총 자산 : " + dec.format(asset) + " 원"
-                            findViewById<TextView>(R.id.tv_cash).text =
-                                "현금 : " + dec.format(cash) + " 원"
-                            findViewById<TextView>(R.id.tv_evaluation).text =
-                                "평가금액 : " + dec.format(evaluation) + " 원"
-                            findViewById<TextView>(R.id.tv_profit).text =
-                                "순손익 : " + dec.format(profit) + " 원"
-                            findViewById<TextView>(R.id.tv_profitrate).text =
-                                "수익률 : " + per.format(profitrate) + " %"
-                            findViewById<TextView>(R.id.tv_dividend).text =
-                                "배당금 : " + dec.format(dividendtot) + " 원"
-                            findViewById<TextView>(R.id.tv_taxtot).text =
-                                "세금 : " + dec.format(taxtot) + " 원"
-                            findViewById<TextView>(R.id.tv_profityear).text =
-                                "당해 실현 수익 : " + dec.format(profityear) + " 원"
-                            findViewById<TextView>(R.id.tv_tradecomtot).text =
-                                "수수료 : " + dec.format(tradecomtot) + " 원"
+                            tv_assetTot.text = "$ " + dec.format(asset)
+                            tv_profitRate.text = per.format(profitrate) + " %"
+                            tv_profitTot.text = "$ " + dec.format(profit)
+                            tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
 
-                            findViewById<TextView>(R.id.tv_price1x).text =
-                                dec.format(price1x) + " 원"
-                            findViewById<TextView>(R.id.tv_price3x).text =
-                                dec.format(price3x) + " 원"
-                            findViewById<TextView>(R.id.tv_priceinv1x).text =
-                                dec.format(priceinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_priceinv3x).text =
-                                dec.format(priceinv3x) + " 원"
+                            tv_price1x.text = "$ " + dec.format(price1x)
+                            tv_price3x.text = "$ " + dec.format(price3x)
+                            tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
+                            tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
 
-                            findViewById<TextView>(R.id.tv_aver1x).text = dec.format(aver1x) + " 원"
-                            findViewById<TextView>(R.id.tv_aver3x).text = dec.format(aver3x) + " 원"
-                            findViewById<TextView>(R.id.tv_averinv1x).text =
-                                dec.format(averinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_averinv3x).text =
-                                dec.format(averinv3x) + " 원"
+                            tv_quant1x.text = dec.format(quant1x) + " 주"
+                            tv_quant3x.text = dec.format(quant3x) + " 주"
+                            tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
+                            tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
 
-                            findViewById<TextView>(R.id.tv_quant1x).text =
-                                dec.format(quant1x) + " 주"
-                            findViewById<TextView>(R.id.tv_quant3x).text =
-                                dec.format(quant3x) + " 주"
-                            findViewById<TextView>(R.id.tv_quantinv1x).text =
-                                dec.format(quantinv1x) + " 주"
-                            findViewById<TextView>(R.id.tv_quantinv3x).text =
-                                dec.format(quantinv3x) + " 주"
+                            tv_diff1x.text = per.format(pr1x) + " %"
+                            tv_diff3x.text = per.format(pr3x) + " %"
+                            tv_diffinv1x.text = per.format(prinv1x) + " %"
+                            tv_diffinv3x.text = per.format(prinv3x) + " %"
 
-                            findViewById<TextView>(R.id.tv_val1x).text = dec.format(val1x) + " 원"
-                            findViewById<TextView>(R.id.tv_val3x).text = dec.format(val3x) + " 원"
-                            findViewById<TextView>(R.id.tv_valinv1x).text =
-                                dec.format(valinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_valinv3x).text =
-                                dec.format(valinv3x) + " 원"
+                            tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+                            tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+                            tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
+                            tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+                            tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+                        }
 
-                            findViewById<TextView>(R.id.tv_profit1x).text = per.format(pr1x) + " %"
-                            findViewById<TextView>(R.id.tv_profit3x).text = per.format(pr3x) + " %"
-                            findViewById<TextView>(R.id.tv_profitinv1x).text =
-                                per.format(prinv1x) + " %"
-                            findViewById<TextView>(R.id.tv_profitinv3x).text =
-                                per.format(prinv3x) + " %"
+                        // 수익률에 따른 화살표 이미지 및 색상 변경
+                        if (pr1x >= 0) {
+                            runOnUiThread {
+                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
+
+                        if (pr3x >= 0) {
+                            runOnUiThread {
+                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
+
+                        if (prinv1x >= 0) {
+                            runOnUiThread {
+                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
+
+                        if (prinv3x >= 0) {
+                            runOnUiThread {
+                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+
 
                         }
 
@@ -1561,7 +1696,7 @@ class GameNormalActivity : AppCompatActivity() {
                         indproIndex1.add(indproIndex)
                         unemIndex1.add(unemIndex)
                         infIndex1.add(infIndex)
-                        println("현재 fundIndex Size: " + fundIndex1.size.toString()+" | 현재 asset1 Size: " + asset1.size.toString())
+                        println("현재 fundIndex Size: " + fundIndex1.size.toString() + " | 현재 asset1 Size: " + asset1.size.toString())
 
                         fundCount1.add(fundCount)
                         bondCount1.add(bondCount)
@@ -1621,7 +1756,7 @@ class GameNormalActivity : AppCompatActivity() {
                         tax1.add(tax)
                         taxtot1.add(taxtot)
 
-                        println("현재 fundIndex Size: " + fundIndex1.size.toString()+" | 현재 asset1 Size: " + asset1.size.toString())
+                        println("현재 fundIndex Size: " + fundIndex1.size.toString() + " | 현재 asset1 Size: " + asset1.size.toString())
                         // 시간역행 아이템용 데이터 저장 종료
                         ////////////////////////////////////////////////////////////////////////////
 
@@ -1668,8 +1803,8 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         ////////////////////////////////////////////////////////////////////////////
                         runOnUiThread{
-                            findViewById<TextView>(R.id.tv_value1).text = "피로도: "+ value1now.toString()
-                            findViewById<ProgressBar>(R.id.progress_value1).progress = value1now
+//                            findViewById<TextView>(R.id.tv_value1).text = "피로도: "+ value1now.toString()
+                            pb_fatigue.progress = value1now
                         }
 
                         dayPlus += 1 // 시간 진행
@@ -1680,11 +1815,8 @@ class GameNormalActivity : AppCompatActivity() {
                     // 정상 진행 시 코드 종료, 시간 역행 아이템 사용시 실행할 코드 시작
                     else if (dayPlus <= gl && item1Active) {
                         runOnUiThread {
-                            findViewById<Button>(R.id.btn_buy).isEnabled = false
-                            findViewById<Button>(R.id.btn_sell).isEnabled = false
-                            findViewById<Button>(R.id.btn_auto).isEnabled = false
-                            findViewById<Button>(R.id.btn_item).isEnabled = false
-                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아가는 중..."
+                            ll_item.isEnabled = false
+                            ll_trade.isEnabled = false
                         }
                         dayPlus -= 1
                         var timeTrableStart = dayPlus
@@ -1837,12 +1969,8 @@ class GameNormalActivity : AppCompatActivity() {
 
                                 runOnUiThread {
                                     // 차트에 DataSet 리프레쉬 통보
-                                    findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                                    findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                                    cht_snp.notifyDataSetChanged()
+                                    cht_eco.notifyDataSetChanged()
 
                                     snpD.notifyDataChanged()
                                     fundD.notifyDataChanged()
@@ -1852,98 +1980,87 @@ class GameNormalActivity : AppCompatActivity() {
                                     infD.notifyDataChanged()
 
                                     // 차트 축 최대 범위 설정
-                                    findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-                                    findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
-                                    findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-                                    findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-                                    findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-                                    findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+                                    cht_snp.setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                                    cht_eco.setVisibleXRangeMaximum(1250F)
 
                                     // 차트 축 이동
-                                    findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                                    findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus).toFloat())
-                                    findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus).toFloat())
-                                    findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus).toFloat())
-                                    findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus).toFloat())
-                                    findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus).toFloat())
-
-                                    // 경과 기간 최신화
-                                    findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
-                                    findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
-                                    // 남은 기간 최신화
-                                    if(countMonth==0){
-                                        findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
-                                                " 년 0 개월"
-                                    }
-                                    else {
-                                        findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
-                                                " 년 ${12 - countMonth} 개월"
-                                    }
+                                    cht_snp.moveViewToX(dayPlus.toFloat())
+                                    cht_eco.moveViewToX((dayPlus).toFloat())
 
                                     // 자산 가치 관련 값들 최신화
-                                    findViewById<TextView>(R.id.tv_asset).text =
-                                        "총 자산 : " + dec.format(asset) + " 원"
-                                    findViewById<TextView>(R.id.tv_cash).text =
-                                        "현금 : " + dec.format(cash) + " 원"
-                                    findViewById<TextView>(R.id.tv_evaluation).text =
-                                        "평가금액 : " + dec.format(evaluation) + " 원"
-                                    findViewById<TextView>(R.id.tv_profit).text =
-                                        "순손익 : " + dec.format(profit) + " 원"
-                                    findViewById<TextView>(R.id.tv_profitrate).text =
-                                        "수익률 : " + per.format(profitrate) + " %"
-                                    findViewById<TextView>(R.id.tv_dividend).text =
-                                        "배당금 : " + dec.format(dividendtot) + " 원"
-                                    findViewById<TextView>(R.id.tv_taxtot).text =
-                                        "세금 : " + dec.format(taxtot) + " 원"
-                                    findViewById<TextView>(R.id.tv_profityear).text =
-                                        "당해 실현 수익 : " + dec.format(profityear) + " 원"
-                                    findViewById<TextView>(R.id.tv_tradecomtot).text =
-                                        "수수료 : " + dec.format(tradecomtot) + " 원"
+                                    tv_assetTot.text = "$ " + dec.format(asset)
+                                    tv_profitRate.text = per.format(profitrate) + " %"
+                                    tv_profitTot.text = "$ " + dec.format(profit)
+                                    tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
 
-                                    findViewById<TextView>(R.id.tv_price1x).text =
-                                        dec.format(price1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_price3x).text =
-                                        dec.format(price3x) + " 원"
-                                    findViewById<TextView>(R.id.tv_priceinv1x).text =
-                                        dec.format(priceinv1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_priceinv3x).text =
-                                        dec.format(priceinv3x) + " 원"
+                                    tv_price1x.text = "$ " + dec.format(price1x)
+                                    tv_price3x.text = "$ " + dec.format(price3x)
+                                    tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
+                                    tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
 
-                                    findViewById<TextView>(R.id.tv_aver1x).text =
-                                        dec.format(aver1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_aver3x).text =
-                                        dec.format(aver3x) + " 원"
-                                    findViewById<TextView>(R.id.tv_averinv1x).text =
-                                        dec.format(averinv1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_averinv3x).text =
-                                        dec.format(averinv3x) + " 원"
+                                    tv_quant1x.text = dec.format(quant1x) + " 주"
+                                    tv_quant3x.text = dec.format(quant3x) + " 주"
+                                    tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
+                                    tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
 
-                                    findViewById<TextView>(R.id.tv_quant1x).text =
-                                        dec.format(quant1x) + " 주"
-                                    findViewById<TextView>(R.id.tv_quant3x).text =
-                                        dec.format(quant3x) + " 주"
-                                    findViewById<TextView>(R.id.tv_quantinv1x).text =
-                                        dec.format(quantinv1x) + " 주"
-                                    findViewById<TextView>(R.id.tv_quantinv3x).text =
-                                        dec.format(quantinv3x) + " 주"
+                                    tv_diff1x.text = per.format(pr1x) + " %"
+                                    tv_diff3x.text = per.format(pr3x) + " %"
+                                    tv_diffinv1x.text = per.format(prinv1x) + " %"
+                                    tv_diffinv3x.text = per.format(prinv3x) + " %"
 
-                                    findViewById<TextView>(R.id.tv_val1x).text =
-                                        dec.format(val1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_val3x).text =
-                                        dec.format(val3x) + " 원"
-                                    findViewById<TextView>(R.id.tv_valinv1x).text =
-                                        dec.format(valinv1x) + " 원"
-                                    findViewById<TextView>(R.id.tv_valinv3x).text =
-                                        dec.format(valinv3x) + " 원"
+                                    tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+                                    tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+                                    tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
+                                    tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+                                    tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+                                }
+                                // 수익률에 따른 화살표 이미지 및 색상 변경
+                                if (pr1x >= 0) {
+                                    runOnUiThread {
+                                        v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                        tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                        tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
+                                    }
+                                }
 
-                                    findViewById<TextView>(R.id.tv_profit1x).text =
-                                        per.format(pr1x) + " %"
-                                    findViewById<TextView>(R.id.tv_profit3x).text =
-                                        per.format(pr3x) + " %"
-                                    findViewById<TextView>(R.id.tv_profitinv1x).text =
-                                        per.format(prinv1x) + " %"
-                                    findViewById<TextView>(R.id.tv_profitinv3x).text =
-                                        per.format(prinv3x) + " %"
+                                if (pr3x >= 0) {
+                                    runOnUiThread {
+                                        v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                        tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                        tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
+                                    }
+                                }
+
+                                if (prinv1x >= 0) {
+                                    runOnUiThread {
+                                        v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                        tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                        tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
+                                    }
+                                }
+
+                                if (prinv3x >= 0) {
+                                    runOnUiThread {
+                                        v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                        tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                        tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
+                                    }
                                 }
                                 delay(80L) // UI 쓰레드 동작 시간 확보, UI 쓰레드 문제로 강제 종료시 이 값을 증가시킬것
                                 dayPlus -= 1
@@ -2024,7 +2141,7 @@ class GameNormalActivity : AppCompatActivity() {
                         taxtot = taxtot1[dayPlus - 1] // 총 세금
 
                         if (sf.parse(snp_date[start + dayPlus - 1]).month < 1) {
-                            monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), (countYear-1).toDouble())).toFloat() // 월 투자금 정상화
+                            monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), (countYear - 1).toDouble())).toFloat() // 월 투자금 정상화
                         }
                         else {
                             monthly = setMonthly * (Math.pow((1F + setSalaryraise / 100F).toDouble(), countYear.toDouble())).toFloat() // 월 투자금 정상화
@@ -2106,12 +2223,9 @@ class GameNormalActivity : AppCompatActivity() {
 
 
                         runOnUiThread {
-                            findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_fund).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
+                            // 차트에 DataSet 리프레쉬 통보
+                            cht_snp.notifyDataSetChanged()
+                            cht_eco.notifyDataSetChanged()
 
                             snpD.notifyDataChanged()
                             fundD.notifyDataChanged()
@@ -2120,100 +2234,88 @@ class GameNormalActivity : AppCompatActivity() {
                             unemD.notifyDataChanged()
                             infD.notifyDataChanged()
 
-                            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F)
-                            findViewById<LineChart>(R.id.cht_fund).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
+                            // 차트 축 최대 범위 설정
+                            cht_snp.setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+                            cht_eco.setVisibleXRangeMaximum(1250F)
 
-                            findViewById<LineChart>(R.id.cht_snp).moveViewToX((dayPlus - 1).toFloat())
-                            findViewById<LineChart>(R.id.cht_fund).moveViewToX((dayPlus - 1).toFloat())
-                            findViewById<LineChart>(R.id.cht_bond).moveViewToX((dayPlus - 1).toFloat())
-                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX((dayPlus - 1).toFloat())
-                            findViewById<LineChart>(R.id.cht_unem).moveViewToX((dayPlus - 1).toFloat())
-                            findViewById<LineChart>(R.id.cht_inf).moveViewToX((dayPlus - 1).toFloat())
-
-                            // 경과 기간 최신화
-                            findViewById<TextView>(R.id.tv_year).text = "${countYear} 년"
-                            findViewById<TextView>(R.id.tv_month).text = "${countMonth} 개월"
-                            // 남은 기간 최신화
-                            if(countMonth==0){
-                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear}" +
-                                        " 년 0 개월"
-                            }
-                            else {
-                                findViewById<TextView>(R.id.left_year_month).text = "${setGamelength - countYear - 1}" +
-                                        " 년 ${12 - countMonth} 개월"
-                            }
-
+                            // 차트 축 이동
+                            cht_snp.moveViewToX(dayPlus.toFloat())
+                            cht_eco.moveViewToX((dayPlus).toFloat())
 
                             // 자산 가치 관련 값들 최신화
-                            findViewById<TextView>(R.id.tv_asset).text =
-                                "총 자산 : " + dec.format(asset) + " 원"
-                            findViewById<TextView>(R.id.tv_cash).text =
-                                "현금 : " + dec.format(cash) + " 원"
-                            findViewById<TextView>(R.id.tv_evaluation).text =
-                                "평가금액 : " + dec.format(evaluation) + " 원"
-                            findViewById<TextView>(R.id.tv_profit).text =
-                                "순손익 : " + dec.format(profit) + " 원"
-                            findViewById<TextView>(R.id.tv_profitrate).text =
-                                "수익률 : " + per.format(profitrate) + " %"
-                            findViewById<TextView>(R.id.tv_dividend).text =
-                                "배당금 : " + dec.format(dividendtot) + " 원"
-                            findViewById<TextView>(R.id.tv_taxtot).text =
-                                "세금 : " + dec.format(taxtot) + " 원"
-                            findViewById<TextView>(R.id.tv_profityear).text =
-                                "당해 실현 수익 : " + dec.format(profityear) + " 원"
-                            findViewById<TextView>(R.id.tv_tradecomtot).text =
-                                "수수료 : " + dec.format(tradecomtot) + " 원"
+                            tv_assetTot.text = "$ " + dec.format(asset)
+                            tv_profitRate.text = per.format(profitrate) + " %"
+                            tv_profitTot.text = "$ " + dec.format(profit)
+                            tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
 
-                            findViewById<TextView>(R.id.tv_price1x).text =
-                                dec.format(price1x) + " 원"
-                            findViewById<TextView>(R.id.tv_price3x).text =
-                                dec.format(price3x) + " 원"
-                            findViewById<TextView>(R.id.tv_priceinv1x).text =
-                                dec.format(priceinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_priceinv3x).text =
-                                dec.format(priceinv3x) + " 원"
+                            tv_price1x.text = "$ " + dec.format(price1x)
+                            tv_price3x.text = "$ " + dec.format(price3x)
+                            tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
+                            tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
 
-                            findViewById<TextView>(R.id.tv_aver1x).text =
-                                dec.format(aver1x) + " 원"
-                            findViewById<TextView>(R.id.tv_aver3x).text =
-                                dec.format(aver3x) + " 원"
-                            findViewById<TextView>(R.id.tv_averinv1x).text =
-                                dec.format(averinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_averinv3x).text =
-                                dec.format(averinv3x) + " 원"
+                            tv_quant1x.text = dec.format(quant1x) + " 주"
+                            tv_quant3x.text = dec.format(quant3x) + " 주"
+                            tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
+                            tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
 
-                            findViewById<TextView>(R.id.tv_quant1x).text =
-                                dec.format(quant1x) + " 주"
-                            findViewById<TextView>(R.id.tv_quant3x).text =
-                                dec.format(quant3x) + " 주"
-                            findViewById<TextView>(R.id.tv_quantinv1x).text =
-                                dec.format(quantinv1x) + " 주"
-                            findViewById<TextView>(R.id.tv_quantinv3x).text =
-                                dec.format(quantinv3x) + " 주"
+                            tv_diff1x.text = per.format(pr1x) + " %"
+                            tv_diff3x.text = per.format(pr3x) + " %"
+                            tv_diffinv1x.text = per.format(prinv1x) + " %"
+                            tv_diffinv3x.text = per.format(prinv3x) + " %"
 
-                            findViewById<TextView>(R.id.tv_val1x).text =
-                                dec.format(val1x) + " 원"
-                            findViewById<TextView>(R.id.tv_val3x).text =
-                                dec.format(val3x) + " 원"
-                            findViewById<TextView>(R.id.tv_valinv1x).text =
-                                dec.format(valinv1x) + " 원"
-                            findViewById<TextView>(R.id.tv_valinv3x).text =
-                                dec.format(valinv3x) + " 원"
+                            tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+                            tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+                            tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
+                            tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+                            tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+                        }
+                        // 수익률에 따른 화살표 이미지 및 색상 변경
+                        if (pr1x >= 0) {
+                            runOnUiThread {
+                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
 
-                            findViewById<TextView>(R.id.tv_profit1x).text =
-                                per.format(pr1x) + " %"
-                            findViewById<TextView>(R.id.tv_profit3x).text =
-                                per.format(pr3x) + " %"
-                            findViewById<TextView>(R.id.tv_profitinv1x).text =
-                                per.format(prinv1x) + " %"
-                            findViewById<TextView>(R.id.tv_profitinv3x).text =
-                                per.format(prinv3x) + " %"
+                        if (pr3x >= 0) {
+                            runOnUiThread {
+                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
 
-                            findViewById<TextView>(R.id.tv_notification).text = "알림: 시간역행을 통해 $item1Length 거래일 전으로 돌아왔습니다..!"
+                        if (prinv1x >= 0) {
+                            runOnUiThread {
+                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
+                            }
+                        }
+
+                        if (prinv3x >= 0) {
+                            runOnUiThread {
+                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
+                            }
+                        } else {
+                            runOnUiThread {
+                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
+                            }
                         }
 
                         delay(100L) // UI 쓰레드 동작 시간 확보
@@ -2223,10 +2325,8 @@ class GameNormalActivity : AppCompatActivity() {
                         item1Active = false //
 
                         runOnUiThread {
-                            findViewById<Button>(R.id.btn_buy).isEnabled = true
-                            findViewById<Button>(R.id.btn_sell).isEnabled = true
-                            findViewById<Button>(R.id.btn_auto).isEnabled = true
-                            findViewById<Button>(R.id.btn_item).isEnabled = true
+                            ll_item.isEnabled = true
+                            ll_trade.isEnabled = true
                         }
                     }
                     // 시간 역행 아이템 사용 시 코드 종료, 설정한 게임 플레이 시간 도달 시 실핼할 코드 시작
@@ -2257,9 +2357,9 @@ class GameNormalActivity : AppCompatActivity() {
             var profileDb: ProfileDB? = null
             profileDb = ProfileDB.getInstace(this@GameNormalActivity)
             funlevelup(
-                profileDb?.profileDao()?.getLoginid()!!,
-                profileDb?.profileDao()?.getLoginpw()!!,
-                100
+                    profileDb?.profileDao()?.getLoginid()!!,
+                    profileDb?.profileDao()?.getLoginpw()!!,
+                    100
             )
             val deleteRunnable = Runnable {
                 gameNormalDb?.gameNormalDao()?.deleteId(setId)
@@ -2319,8 +2419,8 @@ class GameNormalActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(
-                    call: Call<DATACLASS>,
-                    response: retrofit2.Response<DATACLASS>
+                        call: Call<DATACLASS>,
+                        response: retrofit2.Response<DATACLASS>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         var data: DATACLASS = response.body()!!
@@ -2352,72 +2452,72 @@ class GameNormalActivity : AppCompatActivity() {
         for (i in 0..questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0-> if(profitrate>=10F){
+                    0 -> if (profitrate >= 10F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(profitrate>=20F){
+                    1 -> if (profitrate >= 20F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(profitrate>=30F){
+                    2 -> if (profitrate >= 30F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    3-> if(profitrate>=50F){
+                    3 -> if (profitrate >= 50F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    4-> if(profitrate>=100F){
+                    4 -> if (profitrate >= 100F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    5-> if(profitrate>=200F){
+                    5 -> if (profitrate >= 200F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    6-> if(profitrate>=300F){
+                    6 -> if (profitrate >= 300F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    7-> if(profitrate>=400F){
+                    7 -> if (profitrate >= 400F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    8-> if(profitrate>=500F){
+                    8 -> if (profitrate >= 500F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    9-> if(profitrate>=1000F){
+                    9 -> if (profitrate >= 1000F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
@@ -2432,37 +2532,37 @@ class GameNormalActivity : AppCompatActivity() {
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0-> if(relativeprofitrate>=10F){
+                    0 -> if (relativeprofitrate >= 10F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(relativeprofitrate>=20F){
+                    1 -> if (relativeprofitrate >= 20F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(relativeprofitrate>=50F){
+                    2 -> if (relativeprofitrate >= 50F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    3-> if(relativeprofitrate>=100F){
+                    3 -> if (relativeprofitrate >= 100F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    4-> if(relativeprofitrate>=200F){
+                    4 -> if (relativeprofitrate >= 200F) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
@@ -2477,37 +2577,37 @@ class GameNormalActivity : AppCompatActivity() {
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0-> if(surplusCount>=10){
+                    0 -> if (surplusCount >= 10) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1-> if(surplusCount>=20){
+                    1 -> if (surplusCount >= 20) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    2-> if(surplusCount>=30){
+                    2 -> if (surplusCount >= 30) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    3-> if(surplusCount>=40){
+                    3 -> if (surplusCount >= 40) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    4-> if(surplusCount>=50){
+                    4 -> if (surplusCount >= 50) {
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
