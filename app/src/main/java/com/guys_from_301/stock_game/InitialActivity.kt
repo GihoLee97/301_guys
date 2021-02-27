@@ -58,17 +58,17 @@ class InitialActivity : AppCompatActivity() {
             "게임 내 수익률 300% 달성",
             "게임 내 수익률 400% 달성",
             "게임 내 수익률 500% 달성",
-            "게임 내 수익률 1000% 달성",
+            "게임 내 수익률 1,000% 달성",
             "시장대비 평균수익률 10% 달성",
             "시장대비 평균수익률 20% 달성",
             "시장대비 평균수익률 50% 달성",
             "시장대비 평균수익률 100% 달성",
             "시장대비 평균수익률 200% 달성",
-            "게임 누적 거래일 10000일 달성",
-            "게임 누적 거래일 20000일 달성",
-            "게임 누적 거래일 30000일 달성",
-            "게임 누적 거래일 50000일 달성",
-            "게임 누적 거래일 100000일 달성",
+            "게임 누적 거래일 10,000일 달성",
+            "게임 누적 거래일 20,000일 달성",
+            "게임 누적 거래일 30,000일 달성",
+            "게임 누적 거래일 50,000일 달성",
+            "게임 누적 거래일 100,000일 달성",
             "10 거래일 연속 흑자",
             "20 거래일 연속 흑자",
             "30 거래일 연속 흑자",
@@ -81,6 +81,12 @@ class InitialActivity : AppCompatActivity() {
             "게임 100번 플레이하기",
             "친구 초대하기"
     )
+    private var rewardList = arrayListOf<String>("10,000스택", "20,000스택", "30,000스택", "50,000스택", "100,000스택", "200,000스택", "300,000스택", "400,000스택", "500,000스택", "1,000,000스택",
+    "10,000스택", "20,000스택", "50,000스택", "100,000스택", "200,000스택",
+    "100,000스택", "200,000스택", "300,000스택", "500,000스택", "1,000,000스택",
+    "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
+    "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
+    "100,000스택")
     //gameSetDb
     private var gameSetDb: GameSetDB? = null
 
@@ -211,7 +217,7 @@ class InitialActivity : AppCompatActivity() {
         // if profile DB is empty insert dummy
         if (questDb?.questDao()?.getAll().isNullOrEmpty()) {
             for (i in 1..questList.size){
-                val newQuest = Quest(i, "" ,questList[i-1], 0)
+                val newQuest = Quest(i, "" ,questList[i-1],rewardList[i-1], 0)
                 if(i<= IN_GAME_PROFIT) newQuest.theme = "수익률"
                 else if(i<= RELATIVE_PROFIT) newQuest.theme = "시장대비 수익률"
                 else if(i<= CUMULATIVE_TRADING_DAY) newQuest.theme = "누적 거래일"
@@ -228,11 +234,11 @@ class InitialActivity : AppCompatActivity() {
             val newGameSet = GameSet()
             setId = 1
             newGameSet.id = 1
-            newGameSet.setcash = START_CASH
+            newGameSet.setcash = 0
             newGameSet.setgamelength = START_GAME_LENGTH
             newGameSet.setgamespeed = START_GAME_SPEED
-            newGameSet.setmonthly = START_MONTHLY
-            newGameSet.setsalaryraise = START_SALARY_RAISE
+            newGameSet.setmonthly = 0
+            newGameSet.setsalaryraise = 0
             gameSetDb?.gameSetDao()?.insert(newGameSet)
             newGameSet.id = 0
             gameSetDb?.gameSetDao()?.insert(newGameSet)

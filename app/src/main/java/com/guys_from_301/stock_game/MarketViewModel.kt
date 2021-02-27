@@ -19,9 +19,9 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
 
     private var initialId: Int = 0
     private var _stack = MutableLiveData<Int>()
-    private var _initialAsset = MutableLiveData<Float>()
-    private var _initialMonthly = MutableLiveData<Float>()
-    private var _initialSalaryRaise = MutableLiveData<Float>()
+    private var _initialAsset = MutableLiveData<Int>()
+    private var _initialMonthly = MutableLiveData<Int>()
+    private var _initialSalaryRaise = MutableLiveData<Int>()
 
     init{
         profileDb = ProfileDB.getInstace(marketActivity)
@@ -29,7 +29,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
         _stack.value = profileDb?.profileDao()?.getMoney()
         gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
-        _initialAsset.value = gameset?.setcash
+        _initialAsset.value =  gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
         _initialSalaryRaise.value = gameset?.setsalaryraise
     }
@@ -67,24 +67,42 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     }
 
     fun getStack():LiveData<Int>{return _stack}
-    fun getInitialAsset(): LiveData<Float>{return _initialAsset}
-    fun getInitialMonthly(): LiveData<Float>{return _initialMonthly}
-    fun getInitialSalaryRaise(): LiveData<Float>{return _initialSalaryRaise}
+    fun getInitialAsset(): LiveData<Int>{return _initialAsset}
+    fun getInitialMonthly(): LiveData<Int>{return _initialMonthly}
+    fun getInitialSalaryRaise(): LiveData<Int>{return _initialSalaryRaise}
 
     fun applyItemRaiseSetCash(){
-        _initialAsset.value = _initialAsset.value?.plus(RAISE_SET_CASH)
+        _initialAsset.value = _initialAsset.value?.plus(1)
+        _stack.value = _stack.value?.minus(ITEM_COST)
+        writeDataBase()
+    }
+
+    fun applyItmeFailtoSetCash(){
+        _initialAsset.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()
     }
 
     fun applyItemRaiseSetMonthly(){
-        _initialMonthly.value = _initialMonthly.value?.plus(RAISE_SET_MONTHLY)
+        _initialMonthly.value = _initialMonthly.value?.plus(1)
+        _stack.value = _stack.value?.minus(ITEM_COST)
+        writeDataBase()
+    }
+
+    fun applyItmeFailtoSetMonthly(){
+        _initialMonthly.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()
     }
 
     fun applyItemRaiseSetSalaryRaise(){
-        _initialSalaryRaise.value = _initialSalaryRaise.value?.plus(RAISE_SET_SALARY_RAISE)
+        _initialSalaryRaise.value = _initialSalaryRaise.value?.plus(1)
+        _stack.value = _stack.value?.minus(ITEM_COST)
+        writeDataBase()
+    }
+
+    fun applyItmeFailtoSetSalaryRaise(){
+        _initialSalaryRaise.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()
     }

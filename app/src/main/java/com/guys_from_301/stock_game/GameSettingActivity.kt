@@ -194,13 +194,14 @@ class GameSettingActivity : AppCompatActivity() {
                     Toast.makeText(this@GameSettingActivity, "초기 자본금을 설정하세요", Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    //수정필요
                     val addRunnable = Runnable {
                         val newGameSetDB = GameSet()
-                        newGameSetDB.setcash = setCash
+                        newGameSetDB.setcash = 0
                         newGameSetDB.setgamelength = setGamelength
                         newGameSetDB.setgamespeed = setGamespeed
-                        newGameSetDB.setmonthly = setMonthly
-                        newGameSetDB.setsalaryraise = setSalaryraise
+                        newGameSetDB.setmonthly = 0
+                        newGameSetDB.setsalaryraise = 0
                         gameSetDb?.gameSetDao()?.insert(newGameSetDB)
                         setId = newGameSetDB.id
                     }

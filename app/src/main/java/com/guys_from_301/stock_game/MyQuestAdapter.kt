@@ -14,10 +14,13 @@ class MyQuestAdapter(val context: Context, val questList: List<Quest>, val achie
         private val tv_questContents = itemView.findViewById<TextView>(R.id.tv_questContents)
         private val pb_achievement = itemView.findViewById<ProgressBar>(R.id.pb_achivement)
         private val tv_theme = itemView.findViewById<TextView>(R.id.tv_theme)
+        private val tv_reward= itemView.findViewById<TextView>(R.id.tv_reward)
         fun bind(quest: Quest, achievement: Int){
             tv_theme.text = quest.theme
             pb_achievement.setProgress(achievement)
             tv_questContents.text = quest.questcontents
+            if(quest.id == 0) tv_reward.text = "모든 과제 달성"
+            else tv_reward.text = "보상: "+quest.reward
         }
     }
 

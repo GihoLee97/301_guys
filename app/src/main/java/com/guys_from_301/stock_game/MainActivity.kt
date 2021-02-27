@@ -471,7 +471,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    //도전과제 스텍 보상 함수
+    fun rewardByStack(reward: Int){
+        val newProfile = profileDb?.profileDao()?.getAll()?.get(0)
+        if (newProfile != null) {
+            newProfile.money = newProfile.money + reward
+            profileDb?.profileDao()?.update(newProfile)
+        }
+    }
 
+
+    //도전과제 확인 함수(누적거래일, 완료한 게임수)
     fun checkQuestCumulativeTradingDay(tradeday:Int, questList: List<Quest>){
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
@@ -483,6 +493,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(100000)
                         questAchieved.add(questList[i])
                     }
                     1-> if(tradeday>=20000){
@@ -492,6 +503,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(200000)
                         questAchieved.add(questList[i])
                     }
                     2-> if(tradeday>=30000){
@@ -501,6 +513,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(300000)
                         questAchieved.add(questList[i])
                     }
                     3-> if(tradeday>=50000){
@@ -510,6 +523,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(500000)
                         questAchieved.add(questList[i])
                     }
                     4-> if(tradeday>=100000){
@@ -519,6 +533,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(1000000)
                         questAchieved.add(questList[i])
                     }
 
@@ -538,6 +553,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(10000)
                         questAchieved.add(questList[i])
                     }
                     1-> if(countGame>=5){
@@ -547,6 +563,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(20000)
                         questAchieved.add(questList[i])
                     }
                     2-> if(countGame>=10){
@@ -556,6 +573,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(30000)
                         questAchieved.add(questList[i])
                     }
                     3-> if(countGame>=50){
@@ -565,6 +583,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(40000)
                         questAchieved.add(questList[i])
                     }
                     4-> if(countGame>=100){
@@ -574,6 +593,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(50000)
                         questAchieved.add(questList[i])
                     }
                 }

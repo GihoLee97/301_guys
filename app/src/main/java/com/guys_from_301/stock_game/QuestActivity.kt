@@ -60,23 +60,23 @@ class QuestActivity : AppCompatActivity() {
                 exprienceAchievement = 100 - questPlayedGameList.size * 20
                 invitationAchievemnet = 100 - questInviteList.size * 100
                 if (questInGameProfitRateList.isEmpty()) {
-                    questInGameProfitRateList = listOf(Quest(0, "수익률", "투자왕", 1))
+                    questInGameProfitRateList = listOf(Quest(0, "수익률", "투자왕","모든 도전과제 달성", 1))
                     profitAchievement = 100
                 }
                 if (questRelativeProfitRateList.isEmpty()) {
-                    questRelativeProfitRateList = listOf(Quest(0, "시장대비 수익률", "시장을 지배하는 투자자", 1))
+                    questRelativeProfitRateList = listOf(Quest(0, "시장대비 수익률", "시장을 이기는 투자자","모든 도전과제 달성", 1))
                     relativeProfitAchievement = 100
                 }
                 if (questCumulativeList.isEmpty()) {
-                    questCumulativeList = listOf(Quest(0, "연속 흑자", "절대 잃는 법이 없는 투자자", 1))
+                    questCumulativeList = listOf(Quest(0, "연속 흑자", "거래왕","모든 도전과제 달성", 1))
                     surplusAchievement = 100
                 }
                 if (questPlayedGameList.isEmpty()) {
-                    questPlayedGameList = listOf(Quest(0, "투자 경험", "노련한 투자자", 1))
+                    questPlayedGameList = listOf(Quest(0, "투자 경험", "노련한 투자자","모든 도전과제 달성", 1))
                     exprienceAchievement = 100
                 }
                 if (questInviteList.isEmpty()) {
-                    questInviteList = listOf(Quest(0, "초대하기", "인맥왕", 1))
+                    questInviteList = listOf(Quest(0, "초대하기", "인맥왕","모든 도전과제 달성", 1))
                     invitationAchievemnet = 100
                 }
 
