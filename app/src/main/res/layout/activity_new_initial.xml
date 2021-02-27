@@ -3,38 +3,50 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
+    android:orientation="vertical"
+    android:weightSum="736">
+    <View
         android:layout_width="match_parent"
-        android:layout_height="396dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="372"/>
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="건강한 투자 습관을 위해\n타디스가 함께할게요!"
         android:textAppearance="@style/initial_ment"
+        android:lineSpacingExtra="5sp"
+        android:layout_weight="60"
         />
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="88dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="88"/>
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="이미 가입했어요!"
         android:textAppearance="@style/initial_already"
-        android:background="@drawable/initial_rect1"/>
-    <TextView
+        android:background="@drawable/initial_rect1"
+        android:layout_weight="44"/>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="24dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="24"/>
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:textAppearance="@style/initial_first"
         android:text="처음이에요!"
-        android:background="@drawable/initial_rect2"/>
+        android:background="@drawable/initial_rect2"
+        android:layout_weight="44"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="104"/>
 </LinearLayout>
