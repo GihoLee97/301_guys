@@ -590,4 +590,11 @@
     </style>
 
 
+    <style name="initial_signUp_pw_notice">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F94001</item>
+    </style>
+
+
 </resources>
