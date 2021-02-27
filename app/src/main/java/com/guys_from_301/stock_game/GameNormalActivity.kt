@@ -2138,7 +2138,6 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // UI 업데이트 코드
-    //TODO
     private fun Updatecht() {
         runOnUiThread {
             // 차트에 DataSet 리프레쉬 통보
@@ -2238,6 +2237,34 @@ class GameNormalActivity : AppCompatActivity() {
             runOnUiThread {
                 v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
                 tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
+            }
+        }
+
+        when(ecoselect) {
+            0 -> {
+                //cht_eco.data = fundD
+                tv_ecoindex.text = "금리"
+                tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+            }
+            1 -> {
+                //cht_eco.data = bondD
+                tv_ecoindex.text = "10년 만기 국채 이율"
+                tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+            }
+            2 -> {
+                //cht_eco.data = indproD
+                tv_ecoindex.text = "산업생산량"
+                tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
+            }
+            3 -> {
+                //cht_eco.data = unemD
+                tv_ecoindex.text = "실업률"
+                tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+            }
+            4 -> {
+                //cht_eco.data = infD
+                tv_ecoindex.text = "인플레이션"
+                tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
             }
         }
     }
