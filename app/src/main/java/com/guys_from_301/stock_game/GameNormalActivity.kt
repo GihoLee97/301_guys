@@ -372,6 +372,8 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var ll_trade: LinearLayout
     private lateinit var pb_fatigue: ProgressBar
 
+    private var ecoselect: Int = 0 // 0: fund, 1: bond, 2: indpro, 3: unem, 4: inf
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -668,8 +670,36 @@ class GameNormalActivity : AppCompatActivity() {
         }
 
         // 경제 지표 차트
+        // TODO
         cl_fund.setOnClickListener {
-
+            ecoselect = 0
+            cht_eco.data = fundD
+            tv_ecoindex.text = "금리"
+            tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+        }
+        cl_bond.setOnClickListener {
+            ecoselect = 1
+            cht_eco.data = bondD
+            tv_ecoindex.text = "10년 만기 국채 이율"
+            tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+        }
+        cl_indpro.setOnClickListener {
+            ecoselect = 2
+            cht_eco.data = indproD
+            tv_ecoindex.text = "산업생산량"
+            tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
+        }
+        cl_unem.setOnClickListener {
+            ecoselect = 3
+            cht_eco.data = unemD
+            tv_ecoindex.text = "실업률"
+            tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+        }
+        cl_inf.setOnClickListener {
+            ecoselect = 4
+            cht_eco.data = infD
+            tv_ecoindex.text = "인플레이션"
+            tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
         }
 
 
@@ -1623,85 +1653,8 @@ class GameNormalActivity : AppCompatActivity() {
                         else surplusCount = 0
                         surplusQuestList?.let { checkQuestSurplus(surplusCount, it) }
 
-                        runOnUiThread {
-                            // 자산 가치 관련 값들 최신화
-                            tv_assetTot.text = "$ " + dec.format(asset)
-                            tv_profitRate.text = per.format(profitrate) + " %"
-                            tv_profitTot.text = "$ " + dec.format(profit)
-                            tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
-
-                            tv_price1x.text = "$ " + dec.format(price1x)
-                            tv_price3x.text = "$ " + dec.format(price3x)
-                            tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
-                            tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
-
-                            tv_quant1x.text = dec.format(quant1x) + " 주"
-                            tv_quant3x.text = dec.format(quant3x) + " 주"
-                            tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
-                            tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
-
-                            tv_diff1x.text = per.format(pr1x) + " %"
-                            tv_diff3x.text = per.format(pr3x) + " %"
-                            tv_diffinv1x.text = per.format(prinv1x) + " %"
-                            tv_diffinv3x.text = per.format(prinv3x) + " %"
-
-                            tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
-                            tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
-                            tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
-                            tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
-                            tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
-                        }
-
-                        // 수익률에 따른 화살표 이미지 및 색상 변경
-                        if (pr1x >= 0) {
-                            runOnUiThread {
-                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (pr3x >= 0) {
-                            runOnUiThread {
-                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (prinv1x >= 0) {
-                            runOnUiThread {
-                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (prinv3x >= 0) {
-                            runOnUiThread {
-                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-
-
-                        }
+                        // UI 업데이트
+                        Updateui(start, criteria)
 
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간역행 아이템용 데이터 저장 시작
@@ -1984,102 +1937,10 @@ class GameNormalActivity : AppCompatActivity() {
 
                                 value1now += 50 // 피로도 증가
 
+                                // UI 업데이트
+                                Updatecht()
+                                Updateui(start, criteria)
 
-                                runOnUiThread {
-                                    // 차트에 DataSet 리프레쉬 통보
-                                    cht_snp.notifyDataSetChanged()
-                                    cht_eco.notifyDataSetChanged()
-
-                                    snpD.notifyDataChanged()
-                                    fundD.notifyDataChanged()
-                                    bondD.notifyDataChanged()
-                                    indproD.notifyDataChanged()
-                                    unemD.notifyDataChanged()
-                                    infD.notifyDataChanged()
-
-                                    // 차트 축 최대 범위 설정
-                                    cht_snp.setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-                                    cht_eco.setVisibleXRangeMaximum(1250F)
-
-                                    // 차트 축 이동
-                                    cht_snp.moveViewToX(dayPlus.toFloat())
-                                    cht_eco.moveViewToX((dayPlus).toFloat())
-
-                                    // 자산 가치 관련 값들 최신화
-                                    tv_assetTot.text = "$ " + dec.format(asset)
-                                    tv_profitRate.text = per.format(profitrate) + " %"
-                                    tv_profitTot.text = "$ " + dec.format(profit)
-                                    tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
-
-                                    tv_price1x.text = "$ " + dec.format(price1x)
-                                    tv_price3x.text = "$ " + dec.format(price3x)
-                                    tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
-                                    tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
-
-                                    tv_quant1x.text = dec.format(quant1x) + " 주"
-                                    tv_quant3x.text = dec.format(quant3x) + " 주"
-                                    tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
-                                    tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
-
-                                    tv_diff1x.text = per.format(pr1x) + " %"
-                                    tv_diff3x.text = per.format(pr3x) + " %"
-                                    tv_diffinv1x.text = per.format(prinv1x) + " %"
-                                    tv_diffinv3x.text = per.format(prinv3x) + " %"
-
-                                    tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
-                                    tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
-                                    tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
-                                    tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
-                                    tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
-                                }
-                                // 수익률에 따른 화살표 이미지 및 색상 변경
-                                if (pr1x >= 0) {
-                                    runOnUiThread {
-                                        v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                        tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                        tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
-                                    }
-                                }
-
-                                if (pr3x >= 0) {
-                                    runOnUiThread {
-                                        v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                        tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                        tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
-                                    }
-                                }
-
-                                if (prinv1x >= 0) {
-                                    runOnUiThread {
-                                        v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                        tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                        tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
-                                    }
-                                }
-
-                                if (prinv3x >= 0) {
-                                    runOnUiThread {
-                                        v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                        tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                        tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
-                                    }
-                                }
                                 delay(80L) // UI 쓰레드 동작 시간 확보, UI 쓰레드 문제로 강제 종료시 이 값을 증가시킬것
                                 dayPlus -= 1
                             }
@@ -2240,101 +2101,9 @@ class GameNormalActivity : AppCompatActivity() {
                         ////////////////////////////////////////////////////////////////////////////
 
 
-                        runOnUiThread {
-                            // 차트에 DataSet 리프레쉬 통보
-                            cht_snp.notifyDataSetChanged()
-                            cht_eco.notifyDataSetChanged()
-
-                            snpD.notifyDataChanged()
-                            fundD.notifyDataChanged()
-                            bondD.notifyDataChanged()
-                            indproD.notifyDataChanged()
-                            unemD.notifyDataChanged()
-                            infD.notifyDataChanged()
-
-                            // 차트 축 최대 범위 설정
-                            cht_snp.setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-                            cht_eco.setVisibleXRangeMaximum(1250F)
-
-                            // 차트 축 이동
-                            cht_snp.moveViewToX(dayPlus.toFloat())
-                            cht_eco.moveViewToX((dayPlus).toFloat())
-
-                            // 자산 가치 관련 값들 최신화
-                            tv_assetTot.text = "$ " + dec.format(asset)
-                            tv_profitRate.text = per.format(profitrate) + " %"
-                            tv_profitTot.text = "$ " + dec.format(profit)
-                            tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
-
-                            tv_price1x.text = "$ " + dec.format(price1x)
-                            tv_price3x.text = "$ " + dec.format(price3x)
-                            tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
-                            tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
-
-                            tv_quant1x.text = dec.format(quant1x) + " 주"
-                            tv_quant3x.text = dec.format(quant3x) + " 주"
-                            tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
-                            tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
-
-                            tv_diff1x.text = per.format(pr1x) + " %"
-                            tv_diff3x.text = per.format(pr3x) + " %"
-                            tv_diffinv1x.text = per.format(prinv1x) + " %"
-                            tv_diffinv3x.text = per.format(prinv3x) + " %"
-
-                            tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
-                            tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
-                            tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
-                            tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
-                            tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
-                        }
-                        // 수익률에 따른 화살표 이미지 및 색상 변경
-                        if (pr1x >= 0) {
-                            runOnUiThread {
-                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (pr3x >= 0) {
-                            runOnUiThread {
-                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (prinv1x >= 0) {
-                            runOnUiThread {
-                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
-
-                        if (prinv3x >= 0) {
-                            runOnUiThread {
-                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
-                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
-                            }
-                        } else {
-                            runOnUiThread {
-                                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
-                                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
-                            }
-                        }
+                        // UI 업데이트
+                        Updatecht()
+                        Updateui(start, criteria)
 
                         delay(100L) // UI 쓰레드 동작 시간 확보
 
@@ -2365,6 +2134,111 @@ class GameNormalActivity : AppCompatActivity() {
                 break
             }
             delay(btnRefresh)
+        }
+    }
+
+    // UI 업데이트 코드
+    //TODO
+    private fun Updatecht() {
+        runOnUiThread {
+            // 차트에 DataSet 리프레쉬 통보
+            cht_snp.notifyDataSetChanged()
+            cht_eco.notifyDataSetChanged()
+
+            snpD.notifyDataChanged()
+            fundD.notifyDataChanged()
+            bondD.notifyDataChanged()
+            indproD.notifyDataChanged()
+            unemD.notifyDataChanged()
+            infD.notifyDataChanged()
+
+            // 차트 축 최대 범위 설정
+            cht_snp.setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
+            cht_eco.setVisibleXRangeMaximum(1250F)
+
+            // 차트 축 이동
+            cht_snp.moveViewToX(dayPlus.toFloat())
+            cht_eco.moveViewToX((dayPlus).toFloat())
+        }
+    }
+
+    private fun Updateui(start: Int, criteria: Float) {
+        runOnUiThread {
+            // 자산 가치 관련 값들 최신화
+            tv_assetTot.text = "$ " + dec.format(asset)
+            tv_profitRate.text = per.format(profitrate) + " %"
+            tv_profitTot.text = "$ " + dec.format(profit)
+            tv_snp.text = per.format(snp_val[start + dayPlus].toFloat() * criteria)
+
+            tv_price1x.text = "$ " + dec.format(price1x)
+            tv_price3x.text = "$ " + dec.format(price3x)
+            tv_priceinv1x.text = "$ " + dec.format(priceinv1x)
+            tv_priceinv3x.text = "$ " + dec.format(priceinv3x)
+
+            tv_quant1x.text = dec.format(quant1x) + " 주"
+            tv_quant3x.text = dec.format(quant3x) + " 주"
+            tv_quantinv1x.text = dec.format(quantinv1x) + " 주"
+            tv_quantinv3x.text = dec.format(quantinv3x) + " 주"
+
+            tv_diff1x.text = per.format(pr1x) + " %"
+            tv_diff3x.text = per.format(pr3x) + " %"
+            tv_diffinv1x.text = per.format(prinv1x) + " %"
+            tv_diffinv3x.text = per.format(prinv3x) + " %"
+
+            tv_fund.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+            tv_bond.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+            tv_indpro.text = per.format(indpro_val[indproIndex - 1].toFloat()) +" "
+            tv_unem.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+            tv_inf.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+        }
+
+        // 수익률에 따른 화살표 이미지 및 색상 변경
+        if (pr1x >= 0) {
+            runOnUiThread {
+                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                tv_diff1x.setTextAppearance(R.style.game_etfdiff2)
+            }
+        } else {
+            runOnUiThread {
+                v_diff1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                tv_diff1x.setTextAppearance(R.style.game_etfdiff3)
+            }
+        }
+
+        if (pr3x >= 0) {
+            runOnUiThread {
+                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                tv_diff3x.setTextAppearance(R.style.game_etfdiff2)
+            }
+        } else {
+            runOnUiThread {
+                v_diff3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                tv_diff3x.setTextAppearance(R.style.game_etfdiff3)
+            }
+        }
+
+        if (prinv1x >= 0) {
+            runOnUiThread {
+                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_2)
+                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff2)
+            }
+        } else {
+            runOnUiThread {
+                v_diffinv1x.setBackgroundResource(R.drawable.ic_polygon_3)
+                tv_diffinv1x.setTextAppearance(R.style.game_etfdiff3)
+            }
+        }
+
+        if (prinv3x >= 0) {
+            runOnUiThread {
+                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_2)
+                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff2)
+            }
+        } else {
+            runOnUiThread {
+                v_diffinv3x.setBackgroundResource(R.drawable.ic_polygon_3)
+                tv_diffinv3x.setTextAppearance(R.style.game_etfdiff3)
+            }
         }
     }
 
