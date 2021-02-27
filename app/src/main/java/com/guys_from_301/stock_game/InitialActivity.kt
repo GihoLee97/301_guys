@@ -147,8 +147,10 @@ class InitialActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
             val loginDate : String = formatted.toString().trim()
-
-            generalLoginCheck(saveid, savepw, loginDate)
+//            generalLoginCheck(saveid, savepw, loginDate)
+            // 테스트용
+            val intent = Intent(mContext, Initial_set_id_Activity::class.java)
+            startActivity(intent)
         }
 
         // google Sign in & onClickListner
