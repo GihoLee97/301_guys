@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/sv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/navigationBar_main"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_myProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오상훈님"
+                    android:textAppearance="@style/main_userName" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="총 수익율"
+                        android:textAppearance="@style/main_totalProfitRateKr" />
+
+                    <TextView
+                        android:id="@+id/tv_profitRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="11.8%"
+                        android:textAppearance="@style/main_totalProfitRate" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_currentInvestment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="진행 중인 투자"
+                    android:textAppearance="@style/main_moduleTitle" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_games"
+                    android:layout_width="match_parent"
+                    android:layout_height="188dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal" />
+                <!--TODO!!-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_tiredness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="피로도"
+                        android:textAppearance="@style/main_moduleTitle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="0dp"
+                        android:text="피로도 충전하기"
+                        android:textAppearance="@style/main_relieveTiredness"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <View
+                        android:id="@+id/view_path"
+                        android:layout_width="4dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@drawable/ic_path"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/borderline2"
+                    android:elevation="5dp"
+                    android:stateListAnimator="@null"
+                    android:translationZ="0dp">
+
+                    <ProgressBar
+                        android:id="@+id/pb_tiredness"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16.5dp"
+                        android:layout_marginVertical="12.5dp"
+                        android:progress="50"
+                        android:progressDrawable="@drawable/custom_progressbar_horizontal" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:text="피로도가 떨어지면 아이템 사용이 불가능합니다."
+                    android:textAppearance="@style/main_tirednessDescription" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:text="대시보드"
+                    android:textAppearance="@style/main_moduleTitle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginTop="17dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:padding="12dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/cl_dashboard1"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:background="@drawable/ic_dashboard_card1"
+                                android:elevation="10dp"
+                                app:layout_constraintDimensionRatio="H,1:1"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginTop="15dp"
+                                    android:gravity="left"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="실제 투자에서\n 나는 어떨까?"
+                                    android:textAppearance="@style/main_dashboardHistory"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="53dp"
+                                    android:text="예상 수익율"
+                                    android:textAppearance="@style/main_dashboardTipDescription"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                                <TextView
+                                    android:id="@+id/tv_predictedProfitRate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="14dp"
+                                    android:text="6.2%"
+                                    android:textAppearance="@style/main_dashboardPredictedProfitRate"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:paddingHorizontal="12dp"
+                            android:paddingBottom="18dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/cl_dashboard2"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:background="@drawable/ic_dashboard_card1"
+                                android:elevation="10dp"
+                                app:layout_constraintDimensionRatio="H,1:1"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginTop="14dp"
+                                    android:text="팁"
+                                    android:textAppearance="@style/main_dashboardTip"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="41dp"
+                                    android:text="투자를 위한 팁 확인"
+                                    android:textAppearance="@style/main_dashboardTipDescription"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="17dp"
+                                    android:text="보러가기  >"
+                                    android:textAppearance="@style/main_dashboardHistoryToGo"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:padding="12dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/cl_dashboard3"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:background="@drawable/ic_dashboard_card2"
+                                android:elevation="10dp"
+                                app:layout_constraintDimensionRatio="H,148:212"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginTop="18dp"
+                                    android:text="도전과제"
+                                    android:textAppearance="@style/main_dashboardQuest"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginBottom="52dp"
+                                    android:orientation="vertical"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/ll_questStack1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:id="@+id/tv_questName1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="0dp"
+                                            android:layout_marginBottom="19dp"
+                                            android:text="거래왕"
+                                            android:textAppearance="@style/main_dashboardQuestName"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintLeft_toLeftOf="parent" />
+
+                                        <TextView
+                                            android:id="@+id/tv_questDescription1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="0dp"
+                                            android:layout_marginBottom="0dp"
+                                            android:text="연속 거래 10일"
+                                            android:textAppearance="@style/main_dashboardQuestDescription"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                                        <ProgressBar
+                                            android:id="@+id/pb_quest1"
+                                            style="?android:attr/progressBarStyleHorizontal"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_marginRight="0dp"
+                                            android:layout_marginBottom="0dp"
+                                            android:progress="20"
+                                            android:progressDrawable="@drawable/custom_progressbar_ring"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintRight_toRightOf="parent" />
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/ll_questStack2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp">
+
+                                        <TextView
+                                            android:id="@+id/tv_questName2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="0dp"
+                                            android:layout_marginBottom="19dp"
+                                            android:text="거래왕"
+                                            android:textAppearance="@style/main_dashboardQuestName"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintLeft_toLeftOf="parent" />
+
+                                        <TextView
+                                            android:id="@+id/tv_questDescription2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="0dp"
+                                            android:layout_marginBottom="0dp"
+                                            android:text="연속 거래 10일"
+                                            android:textAppearance="@style/main_dashboardQuestDescription"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                                        <ProgressBar
+                                            android:id="@+id/pb_quest2"
+                                            style="?android:attr/progressBarStyleHorizontal"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:layout_marginRight="0dp"
+                                            android:layout_marginBottom="0dp"
+                                            android:progress="20"
+                                            android:progressDrawable="@drawable/custom_progressbar_ring"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintRight_toRightOf="parent" />
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="21dp"
+                                    android:text="보러가기  >"
+                                    android:textAppearance="@style/main_dashboardQuestToGo"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:paddingHorizontal="12dp"
+                            android:paddingBottom="18dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cl_dashboard4"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:background="@drawable/ic_dashboard_card1"
+                            android:elevation="10dp"
+                            app:layout_constraintDimensionRatio="H,148:84"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="15dp"
+                                android:text="히스토리"
+                                android:textAppearance="@style/main_dashboardHistory"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginBottom="17dp"
+                                android:text="투자기록 확인  >"
+                                android:textAppearance="@style/main_dashboardHistoryToGo"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="52dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

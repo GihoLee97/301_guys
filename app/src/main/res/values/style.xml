@@ -492,4 +492,144 @@
 
 
 
+    <style name="ranking_description">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="ranking_scope_checked">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="ranking_scope_unchecked">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#EAEEEF</item>
+    </style>
+    <style name="ranking_top3_num">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="ranking_top3_nickName">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#010001</item>
+    </style>
+    <style name="ranking_top3_money">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#B7B1B3</item>
+    </style>
+    <style name="ranking_rank_num">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4D5256</item>
+    </style>
+    <style name="ranking_rank_nickname">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="ranking_rank_money">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="ranking_levelAndProfit">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="ranking_nicknameAndProfitValue">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <!--  profile  -->
+    <style name="profile_nickname">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="profile_nickname_change">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="proflie_level">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="profile_letter">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="profile_withdraw">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F94001</item>
+    </style>
+    <!--    quest-->
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/custom_progressbar_ring2</item>
+    </style>
+    <style name="quest_oneshotItemTitle">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="quest_oneshotItemProgress">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="quest_title">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="quest_level">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="quest_levelDescription">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="quest_gradualItemName">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="quest_gradualItemDescription">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="quest_gradualItemReward">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+
+    <style name="game_buyandsell">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="game_buyandsell_lock">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="game_buyandsell_option">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="game_buyandsell_title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+
 </resources>

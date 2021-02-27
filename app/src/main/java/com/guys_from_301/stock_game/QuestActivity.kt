@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +46,9 @@ class QuestActivity : AppCompatActivity() {
         var surplusAchievement = 0
         var exprienceAchievement = 0
         var invitationAchievemnet = 0
-
+        findViewById<ImageButton>(R.id.ib_go_back).setOnClickListener{
+            onBackPressed()
+        }
         qRecyclerView.layoutManager = gridLayoutManager
         val r = Runnable {
             try{

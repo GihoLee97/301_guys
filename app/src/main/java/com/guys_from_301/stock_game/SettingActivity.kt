@@ -79,8 +79,7 @@ class SettingActivity : AppCompatActivity() {
             val setThread = Thread(setRunnable)
             setThread.start()
 
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
 
         }
 

@@ -25,13 +25,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/ib_go_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:layout_marginBottom="3dp"
             android:background="#FFFFFF"
             android:padding="10dp"
-            android:src="@drawable/ic_path_reft"
+            android:src="@drawable/ic_path_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 

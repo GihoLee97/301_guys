@@ -1,8 +1,13 @@
 package com.guys_from_301.stock_game
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -31,8 +36,25 @@ const val ITEM_COST = 100000
 const val STACK1_COST = 100
 const val STACK2_COST = 200
 const val STACK3_COST = 1000
+import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.data.ProfileDB
 
-class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [BlankFragment2.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+
     // 결제 객체
     private lateinit var billingManager: BillingManager
 
@@ -50,10 +72,13 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
 
     //gamesetdB
     private var gameSetDB: GameSetDB? = null
+    private lateinit var cl_todayStack : ConstraintLayout
+    private lateinit var tv_marketReceipt : TextView
 
     private var profileDb: ProfileDB? = null
 
     //TextView
+    private lateinit var tv_mountOfStack : TextView
     private lateinit var tv_initial_asset: TextView
     private lateinit var tv_initial_monthly: TextView
     private lateinit var tv_initial_salary_raise: TextView
@@ -64,8 +89,23 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     val moneyreward: Int = 1000000
     val value1reward: Int = 5000
 
+    var mContext : Context = _MainActivity!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        var v : View = inflater.inflate(R.layout.fragment_market, container, false)
+        profileDb = ProfileDB.getInstace(mContext)
         setContentView(R.layout.activity_market)
         profileDb = ProfileDB.getInstace(this)
         gameSetDB = GameSetDB.getInstace(this)
@@ -81,8 +121,16 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         cl_buy_stack1 = findViewById(R.id.cl_buy_stack1)
         cl_buy_stack2 = findViewById(R.id.cl_buy_stack2)
         cl_buy_stack3 = findViewById(R.id.cl_buy_stack3)
+        //btn
+        cl_todayStack = v.findViewById(R.id.cl_todayStack)
+//        btn_purchase = v.findViewById(R.id.btn_purchase)
+        tv_marketReceipt = v.findViewById(R.id.tv_marketReceipt)
 
         //tv
+        tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
+
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
+        mRewardedVideoAd.rewardedVideoAdListener = FragmentMarket()!!
         tv_initial_asset = findViewById(R.id.tv_initial_asset)
         tv_initial_monthly = findViewById(R.id.tv_initial_monthly)
         tv_initial_salary_raise = findViewById(R.id.tv_initial_salary_raise)
@@ -102,7 +150,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         initLayout(marketViewModel)
 
         // billing Manager for purchase process
-        billingManager = BillingManager(this)
+        billingManager = BillingManager(mContext as Activity)
 
 
         //초기자산 아이템 구매
@@ -126,7 +174,16 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             }
             else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
         }
+//        btn_purchase.setOnClickListener {
+//            billingManager.startConnection()
+//        }
+        tv_marketReceipt.setOnClickListener{
+            Toast.makeText(mContext, "구매 내역!", Toast.LENGTH_LONG).show()
 
+        }
+
+        return v
+    }
         //초기월금 아이템 구매
         cl_upgrade_monthly.setOnClickListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
@@ -148,6 +205,33 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
         }
 
+    override fun onResume() {
+        tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
+        loadad()
+        super.onResume()
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment BlankFragment2.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            FragmentMarket().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+    fun initLayout(){
+        cl_todayStack.setOnClickListener{
         //연봉상승률 아이템 구매
         cl_upgrade_salary_raise.setOnClickListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
@@ -217,7 +301,6 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     fun loadad() {
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", AdRequest.Builder().build())
     }
-
     override fun onRewardedVideoAdClosed() {
         Log.d("SSS", "onRewardVideoAdClosed()")
         loadad()
@@ -243,6 +326,8 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
     override fun onRewarded(rItem: RewardItem?) {
         var profileDb: ProfileDB? = null
         profileDb = ProfileDB.getInstace(this)
+        profileDb = ProfileDB.getInstace(mContext)
+        money = profileDb?.profileDao()?.getMoney()!!.toInt()+moneyreward
         value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
 
         if (value1 >= value1reward) {
@@ -252,6 +337,7 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
         }
 
         Toast.makeText(this, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
+        Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                 getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
@@ -261,6 +347,13 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
                 profileDb?.profileDao()?.getLevel()!!
+            getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+            money, value1,
+            profileDb?.profileDao()?.getNickname()!!,
+            profileDb?.profileDao()?.getProfit()!!,
+            profileDb?.profileDao()?.getRoundCount()!!,
+            profileDb?.profileDao()?.getHistory()!!,
+            profileDb?.profileDao()?.getLevel()!!
         )
         // profiledb에 업데이트
         dbupdate()
@@ -286,5 +379,23 @@ class MarketActivity : AppCompatActivity(), RewardedVideoAdListener {
             3-> percentage = 10
         }
         return num<percentage
+    fun dbupdate(){
+        var profileDb: ProfileDB? = null
+        profileDb = ProfileDB.getInstace(mContext)
+        val newProfile = Profile()
+
+        newProfile.id = profileDb?.profileDao()?.getId()!!
+        newProfile.login =profileDb?.profileDao()?.getLogin()!!
+        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
+        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
+        newProfile.history = profileDb?.profileDao()?.getHistory()!!
+        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
+        newProfile.level = profileDb?.profileDao()?.getLevel()!!
+        newProfile.exp = profileDb?.profileDao()?.getExp()!!
+        newProfile.rank = profileDb?.profileDao()?.getRank()!!
+        newProfile.money = money
+        newProfile.value1 = value1
+        profileDb?.profileDao()?.update(newProfile)
     }
 }

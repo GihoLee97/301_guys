@@ -1,0 +1,1503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ll_myProfile_ranking"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F68A06"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:text="랭킹"
+                    android:textAppearance="@style/market_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_marketReceipt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="24dp"
+                    android:background="#F68A06"
+                    android:text="지난 기록 보기"
+                    android:textAppearance="@style/market_receipt"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="42dp"
+                android:lineSpacingExtra="7sp"
+                android:text="친구와\n수익률을 통해\n경쟁해보세요!"
+                android:textAppearance="@style/ranking_description" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_kakaoRanking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="16dp"
+                    android:layout_weight="1"
+                    android:text="카카오 랭킹"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/ranking_scope_unchecked" />
+
+                <TextView
+                    android:id="@+id/tv_localRanking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="16dp"
+                    android:layout_weight="1"
+                    android:text="로컬 랭킹"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/ranking_scope_checked" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_kakao_space"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_local_space"
+                    android:layout_width="0dp"
+                    android:layout_height="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/sv_ranking_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="24dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="10dp"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="2"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_2_local"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_2_local"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_localUser2" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_localUser2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user2_image_local_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user2_image_local"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="28"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user2_image_local_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="8" />
+
+                                <TextView
+                                    android:id="@+id/tv_user2_nickname_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user2_money_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_1_local"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_1_local"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_localUser1" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_localUser1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1.28"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user1_image_local_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="30" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user1_image_local"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="36"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="30" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user1_image_local_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="12" />
+
+                                <TextView
+                                    android:id="@+id/tv_user1_nickname_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user1_money_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="10dp"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="3"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_3_local"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_3_local"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_localUser3" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_localUser3"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user3_image_local_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user3_image_local"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="28"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user3_image_local_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="8" />
+
+                                <TextView
+                                    android:id="@+id/tv_user3_nickname_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user3_money_local"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:background="@drawable/borderline2"
+                    android:elevation="10dp"
+                    android:paddingVertical="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="4"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user4_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user4_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="5"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user5_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user5_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="6"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user6_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user6_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="7"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user7_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user7_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="8"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user8_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user8_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="9"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user9_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user9_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="17dp"
+                            android:text="10"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user10_nickname_local"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user10_money_local"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/sv_ranking_kakao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="24dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ll_kakaoUser2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="10dp"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="2"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_2_kakao"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_2_kakao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_kakaoUser2_content" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_kakaoUser2_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user2_image_kakao_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user2_image_kakao"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="28"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user2_image_kakao_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="8" />
+
+                                <TextView
+                                    android:id="@+id/tv_user2_nickname_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user2_money_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ll_kakaoUser1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_1_kakao"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_1_kakao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_kakaoUser1_content" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_kakaoUser1_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1.28"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user1_image_kakao_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="30" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user1_image_kakao"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="36"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="30" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user1_image_kakao_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="12" />
+
+                                <TextView
+                                    android:id="@+id/tv_user1_nickname_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user1_money_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ll_kakaoUser3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1"
+                        android:clipToPadding="false"
+                        android:paddingTop="10dp"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_rank_number_box"
+                            android:elevation="12dp"
+                            android:paddingTop="2dp"
+                            android:text="3"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/ranking_top3_num"
+                            app:layout_constraintBottom_toBottomOf="@+id/hat_3_kakao"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/hat_3_kakao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_ranking_cap"
+                            android:elevation="11dp"
+                            app:layout_constraintTop_toTopOf="@id/ll_kakaoUser3_content" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ll_kakaoUser3_content"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/borderline4"
+                            android:elevation="10dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,1:1"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/ll_user3_image_kakao_box"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="31dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+
+                                <ImageView
+                                    android:id="@+id/iv_user3_image_kakao"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="28"
+                                    android:src="@drawable/ic_profile_image_templete" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="34" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ll_user3_image_kakao_box">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="8" />
+
+                                <TextView
+                                    android:id="@+id/tv_user3_nickname_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="4" />
+
+                                <TextView
+                                    android:id="@+id/tv_user3_money_kakao"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="15"
+                                    android:gravity="center"
+                                    android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeTextType="uniform" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_kakaoUser4to10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:background="@drawable/borderline2"
+                    android:elevation="10dp"
+                    android:paddingVertical="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser4"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="4"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user4_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user4_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user4_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser5"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="5"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user5_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user5_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user5_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser6"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="6"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user6_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user6_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user6_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser7"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="7"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user7_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user7_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user7_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser8"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="8"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user8_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user8_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user8_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser9"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="25dp"
+                            android:text="9"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user9_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user9_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user9_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_kakaoUser10"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginLeft="17dp"
+                            android:text="10"
+                            android:textAppearance="@style/ranking_rank_num"/>
+
+                        <ImageView
+                            android:id="@+id/iv_user10_image_kakao"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_profile_image_templete"/>
+
+                        <TextView
+                            android:id="@+id/tv_user10_nickname_kakao"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="오상훈"
+                            android:textAppearance="@style/ranking_rank_nickname"/>
+
+                        <TextView
+                            android:id="@+id/tv_user10_money_kakao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1000000"
+                            android:textAppearance="@style/ranking_rank_money" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_myProfile_ranking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/ic_ranking_my_box">
+
+        <ImageView
+            android:id="@+id/iv_my_image"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_profile_image_templete"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_my_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="레벨 "
+                android:textAppearance="@style/ranking_levelAndProfit"/>
+
+            <TextView
+                android:id="@+id/tv_my_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center|left"
+                android:text="닉네임 "
+                android:textAppearance="@style/ranking_nicknameAndProfitValue"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="24dp"
+                android:text="현재 스택"
+                android:textAppearance="@style/ranking_levelAndProfit"/>
+
+            <TextView
+                android:id="@+id/tv_my_stack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center|right"
+                android:text="26.08%"
+                android:textAppearance="@style/ranking_nicknameAndProfitValue"/>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
