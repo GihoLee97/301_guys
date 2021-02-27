@@ -1027,42 +1027,22 @@ class GameNormalActivity : AppCompatActivity() {
             // 차트 생성
             cht_snp.animateXY(1, 1)
             cht_eco.animateXY(1, 1)
-//            findViewById<LineChart>(R.id.cht_bond).animateXY(1, 1)
-//            findViewById<LineChart>(R.id.cht_indpro).animateXY(1, 1)
-//            findViewById<LineChart>(R.id.cht_unem).animateXY(1, 1)
-//            findViewById<LineChart>(R.id.cht_inf).animateXY(1, 1)
             //TODO
             cht_snp.setBackgroundColor(Color.parseColor("#1AFF0000"))
             cht_snp.setDrawGridBackground(false)
             cht_snp.setDrawBorders(false)
-//            cht_snp.setDrawAxisLines(false)
-
 
             cht_eco.setBackgroundColor(Color.parseColor("#1AFF0000"))
             cht_eco.setDrawGridBackground(false)
             cht_eco.setDrawBorders(false)
 
-
-
             cht_eco.setTouchEnabled(false)
-//            findViewById<LineChart>(R.id.cht_bond).setTouchEnabled(false)
-//            findViewById<LineChart>(R.id.cht_indpro).setTouchEnabled(false)
-//            findViewById<LineChart>(R.id.cht_unem).setTouchEnabled(false)
-//            findViewById<LineChart>(R.id.cht_inf).setTouchEnabled(false)
             cht_eco.setVisibleXRangeMaximum(1250F)
-//            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-//            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-//            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-//            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
         }
 
         // 추가분 반영
         cht_snp.notifyDataSetChanged()
         cht_eco.notifyDataSetChanged()
-//        findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-//        findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-//        findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-//        findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
 
         snpD.notifyDataChanged()
         fundD.notifyDataChanged()
@@ -1078,10 +1058,6 @@ class GameNormalActivity : AppCompatActivity() {
             findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // 125 거래일 ~ 6개월
             findViewById<LineChart>(R.id.cht_snp).moveViewToX((i + 1 - given).toFloat())
         }
-
-//        runOnUiThread {
-//            findViewById<TextView>(R.id.tv_notification).text = "알림: 게임 시작...!"
-//        }
     }
 
     // Real time 차트 생성 및 현재 데이터 저장
@@ -1283,38 +1259,8 @@ class GameNormalActivity : AppCompatActivity() {
 
                         println("S&P : " + snp_date[start + dayPlus] + " | " + "Fund : " + fund_date[fundIndex] + " | " + "Bond : " + bond_date[bondIndex] + " | " + "IndPro : " + indpro_date[indproIndex - 1] + " | " + "UnEm : " + unem_date[unemIndex - 1] + " | " + "Inf : " + inf_date[infIndex - 1])
 
-
-                        runOnUiThread {
-                            // 차트에 DataSet 리프레쉬 통보
-                            findViewById<LineChart>(R.id.cht_snp).notifyDataSetChanged()
-                            findViewById<LineChart>(R.id.cht_eco).notifyDataSetChanged()
-//                            findViewById<LineChart>(R.id.cht_bond).notifyDataSetChanged()
-//                            findViewById<LineChart>(R.id.cht_indpro).notifyDataSetChanged()
-//                            findViewById<LineChart>(R.id.cht_unem).notifyDataSetChanged()
-//                            findViewById<LineChart>(R.id.cht_inf).notifyDataSetChanged()
-                            snpD.notifyDataChanged()
-                            fundD.notifyDataChanged()
-                            bondD.notifyDataChanged()
-                            unemD.notifyDataChanged()
-                            infD.notifyDataChanged()
-
-                            // 차트 축 최대 범위 설정
-                            findViewById<LineChart>(R.id.cht_snp).setVisibleXRangeMaximum(125F) // X축 범위: 125 거래일(~6개월)
-                            findViewById<LineChart>(R.id.cht_eco).setVisibleXRangeMaximum(1250F)
-//                            findViewById<LineChart>(R.id.cht_bond).setVisibleXRangeMaximum(1250F)
-//                            findViewById<LineChart>(R.id.cht_indpro).setVisibleXRangeMaximum(1250F)
-//                            findViewById<LineChart>(R.id.cht_unem).setVisibleXRangeMaximum(1250F)
-//                            findViewById<LineChart>(R.id.cht_inf).setVisibleXRangeMaximum(1250F)
-
-                            // 차트 축 이동
-                            findViewById<LineChart>(R.id.cht_snp).moveViewToX(dayPlus.toFloat())
-                            findViewById<LineChart>(R.id.cht_eco).moveViewToX(dayPlus.toFloat())
-//                            findViewById<LineChart>(R.id.cht_bond).moveViewToX(dayPlus.toFloat())
-//                            findViewById<LineChart>(R.id.cht_indpro).moveViewToX(dayPlus.toFloat())
-//                            findViewById<LineChart>(R.id.cht_unem).moveViewToX(dayPlus.toFloat())
-//                            findViewById<LineChart>(R.id.cht_inf).moveViewToX(dayPlus.toFloat())
-                        }
-
+                        // 차트 최신화
+                        Updatecht()
 
                         // 값 OutPut ///////////////////////////////////////////////////////////////
                         // 현재 값 저장
@@ -1790,7 +1736,6 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         ////////////////////////////////////////////////////////////////////////////
                         runOnUiThread{
-//                            findViewById<TextView>(R.id.tv_value1).text = "피로도: "+ value1now.toString()
                             pb_fatigue.progress = value1now
                         }
 
@@ -2154,6 +2099,7 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // UI 업데이트 코드
+    // TODO
     private fun Updatecht() {
         runOnUiThread {
             // 차트에 DataSet 리프레쉬 통보
@@ -2256,31 +2202,28 @@ class GameNormalActivity : AppCompatActivity() {
             }
         }
 
-        when(ecoselect) {
-            0 -> {
-                //cht_eco.data = fundD
-                tv_ecoindex.text = "금리"
-                tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
-            }
-            1 -> {
-                //cht_eco.data = bondD
-                tv_ecoindex.text = "10년 만기 국채 이율"
-                tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
-            }
-            2 -> {
-                //cht_eco.data = indproD
-                tv_ecoindex.text = "산업생산량"
-                tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
-            }
-            3 -> {
-                //cht_eco.data = unemD
-                tv_ecoindex.text = "실업률"
-                tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
-            }
-            4 -> {
-                //cht_eco.data = infD
-                tv_ecoindex.text = "인플레이션"
-                tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+        runOnUiThread {
+            when (ecoselect) {
+                0 -> {
+                    tv_ecoindex.text = "금리"
+                    tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+                }
+                1 -> {
+                    tv_ecoindex.text = "10년 만기 국채 이율"
+                    tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+                }
+                2 -> {
+                    tv_ecoindex.text = "산업생산량"
+                    tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
+                }
+                3 -> {
+                    tv_ecoindex.text = "실업률"
+                    tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+                }
+                4 -> {
+                    tv_ecoindex.text = "인플레이션"
+                    tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+                }
             }
         }
     }
