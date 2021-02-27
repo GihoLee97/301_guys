@@ -70,16 +70,9 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="14dp"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="12.5"/>
+            android:layout_height="match_parent">
 
             <ProgressBar
                 android:id="@+id/pb_achivement"
@@ -88,14 +81,12 @@
                 android:layout_height="0dp"
                 android:progress="80"
                 android:layout_gravity="right"
-                android:layout_weight="40.8"/>
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="12.5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="52.5"/>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
