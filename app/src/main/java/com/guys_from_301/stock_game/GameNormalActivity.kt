@@ -2202,26 +2202,28 @@ class GameNormalActivity : AppCompatActivity() {
             }
         }
 
-        when(ecoselect) {
-            0 -> {
-                tv_ecoindex.text = "금리"
-                tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
-            }
-            1 -> {
-                tv_ecoindex.text = "10년 만기 국채 이율"
-                tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
-            }
-            2 -> {
-                tv_ecoindex.text = "산업생산량"
-                tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
-            }
-            3 -> {
-                tv_ecoindex.text = "실업률"
-                tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
-            }
-            4 -> {
-                tv_ecoindex.text = "인플레이션"
-                tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+        runOnUiThread {
+            when (ecoselect) {
+                0 -> {
+                    tv_ecoindex.text = "금리"
+                    tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
+                }
+                1 -> {
+                    tv_ecoindex.text = "10년 만기 국채 이율"
+                    tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
+                }
+                2 -> {
+                    tv_ecoindex.text = "산업생산량"
+                    tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
+                }
+                3 -> {
+                    tv_ecoindex.text = "실업률"
+                    tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
+                }
+                4 -> {
+                    tv_ecoindex.text = "인플레이션"
+                    tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+                }
             }
         }
     }
