@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
-import android.text.InputFilter.AllCaps
-import android.text.InputFilter.LengthFilter
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -16,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Initial_set_id_Activity : AppCompatActivity() {
+class InitialSetIdActivity : AppCompatActivity() {
     var mContext : Context? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         mContext = this
@@ -86,7 +84,7 @@ class Initial_set_id_Activity : AppCompatActivity() {
                         Toast.makeText(mContext, "이미 있는 아이디입니다.", Toast.LENGTH_LONG).show()
                     }
                     else if(response.body()!! == "555"){
-                        val intent = Intent(mContext, Initial_set_pw_Activity::class.java)
+                        val intent = Intent(mContext, InitialSetPwActivity::class.java)
                         startActivity(intent)
                     }
                     else{

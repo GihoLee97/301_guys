@@ -16,5 +16,6 @@
     <string name="about_inf">"infla 설명~!~!~!"</string>
     <string name="channel_name">tardis</string>
     <string name="channel_description">tardis</string>
+    <string name="sign_up"><u>회원가입</u></string>
 </resources>
 
