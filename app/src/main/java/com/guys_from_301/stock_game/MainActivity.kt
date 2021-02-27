@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -460,8 +461,7 @@ class MainActivity : AppCompatActivity() {
                 //
 
                 runOnUiThread{
-                    findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
-                    findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
+                    findViewById<ProgressBar>(R.id.pb_tiredness).progress = profileDb?.profileDao()?.getValue1()!!
                 }
             }
             delay(200L) // 0.2초에 한 번씩 확인

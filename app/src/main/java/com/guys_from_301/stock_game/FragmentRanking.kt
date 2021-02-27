@@ -206,9 +206,6 @@ class FragmentRanking : Fragment() {
 
         //sort
         realkakaoplayer.sortByDescending { it.MONEY }
-        println("---1: "+ realkakaoplayer[0])
-        println("---2: "+ realkakaoplayer[1])
-        println("---3: "+ realkakaoplayer[2])
 
     }
 }

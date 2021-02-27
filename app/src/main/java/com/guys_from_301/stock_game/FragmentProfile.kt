@@ -212,7 +212,7 @@ class FragmentProfile : Fragment() {
                 newProfile.history = profileDb?.profileDao()?.getHistory()!!
                 newProfile.level = profileDb?.profileDao()?.getLevel()!!
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!-loginMethod
-                newProfile.profit = profileDb?.profileDao()?.getProfit()!!
+                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)

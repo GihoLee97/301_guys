@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdRequest
@@ -36,8 +37,6 @@ const val ITEM_COST = 100000
 const val STACK1_COST = 100
 const val STACK2_COST = 200
 const val STACK3_COST = 1000
-import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProfileDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +71,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
     //gamesetdB
     private var gameSetDB: GameSetDB? = null
-    private lateinit var cl_todayStack : ConstraintLayout
     private lateinit var tv_marketReceipt : TextView
 
     private var profileDb: ProfileDB? = null
@@ -82,7 +80,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     private lateinit var tv_initial_asset: TextView
     private lateinit var tv_initial_monthly: TextView
     private lateinit var tv_initial_salary_raise: TextView
-    private lateinit var tv_mountOfStack: TextView
     var isLoading = false
     var money: Int = 0
     var value1: Int = 0
@@ -106,21 +103,19 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_market, container, false)
         profileDb = ProfileDB.getInstace(mContext)
-        setContentView(R.layout.activity_market)
-        profileDb = ProfileDB.getInstace(this)
-        gameSetDB = GameSetDB.getInstace(this)
+        gameSetDB = GameSetDB.getInstace(mContext)
         var gameset = gameSetDB?.gameSetDao()?.getAll()?.get(0)
         //viewmodel
-        val marketViewModel = MarketViewModel(this)
+        val marketViewModel = MarketViewModel(_MainActivity!!)
 
         //cl
-        cl_todayStack = findViewById(R.id.cl_todayStack)
-        cl_upgrade_asset = findViewById(R.id.cl_upgrade_asset)
-        cl_upgrade_monthly = findViewById(R.id.cl_upgrade_monthly)
-        cl_upgrade_salary_raise = findViewById(R.id.cl_upgrade_salary_raise)
-        cl_buy_stack1 = findViewById(R.id.cl_buy_stack1)
-        cl_buy_stack2 = findViewById(R.id.cl_buy_stack2)
-        cl_buy_stack3 = findViewById(R.id.cl_buy_stack3)
+        cl_todayStack = v.findViewById(R.id.cl_todayStack)
+        cl_upgrade_asset = v.findViewById(R.id.cl_upgrade_asset)
+        cl_upgrade_monthly = v.findViewById(R.id.cl_upgrade_monthly)
+        cl_upgrade_salary_raise = v.findViewById(R.id.cl_upgrade_salary_raise)
+        cl_buy_stack1 = v.findViewById(R.id.cl_buy_stack1)
+        cl_buy_stack2 = v.findViewById(R.id.cl_buy_stack2)
+        cl_buy_stack3 = v.findViewById(R.id.cl_buy_stack3)
         //btn
         cl_todayStack = v.findViewById(R.id.cl_todayStack)
 //        btn_purchase = v.findViewById(R.id.btn_purchase)
@@ -131,19 +126,19 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
         mRewardedVideoAd.rewardedVideoAdListener = FragmentMarket()!!
-        tv_initial_asset = findViewById(R.id.tv_initial_asset)
-        tv_initial_monthly = findViewById(R.id.tv_initial_monthly)
-        tv_initial_salary_raise = findViewById(R.id.tv_initial_salary_raise)
+        tv_initial_asset = v.findViewById(R.id.tv_initial_asset)
+        tv_initial_monthly = v.findViewById(R.id.tv_initial_monthly)
+        tv_initial_salary_raise = v.findViewById(R.id.tv_initial_salary_raise)
 
         //viewmodel 적용
-        marketViewModel.getStack().observe(this, Observer { tv_mountOfStack.text = it.toString() })
-        marketViewModel.getInitialAsset().observe(this, Observer { tv_initial_asset.text = "$" + SET_CASH_STEP[it] })
-        marketViewModel.getInitialMonthly().observe(this, Observer { tv_initial_monthly.text = "$" + SET_MONTHLY_STEP[it] })
-        marketViewModel.getInitialSalaryRaise().observe(this, Observer { tv_initial_salary_raise.text = SET_SALARY_RAISE_STEP[it].toString() + "%" })
+        marketViewModel.getStack().observe(viewLifecycleOwner, Observer { tv_mountOfStack.text = it.toString() })
+        marketViewModel.getInitialAsset().observe(viewLifecycleOwner, Observer { tv_initial_asset.text = "$" + SET_CASH_STEP[it] })
+        marketViewModel.getInitialMonthly().observe(viewLifecycleOwner, Observer { tv_initial_monthly.text = "$" + SET_MONTHLY_STEP[it] })
+        marketViewModel.getInitialSalaryRaise().observe(viewLifecycleOwner, Observer { tv_initial_salary_raise.text = SET_SALARY_RAISE_STEP[it].toString() + "%" })
 
-        tv_mountOfStack = findViewById(R.id.tv_mountOfStack)
+        tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
         tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
         loadad()
@@ -157,22 +152,22 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         cl_upgrade_asset.setOnClickListener {
             //billingManager.startConnection()
             if (marketViewModel.getStack().value!! >= ITEM_COST){
-                if(marketViewModel.getInitialAsset().value == 4) Toast.makeText(this, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
+                if(marketViewModel.getInitialAsset().value == 4) Toast.makeText(mContext, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
                 else {
-                    val dialog = Dialog_loading(this@MarketActivity)
+                    val dialog = Dialog_loading(mContext)
                     dialog.show()
                     if(negotiation(marketViewModel.getInitialAsset().value!!)) {
                         marketViewModel.applyItemRaiseSetCash()
-                        Toast.makeText(this, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
                     }
                     else {
                         marketViewModel.applyItmeFailtoSetCash()
-                        Toast.makeText(this, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
                     }
                     dialog.dismiss()
                 }
             }
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(mContext, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
         }
 //        btn_purchase.setOnClickListener {
 //            billingManager.startConnection()
@@ -182,28 +177,30 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
         }
 
-        return v
-    }
         //초기월금 아이템 구매
         cl_upgrade_monthly.setOnClickListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
-                if(marketViewModel.getInitialMonthly().value == 4) Toast.makeText(this, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
+                if(marketViewModel.getInitialMonthly().value == 4) Toast.makeText(mContext, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
                 else {
-                    val dialog = Dialog_loading(this@MarketActivity)
+                    val dialog = Dialog_loading(mContext)
                     dialog.show()
                     if(negotiation(marketViewModel.getInitialMonthly().value!!)) {
                         marketViewModel.applyItemRaiseSetMonthly()
-                        Toast.makeText(this, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
                     }
                     else {
                         marketViewModel.applyItmeFailtoSetMonthly()
-                        Toast.makeText(this, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
                     }
                     dialog.dismiss()
                 }
             }
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(mContext, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
         }
+
+        return v
+    }
+
 
     override fun onResume() {
         tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
@@ -230,47 +227,20 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
                 }
             }
     }
-    fun initLayout(){
-        cl_todayStack.setOnClickListener{
-        //연봉상승률 아이템 구매
-        cl_upgrade_salary_raise.setOnClickListener {
-            if (marketViewModel.getStack().value!! >= ITEM_COST){
-                if(marketViewModel.getInitialSalaryRaise().value == 4) Toast.makeText(this, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
-                else {
-                    val dialog = Dialog_loading(this@MarketActivity)
-                    dialog.show()
-                    if(negotiation(marketViewModel.getInitialSalaryRaise().value!!)) {
-                        marketViewModel.applyItemRaiseSetSalaryRaise()
-                        Toast.makeText(this, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        marketViewModel.applyItmeFailtoSetSalaryRaise()
-                        Toast.makeText(this, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
-                    }
-                    dialog.dismiss()
-                }
+
+    fun initLayout(marketViewModel: MarketViewModel) {
+        cl_todayStack.setOnClickListener {
+            if (mRewardedVideoAd.isLoaded) {
+                mRewardedVideoAd.show()
+                marketViewModel.BuyStack(moneyreward)
             }
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
-        }
 
-        //스택 구매
-        cl_buy_stack1.setOnClickListener{
-            if(marketViewModel.getStack().value!! >= STACK1_COST) marketViewModel.BuyStack(STACK1_COST)
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
         }
-        cl_buy_stack2.setOnClickListener{
-            if(marketViewModel.getStack().value!! >= STACK2_COST) marketViewModel.BuyStack(STACK2_COST)
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
-        }
-        cl_buy_stack3.setOnClickListener{
-            if(marketViewModel.getStack().value!! >= STACK3_COST) marketViewModel.BuyStack(STACK3_COST)
-            else Toast.makeText(this, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
-        }
-
     }
+
     fun dbupdate() {
         var profileDb: ProfileDB? = null
-        profileDb = ProfileDB.getInstace(this)
+        profileDb = ProfileDB.getInstace(mContext)
         val newProfile = Profile()
 
         newProfile.id = profileDb?.profileDao()?.getId()!!
@@ -288,19 +258,10 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         profileDb?.profileDao()?.update(newProfile)
     }
 
-    fun initLayout(marketViewModel: MarketViewModel) {
-        cl_todayStack.setOnClickListener {
-            if (mRewardedVideoAd.isLoaded) {
-                mRewardedVideoAd.show()
-                marketViewModel.BuyStack(moneyreward)
-            }
-
-        }
-    }
-
     fun loadad() {
         mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", AdRequest.Builder().build())
     }
+
     override fun onRewardedVideoAdClosed() {
         Log.d("SSS", "onRewardVideoAdClosed()")
         loadad()
@@ -325,7 +286,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
     override fun onRewarded(rItem: RewardItem?) {
         var profileDb: ProfileDB? = null
-        profileDb = ProfileDB.getInstace(this)
+        profileDb = ProfileDB.getInstace(mContext)
         profileDb = ProfileDB.getInstace(mContext)
         money = profileDb?.profileDao()?.getMoney()!!.toInt()+moneyreward
         value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
@@ -336,7 +297,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             value1 = 0
         }
 
-        Toast.makeText(this, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
+        Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
@@ -347,13 +308,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
                 profileDb?.profileDao()?.getLevel()!!
-            getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-            money, value1,
-            profileDb?.profileDao()?.getNickname()!!,
-            profileDb?.profileDao()?.getProfit()!!,
-            profileDb?.profileDao()?.getRoundCount()!!,
-            profileDb?.profileDao()?.getHistory()!!,
-            profileDb?.profileDao()?.getLevel()!!
         )
         // profiledb에 업데이트
         dbupdate()
@@ -368,34 +322,17 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         Log.d("SSS", "onRewardedVideoAdFailedToLoad($p0)")
     }
 
-    fun negotiation(level: Int): Boolean{
+    fun negotiation(level: Int): Boolean {
         var percentage = 0
         val random = Random()
         val num = random.nextInt(99)
-        when(level){
-            0-> percentage = 80
-            1-> percentage = 50
-            2-> percentage = 25
-            3-> percentage = 10
+        when (level) {
+            0 -> percentage = 80
+            1 -> percentage = 50
+            2 -> percentage = 25
+            3 -> percentage = 10
         }
-        return num<percentage
-    fun dbupdate(){
-        var profileDb: ProfileDB? = null
-        profileDb = ProfileDB.getInstace(mContext)
-        val newProfile = Profile()
-
-        newProfile.id = profileDb?.profileDao()?.getId()!!
-        newProfile.login =profileDb?.profileDao()?.getLogin()!!
-        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-        newProfile.history = profileDb?.profileDao()?.getHistory()!!
-        newProfile.profit = profileDb?.profileDao()?.getProfit()!!
-        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-        newProfile.level = profileDb?.profileDao()?.getLevel()!!
-        newProfile.exp = profileDb?.profileDao()?.getExp()!!
-        newProfile.rank = profileDb?.profileDao()?.getRank()!!
-        newProfile.money = money
-        newProfile.value1 = value1
-        profileDb?.profileDao()?.update(newProfile)
+        return num < percentage
     }
+
 }
