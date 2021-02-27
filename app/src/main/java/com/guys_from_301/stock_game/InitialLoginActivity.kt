@@ -417,23 +417,23 @@ class InitialLoginActivity : AppCompatActivity() {
             profileDb?.profileDao()?.update(newProfile)
         }
     }
-
-    // 두번 누르면 종료되는 코드
-    var time3: Long = 0
-    override fun onBackPressed() {
-        val time1 = System.currentTimeMillis()
-        val time2 = time1 - time3
-        if (time2 in 0..2000) {
-            // 이거 3줄 다 써야 안전하게 종료
-            moveTaskToBack(true)
-            finish()
-            android.os.Process.killProcess(android.os.Process.myPid())
-        }
-        else {
-            time3 = time1
-            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
-        }
-    }
+//
+//    // 두번 누르면 종료되는 코드
+//    var time3: Long = 0
+//    override fun onBackPressed() {
+//        val time1 = System.currentTimeMillis()
+//        val time2 = time1 - time3
+//        if (time2 in 0..2000) {
+//            // 이거 3줄 다 써야 안전하게 종료
+//            moveTaskToBack(true)
+//            finish()
+//            android.os.Process.killProcess(android.os.Process.myPid())
+//        }
+//        else {
+//            time3 = time1
+//            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     fun getuserinformation(u_id: String, u_pw: String) {
         var fungetuserinformation: RetrofitGet? = null
