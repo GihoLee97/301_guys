@@ -602,4 +602,26 @@
 
 
 
+
+
+    <style name="initial_signIn_idPw">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="initial_signIn_notification">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F94001</item>
+    </style>
+    <style name="initial_signIn_or">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="initial_signIn_underline">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+
 </resources>
