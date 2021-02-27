@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="224dp"
     android:orientation="vertical"
     android:weightSum="224">
 
@@ -14,15 +14,12 @@
         android:background="#F1F5F5"
         android:src="@drawable/ic_path_close_bottom" />
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#F1F5F5"
         android:layout_weight="152">
-
 
         <TextView
             android:id="@+id/tv_autotitle"
@@ -45,8 +42,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text="90%"
             android:textAppearance="@style/game_autotrading"/>
-
-
 
         <SeekBar
             android:id="@+id/sb_autotrading"
