@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -17,8 +19,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.guys_from_301.stock_game.data.*
-import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -835,7 +835,7 @@ class GameNormalActivity : AppCompatActivity() {
         auto1x = gamehistory?.auto1x!!
 
 
-        setSalaryraise = gameset.setsalaryraise
+        setSalaryraise = SET_SALARY_RAISE_STEP[gameset.setsalaryraise]
         setGamespeed = gameset.setgamespeed
         setMonthly = gamehistory?.monthly!!
         monthToggle =gamehistory?.monthtoggle!!
@@ -1426,6 +1426,22 @@ class GameNormalActivity : AppCompatActivity() {
                         if (snpDate_sf.date >= 10 && monthToggle==0) {
                             cash += monthly // 월 투자금 현금으로 입금
                             input += monthly // 총 input 최신화
+                            // 자산내역 DB 저장
+                            val addRunnable = Runnable {
+                                val newGameNormalDB = GameNormal()
+                                newGameNormalDB.id = localdatatime
+                                newGameNormalDB.buyorsell = "자산 차트"
+                                newGameNormalDB.select = 1
+                                newGameNormalDB.price = price1x
+                                newGameNormalDB.volume = auto1xquant * price1x
+                                newGameNormalDB.quant = auto1xquant
+                                newGameNormalDB.tradecom = auto1xquant * price1x * (tradecomrate - 1F)
+                                newGameNormalDB.cash = cash
+                                newGameNormalDB.setId = setId
+                                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                            }
+                            val addThread = Thread(addRunnable)
+                            addThread.start()
 //                            runOnUiThread {
 //                                findViewById<TextView>(R.id.tv_notification).text =
 //                                    "알림: 월 투자금 " + dec.format(monthly) + " 원이 입금되었습니다"
@@ -1649,7 +1665,7 @@ class GameNormalActivity : AppCompatActivity() {
                         pastAsset = asset
                         asset = cash + evaluation // 총 자산
                         // 자산 관련 데이터 계산 종료
-                        if(asset>= pastAsset) surplusCount++
+                        if(asset> pastAsset) surplusCount++
                         else surplusCount = 0
                         surplusQuestList?.let { checkQuestSurplus(surplusCount, it) }
 
@@ -2367,78 +2383,97 @@ class GameNormalActivity : AppCompatActivity() {
 
     }
 
+    //도전과제 스텍 보상 함수
+    fun rewardByStack(reward: Int){
+        val newProfile = profileDb?.profileDao()?.getAll()?.get(0)
+        if (newProfile != null) {
+            newProfile.money = newProfile.money + reward
+            profileDb?.profileDao()?.update(newProfile)
+        }
+    }
+
+
     fun checkQuestInGameProfit(profitrate: Float, questList: List<Quest>){
         for (i in 0..questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0 -> if (profitrate >= 10F) {
+                    0-> if(profitrate>=10F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        rewardByStack(10000)
+                        questAchieved.add(questList[i])
+                    }
+                    1-> if(profitrate>=20F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        rewardByStack(20000)
+                        questAchieved.add(questList[i])
+                    }
+                    2-> if(profitrate>=30F){
+                        questList?.get(i)?.achievement = 1
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
                         questAchieved.add(questList[i])
                     }
-                    1 -> if (profitrate >= 20F) {
+                    3-> if(profitrate>=50F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(50000)
                         questAchieved.add(questList[i])
                     }
-                    2 -> if (profitrate >= 30F) {
+                    4-> if(profitrate>=100F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(100000)
                         questAchieved.add(questList[i])
                     }
-                    3 -> if (profitrate >= 50F) {
+                    5-> if(profitrate>=200F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(200000)
                         questAchieved.add(questList[i])
                     }
-                    4 -> if (profitrate >= 100F) {
+                    6-> if(profitrate>=300F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(300000)
                         questAchieved.add(questList[i])
                     }
-                    5 -> if (profitrate >= 200F) {
+                    7-> if(profitrate>=400F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(400000)
                         questAchieved.add(questList[i])
                     }
-                    6 -> if (profitrate >= 300F) {
+                    8-> if(profitrate>=500F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(500000)
                         questAchieved.add(questList[i])
                     }
-                    7 -> if (profitrate >= 400F) {
+                    9-> if(profitrate>=1000F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        questAchieved.add(questList[i])
-                    }
-                    8 -> if (profitrate >= 500F) {
-                        questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
-                        val addThread = Thread(addRunnable)
-                        addThread.start()
-                        questAchieved.add(questList[i])
-                    }
-                    9 -> if (profitrate >= 1000F) {
-                        questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
-                        val addThread = Thread(addRunnable)
-                        addThread.start()
+                        rewardByStack(1000000)
                         questAchieved.add(questList[i])
                     }
                 }
@@ -2451,39 +2486,44 @@ class GameNormalActivity : AppCompatActivity() {
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0 -> if (relativeprofitrate >= 10F) {
+                    0-> if(relativeprofitrate>=10F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(10000)
                         questAchieved.add(questList[i])
                     }
-                    1 -> if (relativeprofitrate >= 20F) {
+                    1-> if(relativeprofitrate>=20F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(20000)
                         questAchieved.add(questList[i])
                     }
-                    2 -> if (relativeprofitrate >= 50F) {
+                    2-> if(relativeprofitrate>=50F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(50000)
                         questAchieved.add(questList[i])
                     }
-                    3 -> if (relativeprofitrate >= 100F) {
+                    3-> if(relativeprofitrate>=100F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(100000)
                         questAchieved.add(questList[i])
                     }
-                    4 -> if (relativeprofitrate >= 200F) {
+                    4-> if(relativeprofitrate>=200F){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(200000)
                         questAchieved.add(questList[i])
                     }
 
@@ -2496,39 +2536,44 @@ class GameNormalActivity : AppCompatActivity() {
         for(i in 0 .. questList.size-1){
             if(questList?.get(i)?.achievement  == 0){
                 when(i){
-                    0 -> if (surplusCount >= 10) {
+                    0-> if(surplusCount>=10){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(10000)
                         questAchieved.add(questList[i])
                     }
-                    1 -> if (surplusCount >= 20) {
+                    1-> if(surplusCount>=20){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(20000)
                         questAchieved.add(questList[i])
                     }
-                    2 -> if (surplusCount >= 30) {
+                    2-> if(surplusCount>=30){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(30000)
                         questAchieved.add(questList[i])
                     }
-                    3 -> if (surplusCount >= 40) {
+                    3-> if(surplusCount>=40){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(40000)
                         questAchieved.add(questList[i])
                     }
-                    4 -> if (surplusCount >= 50) {
+                    4-> if(surplusCount>=50){
                         questList?.get(i)?.achievement = 1
-                        val addRunnable = Runnable { questList?.get(i)?.let { questDb?.questDao()?.insert(it) } }
+                        val addRunnable = Runnable{questList?.get(i)?.let { questDb?.questDao()?.insert(it) }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
+                        rewardByStack(50000)
                         questAchieved.add(questList[i])
                     }
                 }

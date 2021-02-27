@@ -40,9 +40,9 @@ class NewMainActivity : AppCompatActivity() {
                 //초기자산값 변수
                 val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
                 if (initialgameset != null) {
-                    setCash = initialgameset.setcash
-                    setMonthly = initialgameset.setmonthly
-                    setSalaryraise = initialgameset.setsalaryraise
+                    setCash = SET_CASH_STEP[initialgameset.setcash]
+                    setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
+                    setSalaryraise = SET_SALARY_RAISE_STEP[initialgameset.setsalaryraise]
                     setGamelength = initialgameset.setgamelength
                     setGamespeed = initialgameset.setgamespeed
                 }
