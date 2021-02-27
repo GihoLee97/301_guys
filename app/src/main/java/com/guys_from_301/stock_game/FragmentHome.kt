@@ -2,14 +2,16 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.guys_from_301.stock_game.data.ProfileDB
-import com.guys_from_301.stock_game.data.Quest
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.guys_from_301.stock_game.data.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +28,11 @@ class FragmentHome : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
     var profileDb : ProfileDB? = null
+    //게임 데이터 불러올 변수
+    private var gameDb: GameSetDB? = null
+    private var gameNormalDB: GameNormalDB? = null
+    private var game = listOf<GameSet>()
+    lateinit var mAdapter: MyGameSetAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +47,55 @@ class FragmentHome : Fragment() {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
         profileDb = ProfileDB.getInstace(_MainActivity!!)
+
+        //기본설정(data 불러오기 및 리사이클러뷰 바인딩)
+        gameDb = GameSetDB.getInstace(_MainActivity!!)
+        gameNormalDB = GameNormalDB.getInstace(_MainActivity!!)
+        mAdapter = gameNormalDB?.let {
+            MyGameSetAdapter(_MainActivity!!, game, it){ game -> setId = game.id }
+        }!!
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(_MainActivity!!)
+        val pRecyclerView = v.findViewById<RecyclerView>(R.id.rv_games)
+        val dialog = Dialog_loading(_MainActivity!!)
+        dialog.show()
+        pRecyclerView.layoutManager = layoutManager
+        val r = Runnable {
+            try{
+                game = gameDb?.gameSetDao()?.getPick()!!
+                //초기자산값 변수
+                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+                if (initialgameset != null) {
+                    setCash = SET_CASH_STEP[initialgameset.setcash]
+                    setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
+                    setSalaryraise = SET_SALARY_RAISE_STEP[initialgameset.setsalaryraise]
+                    setGamelength = initialgameset.setgamelength
+                    setGamespeed = initialgameset.setgamespeed
+                }
+                for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
+                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll()!![i].id).isNullOrEmpty()) {
+                    }
+                }
+                mAdapter = MyGameSetAdapter(_MainActivity!!, game,gameNormalDB!!){
+                        gameUnit -> setId = gameUnit.id
+                    val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)
+                    startActivity(intent)
+                }
+                mAdapter.notifyDataSetChanged()
+
+                pRecyclerView.adapter = mAdapter
+                val manager = LinearLayoutManager(_MainActivity!!, LinearLayoutManager.HORIZONTAL, false)
+                pRecyclerView.setHasFixedSize(true)
+                manager.reverseLayout = true
+                manager.stackFromEnd = true
+                pRecyclerView.layoutManager = manager
+                dialog.dismiss()
+            }catch (e: Exception){
+                Log.d("tag", "Error - $e")
+            }
+        }
+        val thread = Thread(r)
+        thread.start()
+
 
         v.findViewById<ConstraintLayout>(R.id.cl_dashboard3).setOnClickListener{
             val intent = Intent(_MainActivity, QuestActivity::class.java)
