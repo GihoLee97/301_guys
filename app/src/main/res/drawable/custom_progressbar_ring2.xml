@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape
-            android:shape="ring"
-
-            android:thicknessRatio="8"
-            android:useLevel="false">
-            <solid android:color="@color/color_style_3" />
-        </shape>
+    <item
+        android:id="@android:id/background"
+        android:drawable="@drawable/ic_progress_ring_background_orange">
     </item>
     <item>
         <rotate
@@ -15,13 +10,10 @@
             android:toDegrees="270">
             <shape
                 android:shape="ring"
-                android:innerRadiusRatio="2.7"
-                android:thicknessRatio="25"
+                android:innerRadiusRatio="2.5"
+                android:thicknessRatio="15"
                 android:useLevel="true">
-                <gradient
-                    android:endColor="#FFFFFF"
-                    android:startColor="#FFFFFF"
-                    android:type="sweep" />
+                <solid android:color="#F4730B"/>
             </shape>
         </rotate>
     </item>
