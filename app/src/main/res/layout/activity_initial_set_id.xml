@@ -25,6 +25,7 @@
                 >
 
                 <ImageButton
+                    android:id="@+id/ib_go_signup_main"
                     android:layout_width="8dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
@@ -76,15 +77,37 @@
             android:text="사용하실 아이디를 입력해주세요 :)"
             android:textAppearance="@style/initial_signUp_id_ment" />
     </LinearLayout>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="아이디 입력 창 들어갈 자리"
         android:layout_marginTop="68dp"
+        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center">
+        <EditText
+            android:id="@+id/et_signup_id"
+            android:layout_width="290dp"
+            android:layout_height="30dp"
+            android:text=""
+            android:hint="아이디를 입력해주세요"
+            android:background="null"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <ImageButton
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center"
+            android:background="@drawable/initial_delete"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="315dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/initial_set_id_line"/>
 
     <Button
+        android:id="@+id/btn_go_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="계속하기"
