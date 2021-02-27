@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,78 +8,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="196dp"
-        android:background="#ED9D0B"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:background="#ED9D0B">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_marginTop="28dp"
-            android:orientation="horizontal"
-            >
-
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
                 >
-
-                <ImageButton
+                <ImageView
                     android:layout_width="8dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="24dp"
-                    android:background="@drawable/ic_path_white" />
+                    android:background="@drawable/ic_path_white"/>
             </LinearLayout>
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
+                android:textAppearance="@style/initial_signup_title"
                 android:text="회원가입"
-                android:textAppearance="@style/initial_signup_title" />
-
+                android:layout_weight="2"
+                android:gravity="center"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center" />
+                android:gravity="center"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="24dp"
-            android:lineSpacingExtra="6sp"
-            android:text="로그인을 위한\n아이디를 설정해주세요"
-            android:textAppearance="@style/initial_signUp_id_description"/>
-
     </LinearLayout>
-
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
-
+        android:layout_height="60dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="24dp">
-
         <TextView
             android:layout_width="24dp"
-            android:layout_height="24dp" />
-
+            android:layout_height="24dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="사용하실 아이디를 입력해주세요 :)"
-            android:textAppearance="@style/initial_signUp_id_ment" />
+            android:text="비밀번호를 입력해주세요."
+            android:textAppearance="@style/initial_id_ment"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="아이디 입력 창 들어갈 자리"
+        android:text="비밀번호 입력 창 들어갈 자리"
+        android:layout_marginTop="68dp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="비밀번호 입력 창 들어갈 자리"
         android:layout_marginTop="68dp"
         android:layout_gravity="center"
         android:gravity="center"/>
@@ -87,7 +80,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="계속하기"
+        android:text="마지막 단계로 건너가기"
         android:layout_marginTop="48dp"
         android:gravity="center"
         android:background="@drawable/initial_box_go_on_gray"
