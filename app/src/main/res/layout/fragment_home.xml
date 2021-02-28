@@ -141,7 +141,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16.5dp"
                         android:layout_marginVertical="12.5dp"
-                        android:progress="50"
+                        android:progress="5000"
+                        android:max="10000"
                         android:progressDrawable="@drawable/custom_progressbar_horizontal" />
                 </LinearLayout>
 

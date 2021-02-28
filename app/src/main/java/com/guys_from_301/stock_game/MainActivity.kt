@@ -209,6 +209,15 @@ class MainActivity : AppCompatActivity() {
                 friendInfo(friendid, friendscount)
             }
         }
+
+        // 피로도 저감 코드
+        CoroutineScope(Dispatchers.IO).launch {
+            val job1 = launch {
+                value1reduc()
+            }
+        }
+
+
 //        btn_profile = findViewById(R.id.btn_profile)
 //        btn_setting = findViewById(R.id.btn_setting)
 //        btn_quest = findViewById(R.id.btn_quest)
@@ -332,12 +341,6 @@ class MainActivity : AppCompatActivity() {
 //        findViewById<TextView>(R.id.tv_value1).text = "피로도: "+profileDb?.profileDao()?.getValue1()!!
 //        findViewById<ProgressBar>(R.id.progress_value1).progress = profileDb?.profileDao()?.getValue1()!!
 //
-//        // 피로도 저감 코드
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val job1 = launch {
-//                value1reduc()
-//            }
-//        }
 //
 //        while (true) {
 //            if (loadcomp) {
@@ -451,7 +454,6 @@ class MainActivity : AppCompatActivity() {
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
                 profileDb?.profileDao()?.update(newProfile)
-                //
 
                 // 피로도 저감 시간 저장
                 val newItem = Item()
