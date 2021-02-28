@@ -25,7 +25,7 @@
                 >
 
                 <ImageButton
-                    android:id="@+id/ib_go_setid"
+                    android:id="@+id/ib_go_setpw"
                     android:layout_width="8dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
@@ -54,7 +54,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="24dp"
             android:lineSpacingExtra="6sp"
-            android:text="건강한 투자의 기본은\n비밀번호부터 !"
+            android:text="이제\n마지막 단계에요!"
             android:textAppearance="@style/initial_signUp_id_description"/>
 
     </LinearLayout>
@@ -74,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="비밀번호를 입력해주세요."
+            android:text="당신의 닉네임을 설정해주세요 :)"
             android:textAppearance="@style/initial_signUp_id_ment" />
     </LinearLayout>
     <LinearLayout
@@ -91,7 +91,7 @@
             android:id="@+id/et_signup_pw"
             android:layout_width="300dp"
             android:layout_height="30dp"
-            android:inputType="textPassword"
+            android:text=""
             android:hint="6자리 이상으로 입력해주세요"
             android:background="@null"
             android:layout_gravity="center"
@@ -102,7 +102,6 @@
             android:layout_gravity="center|right"
             android:gravity="center|right">
             <ImageButton
-                android:id="@+id/ib_initial_pw"
                 android:layout_marginRight="36dp"
 
                 android:layout_width="20dp"
@@ -128,60 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|left"
         android:gravity="center"
-        android:text="비밀번호는 6자리 이상이어야 합니다."
-        android:textAppearance="@style/initial_signUp_pw_notice"
-    />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="68dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center">
-        <TextView
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-        <EditText
-            android:id="@+id/et_signup_pw_check"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:inputType="textPassword"
-            android:hint="비밀번호를 다시 입력해주세요"
-            android:background="@null"
-            android:layout_gravity="center"
-            android:gravity="center|left"/>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:layout_gravity="center|right"
-            android:gravity="center|right">
-            <ImageButton
-                android:layout_marginRight="36dp"
-                android:id="@+id/ib_initial_pw_check"
-                android:layout_width="20dp"
-                android:layout_height="14dp"
-                android:layout_gravity="center|right"
-                android:background="@drawable/initial_pw_visibility_off"/>
-        </LinearLayout>
-
-    </LinearLayout>
-    <TextView
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_width="fill_parent"
-        android:layout_height="3dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/initial_set_id_line"/>
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|left"
-        android:gravity="center"
-        android:text="비밀번호가 일치하지 않습니다."
+        android:text="이미 존재하는 이름입니다."
         android:textAppearance="@style/initial_signUp_pw_notice"
         />
 
@@ -189,7 +135,7 @@
         android:id="@+id/btn_go_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="마지막 단계로 건너가기"
+        android:text="타디스 시작하기"
         android:layout_marginTop="48dp"
         android:gravity="center"
         android:background="@drawable/initial_box_go_on_gray"

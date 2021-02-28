@@ -21,6 +21,7 @@
         <activity android:name=".QuestActivity" />
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
+        <activity android:name=".Initial_signup_final_Activity" />
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />
