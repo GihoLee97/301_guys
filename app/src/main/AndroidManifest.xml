@@ -15,19 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewMainActivity"></activity>
+        <activity android:name=".NewInitialActivity"></activity>
+        <activity android:name=".InitialLoginActivity" />
+        <activity android:name=".NewMainActivity" />
         <activity android:name=".QuestActivity" />
+        <activity android:name=".InitialSetIdActivity" />
+        <activity android:name=".InitialSetPwActivity" />
+        <activity android:name=".Initial_signup_final_Activity" />
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MarketActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".GameSettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RankingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WelcomeActivity"

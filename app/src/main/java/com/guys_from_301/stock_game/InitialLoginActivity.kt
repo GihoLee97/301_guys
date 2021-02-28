@@ -3,13 +3,13 @@ package com.guys_from_301.stock_game
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,7 +23,6 @@ import com.guys_from_301.stock_game.data.*
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -33,14 +32,15 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
 
-//const val IN_GAME_PROFIT = 10
-//const val RELATIVE_PROFIT = IN_GAME_PROFIT+5
-//const val CUMULATIVE_TRADING_DAY = RELATIVE_PROFIT+5
-//const val CONTINUOUS_SURPLUS = CUMULATIVE_TRADING_DAY+5
-//const val PLAY_GAME = CONTINUOUS_SURPLUS+5
-//const val INVITE = PLAY_GAME+1
+const val IN_GAME_PROFIT = 10
+const val RELATIVE_PROFIT = IN_GAME_PROFIT+5
+const val CUMULATIVE_TRADING_DAY = RELATIVE_PROFIT+5
+const val CONTINUOUS_SURPLUS = CUMULATIVE_TRADING_DAY+5
+const val PLAY_GAME = CONTINUOUS_SURPLUS+5
+const val INVITE = PLAY_GAME+1
 
-class InitialActivity : AppCompatActivity() {
+class InitialLoginActivity : AppCompatActivity() {
+
     val mContext : Context = this
     // profileDb
     private var profileDb : ProfileDB? = null
@@ -82,11 +82,11 @@ class InitialActivity : AppCompatActivity() {
             "친구 초대하기"
     )
     private var rewardList = arrayListOf<String>("10,000스택", "20,000스택", "30,000스택", "50,000스택", "100,000스택", "200,000스택", "300,000스택", "400,000스택", "500,000스택", "1,000,000스택",
-    "10,000스택", "20,000스택", "50,000스택", "100,000스택", "200,000스택",
-    "100,000스택", "200,000스택", "300,000스택", "500,000스택", "1,000,000스택",
-    "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
-    "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
-    "100,000스택")
+            "10,000스택", "20,000스택", "50,000스택", "100,000스택", "200,000스택",
+            "100,000스택", "200,000스택", "300,000스택", "500,000스택", "1,000,000스택",
+            "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
+            "10,000스택", "20,000스택", "30,000스택", "40,000스택", "50,000스택",
+            "100,000스택")
     //gameSetDb
     private var gameSetDb: GameSetDB? = null
 
@@ -98,44 +98,25 @@ class InitialActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private lateinit var btn_googleSignIn : SignInButton
-    private lateinit var btn_generalSignup : Button
     private lateinit var btn_generalLogin : Button
     private lateinit var btn_kakaoLogin : ImageButton
+    private lateinit var tv_goToSignUp : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_initial)
+        setContentView(R.layout.activity_initial_login)
 
         btn_googleSignIn = findViewById(R.id.btn_googleSignIn)
-        btn_generalSignup = findViewById(R.id.btn_generalsignup)
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
+        tv_goToSignUp = findViewById(R.id.tv_goToSignUp)
 
         val id1: EditText = findViewById(R.id.et_id)
         val pw1: EditText = findViewById(R.id.et_pw)
 
         onlyAlphabetFilterToEnglishET(id1)
         onlyAlphabetFilterToEnglishET(pw1)
-
-
-        // 회원가입 & onClickListner
-        btn_generalSignup.setOnClickListener{
-
-            val id1: TextView = findViewById(R.id.et_id)
-            val pw1: TextView = findViewById(R.id.et_pw)
-
-            val time1: LocalDateTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            val formatted = time1.format(formatter)
-            val loginDate : String = formatted.toString().trim()
-            val loginID = getHash(id1.text.toString().trim()).trim()
-            val loginPW = getHash(pw1.text.toString().trim()).trim()
-            Log.d("Giho","ID is hashed to : "+loginID)
-            Log.d("Giho","PW is hashed to : "+loginPW)
-
-            generalSignup(loginID, loginPW, loginDate)
-        }
 
         // 로그인 & onClickListner
         btn_generalLogin.setOnClickListener{
@@ -147,18 +128,17 @@ class InitialActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
             val loginDate : String = formatted.toString().trim()
-//            generalLoginCheck(saveid, savepw, loginDate)
-            // 테스트용
-            val intent = Intent(mContext, NewInitialActivity::class.java)
-            startActivity(intent)
+
+            generalLoginCheck(saveid, savepw, loginDate)
         }
+
 
         // google Sign in & onClickListner
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
         googleSignInClient = GoogleSignIn.getClient(this,gso)
 
         btn_googleSignIn.setOnClickListener {
@@ -167,7 +147,7 @@ class InitialActivity : AppCompatActivity() {
 
         // kakao login & onClickListner
         btn_kakaoLogin.setOnClickListener(View.OnClickListener {
-            val dialog = Dialog_loading(this@InitialActivity)
+            val dialog = Dialog_loading(this)
             dialog.show()
             // 로그인 공통 callback 구성
 
@@ -198,6 +178,11 @@ class InitialActivity : AppCompatActivity() {
             }
 
         })
+
+        tv_goToSignUp.setOnClickListener {
+            val intent = Intent(this,InitialSetIdActivity::class.java)
+            startActivity(intent)
+        }
 
         // 피로도: 로그인 화면에서 마지막 저장시간 초기화
         var itemDb: ItemDB? = null
@@ -249,43 +234,9 @@ class InitialActivity : AppCompatActivity() {
         t.start()
     }
 
-    // general signup
-    fun generalSignup(u_id: String, u_pw: String, u_date : String) {
-        var api_signup: Retrofitsignup? = null
-        val url = "http://stockgame.dothome.co.kr/test/Signup.php/"
-        var gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
-        //creating retrofit object
-        var retrofit =
-            Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-        //creating our api
-        api_signup = retrofit.create(Retrofitsignup::class.java)
-        api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
-            }
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                val code: String = response.body()!!
-                if(code == "444"){
-                    Toast.makeText(this@InitialActivity, "공백 아이디는 불가합니다.", Toast.LENGTH_LONG).show()
-                }
-                if(code == "555"){
-                    Toast.makeText(this@InitialActivity, "이미 등록된 아이디입니다.", Toast.LENGTH_LONG).show()
-                }
-                if(code == "666"){
-                    Toast.makeText(this@InitialActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
-    }
-
     // general login
     fun generalLoginCheck(u_id: String, u_pw: String, u_date: String) {
-        val dialog = Dialog_loading(this@InitialActivity)
+        val dialog = Dialog_loading(this@InitialLoginActivity)
         dialog.show()
 
         var funlogincheck: Retrofitlogincheck? = null
@@ -294,31 +245,31 @@ class InitialActivity : AppCompatActivity() {
 
         val url = "http://stockgame.dothome.co.kr/test/logincheck.php/"
         var gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
+                .setLenient()
+                .create()
         //creating retrofit object
         var retrofit =
-            Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
         //creating our api
         funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
         funlogincheck.post_logincheck(loginID, loginPW, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@InitialLoginActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
                 dialog.dismiss()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     val okcode: String = response.body()!!
                     if (okcode == "7774"){
-                        Toast.makeText(this@InitialActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@InitialLoginActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
                         dialog.dismiss()
                         loginSuccess("GENERAL", u_id, u_pw) // memorize login method and move to MainActivity
                     }
                     if (okcode == "4"){
-                        Toast.makeText(this@InitialActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@InitialLoginActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
                         dialog.dismiss()
                     }
                 }
@@ -347,19 +298,19 @@ class InitialActivity : AppCompatActivity() {
         api_signup = retrofit.create(Retrofitsignup::class.java)
         api_signup.retro_signup(u_id, u_pw, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialActivity, t.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@InitialLoginActivity, t.message, Toast.LENGTH_LONG).show()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 val code: String = response.body()!!
                 if(code == "444"){
-                    Toast.makeText(this@InitialActivity, "오류가 발생했습니다.\n잠시 후 다시 시도해주세요", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@InitialLoginActivity, "오류가 발생했습니다.\n잠시 후 다시 시도해주세요", Toast.LENGTH_LONG).show()
                 }
                 if(code == "555"){
                     //첫번째 로그인 아님
                 }
                 if(code == "666"){
                     //첫번째 로그인
-                    Toast.makeText(this@InitialActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@InitialLoginActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -392,27 +343,27 @@ class InitialActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
-        val dialog = Dialog_loading(this@InitialActivity)
+        val dialog = Dialog_loading(this@InitialLoginActivity)
         dialog.show()
         auth?.signInWithCredential(credential)
-            ?.addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    var googleAuth : FirebaseAuth
-                    googleAuth = FirebaseAuth.getInstance()
-                    val currUser = googleAuth.currentUser
-                    val user = auth!!.currentUser
-                    Log.d(TAG, "로그인 성공")
-                    val id = currUser?.email.toString()
-                    val pw =currUser?.uid.toString()
-                    GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
-                    dialog.dismiss()
-                    loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                ?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        var googleAuth : FirebaseAuth
+                        googleAuth = FirebaseAuth.getInstance()
+                        val currUser = googleAuth.currentUser
+                        val user = auth!!.currentUser
+                        Log.d(TAG, "로그인 성공")
+                        val id = currUser?.email.toString()
+                        val pw =currUser?.uid.toString()
+                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
+                        dialog.dismiss()
+                        loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    }
                 }
-            }
     }
 
     private fun loginSuccess(method: String, id:String, pw:String){
@@ -420,7 +371,7 @@ class InitialActivity : AppCompatActivity() {
         getuserinformation(id, pw)
 
         Timer().schedule(500) {
-            profileDb = ProfileDB.getInstace(this@InitialActivity)
+            profileDb = ProfileDB.getInstace(this@InitialLoginActivity)
             if (profileDb?.profileDao()?.getNickname() == "#########first_login##########") {
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
@@ -466,47 +417,47 @@ class InitialActivity : AppCompatActivity() {
             profileDb?.profileDao()?.update(newProfile)
         }
     }
-
-    // 두번 누르면 종료되는 코드
-    var time3: Long = 0
-    override fun onBackPressed() {
-        val time1 = System.currentTimeMillis()
-        val time2 = time1 - time3
-        if (time2 in 0..2000) {
-            // 이거 3줄 다 써야 안전하게 종료
-            moveTaskToBack(true)
-            finish()
-            android.os.Process.killProcess(android.os.Process.myPid())
-        }
-        else {
-            time3 = time1
-            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
-        }
-    }
+//
+//    // 두번 누르면 종료되는 코드
+//    var time3: Long = 0
+//    override fun onBackPressed() {
+//        val time1 = System.currentTimeMillis()
+//        val time2 = time1 - time3
+//        if (time2 in 0..2000) {
+//            // 이거 3줄 다 써야 안전하게 종료
+//            moveTaskToBack(true)
+//            finish()
+//            android.os.Process.killProcess(android.os.Process.myPid())
+//        }
+//        else {
+//            time3 = time1
+//            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     fun getuserinformation(u_id: String, u_pw: String) {
         var fungetuserinformation: RetrofitGet? = null
         val url = "http://stockgame.dothome.co.kr/test/getall.php/"
         var gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
+                .setLenient()
+                .create()
         //creating retrofit object
         var retrofit =
-            Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
         //creating our api
         fungetuserinformation = retrofit.create(RetrofitGet::class.java)
         fungetuserinformation.getall(
-            com.guys_from_301.stock_game.getHash(u_id).trim(), com.guys_from_301.stock_game.getHash(u_pw).trim()).enqueue(object : Callback<DATACLASS> {
+                com.guys_from_301.stock_game.getHash(u_id).trim(), com.guys_from_301.stock_game.getHash(u_pw).trim()).enqueue(object : Callback<DATACLASS> {
             override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
 //                println("---"+t.message)
             }
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
                     var data: DATACLASS? = response.body()!!
-                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
+                    profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
                     val newProfile = Profile()
                     newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
                     newProfile.nickname = data?.NICKNAME!!
@@ -523,7 +474,7 @@ class InitialActivity : AppCompatActivity() {
                     //TODO: 업적저장
                     questdecode(data?.QUEST!!)
                     profileDb?.profileDao()?.update(newProfile)
-                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
+                    profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
                 }
             }
         })
@@ -533,7 +484,7 @@ class InitialActivity : AppCompatActivity() {
     private fun questdecode(questcode : Int){
         var cnt = 0
         var tmp = 0
-        questDb = QuestDB.getInstance(this@InitialActivity)
+        questDb = QuestDB.getInstance(this@InitialLoginActivity)
         var stringquest = Integer.toBinaryString(questcode)
 
         //가져온 string은 숫자앞에서부터 저장된다. 13=1101(2) 1, 1, 0, 1 순서
@@ -548,6 +499,8 @@ class InitialActivity : AppCompatActivity() {
             questDb?.questDao()?.update(newQuest)
         }
     }
+
+
 
     private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText) {
         IdorPw.setFilters(arrayOf(
@@ -583,6 +536,3 @@ class InitialActivity : AppCompatActivity() {
         ))
     }
 }
-
-
-

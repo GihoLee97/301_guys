@@ -137,7 +137,6 @@
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:clipToPadding="false"
-                        android:paddingTop="10dp"
                         android:padding="6dp">
 
                         <TextView
@@ -170,7 +169,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1"
@@ -287,7 +286,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1.28"
@@ -372,7 +371,6 @@
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:clipToPadding="false"
-                        android:paddingTop="10dp"
                         android:padding="6dp">
 
                         <TextView
@@ -405,7 +403,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1"
@@ -817,7 +815,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1"
@@ -935,7 +933,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1.28"
@@ -1054,7 +1052,7 @@
                             android:layout_gravity="bottom"
                             android:layout_marginBottom="0dp"
                             android:background="@drawable/borderline4"
-                            android:elevation="10dp"
+                            android:elevation="5dp"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="H,1:1"
