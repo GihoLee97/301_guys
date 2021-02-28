@@ -77,7 +77,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         writeDataBase()
     }
 
-    fun applyItmeFailtoSetCash(){
+    fun applyItemFailtoSetCash(){
         _initialAsset.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()
@@ -89,7 +89,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         writeDataBase()
     }
 
-    fun applyItmeFailtoSetMonthly(){
+    fun applyItemFailtoSetMonthly(){
         _initialMonthly.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()
@@ -101,7 +101,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         writeDataBase()
     }
 
-    fun applyItmeFailtoSetSalaryRaise(){
+    fun applyItemFailtoSetSalaryRaise(){
         _initialSalaryRaise.value = 0
         _stack.value = _stack.value?.minus(ITEM_COST)
         writeDataBase()

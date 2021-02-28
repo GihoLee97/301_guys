@@ -457,7 +457,7 @@ class GameNormalActivity : AppCompatActivity() {
         tradeday = 0
 
         gameNormalDb = GameNormalDB.getInstace(this)
-
+        tv_gameName.text = "투자공간"+ setId
         if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() == false) {
             sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.last()?.endpoint!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////

@@ -104,7 +104,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         cl_buy_stack3 = v.findViewById(R.id.cl_buy_stack3)
         //btn
         cl_todayStack = v.findViewById(R.id.cl_todayStack)
-//        btn_purchase = v.findViewById(R.id.btn_purchase)
+        //btn_purchase = v.findViewById(R.id.btn_purchase)
         tv_marketReceipt = v.findViewById(R.id.tv_marketReceipt)
 
         //tv
@@ -117,9 +117,9 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         tv_initial_salary_raise = v.findViewById(R.id.tv_initial_salary_raise)
 
         //viewmodel 적용
-        marketViewModel.getStack().observe(viewLifecycleOwner, Observer { tv_mountOfStack.text = it.toString() })
-        marketViewModel.getInitialAsset().observe(viewLifecycleOwner, Observer { tv_initial_asset.text = "$" + SET_CASH_STEP[it] })
-        marketViewModel.getInitialMonthly().observe(viewLifecycleOwner, Observer { tv_initial_monthly.text = "$" + SET_MONTHLY_STEP[it] })
+        marketViewModel.getStack().observe(viewLifecycleOwner, Observer { tv_mountOfStack.text = dec.format(it).toString() })
+        marketViewModel.getInitialAsset().observe(viewLifecycleOwner, Observer { tv_initial_asset.text = "$" + dec.format(SET_CASH_STEP[it]) })
+        marketViewModel.getInitialMonthly().observe(viewLifecycleOwner, Observer { tv_initial_monthly.text = "$" + dec.format(SET_MONTHLY_STEP[it]) })
         marketViewModel.getInitialSalaryRaise().observe(viewLifecycleOwner, Observer { tv_initial_salary_raise.text = SET_SALARY_RAISE_STEP[it].toString() + "%" })
 
         tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
@@ -138,22 +138,21 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         cl_upgrade_asset.setOnClickListener {
             //billingManager.startConnection()
             if (marketViewModel.getStack().value!! >= ITEM_COST){
-                if(marketViewModel.getInitialAsset().value == 4) Toast.makeText(mContext, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
+                if(marketViewModel.getInitialMonthly().value == 4) {
+                    val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                    dialogUnsuccess.start(5)
+                }
                 else {
-                    val dialog = Dialog_loading(mContext)
-                    dialog.show()
-                    if(negotiation(marketViewModel.getInitialAsset().value!!)) {
-                        marketViewModel.applyItemRaiseSetCash()
-                        Toast.makeText(mContext, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                    if (gameset != null) {
+                        val dialogNegotiation = Dialog_negotiation(_MainActivity!!)
+                        dialogNegotiation.start(1,marketViewModel.getInitialAsset().value!!,marketViewModel)
                     }
-                    else {
-                        marketViewModel.applyItmeFailtoSetCash()
-                        Toast.makeText(mContext, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
-                    }
-                    dialog.dismiss()
                 }
             }
-            else Toast.makeText(mContext, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
+            else {
+                val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                dialogUnsuccess.start(4)
+            }
         }
 //        btn_purchase.setOnClickListener {
 //            billingManager.startConnection()
@@ -166,23 +165,55 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         //초기월금 아이템 구매
         cl_upgrade_monthly.setOnClickListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
-                if(marketViewModel.getInitialMonthly().value == 4) Toast.makeText(mContext, "더 이상 협상을 진행할 수 없습니다", Toast.LENGTH_LONG).show()
+                if(marketViewModel.getInitialMonthly().value == 4) {
+                    val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                    dialogUnsuccess.start(5)
+                }
                 else {
-                    val dialog = Dialog_loading(mContext)
-                    dialog.show()
-                    if(negotiation(marketViewModel.getInitialMonthly().value!!)) {
-                        marketViewModel.applyItemRaiseSetMonthly()
-                        Toast.makeText(mContext, "협상에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                    if (gameset != null) {
+                        val dialogNegotiation = Dialog_negotiation(_MainActivity!!)
+                        dialogNegotiation.start(2,marketViewModel.getInitialMonthly().value!!,marketViewModel)
                     }
-                    else {
-                        marketViewModel.applyItmeFailtoSetMonthly()
-                        Toast.makeText(mContext, "협상에 실패했습니다", Toast.LENGTH_SHORT).show()
-                    }
-                    dialog.dismiss()
                 }
             }
-            else Toast.makeText(mContext, "스택이 부족합니다", Toast.LENGTH_SHORT).show()
+            else {
+                val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                dialogUnsuccess.start(4)
+            }
         }
+
+        //연봉 인상률 협상
+        cl_upgrade_salary_raise.setOnClickListener {
+            if (marketViewModel.getStack().value!! >= ITEM_COST){
+                if(marketViewModel.getInitialMonthly().value == 4) {
+                    val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                    dialogUnsuccess.start(5)
+                }
+                else {
+                    if (gameset != null) {
+                        val dialogNegotiation = Dialog_negotiation(_MainActivity!!)
+                        dialogNegotiation.start(3,marketViewModel.getInitialSalaryRaise().value!!,marketViewModel)
+                    }
+                }
+            }
+            else {
+                val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                dialogUnsuccess.start(4)
+            }
+        }
+
+        //스텍 구매
+        cl_buy_stack1.setOnClickListener{
+            marketViewModel.BuyStack(100)
+        }
+        cl_buy_stack2.setOnClickListener{
+            marketViewModel.BuyStack(200)
+        }
+        cl_buy_stack3.setOnClickListener{
+            marketViewModel.BuyStack(1000)
+        }
+
+
 
         return v
     }
@@ -288,17 +319,5 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         Log.d("SSS", "onRewardedVideoAdFailedToLoad($p0)")
     }
 
-    fun negotiation(level: Int): Boolean {
-        var percentage = 0
-        val random = Random()
-        val num = random.nextInt(99)
-        when (level) {
-            0 -> percentage = 80
-            1 -> percentage = 50
-            2 -> percentage = 25
-            3 -> percentage = 10
-        }
-        return num < percentage
-    }
 
 }

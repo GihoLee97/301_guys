@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="256dp"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:background="@drawable/ic_negotiation_unsuccess_borderline"
+        android:elevation="5dp">
+
+
+
+
+        <TextView
+            android:id="@+id/tv_negotiation_fail_message"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="33dp"
+            android:layout_marginBottom="69dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="초기자산 협상에 실패했습니다"
+            android:textAppearance="@style/negotiation_dialog_content"
+            />
+
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_negotiation_close"
+            android:gravity="center"
+            android:text="확인"
+            android:textAppearance="@style/game_dialog_asset_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
