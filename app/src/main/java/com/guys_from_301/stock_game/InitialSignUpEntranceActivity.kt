@@ -138,6 +138,8 @@ class InitialSignUpEntranceActivity : AppCompatActivity() {
                         var pw : String = ""
                         id = user?.id.toString()
                         pw = user?.kakaoAccount?.email.toString()
+                        saveid = id
+                        savepw = pw
                         dialog.dismiss()
                         Log.i(TAG, "로그인 성공 ${token.accessToken}")
                         GoogleKakaoAccountAlreadyExistCheck(getHash(id).trim(), getHash(pw).trim())
@@ -201,6 +203,8 @@ class InitialSignUpEntranceActivity : AppCompatActivity() {
                     Log.d(TAG, "로그인 성공")
                     val id = currUser?.email.toString()
                     val pw =currUser?.uid.toString()
+                    saveid = id
+                    savepw = pw
                     dialog.dismiss()
                     GoogleKakaoAccountAlreadyExistCheck(getHash(id).trim(), getHash(pw).trim())
                 } else {
@@ -247,7 +251,11 @@ class InitialSignUpEntranceActivity : AppCompatActivity() {
                 }
                 if(code == "666"){
                     //첫번째 로그인
+                    var method = "notgeneral"
                     val intent = Intent(this@InitialSignUpEntranceActivity, InitialSignupFinalActivity::class.java)
+                    intent.putExtra("u_id", saveid)
+                    intent.putExtra("u_pw", savepw)
+                    intent.putExtra("u_method", method)
                     startActivity(intent)
                     alreadyExistCheck = false
                 }

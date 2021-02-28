@@ -49,6 +49,8 @@ class InitialLoginActivity : AppCompatActivity() {
 
     val mContext : Context = this
     // profileDb
+    var tmp_id : Boolean = false
+    var tmp_pw : Boolean = false
     private var profileDb : ProfileDB? = null
     var saveid :String = ""
     var savepw :String = ""
@@ -126,7 +128,6 @@ class InitialLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_login)
-
         btn_googleSignIn = findViewById(R.id.btn_googleSignIn)
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
@@ -145,12 +146,19 @@ class InitialLoginActivity : AppCompatActivity() {
 
         // password visibility
         visibility = false
+        // 회원가입 후 넘어오면 아이디 비밀번호 자동 작성
+        if(intent.hasExtra("u_id")){
+            tmp_id = true
+        }
+        if(intent.hasExtra("u_pw")){
+            tmp_pw = true
+        }
 
-        onlyAlphabetFilterToEnglishET(et_id)
-        onlyAlphabetFilterToEnglishET(et_pw)
+        onlyAlphabetFilterToEnglishET(et_id,1)
+        onlyAlphabetFilterToEnglishET(et_pw,2)
+
         tv_notice.visibility = View.INVISIBLE
         attention("no")
-
 
         // attention to id or pw
         et_id.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
@@ -171,7 +179,6 @@ class InitialLoginActivity : AppCompatActivity() {
                 attention("no")
             }
         }
-
         et_id.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
                 id_length = p0?.length!!
@@ -206,7 +213,7 @@ class InitialLoginActivity : AppCompatActivity() {
                 }
             }
         })
-
+        et_id.transformationMethod = HideReturnsTransformationMethod.getInstance()
         et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
         iv_visibility.setOnClickListener {
             visibility = !visibility
@@ -614,13 +621,25 @@ class InitialLoginActivity : AppCompatActivity() {
 
 
 
-    private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText) {
+    private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText, option : Int) {
         IdorPw.setFilters(arrayOf(
                 InputFilter { src, start, end, dst, dstart, dend ->
+                    if (tmp_pw && ( option == 2)) {
+                        println("---option2")
+                        tmp_pw = !tmp_pw
+                        return@InputFilter intent.getStringExtra("u_pw")!!
+                    }
+                    if (tmp_id && (option == 1)) {
+                        println("---option1")
+                        tmp_id = !tmp_id
+                        return@InputFilter intent.getStringExtra("u_id")!!
+                    }
+
                     if (src == " ") { // for space
                         notice("공백은 입력할 수 없습니다.")
                         return@InputFilter ""
                     }
+
                     if (src == "") { // for backspace
                         println("---back")
                         return@InputFilter ""
@@ -630,17 +649,10 @@ class InitialLoginActivity : AppCompatActivity() {
                         notice("")
                         return@InputFilter src
                     }
-//                    if (src.matches(Regex("[ㄱ-ㅎㅏ-ㅣ가-힣]+"))) {
-//                        println("---1")
-//                        return@InputFilter ""
-//                    }
                     else{
                         notice("영어 대소문자, 숫자, 특수문자만을 입력해주세요")
                         return@InputFilter ""
                     }
-//                    Toast.makeText(this, "영단어를 입력해주세요", Toast.LENGTH_LONG).show()
-//                    IdorPw.setText("")
-//                    return@InputFilter ""
                 }
         ))
     }

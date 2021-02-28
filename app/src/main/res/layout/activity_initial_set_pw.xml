@@ -113,6 +113,7 @@
 
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_set_pw_underline"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_width="fill_parent"
@@ -169,6 +170,7 @@
 
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_set_pw_check_underline"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_width="fill_parent"

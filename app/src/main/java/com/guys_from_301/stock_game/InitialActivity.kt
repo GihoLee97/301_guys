@@ -404,7 +404,7 @@ class InitialActivity : AppCompatActivity() {
                     val user = auth!!.currentUser
                     Log.d(TAG, "로그인 성공")
                     val id = currUser?.email.toString()
-                    val pw =currUser?.uid.toString()
+                    val pw = currUser?.uid.toString()
                     GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
                     dialog.dismiss()
                     loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity

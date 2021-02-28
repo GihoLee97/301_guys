@@ -27,9 +27,11 @@ class InitialSetIdActivity : AppCompatActivity() {
         onlyAlphabetFilterToEnglishET(findViewById<EditText>(R.id.et_signup_id))
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
             if(findViewById<EditText>(R.id.et_signup_id).text.toString().length < 6){
+                findViewById<TextView>(R.id.tv_set_id_underline).setBackgroundResource(R.drawable.initial_set_id_line_red)
                 findViewById<TextView>(R.id.tv_signup_id_ment_1).visibility = View.VISIBLE
             }
             else{
+                findViewById<TextView>(R.id.tv_set_id_underline).setBackgroundResource(R.drawable.initial_set_id_line)
                 findViewById<TextView>(R.id.tv_signup_id_ment_1).visibility = View.INVISIBLE
                 idcheck(getHash(findViewById<EditText>(R.id.et_signup_id).text.toString()))
             }

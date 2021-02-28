@@ -35,15 +35,19 @@ class InitialSetPwActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
             if(et_signup_pw.text.toString().length < 6){
+                findViewById<TextView>(R.id.tv_set_pw_underline).setBackgroundResource(R.drawable.initial_set_id_line_red)
                 findViewById<TextView>(R.id.tv_signup_pw_ment_1).visibility = View.VISIBLE
             }
             else{
+                findViewById<TextView>(R.id.tv_set_pw_underline).setBackgroundResource(R.drawable.initial_set_id_line)
                 findViewById<TextView>(R.id.tv_signup_pw_ment_1).visibility = View.INVISIBLE
             }
             if(et_signup_pw.text.toString() != et_signup_pw_check.text.toString()){
+                findViewById<TextView>(R.id.tv_set_pw_check_underline).setBackgroundResource(R.drawable.initial_set_id_line_red)
                 findViewById<TextView>(R.id.tv_signup_pw_ment_2).visibility = View.VISIBLE
             }
             else{
+                findViewById<TextView>(R.id.tv_set_pw_check_underline).setBackgroundResource(R.drawable.initial_set_id_line)
                 findViewById<TextView>(R.id.tv_signup_pw_ment_2).visibility = View.INVISIBLE
             }
             if(et_signup_pw.text.toString() == et_signup_pw_check.text.toString() && et_signup_pw.text.toString().length >= 6){
