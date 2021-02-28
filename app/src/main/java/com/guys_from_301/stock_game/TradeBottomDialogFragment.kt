@@ -8,12 +8,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
@@ -23,10 +21,11 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
     var mContext: Context? = context
     private var buyOrsell: Int = 0 // 0: buy, 1: sell
     private var select: Int = 0 // 0, 1, 2, 3,
+    private var depth: Int = 0 // 0, 1
 
+    private var quant: Int = 0
     private var price: Float = 0F
     private var temptradecom: Float = 0F
-    private var quant: Int = 0
 
     //Roomdata관련
     private var gameNormalDb: GameNormalDB? = null
@@ -47,7 +46,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
     private lateinit var btn_trade3x: Button // 언락시 text 및 배경 변경
     private lateinit var btn_tradeinv1x: Button
     private lateinit var btn_tradeinv3x: Button // 언락시 text 및 배경 변경
-    private lateinit var v_tradetomain: View
+    private lateinit var ll_tradetomain: View
     private lateinit var tv_tradetitle: TextView
     private lateinit var tv_tradeprice: TextView
     private lateinit var btn_trademinus: Button
@@ -76,7 +75,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         btn_trade3x = view.findViewById(R.id.btn_trade3x)!!// 언락시 text 및 배경 변경
         btn_tradeinv1x = view.findViewById(R.id.btn_tradeinv1x)!!
         btn_tradeinv3x = view.findViewById(R.id.btn_tradeinv3x)!! // 언락시 text 및 배경 변경
-        v_tradetomain = view.findViewById(R.id.v_tradetomain)!!
+        ll_tradetomain = view.findViewById(R.id.ll_tradetomain)!!
         tv_tradetitle = view.findViewById(R.id.tv_tradetitle)!!
         tv_tradeprice = view.findViewById(R.id.tv_tradeprice)!!
         btn_trademinus = view.findViewById(R.id.btn_trademinus)!!
@@ -142,6 +141,104 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
 
         ll_tradeclose.setOnClickListener {
             dismiss()
+        }
+
+        ll_tradetomain.setOnClickListener {
+            when (buyOrsell) {
+                0 -> {
+                    ll_tradebefore.visibility = VISIBLE
+                    ll_tradeafter.visibility = GONE
+                    buyOrsell = 0
+                    btn_buy.setBackgroundResource(R.drawable.trade_buy)
+                    btn_buy.setTextAppearance(R.style.trade_choosen)
+                    btn_sell.setBackgroundResource(R.drawable.trade_unchoosen)
+                    btn_sell.setTextAppearance(R.style.trade_unchoosen)
+
+                    btn_trade1x.isEnabled = true
+                    btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+
+                    btn_tradeinv1x.isEnabled = true
+                    btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+
+                    if (item4Active) {
+                        btn_trade3x.isEnabled = true
+                        btn_trade3x.text = "x3\n레버리지"
+                        btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
+                        btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+
+                        btn_tradeinv3x.isEnabled = true
+                        btn_tradeinv3x.text = "x3\n인버스"
+                        btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
+                        btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                    } else {
+                        btn_trade3x.isEnabled = false
+                        btn_trade3x.text = "잠김"
+                        btn_trade3x.setTextAppearance(R.style.trade_lock)
+                        btn_trade3x.setBackgroundResource(R.drawable.trade_option_lock)
+
+                        btn_tradeinv3x.isEnabled = false
+                        btn_tradeinv3x.text = "잠김"
+                        btn_tradeinv3x.setTextAppearance(R.style.trade_lock)
+                        btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option_lock)
+                    }
+                    depth = 0
+                }
+                1 -> {
+                    ll_tradebefore.visibility = VISIBLE
+                    ll_tradeafter.visibility = GONE
+                    buyOrsell = 1
+                    btn_buy.setBackgroundResource(R.drawable.trade_unchoosen)
+                    btn_buy.setTextAppearance(R.style.trade_unchoosen)
+                    btn_sell.setBackgroundResource(R.drawable.trade_sell)
+                    btn_sell.setTextAppearance(R.style.trade_choosen)
+
+                    if (quant1x > 0) {
+                        btn_trade1x.isEnabled = true
+                        btn_trade1x.setTextAppearance(R.style.trade_optionsell)
+                    } else {
+                        btn_trade1x.isEnabled = false
+                        btn_trade1x.setTextAppearance(R.style.trade_optionsellnone)
+                    }
+
+                    if ((quant3x > 0) && item4Active) {
+                        btn_trade3x.isEnabled = true
+                        btn_trade3x.text = "x3\n레버리지"
+                        btn_trade3x.setTextAppearance(R.style.trade_optionsell)
+                        btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                    } else if (quant3x == 0 && item4Active) {
+                        btn_trade3x.isEnabled = false
+                        btn_trade3x.setTextAppearance(R.style.trade_optionsellnone)
+                    } else {
+                        btn_trade3x.isEnabled = false
+                        btn_trade3x.text = "잠김"
+                        btn_trade3x.setTextAppearance(R.style.trade_lock)
+                        btn_trade3x.setBackgroundResource(R.drawable.trade_option_lock)
+                    }
+
+                    if (quantinv1x > 0) {
+                        btn_tradeinv1x.setTextAppearance(R.style.trade_optionsell)
+                    } else {
+                        btn_tradeinv1x.isEnabled = false
+                        btn_tradeinv1x.setTextAppearance(R.style.trade_optionsellnone)
+                    }
+
+                    if ((quantinv3x > 0) && item4Active) {
+                        btn_tradeinv3x.isEnabled = true
+                        btn_tradeinv3x.text = "x3\n인버스"
+                        btn_tradeinv3x.setTextAppearance(R.style.trade_optionsell)
+                        btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                    } else if ((quantinv3x == 0) && item4Active) {
+                        btn_tradeinv3x.isEnabled = false
+                        btn_tradeinv3x.setTextAppearance(R.style.trade_optionsellnone)
+                    } else {
+                        btn_tradeinv3x.isEnabled = false
+                        btn_tradeinv3x.text = "잠김"
+                        btn_tradeinv3x.setTextAppearance(R.style.trade_lock)
+                        btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option_lock)
+                    }
+                    depth = 0
+                }
+            }
         }
 
         // 매수 매도 선택
@@ -235,6 +332,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
 
         // 거래할 ETF 선택
         btn_trade1x.setOnClickListener {
+            depth = 1
             ll_tradebefore.visibility = GONE
             ll_tradeafter.visibility = VISIBLE
             select = 0
@@ -244,13 +342,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
                 np_ratio.value = (100 * (price1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
                 np_ratio.value = (100 * quant / quant1x)
@@ -260,6 +358,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         }
 
         btn_trade3x.setOnClickListener {
+            depth = 1
             ll_tradebefore.visibility = GONE
             ll_tradeafter.visibility = VISIBLE
             select = 1
@@ -269,13 +368,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
                 np_ratio.value = (100 * (price3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
                 np_ratio.value = (100 * quant / quant3x)
@@ -285,6 +384,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         }
 
         btn_tradeinv1x.setOnClickListener {
+            depth = 1
             ll_tradebefore.visibility = GONE
             ll_tradeafter.visibility = VISIBLE
             select = 2
@@ -294,13 +394,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
                 np_ratio.value = (100 * (priceinv1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
                 np_ratio.value = (100 * quant / quantinv1x)
@@ -310,6 +410,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         }
 
         btn_tradeinv3x.setOnClickListener {
+            depth = 1
             ll_tradebefore.visibility = GONE
             ll_tradeafter.visibility = VISIBLE
             select = 3
@@ -319,13 +420,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
                 np_ratio.value = (100 * (priceinv3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                v_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
                 np_ratio.value = (100 * quant / quantinv3x)
@@ -618,6 +719,9 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             quant1x += quant
                             bought1x += price1x * quant
                             aver1x = bought1x / quant1x
+
+                            price = quant * price1x
+                            temptradecom = quant * price1x * (tradecomrate - 1F)
                         }
                         1 -> {
                             cash -= quant * price3x * tradecomrate
@@ -626,6 +730,9 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             quant3x += quant
                             bought3x += price3x * quant
                             aver3x = bought3x / quant3x
+
+                            price = quant * price3x
+                            temptradecom = quant * price3x * (tradecomrate - 1F)
                         }
                         2 -> {
                             cash -= quant * priceinv1x * tradecomrate
@@ -634,6 +741,9 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             quantinv1x += quant
                             boughtinv1x += priceinv1x * quant
                             averinv1x = boughtinv1x / quantinv1x
+
+                            price = quant * priceinv1x
+                            temptradecom = quant * priceinv1x * (tradecomrate - 1F)
                         }
                         3 -> {
                             cash -= quant * priceinv3x * tradecomrate
@@ -642,6 +752,9 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             quantinv3x += quant
                             boughtinv3x += priceinv3x * quant
                             averinv3x = boughtinv3x / quantinv3x
+
+                            price = quant * priceinv3x
+                            temptradecom = quant * priceinv3x * (tradecomrate - 1F)
                         }
                     }
 
@@ -744,7 +857,6 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                     addThread.start()
                 }
             }
-
             dismiss()
         }
         return view
