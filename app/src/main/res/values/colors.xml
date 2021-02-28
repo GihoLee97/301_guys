@@ -13,4 +13,7 @@
 
     <color name="color_style_3">#F4730B</color>
 
+    <color name="attention">#F96209</color>
+    <color name="ignore">#6C7B8E</color>
+
 </resources>

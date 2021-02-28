@@ -15,13 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewInitialActivity"></activity>
+        <activity android:name=".InitialSignUpEntranceActivity"></activity>
+        <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />
         <activity android:name=".NewMainActivity" />
         <activity android:name=".QuestActivity" />
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
-        <activity android:name=".Initial_signup_final_Activity" />
+        <activity android:name=".InitialSignupFinalActivity" />
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />

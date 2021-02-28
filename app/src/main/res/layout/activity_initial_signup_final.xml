@@ -88,26 +88,26 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
-            android:id="@+id/et_signup_pw"
+            android:id="@+id/et_signup_nick"
             android:layout_width="300dp"
             android:layout_height="30dp"
-            android:text=""
+            android:inputType="text"
             android:hint="6자리 이상으로 입력해주세요"
             android:background="@null"
             android:layout_gravity="center"
             android:gravity="center|left"/>
         <LinearLayout
+            android:id="@+id/ll_signup_nick_delete"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_gravity="center|right"
             android:gravity="center|right">
             <ImageButton
-                android:layout_marginRight="36dp"
-
-                android:layout_width="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_gravity="center|right"
-                android:background="@drawable/initial_pw_visibility_off"/>
+                android:layout_gravity="center"
+                android:background="@drawable/initial_delete"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -121,6 +121,8 @@
         android:background="@drawable/initial_set_id_line"/>
 
     <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_signup_final_ment_1"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="24dp"
         android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.google.firebase.auth.FirebaseAuth
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
 import org.w3c.dom.Text
@@ -94,11 +96,20 @@ class FragmentProfile : Fragment() {
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
             if(profileDb?.profileDao()?.getLogin()!! == 1){
+                loginMethod = "GENERAL"
+            }
+            else if(profileDb?.profileDao()?.getLogin()!! == 2){
+                loginMethod = "GOOGLE"
+            }
+            else if(profileDb?.profileDao()?.getLogin()!! == 4){
+                loginMethod =  "KAKAO"
+            }
+            if(loginMethod == "GENERAL"){
                 val dlg_delete = Dialog_DeleteAlert(_MainActivity!!)
                 dlg_delete.start()
             }
             else{
-                val dlg_delete = Dialog_DeleteKakaoGoogle(_MainActivity!!)
+                val dlg_delete = Dialog_DeleteKakaoGoogle(_MainActivity!!,loginMethod!!)
                 dlg_delete.start()
             }
         }

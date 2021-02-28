@@ -5,15 +5,14 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class InitialSetPwActivity : AppCompatActivity() {
     var visible_pw : Boolean = false
     var visible_pw_check : Boolean = false
+    var u_id : String = ""
     private lateinit var et_signup_pw : EditText
     private lateinit var et_signup_pw_check : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,15 +22,34 @@ class InitialSetPwActivity : AppCompatActivity() {
         et_signup_pw_check = findViewById(R.id.et_signup_pw_check)
         onlyAlphabetFilterToEnglishET(et_signup_pw)
         onlyAlphabetFilterToEnglishET(et_signup_pw_check)
+
+        if (intent.hasExtra("u_id")) {
+             u_id = intent.getStringExtra("u_id")!!
+        } else {
+            Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()
+            onBackPressed()
+        }
+
         findViewById<ImageButton>(R.id.ib_go_setid).setOnClickListener{
             onBackPressed()
         }
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
-            if(et_signup_pw.text.toString() != et_signup_pw_check.text.toString()){
-                Toast.makeText(this,"비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
+            if(et_signup_pw.text.toString().length < 6){
+                findViewById<TextView>(R.id.tv_signup_pw_ment_1).visibility = View.VISIBLE
             }
             else{
-                val intent = Intent(this, Initial_signup_final_Activity::class.java)
+                findViewById<TextView>(R.id.tv_signup_pw_ment_1).visibility = View.INVISIBLE
+            }
+            if(et_signup_pw.text.toString() != et_signup_pw_check.text.toString()){
+                findViewById<TextView>(R.id.tv_signup_pw_ment_2).visibility = View.VISIBLE
+            }
+            else{
+                findViewById<TextView>(R.id.tv_signup_pw_ment_2).visibility = View.INVISIBLE
+            }
+            if(et_signup_pw.text.toString() == et_signup_pw_check.text.toString() && et_signup_pw.text.toString().length >= 6){
+                val intent = Intent(this, InitialSignupFinalActivity::class.java)
+                intent.putExtra("u_id", u_id)
+                intent.putExtra("u_pw", findViewById<EditText>(R.id.et_signup_pw).text.toString())
                 startActivity(intent)
             }
         }
@@ -62,8 +80,6 @@ class InitialSetPwActivity : AppCompatActivity() {
             }
             visible_pw_check = !visible_pw_check
         }
-
-
     }
     private fun onlyAlphabetFilterToEnglishET(IdorPw : EditText) {
         IdorPw.setFilters(arrayOf(InputFilter.LengthFilter(20),

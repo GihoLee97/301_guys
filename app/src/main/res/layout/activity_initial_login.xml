@@ -21,6 +21,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_backBtn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -74,7 +75,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="24"/>
+                android:layout_weight="24" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -83,12 +84,14 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_idTitle"
                         android:layout_width="47dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -106,6 +109,7 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/view_idUnderBar"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_gravity="center"
@@ -117,7 +121,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="24"/>
+                android:layout_weight="24" />
         </LinearLayout>
 
 
@@ -129,69 +133,78 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="24"/>
+                android:layout_weight="24" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="312"
-                android:layout_marginTop="30dp">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_pw"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="47dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="PW"
-                        android:textAppearance="@style/initial_signIn_idPw"
-                        android:textColor="#F96209" />
-
-                    <EditText
-                        android:id="@+id/et_pw"
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_pwTitle"
+                            android:layout_width="47dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="PW"
+                            android:textAppearance="@style/initial_signIn_idPw"
+                            android:textColor="#F96209" />
+
+                        <EditText
+                            android:id="@+id/et_pw"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:inputType="textPassword"
+                            android:textAppearance="@style/initial_signIn_idPw"
+                            android:textColor="#4B586B" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_visibility"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:inputType="textPassword"
-                        android:textAppearance="@style/initial_signIn_idPw"
-                        android:textColor="#4B586B" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/ic_invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        android:paddingRight="12dp"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/ic_invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/view_pwUnderBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/ic_bottom_line_orange" />
+            </LinearLayout>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="24"/>
+                android:layout_weight="24" />
         </LinearLayout>
 
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/ic_bottom_line_orange" />
-
         <TextView
+            android:id="@+id/tv_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
@@ -203,12 +216,12 @@
             android:id="@+id/btn_generalLogin"
             android:layout_width="300dp"
             android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="24dp"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/initial_box_go_on_gray"
             android:text="로그인"
-            android:textAppearance="@style/initial_go_on"
-            android:background="@drawable/initial_box_go_on_gray"/>
+            android:textAppearance="@style/initial_go_on" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -220,19 +233,19 @@
             <View
                 android:layout_width="100dp"
                 android:layout_height="1dp"
-                android:background="#000000"/>
+                android:background="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="23dp"
                 android:text="혹은"
-                android:textAppearance="@style/initial_signIn_or"/>
+                android:textAppearance="@style/initial_signIn_or" />
 
             <View
                 android:layout_width="100dp"
                 android:layout_height="1dp"
-                android:background="#000000"/>
+                android:background="#000000" />
 
         </LinearLayout>
 
@@ -241,15 +254,15 @@
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:src="@drawable/kakao_login_medium_wide"
-            android:background="#FFFFFF"/>
+            android:background="#FFFFFF"
+            android:src="@drawable/kakao_login_medium_wide" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_googleSignIn"
             android:layout_width="306dp"
             android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -261,7 +274,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아직 회원이 아니라면 "
-                android:textAppearance="@style/initial_signIn_or"/>
+                android:textAppearance="@style/initial_signIn_or" />
 
             <TextView
                 android:id="@+id/tv_goToSignUp"
@@ -269,7 +282,7 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="@string/sign_up"
-                android:textAppearance="@style/initial_signIn_underline"/>
+                android:textAppearance="@style/initial_signIn_underline" />
         </LinearLayout>
 
 

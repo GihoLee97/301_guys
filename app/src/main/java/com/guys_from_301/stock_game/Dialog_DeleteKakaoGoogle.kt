@@ -3,22 +3,24 @@ package com.guys_from_301.stock_game
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.Window
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import com.guys_from_301.stock_game.data.Profile
+import com.google.firebase.auth.FirebaseAuth
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitDelete
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Dialog_DeleteKakaoGoogle(context: Context) {
+class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
     var mContext: Context = context
+    var loginMethod : String = method
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnOK: Button
     private lateinit var btnCancel: Button
@@ -35,6 +37,7 @@ class Dialog_DeleteKakaoGoogle(context: Context) {
             profileDb = ProfileDB?.getInstace(mContext)
             accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim())
+            signOut(loginMethod)
             dlg.dismiss()
         }
         btnCancel.setOnClickListener {
@@ -77,5 +80,23 @@ class Dialog_DeleteKakaoGoogle(context: Context) {
                 }
             }
         })
+    }
+
+    private fun signOut(method: String){
+        if(method=="KAKAO"){
+            UserApiClient.instance.unlink { error ->
+                if (error != null) {
+                    Log.e("KAKAO REVOKE ACCESS", "연결 끊기 실패", error)
+                }
+                else {
+                    Log.i("KAKAO REVOKE ACCESS", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                }
+            }
+        }
+        else if(method=="GOOGLE"){
+            var googleAuth : FirebaseAuth
+            googleAuth = FirebaseAuth.getInstance()
+            googleAuth.signOut()
+        }
     }
 }
