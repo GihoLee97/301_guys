@@ -134,7 +134,7 @@ class AccountManagementActivity : AppCompatActivity() {
                 }
             }
             updatelogOutInFo2DB("KAKAO")
-            val dlg_delete = Dialog_DeleteKakaoGoogle(this)
+            val dlg_delete = Dialog_DeleteKakaoGoogle(this,"KAKAO")
             dlg_delete.start()
         }
         // 일반 로그인 시 비밀번호 변경

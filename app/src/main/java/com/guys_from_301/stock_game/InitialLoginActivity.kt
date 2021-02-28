@@ -117,6 +117,7 @@ class InitialLoginActivity : AppCompatActivity() {
     private lateinit var iv_visibility : ImageView
     private lateinit var ll_id : LinearLayout
     private lateinit var cl_pw : ConstraintLayout
+    private lateinit var ll_backBtn : LinearLayout
 
     private var visibility = false
     private var id_length = 0
@@ -140,6 +141,7 @@ class InitialLoginActivity : AppCompatActivity() {
         iv_visibility = findViewById(R.id.iv_visibility)
         ll_id = findViewById(R.id.ll_id)
         cl_pw = findViewById(R.id.cl_pw)
+        ll_backBtn = findViewById(R.id.ll_backBtn)
 
         // password visibility
         visibility = false
@@ -285,6 +287,10 @@ class InitialLoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        ll_backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
         // 피로도: 로그인 화면에서 마지막 저장시간 초기화
         var itemDb: ItemDB? = null
         itemDb = ItemDB?.getInstace(this)
@@ -415,6 +421,7 @@ class InitialLoginActivity : AppCompatActivity() {
                 if(code == "666"){
                     //첫번째 로그인 -> 회원가입 해야함
                     Toast.makeText(this@InitialLoginActivity, "먼저 회원가입해야 합니다. 회원가입 페이지로 이동합니다.", Toast.LENGTH_LONG).show()
+                    tempSignOut(method)
                     goToSignUp()
                 }
             }
@@ -670,6 +677,24 @@ class InitialLoginActivity : AppCompatActivity() {
             view_pwUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_orange)
             tv_idTitle.setTextColor(getColor(ignoreColor))
             tv_pwTitle.setTextColor(getColor(attentionColor))
+        }
+    }
+
+    private fun tempSignOut(method: String){
+        if(method=="KAKAO"){
+            UserApiClient.instance.unlink { error ->
+                if (error != null) {
+                    Log.e("KAKAO REVOKE ACCESS", "연결 끊기 실패", error)
+                }
+                else {
+                    Log.i("KAKAO REVOKE ACCESS", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                }
+            }
+        }
+        else if(method=="GOOGLE"){
+            var googleAuth : FirebaseAuth
+            googleAuth = FirebaseAuth.getInstance()
+            googleAuth.signOut()
         }
     }
 }

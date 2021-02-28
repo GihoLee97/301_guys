@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class Initial_signup_final_Activity : AppCompatActivity()  {
+class InitialSignupFinalActivity : AppCompatActivity()  {
     var mContext : Context? = null
     private lateinit var et_signup_nick : EditText
     var u_id :String = ""

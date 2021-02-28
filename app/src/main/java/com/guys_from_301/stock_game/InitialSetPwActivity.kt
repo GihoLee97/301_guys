@@ -47,7 +47,7 @@ class InitialSetPwActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.tv_signup_pw_ment_2).visibility = View.INVISIBLE
             }
             if(et_signup_pw.text.toString() == et_signup_pw_check.text.toString() && et_signup_pw.text.toString().length >= 6){
-                val intent = Intent(this, Initial_signup_final_Activity::class.java)
+                val intent = Intent(this, InitialSignupFinalActivity::class.java)
                 intent.putExtra("u_id", u_id)
                 intent.putExtra("u_pw", findViewById<EditText>(R.id.et_signup_pw).text.toString())
                 startActivity(intent)
