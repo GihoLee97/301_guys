@@ -1,79 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        android:text="종료"
-        android:background="@color/black"/>
-
-    <TextView
-        android:id="@+id/매수금액"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        android:text="종료하시겠습니까?"
-        android:background="@color/white"/>
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_save"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="256dp"
+        android:layout_height="120dp"
+        android:background="@drawable/game_exit_borderline">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="저장"
-            android:textColor="@color/white"
-            android:textSize="16dp"
-            android:backgroundTint="@color/blue"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/매수금액"
+                android:layout_marginTop="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:text="게임을 종료하시겠습니까?"
+                android:textAppearance="@style/game_exit_ment"
+                android:background="@color/white"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="(이대로 투자를 마치면 총 수익률에 반영됩니다)"
+                android:textAppearance="@style/game_exit_content"
+                android:background="@color/white"/>
 
-        <Button
-            android:id="@+id/btn_exit"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="종료"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:backgroundTint="@color/white"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="취소"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:backgroundTint="@color/gray"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="256dp"
+            android:layout_height="36dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="투자 마치기"
+                android:textAppearance="@style/game_exit_button"
+                android:background="@drawable/game_exit_button"/>
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="나중에 이어하기"
+                android:textAppearance="@style/game_save_button"
+                android:background="@drawable/game_save_button"
+                />
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+    <ImageButton
+        android:id="@+id/ib_cancel"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_exit_cancel"/>
 </LinearLayout>
