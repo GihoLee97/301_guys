@@ -17,6 +17,7 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
@@ -642,12 +643,12 @@ class GameNormalActivity : AppCompatActivity() {
 //        }
 
 
+
+        val tradeBottomSheetDialog= TradeBottomDialogFragment(applicationContext)
+
         // 거래하기
         ll_trade.setOnClickListener {
-//            val dialog = Dialog_new_buyandsell()
-//            dialog.show(supportFragmentManager, " ")
-            val dlgBuy = Dialog_buy(this)
-            dlgBuy.start()
+            tradeBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
