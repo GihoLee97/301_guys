@@ -12,6 +12,7 @@ import android.widget.*
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
@@ -46,7 +47,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
     private lateinit var btn_trade3x: Button // 언락시 text 및 배경 변경
     private lateinit var btn_tradeinv1x: Button
     private lateinit var btn_tradeinv3x: Button // 언락시 text 및 배경 변경
-    private lateinit var ll_tradetomain: View
+    private lateinit var cl_tradetomain: ConstraintLayout
+    private lateinit var v_left: View
     private lateinit var tv_tradetitle: TextView
     private lateinit var tv_tradeprice: TextView
     private lateinit var btn_trademinus: Button
@@ -75,7 +77,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         btn_trade3x = view.findViewById(R.id.btn_trade3x)!!// 언락시 text 및 배경 변경
         btn_tradeinv1x = view.findViewById(R.id.btn_tradeinv1x)!!
         btn_tradeinv3x = view.findViewById(R.id.btn_tradeinv3x)!! // 언락시 text 및 배경 변경
-        ll_tradetomain = view.findViewById(R.id.ll_tradetomain)!!
+        cl_tradetomain = view.findViewById(R.id.cl_tradetomain)!!
+        v_left = view.findViewById(R.id.v_left)!!
         tv_tradetitle = view.findViewById(R.id.tv_tradetitle)!!
         tv_tradeprice = view.findViewById(R.id.tv_tradeprice)!!
         btn_trademinus = view.findViewById(R.id.btn_trademinus)!!
@@ -143,7 +146,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             dismiss()
         }
 
-        ll_tradetomain.setOnClickListener {
+        cl_tradetomain.setOnClickListener {
             when (buyOrsell) {
                 0 -> {
                     ll_tradebefore.visibility = VISIBLE
@@ -342,13 +345,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
                 np_ratio.value = (100 * (price1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
                 np_ratio.value = (100 * quant / quant1x)
@@ -368,13 +371,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
                 np_ratio.value = (100 * (price3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
                 np_ratio.value = (100 * quant / quant3x)
@@ -394,13 +397,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
                 np_ratio.value = (100 * (priceinv1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
                 np_ratio.value = (100 * quant / quantinv1x)
@@ -420,13 +423,13 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_orange)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
                 np_ratio.value = (100 * (priceinv3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
-                ll_tradetomain.setBackgroundResource(R.drawable.ic_path_left_blue)
+                v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
                 np_ratio.value = (100 * quant / quantinv3x)

@@ -119,22 +119,24 @@
                 android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="18dp">
-                <LinearLayout
-                    android:id="@+id/ll_tradetomain"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_tradetomain"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                </LinearLayout>
-                <View
-                    android:layout_marginTop="3dp"
-                    android:layout_marginLeft="26dp"
-                    android:layout_width="6dp"
-                    android:layout_height="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/ic_path_left_orange"
-                    />
+                    android:orientation="horizontal">
+                    <View
+                        android:id="@+id/v_left"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="26dp"
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="@drawable/ic_path_left_orange"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <TextView
                     android:id="@+id/tv_tradetitle"
                     android:layout_marginLeft="47dp"

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.guys_from_301.stock_game.data.*
@@ -333,9 +335,8 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var tv_quant3x: TextView
     private lateinit var v_diff3x: View
     private lateinit var tv_diff3x: TextView
-    private lateinit var ll_hide3x: LinearLayout // 언락시 elevation 0dp 로 변경
-    private lateinit var ll_lock3x: LinearLayout // 언락시 elevation 0dp 로 변경
-
+    private lateinit var ll_hide3x: LinearLayout // 언락시 visible
+    private lateinit var ll_lock3x: LinearLayout // 언락시 gone
     private lateinit var tv_priceinv1x: TextView
     private lateinit var tv_quantinv1x: TextView
     private lateinit var v_diffinv1x: View
@@ -345,8 +346,8 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var tv_quantinv3x: TextView
     private lateinit var v_diffinv3x: View
     private lateinit var tv_diffinv3x: TextView
-    private lateinit var ll_hideinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
-    private lateinit var ll_lockinv3x: LinearLayout // 언락시 elevation 0dp 로 변경
+    private lateinit var ll_hideinv3x: LinearLayout // 언락시 visible
+    private lateinit var ll_lockinv3x: LinearLayout // 언락시 gone
 
     private lateinit var tv_fund: TextView
     private lateinit var tv_bond: TextView
@@ -667,6 +668,15 @@ class GameNormalActivity : AppCompatActivity() {
             val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!, profileDb?.profileDao()?.getValue1()!!)
             dlgItem.start()
             click = !click ///////////////////////////////////////////////////////////////////////
+        }
+
+        // 레버리지 언락
+        if (item4Active) {
+            ll_hide3x.visibility = VISIBLE
+            ll_lock3x.visibility = GONE
+
+            ll_hideinv3x.visibility = VISIBLE
+            ll_lockinv3x.visibility = GONE
         }
 
         // 경제 지표 차트
@@ -2125,6 +2135,13 @@ class GameNormalActivity : AppCompatActivity() {
 
     private fun Updateui(start: Int, criteria: Float) {
         runOnUiThread {
+            if (item4Active) {
+                ll_hide3x.visibility = VISIBLE
+                ll_lock3x.visibility = GONE
+
+                ll_hideinv3x.visibility = VISIBLE
+                ll_lockinv3x.visibility = GONE
+            }
             // 자산 가치 관련 값들 최신화
             tv_assetTot.text = "$ " + dec.format(asset)
             tv_profitRate.text = per.format(profitrate) + " %"
