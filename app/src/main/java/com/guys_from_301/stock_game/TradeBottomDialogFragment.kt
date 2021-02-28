@@ -633,8 +633,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         0 -> {
                             if (((newVal / 100F * limbuy1x).roundToInt() - (newVal / 100F * limbuy1x)) > 0) {
                                 quant = (newVal / 100F * limbuy1x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * limbuy1x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * price1x)
@@ -642,8 +648,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         1 -> {
                             if (((newVal / 100F * limbuy3x).roundToInt() - (newVal / 100F * limbuy3x)) > 0) {
                                 quant = (newVal / 100F * limbuy3x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * limbuy3x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * price3x)
@@ -651,8 +663,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         2 -> {
                             if (((newVal / 100F * limbuyinv1x).roundToInt() - (newVal / 100F * limbuyinv1x)) > 0) {
                                 quant = (newVal / 100F * limbuyinv1x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * limbuyinv1x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * priceinv1x)
@@ -660,8 +678,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         3 -> {
                             if (((newVal / 100F * limbuyinv3x).roundToInt() - (newVal / 100F * limbuyinv3x)) > 0) {
                                 quant = (newVal / 100F * limbuyinv3x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * limbuyinv3x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * priceinv3x)
@@ -673,8 +697,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         0 -> {
                             if (((newVal / 100F * quant1x).roundToInt()-(newVal / 100F * quant1x)>0)) {
                                 quant = (newVal / 100F * quant1x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * quant1x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * price1x)
@@ -682,8 +712,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         1 -> {
                             if (((newVal / 100F * quant3x).roundToInt()-(newVal / 100F * quant3x)>0)) {
                                 quant = (newVal / 100F * quant3x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * quant3x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * price3x)
@@ -691,8 +727,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         2 -> {
                             if (((newVal / 100F * quantinv1x).roundToInt()-(newVal / 100F * quantinv1x)>0)) {
                                 quant = (newVal / 100F * quantinv1x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * quantinv1x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * priceinv1x)
@@ -700,8 +742,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         3 -> {
                             if (((newVal / 100F * quantinv3x).roundToInt()-(newVal / 100F * quantinv3x)>0)) {
                                 quant = (newVal / 100F * quantinv3x).roundToInt() - 1
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             } else {
                                 quant = (newVal / 100F * quantinv3x).roundToInt()
+                                if (quant==0) {
+                                    quant = 1
+                                }
                             }
                             tv_tradequant.text = quant.toString()
                             tv_tradeprice.text = "$ " + dec.format(quant * priceinv3x)
