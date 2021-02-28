@@ -33,7 +33,7 @@
             android:layout_height="31dp"
             android:text="매수"
             android:textAppearance="@style/game_buyandsell"
-            android:background="@drawable/game_buyandsell_choose"/>
+            android:background="@drawable/trade_buy"/>
         <TextView
             android:layout_width="6dp"
             android:layout_height="31dp"/>
@@ -43,7 +43,7 @@
             android:gravity="center"
             android:text="매도"
             android:textAppearance="@style/game_buyandsell"
-            android:background="@drawable/game_buyandsell_unchoosen"
+            android:background="@drawable/trade_unchoosen"
             />
     </LinearLayout>
     <TextView
@@ -61,7 +61,7 @@
             android:gravity="center"
             android:text="x1\n일반"
             android:textAppearance="@style/game_buyandsell_option"
-            android:background="@drawable/game_buyandsell_option"/>
+            android:background="@drawable/trade_option"/>
         <TextView
             android:layout_width="4dp"
             android:layout_height="match_parent"/>
@@ -72,7 +72,7 @@
             android:gravity="center"
             android:text="x3\n레버리지"
             android:textAppearance="@style/game_buyandsell_option"
-            android:background="@drawable/game_buyandsell_option"/>
+            android:background="@drawable/trade_option"/>
         <TextView
             android:layout_width="4dp"
             android:layout_height="match_parent"/>
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:text="x1\n인버스"
             android:textAppearance="@style/game_buyandsell_option"
-            android:background="@drawable/game_buyandsell_option"/>
+            android:background="@drawable/trade_option"/>
         <TextView
             android:layout_width="4dp"
             android:layout_height="match_parent"/>
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:text="잠김"
             android:textAppearance="@style/game_buyandsell_lock"
-            android:background="@drawable/game_buyandsell_option_lock"/>
+            android:background="@drawable/trade_option_lock"/>
 
 
     </LinearLayout>

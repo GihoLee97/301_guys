@@ -3,180 +3,231 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="240dp"
     android:orientation="vertical"
     android:background="#F1F5F5">
+
     <LinearLayout
+        android:id="@+id/ll_tradeclose"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="14dp"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="8dp"/>
         <ImageView
+            android:layout_marginTop="8dp"
             android:layout_width="20dp"
             android:layout_height="6dp"
             android:background="@drawable/ic_path_down"
-            android:layout_gravity="center"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="16dp"/>
+            android:layout_gravity="center" />
     </LinearLayout>
+
+
     <FrameLayout
         android:id="@+id/fl_choose_buyandsell_option"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="154dp">
+
         <LinearLayout
+            android:id="@+id/ll_tradebefore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="31dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
                 <Button
                     android:id="@+id/btn_buy"
                     android:layout_width="133dp"
-                    android:layout_height="31dp"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="매수"
-                    android:textAppearance="@style/game_buyandsell"
-                    android:background="@drawable/game_buyandsell_choose"/>
-                <TextView
-                    android:layout_width="6dp"
-                    android:layout_height="31dp"/>
+                    android:textAppearance="@style/trade_choosen"
+                    android:background="@drawable/trade_buy"/>
                 <Button
                     android:id="@+id/btn_sell"
+                    android:layout_marginLeft="6dp"
                     android:layout_width="133dp"
-                    android:layout_height="31dp"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="매도"
-                    android:textAppearance="@style/game_buyandsell"
-                    android:background="@drawable/game_buyandsell_unchoosen"
+                    android:textAppearance="@style/trade_unchoosen"
+                    android:background="@drawable/trade_unchoosen"
                     />
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="23dp"/>
+
             <LinearLayout
+                android:layout_marginTop="23dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv_x1_plus"
+                <Button
+                    android:id="@+id/btn_trade1x"
                     android:layout_width="65dp"
-                    android:layout_height="64dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="x1\n일반"
-                    android:textAppearance="@style/game_buyandsell_option"
-                    android:background="@drawable/game_buyandsell_option"/>
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"/>
-                <TextView
-                    android:id="@+id/tv_x3_plus"
+                    android:textAppearance="@style/trade_optionbuy"
+                    android:background="@drawable/trade_option"/>
+                <Button
+                    android:id="@+id/btn_trade3x"
+                    android:layout_marginLeft="4dp"
                     android:layout_width="65dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="x3\n레버리지"
-                    android:textAppearance="@style/game_buyandsell_option"
-                    android:background="@drawable/game_buyandsell_option"/>
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"/>
-                <TextView
-                    android:id="@+id/tv_x1_minus"
-                    android:layout_width="65dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="x1\n인버스"
-                    android:textAppearance="@style/game_buyandsell_option"
-                    android:background="@drawable/game_buyandsell_option"/>
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"/>
-                <TextView
-                    android:id="@+id/tv_x3_minus"
-                    android:layout_width="65dp"
-                    android:layout_height="64dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="잠김"
-                    android:textAppearance="@style/game_buyandsell_lock"
-                    android:background="@drawable/game_buyandsell_option_lock"/>
-
+                    android:textAppearance="@style/trade_lock"
+                    android:background="@drawable/trade_option_lock"/>
+                <Button
+                    android:id="@+id/btn_tradeinv1x"
+                    android:layout_marginLeft="4dp"
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="x1\n인버스"
+                    android:textAppearance="@style/trade_optionbuy"
+                    android:background="@drawable/trade_option"/>
+                <Button
+                    android:id="@+id/btn_tradeinv3x"
+                    android:layout_marginLeft="4dp"
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="잠김"
+                    android:textAppearance="@style/trade_lock"
+                    android:background="@drawable/trade_option_lock"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="36dp"/>
-
         </LinearLayout>
 
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/fl_choose_buyandsell_number"
-        android:layout_width="match_parent"
-        android:layout_height="154dp">
+
         <LinearLayout
+            android:id="@+id/ll_tradeafter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center|left">
-                <ImageView
-                    android:id="@+id/iv_go_option"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="18dp">
+                <View
+                    android:id="@+id/v_tradetomain"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="26dp"
                     android:layout_width="6dp"
                     android:layout_height="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:background="@drawable/ic_path_left_orange"
                     />
                 <TextView
-                    android:layout_marginLeft="15dp"
-                    android:id="@+id/tv_bargain_title"
+                    android:id="@+id/tv_tradetitle"
+                    android:layout_marginLeft="47dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  x1 일반 매수하기"
-                    android:textAppearance="@style/game_buyandsell_title"/>
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:gravity="center"
+                    android:text="x1 일반 매수하기"
+                    android:textAppearance="@style/trade_titlebuy"/>
 
-            </LinearLayout>
-            <TextView
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="34dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:text="현재가"/>
+                android:layout_height="120dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
                 <TextView
-                    android:layout_width="76dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginBottom="87dp"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="현재가"
+                    android:textAppearance="@style/trade_now"/>
+                <TextView
+                    android:id="@+id/tv_tradeprice"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:text="$ 0,000"/>
+                    android:layout_marginRight="220dp"
+                    android:layout_marginBottom="85dp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="$ 0"
+                    android:textAppearance="@style/trade_price"/>
+                <Button
+                    android:id="@+id/btn_trademinus"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/borderline_trade"
+                    android:text="-"
+                    android:textAppearance="@style/trade_buttons"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:text="수치 변경하는 칸"/>
-            </LinearLayout>
+                    android:id="@+id/tv_tradequant"
+                    android:layout_width="64dp"
+                    android:layout_height="36dp"
+                    android:gravity="center"
+                    android:background="@drawable/borderline_trade"
+                    android:text="1"
+                    app:layout_constraintStart_toEndOf="@+id/btn_trademinus"
+                    app:layout_constraintTop_toTopOf="@+id/btn_trademinus"/>
+                <Button
+                    android:id="@+id/btn_tradeplus"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/borderline_trade"
+                    android:text="+"
+                    android:textAppearance="@style/trade_buttons"
+                    android:gravity="center"
+                    app:layout_constraintStart_toEndOf="@+id/tv_tradequant"
+                    app:layout_constraintTop_toTopOf="@+id/tv_tradequant"/>
 
+                <NumberPicker
+                    android:id="@+id/np_ratio"
+                    android:layout_width="56dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="52dp"
+                    android:layout_marginBottom="4dp"
+                    android:selectionDividersDistance="36dp"
+                    android:theme="@style/trade_picker"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="%"
+                    android:textAppearance="@style/trade_percent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="38dp"
+                    android:layout_marginRight="28dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
     </FrameLayout>
     
-    <TextView
-        android:id="@+id/tv_bargain"
+    <Button
+        android:id="@+id/btn_tradeok"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#B7B1B3"

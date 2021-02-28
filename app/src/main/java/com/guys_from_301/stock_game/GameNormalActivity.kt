@@ -63,7 +63,6 @@ var boughtinv3x: Float = 0F
 var aver1x: Float = 0F // 1x 평균 단가
 var aver3x: Float = 0F // 3x 평균 단가
 var averinv1x: Float = 0F // inv1x 평균 단가
-
 var averinv3x: Float = 0F // inv3x 평균 단가
 
 var buylim1x: Float = 0F // 1x 매수 한계 수량
