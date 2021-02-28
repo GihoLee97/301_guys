@@ -25,6 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.RetrofitIdcheck
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
