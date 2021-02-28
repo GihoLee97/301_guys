@@ -638,7 +638,7 @@ class InitialLoginActivity : AppCompatActivity() {
     }
 
     private fun goToSignUp(){
-        val intent = Intent(this@InitialLoginActivity,InitialSetIdActivity::class.java)
+        val intent = Intent(this@InitialLoginActivity,InitialSignUpEntranceActivity::class.java)
         startActivity(intent)
     }
 

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_topBox_login"
+        android:layout_width="match_parent"
+        android:layout_height="196dp"
+        android:layout_marginTop="0dp"
+        android:background="#ED9D0B"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="28dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="8dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="24dp"
+                    android:background="@drawable/ic_path_white" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="회원가입"
+                android:textAppearance="@style/initial_signup_title" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="40dp"
+            android:lineSpacingExtra="6sp"
+            android:text="건강한 투자습관을\n함께 길러볼까요?"
+            android:textAppearance="@style/initial_signUp_id_description" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginVertical="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_topBox_login">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="60dp"
+            android:text="소셜계정으로 가입하고\n친구와 랭킹을 공유할 수 있어요."
+            android:lineSpacingExtra="4sp"
+            android:textAppearance="@style/initial_signUp_id_ment" />
+
+
+        <ImageButton
+            android:id="@+id/btn_kakaoLogin"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/kakao_login_medium_wide" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_googleSignIn"
+            android:layout_width="306dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="38dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:text="혹은"
+                android:textAppearance="@style/initial_signIn_or" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="#000000" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_generalLogin"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="24dp"
+            android:background="@drawable/ic_rectangle_orange_stroke"
+            android:text="그냥 아이디로 만들게요"
+            android:textAppearance="@style/initial_signUp_entrance_general" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

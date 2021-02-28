@@ -22,7 +22,7 @@ class NewInitialActivity : AppCompatActivity() {
         }
 
         tv_goToSignUpActivity.setOnClickListener {
-            val intent = Intent(this,InitialSetIdActivity::class.java)
+            val intent = Intent(this,InitialSignUpEntranceActivity::class.java)
             startActivity(intent)
         }
     }
