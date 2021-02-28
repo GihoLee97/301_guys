@@ -741,7 +741,6 @@
                                 android:layout_height="match_parent"
                                 android:text="뉴스스스스스스스스스스"
                                 android:textAppearance="@style/game_news"
-                                android:background="#1AFF0000"
                                 android:layout_weight="229">
                             </TextView>
                             <LinearLayout

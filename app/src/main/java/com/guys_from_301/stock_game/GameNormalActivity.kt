@@ -1038,11 +1038,11 @@ class GameNormalActivity : AppCompatActivity() {
             cht_snp.animateXY(1, 1)
             cht_eco.animateXY(1, 1)
             //TODO
-            cht_snp.setBackgroundColor(Color.parseColor("#1AFF0000"))
+            cht_snp.setBackgroundColor(Color.parseColor("#F8FAFB"))
             cht_snp.setDrawGridBackground(false)
             cht_snp.setDrawBorders(false)
 
-            cht_eco.setBackgroundColor(Color.parseColor("#1AFF0000"))
+            cht_eco.setBackgroundColor(Color.parseColor("#FFFFFF"))
             cht_eco.setDrawGridBackground(false)
             cht_eco.setDrawBorders(false)
 
