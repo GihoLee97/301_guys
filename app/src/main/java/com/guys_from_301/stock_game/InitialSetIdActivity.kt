@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -25,7 +26,13 @@ class InitialSetIdActivity : AppCompatActivity() {
         }
         onlyAlphabetFilterToEnglishET(findViewById<EditText>(R.id.et_signup_id))
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
-            idcheck(getHash(findViewById<EditText>(R.id.et_signup_id).text.toString()))
+            if(findViewById<EditText>(R.id.et_signup_id).text.toString().length < 6){
+                findViewById<TextView>(R.id.tv_signup_id_ment_1).visibility = View.VISIBLE
+            }
+            else{
+                findViewById<TextView>(R.id.tv_signup_id_ment_1).visibility = View.INVISIBLE
+                idcheck(getHash(findViewById<EditText>(R.id.et_signup_id).text.toString()))
+            }
         }
         findViewById<LinearLayout>(R.id.ll_signup_id_delete).setOnClickListener{
             findViewById<EditText>(R.id.et_signup_id).text = null
@@ -59,6 +66,7 @@ class InitialSetIdActivity : AppCompatActivity() {
                 }
         ))
     }
+
     fun idcheck(u_id: String) {
         var funidcheck: RetrofitIdcheck? = null
         val url = "http://stockgame.dothome.co.kr/test/idcheck.php/"
@@ -85,6 +93,7 @@ class InitialSetIdActivity : AppCompatActivity() {
                     }
                     else if(response.body()!! == "555"){
                         val intent = Intent(mContext, InitialSetPwActivity::class.java)
+                        intent.putExtra("u_id", findViewById<EditText>(R.id.et_signup_id).text.toString())
                         startActivity(intent)
                     }
                     else{

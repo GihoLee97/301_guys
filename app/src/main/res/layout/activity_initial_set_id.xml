@@ -122,6 +122,18 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:background="@drawable/initial_set_id_line"/>
+    <TextView
+        android:id="@+id/tv_signup_id_ment_1"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:gravity="center"
+        android:text="아이디는 6글자 이상이어야 합니다."
+        android:textAppearance="@style/initial_signUp_pw_notice"
+        android:visibility="invisible"
+        />
 
     <Button
         android:id="@+id/btn_go_on"
