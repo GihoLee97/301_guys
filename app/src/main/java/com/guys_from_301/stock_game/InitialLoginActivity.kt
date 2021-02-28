@@ -3,13 +3,18 @@ package com.guys_from_301.stock_game
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -101,6 +106,19 @@ class InitialLoginActivity : AppCompatActivity() {
     private lateinit var btn_generalLogin : Button
     private lateinit var btn_kakaoLogin : ImageButton
     private lateinit var tv_goToSignUp : TextView
+    private lateinit var tv_notice : TextView
+    private lateinit var et_id : EditText
+    private lateinit var et_pw : EditText
+    private lateinit var view_idUnderBar : View
+    private lateinit var view_pwUnderBar : View
+    private lateinit var tv_idTitle : TextView
+    private lateinit var tv_pwTitle : TextView
+    private lateinit var iv_visibility : ImageView
+    private lateinit var ll_id : LinearLayout
+    private lateinit var cl_pw : ConstraintLayout
+
+    private var visibility = false
+    private var id_length = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,19 +129,101 @@ class InitialLoginActivity : AppCompatActivity() {
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
         tv_goToSignUp = findViewById(R.id.tv_goToSignUp)
+        tv_notice = findViewById(R.id.tv_notice)
+        et_id = findViewById(R.id.et_id)
+        et_pw = findViewById(R.id.et_pw)
+        view_idUnderBar = findViewById(R.id.view_idUnderBar)
+        view_pwUnderBar = findViewById(R.id.view_pwUnderBar)
+        tv_idTitle = findViewById(R.id.tv_idTitle)
+        tv_pwTitle = findViewById(R.id.tv_pwTitle)
+        iv_visibility = findViewById(R.id.iv_visibility)
+        ll_id = findViewById(R.id.ll_id)
+        cl_pw = findViewById(R.id.cl_pw)
 
-        val id1: EditText = findViewById(R.id.et_id)
-        val pw1: EditText = findViewById(R.id.et_pw)
+        // password visibility
+        visibility = false
 
-        onlyAlphabetFilterToEnglishET(id1)
-        onlyAlphabetFilterToEnglishET(pw1)
+        onlyAlphabetFilterToEnglishET(et_id)
+        onlyAlphabetFilterToEnglishET(et_pw)
+        tv_notice.visibility = View.INVISIBLE
+        attention("no")
+
+
+        // attention to id or pw
+        et_id.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                Log.d("Giho","onClickIdET")
+                attention("id")
+            }
+            else{
+                attention("no")
+            }
+        }
+        et_pw.onFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                Log.d("Giho","onClickIdET")
+                attention("pw")
+            }
+            else{
+                attention("no")
+            }
+        }
+
+        et_id.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                id_length = p0?.length!!
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(p0?.length!! !in 6..20){
+                    notice("아이디는 6~20자입니다.")
+                }
+                else{
+                    notice("")
+                }
+            }
+        })
+
+        et_pw.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(p0?.length!!>0&&(id_length in 6..20)){
+                    btn_generalLogin.setBackgroundResource(R.drawable.initial_box_go_on_orange)
+                }
+                else{
+                    btn_generalLogin.setBackgroundResource(R.drawable.initial_box_go_on_gray)
+                    if(id_length !in 6..20)
+                        notice("아이디는 6~20자입니다.")
+                    else
+                        notice("비밀번호를 입력하세요.")
+                }
+            }
+        })
+
+        et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
+        iv_visibility.setOnClickListener {
+            visibility = !visibility
+            if(visibility) {
+                iv_visibility.setImageResource(R.drawable.ic_visible)
+                et_pw.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+            else {
+                iv_visibility.setImageResource(R.drawable.ic_invisible)
+                et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }
+        }
+
 
         // 로그인 & onClickListner
         btn_generalLogin.setOnClickListener{
-            val id1: TextView = findViewById(R.id.et_id)
-            val pw1: TextView = findViewById(R.id.et_pw)
-            saveid = id1.text.toString()
-            savepw = pw1.text.toString()
+            val et_id: TextView = findViewById(R.id.et_id)
+            val et_pw: TextView = findViewById(R.id.et_pw)
+            saveid = et_id.text.toString()
+            savepw = et_pw.text.toString()
             val time1: LocalDateTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
@@ -163,10 +263,10 @@ class InitialLoginActivity : AppCompatActivity() {
                         pw = user?.kakaoAccount?.email.toString()
                         dialog.dismiss()
                         Log.i(TAG, "로그인 성공 ${token.accessToken}")
-                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
+                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim(),"KAKAO",id, pw)
                         println("---kakao"+id)
                         println("---kakaopw"+pw)
-                        loginSuccess("KAKAO", id, pw) // memorize login method and move to MainActivity
+//                        loginSuccess("KAKAO", id, pw) // memorize login method and move to MainActivity
                     }
                 }
             }
@@ -257,19 +357,20 @@ class InitialLoginActivity : AppCompatActivity() {
         funlogincheck= retrofit.create(Retrofitlogincheck::class.java)
         funlogincheck.post_logincheck(loginID, loginPW, u_date).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(this@InitialLoginActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
+                notice("아이디나 비밀번호가 일치하지 않거나 존재하지 않는 아이디 입니다.")
+//                Toast.makeText(this@InitialLoginActivity, "아이디나 비밀번호가 맞지 않습니다.", Toast.LENGTH_LONG).show()
                 dialog.dismiss()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     val okcode: String = response.body()!!
                     if (okcode == "7774"){
-                        Toast.makeText(this@InitialLoginActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
+//                        Toast.makeText(this@InitialLoginActivity, "로그인 성공!", Toast.LENGTH_LONG).show()
                         dialog.dismiss()
                         loginSuccess("GENERAL", u_id, u_pw) // memorize login method and move to MainActivity
                     }
                     if (okcode == "4"){
-                        Toast.makeText(this@InitialLoginActivity, "아이디나 비밀번호가 틀렸습니다.", Toast.LENGTH_LONG).show()
+                        notice("아이디나 비밀번호가 일치하지 않거나 존재하지 않는 아이디 입니다.")
                         dialog.dismiss()
                     }
                 }
@@ -278,7 +379,7 @@ class InitialLoginActivity : AppCompatActivity() {
         })
     }
 
-    fun GoogleKakaoSignup(u_id: String, u_pw: String) {
+    fun GoogleKakaoSignup(u_id: String, u_pw: String, method: String, id : String, pw : String) {
         var api_signup: Retrofitsignup? = null
         val time1: LocalDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -306,11 +407,14 @@ class InitialLoginActivity : AppCompatActivity() {
                     Toast.makeText(this@InitialLoginActivity, "오류가 발생했습니다.\n잠시 후 다시 시도해주세요", Toast.LENGTH_LONG).show()
                 }
                 if(code == "555"){
+                    Log.d("Gihoe","555???????")
+                    loginSuccess(method,id, pw)
                     //첫번째 로그인 아님
                 }
                 if(code == "666"){
-                    //첫번째 로그인
-                    Toast.makeText(this@InitialLoginActivity, "회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show()
+                    //첫번째 로그인 -> 회원가입 해야함
+                    Toast.makeText(this@InitialLoginActivity, "먼저 회원가입해야 합니다. 회원가입 페이지로 이동합니다.", Toast.LENGTH_LONG).show()
+                    goToSignUp()
                 }
             }
         })
@@ -356,9 +460,9 @@ class InitialLoginActivity : AppCompatActivity() {
                         Log.d(TAG, "로그인 성공")
                         val id = currUser?.email.toString()
                         val pw =currUser?.uid.toString()
-                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim())
                         dialog.dismiss()
-                        loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity
+                        GoogleKakaoSignup(getHash(id).trim(), getHash(pw).trim(),"GOOGLE",id, pw)
+//                        loginSuccess("GOOGLE", id, pw) // memorize login method and move to MainActivity
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -506,14 +610,16 @@ class InitialLoginActivity : AppCompatActivity() {
         IdorPw.setFilters(arrayOf(
                 InputFilter { src, start, end, dst, dstart, dend ->
                     if (src == " ") { // for space
+                        notice("공백은 입력할 수 없습니다.")
                         return@InputFilter ""
                     }
                     if (src == "") { // for backspace
                         println("---back")
                         return@InputFilter ""
                     }
-                    if (src.matches(Regex("[a-zA-Z0-9]+"))) {
+                    if (src.matches(Regex("[a-zA-Z0-9!\"#\$%&'()*+,./:;<=>?@\\^_`{|}~-]+"))) {
                         println("---정상")
+                        notice("")
                         return@InputFilter src
                     }
 //                    if (src.matches(Regex("[ㄱ-ㅎㅏ-ㅣ가-힣]+"))) {
@@ -521,12 +627,7 @@ class InitialLoginActivity : AppCompatActivity() {
 //                        return@InputFilter ""
 //                    }
                     else{
-                        if(src == "ㄱ")
-                        {
-                            println("---ok")
-                            return@InputFilter ""
-                        }
-                        println("---why")
+                        notice("영어 대소문자, 숫자, 특수문자만을 입력해주세요")
                         return@InputFilter ""
                     }
 //                    Toast.makeText(this, "영단어를 입력해주세요", Toast.LENGTH_LONG).show()
@@ -534,5 +635,40 @@ class InitialLoginActivity : AppCompatActivity() {
 //                    return@InputFilter ""
                 }
         ))
+    }
+
+    private fun goToSignUp(){
+        val intent = Intent(this@InitialLoginActivity,InitialSetIdActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun notice(notice : String){
+        tv_notice.visibility = View.VISIBLE
+        tv_notice.text = notice
+    }
+
+    private fun attention(obj : String){
+        val attentionColor = R.color.attention
+        val ignoreColor = R.color.ignore
+
+        if(obj=="no"){
+            view_idUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_gray)
+            view_pwUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_gray)
+            tv_idTitle.setTextColor(getColor(ignoreColor))
+            tv_pwTitle.setTextColor(getColor(ignoreColor))
+        }
+        else if(obj=="id"){
+            view_idUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_orange)
+            view_pwUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_gray)
+            tv_idTitle.setTextColor(getColor(attentionColor))
+            tv_pwTitle.setTextColor(getColor(ignoreColor))
+        }
+
+        else if(obj=="pw"){
+            view_idUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_gray)
+            view_pwUnderBar.setBackgroundResource(R.drawable.ic_bottom_line_orange)
+            tv_idTitle.setTextColor(getColor(ignoreColor))
+            tv_pwTitle.setTextColor(getColor(attentionColor))
+        }
     }
 }
