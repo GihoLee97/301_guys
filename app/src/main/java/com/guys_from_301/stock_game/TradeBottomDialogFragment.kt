@@ -151,6 +151,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 0 -> {
                     ll_tradebefore.visibility = VISIBLE
                     ll_tradeafter.visibility = GONE
+                    btn_tradeok.isEnabled = false
+                    btn_tradeok.setBackgroundColor(Color.parseColor("#B7B1B3"))
                     buyOrsell = 0
                     btn_buy.setBackgroundResource(R.drawable.trade_buy)
                     btn_buy.setTextAppearance(R.style.trade_choosen)
@@ -189,6 +191,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 1 -> {
                     ll_tradebefore.visibility = VISIBLE
                     ll_tradeafter.visibility = GONE
+                    btn_tradeok.isEnabled = false
+                    btn_tradeok.setBackgroundColor(Color.parseColor("#B7B1B3"))
                     buyOrsell = 1
                     btn_buy.setBackgroundResource(R.drawable.trade_unchoosen)
                     btn_buy.setTextAppearance(R.style.trade_unchoosen)
@@ -345,12 +349,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
+                tv_tradetitle.text = "x1 일반 매수하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
                 np_ratio.value = (100 * (price1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
+                tv_tradetitle.text = "x1 일반 매도하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
@@ -371,12 +377,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
+                tv_tradetitle.text = "x3 레버리지 매수하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
                 np_ratio.value = (100 * (price3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
+                tv_tradetitle.text = "x3 레버리지 매도하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
@@ -397,12 +405,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
+                tv_tradetitle.text = "x1 인버스 매수하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
                 np_ratio.value = (100 * (priceinv1x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
+                tv_tradetitle.text = "x1 인버스 매도하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
@@ -423,12 +433,14 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             np_ratio.maxValue = 100
 
             if (buyOrsell == 0) {
+                tv_tradetitle.text = "x3 인버스 매수하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_orange)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlebuy)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
                 np_ratio.value = (100 * (priceinv3x * quant) / cash).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#F4730B"))
             } else {
+                tv_tradetitle.text = "x3 인버스 매도하기"
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
