@@ -7,11 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.guys_from_301.stock_game.data.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,6 +108,16 @@ class FragmentHome : Fragment() {
         }
 
         v.findViewById<TextView>(R.id.tv_userName).text = profileDb?.profileDao()?.getNickname()!!+"님"
+
+        // 피로도
+        CoroutineScope(Dispatchers.Default).launch {
+            val job1 = launch {
+                while (true) {
+                    v.findViewById<ProgressBar>(R.id.pb_tiredness).progress = profileDb?.profileDao()?.getValue1()!!
+                    delay(200L)
+                }
+            }
+        }
 
         return v
     }

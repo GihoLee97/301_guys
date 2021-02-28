@@ -462,9 +462,6 @@ class MainActivity : AppCompatActivity() {
                 itemDb?.itemDao()?.update(newItem)
                 //
 
-                runOnUiThread{
-                    findViewById<ProgressBar>(R.id.pb_tiredness).progress = profileDb?.profileDao()?.getValue1()!!
-                }
             }
             delay(200L) // 0.2초에 한 번씩 확인
         }
