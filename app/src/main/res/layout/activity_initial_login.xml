@@ -103,6 +103,8 @@
                         android:id="@+id/et_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:text=""
                         android:background="@null"
                         android:textAppearance="@style/initial_signIn_idPw"
                         android:textColor="#4B586B" />

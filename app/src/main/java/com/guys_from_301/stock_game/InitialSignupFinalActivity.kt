@@ -22,19 +22,26 @@ import java.time.format.DateTimeFormatter
 class InitialSignupFinalActivity : AppCompatActivity()  {
     var mContext : Context? = null
     private lateinit var et_signup_nick : EditText
-    var u_id :String = ""
-    var u_pw : String = ""
+    var _u_id : String = ""
+    var _u_pw : String = ""
+    var _u_method : String = "general"
     override fun onCreate(savedInstanceState: Bundle?) {
         mContext = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_signup_final)
         if (intent.hasExtra("u_id") && intent.hasExtra("u_pw")) {
-            u_id = intent.getStringExtra("u_id")!!
-            u_pw = intent.getStringExtra("u_pw")!!
+            _u_id = intent.getStringExtra("u_id")!!
+            _u_pw = intent.getStringExtra("u_pw")!!
         } else {
             Toast.makeText(this, "다시 시도해주세요", Toast.LENGTH_SHORT).show()
             onBackPressed()
         }
+        if (intent.hasExtra("u_method")) {
+            _u_method = intent.getStringExtra("u_method")!!
+        } else {
+                println("---일반로그인 아님")
+        }
+
         findViewById<LinearLayout>(R.id.ll_signup_nick_delete).setOnClickListener{
             findViewById<EditText>(R.id.et_signup_nick).text = null
         }
@@ -48,9 +55,10 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             val formatted = time1.format(formatter)
             val SignupDate : String = formatted.toString().trim()
-            signupnickcheck(getHash(u_id).toString().trim(),
-                    getHash(u_pw).toString().trim(),
-                    SignupDate, et_signup_nick.text.toString())
+            signupnickcheck(getHash(_u_id).toString().trim(),
+                    getHash(_u_pw).toString().trim(),
+                    SignupDate, et_signup_nick.text.toString(),
+                    _u_method)
 //            Toast.makeText(this, "아이디: "+ u_id +"\n비밀번호: "+u_pw, Toast.LENGTH_LONG).show()
         }
     }
@@ -80,7 +88,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         ))
     }
 
-    fun signupnickcheck(u_id: String, u_pw: String, u_date : String,u_nickname: String) {
+    fun signupnickcheck(u_id: String, u_pw: String, u_date : String,u_nickname: String, method : String) {
         var funsignupnickcheck: RetrofitSignupNickcheck? = null
         val url = "http://stockgame.dothome.co.kr/test/signupnickcheck.php/"
         var gson: Gson = GsonBuilder()
@@ -110,6 +118,10 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
                     else if(response.body()!! == "666"){
                         findViewById<TextView>(R.id.tv_signup_final_ment_1).visibility = View.INVISIBLE
                         val intent = Intent(mContext, InitialLoginActivity::class.java)
+                        if(method == "general"){
+                            intent.putExtra("u_id", _u_id)
+                            intent.putExtra("u_pw", _u_pw)
+                        }
                         startActivity(intent)
                     }
                     else{

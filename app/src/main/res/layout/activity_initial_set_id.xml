@@ -115,6 +115,7 @@
 
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_set_id_underline"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_width="fill_parent"
