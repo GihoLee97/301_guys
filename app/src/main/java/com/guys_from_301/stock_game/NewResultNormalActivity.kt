@@ -62,7 +62,11 @@ class NewResultNormalActivity: AppCompatActivity() {
 
 
         if(relativeprofitrate>0) tv_relativeProfitRate.text ="+"+ per.format(relativeprofitrate)+"%"
-        else tv_relativeProfitRate.text =per.format(relativeprofitrate)+"%"
+        else {
+            tv_relativeProfitRate.text =per.format(relativeprofitrate)+"%"
+            tv_relativeProfitRate.setTextAppearance(applicationContext, R.style.gameResult_relativeProfitValueDown)
+            tv_yourProfit.setTextAppearance(applicationContext, R.style.gameResult_descriptionChangeDown)
+        }
         tv_yourProfit.text = "당신은 "+dec.format(10000*(100+ relativeprofitrate)/100)+"원"
         tv_totalTax.text = "+$"+dec.format(taxtot)
         tv_totalDividend.text = "+$"+dec.format(dividendtot)

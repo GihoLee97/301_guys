@@ -451,6 +451,7 @@ class MainActivity : AppCompatActivity() {
                 newProfile.login = profileDb?.profileDao()?.getLogin()!!
                 newProfile.money = profileDb?.profileDao()?.getMoney()!!
                 newProfile.value1 = nowvalue1
+                newProfile.profitrate = profileDb?.profileDao()?.getProfitRate()!!
                 newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
                 newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
                 newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
