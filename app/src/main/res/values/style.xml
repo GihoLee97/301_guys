@@ -15,7 +15,7 @@
         <item name="android:textColor">#F4730B</item>
     </style>
     <style name="game_dialog_bottom_sheet_item_buttonActivated">
-        <item name="android:background">@drawable/ic_dialog_bottom_sheet_item_button_unactivated</item>
+        <item name="android:background">@drawable/item_notok</item>
     </style>
     <style name="game_dialog_bottom_sheet_item_buttonUnactivated">
         <item name="android:background">@drawable/ic_dialog_bottom_sheet_item_button_activated</item>

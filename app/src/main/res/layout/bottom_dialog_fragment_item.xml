@@ -2,48 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="223dp"
+    android:layout_height="224dp"
     android:orientation="vertical"
-    android:weightSum="223">
+    android:weightSum="224"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <ImageButton
-        android:id="@+id/ib_closeItemUseDialog"
+        android:id="@+id/ib_itemclose"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="16dp"
         android:layout_weight="16"
         android:background="#F1F5F5"
         android:src="@drawable/ic_path_close_bottom" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="119"
+        android:layout_height="120dp"
+        android:layout_weight="120"
         android:background="#F1F5F5">
 
-        <LinearLayout
-            android:id="@+id/ll_selectItemToUse"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_itemselect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
-            android:paddingBottom="35dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:weightSum="360">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="60" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_goToTurnBackTime"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:id="@+id/cl_item1"
+                android:layout_width="125dp"
+                android:layout_height="64dp"
                 android:layout_weight="110"
                 android:background="@drawable/borderline2"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:elevation="5dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,7 +49,6 @@
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_titleSmall"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,22 +57,18 @@
                     android:src="@drawable/ic_item_turn_back_time"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_goToAdjustTimeSpeed"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:id="@+id/cl_item2"
+                android:layout_width="125dp"
+                android:layout_height="64dp"
                 android:layout_weight="110"
                 android:background="@drawable/borderline2"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="60dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:elevation="5dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +78,6 @@
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_titleSmall"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,16 +86,25 @@
                     android:src="@drawable/ic_item_adjust_game_speed"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_turnBackTime"
+            android:id="@+id/cl_item1detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible">
-
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_item1consume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="피로도 3500 증가"
+                android:textAppearance="@style/auto_title"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,14 +114,12 @@
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <ImageButton
-                    android:id="@+id/ib_backToSelectItem_turnBackTime"
+                    android:id="@+id/ib_item1main"
                     android:layout_width="26dp"
                     android:layout_height="32dp"
                     android:backgroundTint="#F1F5F5"
                     android:src="@drawable/ic_path_left_orange" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -131,21 +128,20 @@
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_titleLarge" />
 
             </LinearLayout>
-
             <SeekBar
-                android:id="@+id/sb_turnBackTime"
+                android:id="@+id/sb_item1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="35dp"
-                android:progress="4"
-                android:max="7"
+                android:progress="1"
+                android:max="1"
+                android:min="1"
                 android:progressDrawable="@drawable/seek_bar"
                 android:thumb="@drawable/ic_thumb"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
-
             <LinearLayout
                 android:layout_width="136dp"
                 android:layout_height="36dp"
@@ -156,9 +152,8 @@
                 android:weightSum="136"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <Button
-                    android:id="@+id/btn_minus"
+                    android:id="@+id/btn_item1minus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="36"
@@ -166,19 +161,16 @@
                     android:gravity="center"
                     android:text="-"
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_plusMinus" />
-
-
                 <TextView
-                    android:id="@+id/tv_day"
+                    android:id="@+id/tv_item1day"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="64"
                     android:gravity="center"
                     android:text="0"
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_number" />
-
                 <Button
-                    android:id="@+id/btn_plus"
+                    android:id="@+id/btn_item1plus"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="36"
@@ -186,16 +178,14 @@
                     android:gravity="center"
                     android:text="+"
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_plusMinus" />
-
             </LinearLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_adjustTimeSpeed"
+            android:id="@+id/cl_item2detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:visibility="visible">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,39 +195,35 @@
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <ImageButton
-                    android:id="@+id/ib_backToSelectItem_adjustTimeSpeed"
+                    android:id="@+id/ib_item2main"
                     android:layout_width="26dp"
                     android:layout_height="32dp"
                     android:backgroundTint="#F1F5F5"
                     android:src="@drawable/ic_path_left_orange" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="인게임 속도 조절"
                     android:textAppearance="@style/game_dialog_bottom_sheet_item_titleLarge" />
-
             </LinearLayout>
-
             <SeekBar
-                android:id="@+id/sb_adjustTimeSpeed"
+                android:id="@+id/sb_item2"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:max="10"
+                android:max="7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="35dp"
-                android:progress="5"
+                android:progress="3"
                 android:progressDrawable="@drawable/seek_bar"
                 android:thumb="@drawable/ic_thumb"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
-
             <TextView
+                android:id="@+id/tv_item2speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1초에 n일이 흘러갑니다"
@@ -246,18 +232,17 @@
                 android:layout_marginBottom="57dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_useItem_time"
+        android:id="@+id/cl_itemok"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="56dp"
         android:layout_weight="56"
-        android:background="@drawable/ic_dialog_bottom_sheet_item_button_unactivated">
+        android:background="@drawable/item_notok">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -284,13 +269,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="32dp"
         android:layout_weight="32"
         android:background="#EAEEEF"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/tv_item4debug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
@@ -298,13 +284,14 @@
             android:textAppearance="@style/game_dialog_bottom_sheet_item_tiredness"/>
 
         <ProgressBar
-            android:id="@+id/pb_tiredness"
+            android:id="@+id/pb_itemfatigue"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="23dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginRight="24dp"
-            android:progress="50"
+            android:progress="5000"
+            android:max="10000"
             android:progressDrawable="@drawable/custom_progressbar_horizontal" />
 
     </LinearLayout>

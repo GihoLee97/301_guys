@@ -8,7 +8,6 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlin.math.roundToInt
 
 class Dialog_bottom_sheet_item : BottomSheetDialogFragment() {
 
@@ -28,58 +27,58 @@ class Dialog_bottom_sheet_item : BottomSheetDialogFragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        var v : View = inflater.inflate(R.layout.dialog_bottom_sheet_item, container)
+        var v : View = inflater.inflate(R.layout.bottom_dialog_fragment_item, container)
 
         currentLayout = SELECT_ITEM_LAYOUT
-        v.findViewById<LinearLayout>(R.id.ll_selectItemToUse).visibility = View.VISIBLE
-        v.findViewById<ConstraintLayout>(R.id.cl_turnBackTime).visibility = View.GONE
-        v.findViewById<ConstraintLayout>(R.id.cl_adjustTimeSpeed).visibility = View.GONE
-        v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).background =
-                ContextCompat.getDrawable(requireContext(),R.drawable.ic_dialog_bottom_sheet_item_button_unactivated)
-        v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).isClickable = false
-        v.findViewById<TextView>(R.id.tv_day).text = dayTOBack.toString()
+        v.findViewById<LinearLayout>(R.id.cl_itemselect).visibility = View.VISIBLE
+        v.findViewById<ConstraintLayout>(R.id.cl_item1detail).visibility = View.GONE
+        v.findViewById<ConstraintLayout>(R.id.cl_item2detail).visibility = View.GONE
+        v.findViewById<ConstraintLayout>(R.id.cl_itemok).background =
+                ContextCompat.getDrawable(requireContext(),R.drawable.item_notok)
+        v.findViewById<ConstraintLayout>(R.id.cl_itemok).isClickable = false
+        v.findViewById<TextView>(R.id.tv_item1day).text = dayTOBack.toString()
 
-        v.findViewById<ConstraintLayout>(R.id.cl_goToTurnBackTime).setOnClickListener {
+        v.findViewById<ConstraintLayout>(R.id.cl_item1).setOnClickListener {
             currentLayout = TURN_BACK_TIME_LAYOUT
-            v.findViewById<LinearLayout>(R.id.ll_selectItemToUse).visibility = View.GONE
-            v.findViewById<ConstraintLayout>(R.id.cl_turnBackTime).visibility = View.VISIBLE
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).background =
+            v.findViewById<LinearLayout>(R.id.cl_itemselect).visibility = View.GONE
+            v.findViewById<ConstraintLayout>(R.id.cl_item1detail).visibility = View.VISIBLE
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).background =
                     ContextCompat.getDrawable(requireContext(),R.drawable.ic_dialog_bottom_sheet_item_button_activated)
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).isClickable = true
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).isClickable = true
         }
 
-        v.findViewById<ConstraintLayout>(R.id.cl_goToAdjustTimeSpeed).setOnClickListener {
+        v.findViewById<ConstraintLayout>(R.id.cl_item2).setOnClickListener {
             currentLayout = ADJUST_TIME_SPEED_LAYOUT
-            v.findViewById<LinearLayout>(R.id.ll_selectItemToUse).visibility = View.GONE
-            v.findViewById<ConstraintLayout>(R.id.cl_adjustTimeSpeed).visibility = View.VISIBLE
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).background =
+            v.findViewById<LinearLayout>(R.id.cl_itemselect).visibility = View.GONE
+            v.findViewById<ConstraintLayout>(R.id.cl_item2detail).visibility = View.VISIBLE
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).background =
                     ContextCompat.getDrawable(requireContext(),R.drawable.ic_dialog_bottom_sheet_item_button_activated)
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).isClickable = true
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).isClickable = true
         }
 
-        v.findViewById<ImageButton>(R.id.ib_backToSelectItem_turnBackTime).setOnClickListener{
+        v.findViewById<ImageButton>(R.id.ib_item1main).setOnClickListener{
             currentLayout = SELECT_ITEM_LAYOUT
-            v.findViewById<LinearLayout>(R.id.ll_selectItemToUse).visibility = View.VISIBLE
-            v.findViewById<ConstraintLayout>(R.id.cl_turnBackTime).visibility = View.GONE
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).background =
-                    ContextCompat.getDrawable(requireContext(),R.drawable.ic_dialog_bottom_sheet_item_button_unactivated)
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).isClickable = false
+            v.findViewById<LinearLayout>(R.id.cl_itemselect).visibility = View.VISIBLE
+            v.findViewById<ConstraintLayout>(R.id.cl_item1detail).visibility = View.GONE
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).background =
+                    ContextCompat.getDrawable(requireContext(),R.drawable.item_notok)
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).isClickable = false
         }
 
-        v.findViewById<ImageButton>(R.id.ib_backToSelectItem_adjustTimeSpeed).setOnClickListener{
+        v.findViewById<ImageButton>(R.id.ib_item2main).setOnClickListener{
             currentLayout = SELECT_ITEM_LAYOUT
-            v.findViewById<LinearLayout>(R.id.ll_selectItemToUse).visibility = View.VISIBLE
-            v.findViewById<ConstraintLayout>(R.id.cl_adjustTimeSpeed).visibility = View.GONE
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).background =
-                    ContextCompat.getDrawable(requireContext(),R.drawable.ic_dialog_bottom_sheet_item_button_unactivated)
-            v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).isClickable = false
+            v.findViewById<LinearLayout>(R.id.cl_itemselect).visibility = View.VISIBLE
+            v.findViewById<ConstraintLayout>(R.id.cl_item2detail).visibility = View.GONE
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).background =
+                    ContextCompat.getDrawable(requireContext(),R.drawable.item_notok)
+            v.findViewById<ConstraintLayout>(R.id.cl_itemok).isClickable = false
         }
 
-        v.findViewById<ImageButton>(R.id.ib_closeItemUseDialog).setOnClickListener {
+        v.findViewById<ImageButton>(R.id.ib_itemclose).setOnClickListener {
             // TODO!! dialog close code
         }
 
-        v.findViewById<ConstraintLayout>(R.id.cl_useItem_time).setOnClickListener {
+        v.findViewById<ConstraintLayout>(R.id.cl_itemok).setOnClickListener {
             if(currentLayout==TURN_BACK_TIME_LAYOUT){
 
             }
@@ -88,21 +87,21 @@ class Dialog_bottom_sheet_item : BottomSheetDialogFragment() {
             }
         }
 
-        v.findViewById<Button>(R.id.btn_minus).setOnClickListener {
+        v.findViewById<Button>(R.id.btn_item1minus).setOnClickListener {
             if(dayTOBack>0){
                 dayTOBack -= 1
-                v.findViewById<TextView>(R.id.tv_day).text = dayTOBack.toString()
+                v.findViewById<TextView>(R.id.tv_item1day).text = dayTOBack.toString()
             }
         }
 
-        v.findViewById<Button>(R.id.btn_plus).setOnClickListener {
+        v.findViewById<Button>(R.id.btn_item1plus).setOnClickListener {
             if(dayTOBack<1000){ // TODO!! set maximum
                 dayTOBack += 1
-                v.findViewById<TextView>(R.id.tv_day).text = dayTOBack.toString()
+                v.findViewById<TextView>(R.id.tv_item1day).text = dayTOBack.toString()
             }
         }
 
-        v.findViewById<SeekBar>(R.id.sb_turnBackTime).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        v.findViewById<SeekBar>(R.id.sb_item1).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             }
 
@@ -113,7 +112,7 @@ class Dialog_bottom_sheet_item : BottomSheetDialogFragment() {
             }
         })
 
-        v.findViewById<SeekBar>(R.id.sb_adjustTimeSpeed).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        v.findViewById<SeekBar>(R.id.sb_item2).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             }
 

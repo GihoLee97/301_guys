@@ -2,7 +2,6 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -149,7 +148,7 @@ class FragmentHome : Fragment() {
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 while (true) {
-                    v.findViewById<ProgressBar>(R.id.pb_tiredness).progress = profileDb?.profileDao()?.getValue1()!!
+                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDb?.profileDao()?.getValue1()!!
                     delay(200L)
                 }
             }

@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AutoBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
-    var mContext: Context? = context
 
     private var ontemp: Boolean = true
     private var ratiotemp: Int = 0

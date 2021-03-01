@@ -649,9 +649,9 @@ class GameNormalActivity : AppCompatActivity() {
 
 
 
-        val tradeBottomSheetDialog= TradeBottomDialogFragment(applicationContext)
-        val autoBottomSheetDialog= AutoBottomDialogFragment(applicationContext)
-
+        val tradeBottomSheetDialog = TradeBottomDialogFragment(applicationContext)
+        val autoBottomSheetDialog = AutoBottomDialogFragment(applicationContext)
+        val itemBottomSheetDialog = ItemBottomDialogFragment(applicationContext)
 
         // 거래하기
         ll_trade.setOnClickListener {
@@ -677,11 +677,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 아이템
         ll_item.setOnClickListener {
-            profileDb = ProfileDB.getInstace(this)
-
-            val dlgItem = Dialog_item(this, profileDb?.profileDao()?.getMoney()!!, profileDb?.profileDao()?.getValue1()!!)
-            dlgItem.start()
-            click = !click ///////////////////////////////////////////////////////////////////////
+            itemBottomSheetDialog.show(supportFragmentManager, itemBottomSheetDialog.tag)
+            click = !click /////////////////////////////////////////////////////////////////////////
         }
 
         // 레버리지 언락
@@ -1733,40 +1730,33 @@ class GameNormalActivity : AppCompatActivity() {
                             oneday = 7995L - 80L // 8 sec/day
                             value1diff = 3
                             value1now += value1diff
-
                         } else if ((setGamespeed==1) && (value1now <= 10000 - 2)) {
                             oneday = 3995L - 80L // 4 sec/day
                             value1diff = 2
                             value1now += value1diff
-
                         } else if ((setGamespeed==2) && (value1now <= 10000 - 1)) {
                             oneday = 1995L - 80L // 2 sec/day
                             value1diff = 1
                             value1now += value1diff
-
                         } else if ((setGamespeed==4) && (value1now <= 10000 - 1)) {
                             oneday = 495L - 80L // 2 day/sec
                             value1diff = 1
                             value1now += value1diff
-
                         } else if ((setGamespeed==5) && (value1now <= 10000 - 2)) {
                             oneday = 245L - 80L // 4 day/sec
                             value1diff = 2
                             value1now += value1diff
-
                         } else if ((setGamespeed==6) && (value1now <= 10000 - 3)) {
                             oneday = 115L - 80L // 8 day/sec
                             value1diff = 3
                             value1now += value1diff
-
                         } else if ((setGamespeed==7) && (value1now <= 10000 - 4)) {
                             oneday = 95L - 80L // 10 day/sec
                             value1diff = 4
                             value1now += value1diff
-
                         } else { // 피로도 == 10000, or setGamespeed == 3
                             oneday = 995L - 80L // 1 day/sec
-
+                            setGamespeed = 3
                         }
                         ////////////////////////////////////////////////////////////////////////////
                         runOnUiThread{
@@ -1931,6 +1921,9 @@ class GameNormalActivity : AppCompatActivity() {
 
 
                                 value1now += 50 // 피로도 증가
+                                runOnUiThread {
+                                    pb_fatigue.progress = value1now
+                                }
 
                                 // UI 업데이트
                                 Updatecht()
