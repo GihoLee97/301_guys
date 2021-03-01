@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="256dp"
+        android:layout_height="212dp"
+        android:layout_gravity="center"
+        android:background="@drawable/borderline_negotiation"
+        android:elevation="5dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="피로도 채우기"
+            android:textAppearance="@style/dialog_potion_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_potion_upper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_vector_potion_upper"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <ImageView
+            android:id="@+id/iv_potion_upper_inactive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_vector_potion_upper_inactive"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <ImageView
+            android:id="@+id/iv_potion_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1.89dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_vector_potion_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/iv_potion_upper" />
+
+        <ImageView
+            android:id="@+id/iv_potion_bottom_inactive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1.89dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_vector_potion_bottom_inactive"
+            app:layout_constraintTop_toBottomOf="@+id/iv_potion_upper" />
+
+
+
+        <TextView
+            android:id="@+id/tv_potion_count"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toBottomOf="@id/iv_potion_bottom"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="현재 물약 개수: 00개"
+            android:textAppearance="@style/dialog_potion_count"
+            />
+
+
+
+        <TextView
+            android:id="@+id/tv_potion_contents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_potion_count"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="62dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="상점에서 피로도 물약을 구매해보세요!"
+            android:textAppearance="@style/dialog_potion_contents"
+            />
+
+
+
+        <Button
+            android:id="@+id/btn_potion"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_asset_dialog_close_button"
+            android:gravity="center"
+            android:text="물약 마시기"
+            android:visibility="invisible"
+            android:textAppearance="@style/game_dialog_asset_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_potion_inactive"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/ic_rectangle_potion_close_inactive"
+            android:gravity="center"
+            android:text="물약 마시기"
+            android:textAppearance="@style/game_dialog_asset_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/ib_cancel"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_exit_cancel"/>
+
+
+</LinearLayout>

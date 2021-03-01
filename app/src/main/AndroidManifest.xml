@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".InitialSignUpEntranceActivity"></activity>
+        <activity android:name=".NoticeActivity"></activity>
+        <activity android:name=".InitialSignUpEntranceActivity" />
         <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />
         <activity android:name=".NewMainActivity" />

@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.guys_from_301.stock_game.data.GameNormalDB
-import com.guys_from_301.stock_game.data.GameSet
-import com.guys_from_301.stock_game.data.GameSetDB
-import com.guys_from_301.stock_game.data.ProfileDB
+import com.guys_from_301.stock_game.data.*
 
 class MarketViewModel(_marketActivity : Context): ViewModel() {
     //변수 선언
@@ -16,33 +13,42 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     private var gameSetDb: GameSetDB? = null
     private var gameset: GameSet? = null
     private var gameNormalDb: GameNormalDB? = null
+    private var itemDb: ItemDB? = null
+    private var itemList: Item? = null
 
     private var initialId: Int = 0
     private var _stack = MutableLiveData<Int>()
     private var _initialAsset = MutableLiveData<Int>()
     private var _initialMonthly = MutableLiveData<Int>()
     private var _initialSalaryRaise = MutableLiveData<Int>()
+    private var _potion = MutableLiveData<Int>()
 
     init{
         profileDb = ProfileDB.getInstace(marketActivity)
         gameSetDb = GameSetDB.getInstace(marketActivity)
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
+        itemDb = ItemDB.getInstace(marketActivity)
         _stack.value = profileDb?.profileDao()?.getMoney()
         gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value =  gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
         _initialSalaryRaise.value = gameset?.setsalaryraise
+        _potion.value = itemList?.potion
     }
 
     fun refresh(){
         profileDb = ProfileDB.getInstace(marketActivity)
         gameSetDb = GameSetDB.getInstace(marketActivity)
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
+        itemDb = ItemDB.getInstace(marketActivity)
         _stack.value = profileDb?.profileDao()?.getMoney()
         gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value = gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
         _initialSalaryRaise.value = gameset?.setsalaryraise
+        _potion.value = itemList?.potion
     }
 
     fun writeDataBase(){
@@ -61,6 +67,12 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
                 newGameSet.setsalaryraise = _initialSalaryRaise.value!!
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
             }
+            itemDb = ItemDB.getInstace(marketActivity)
+            var newItem = itemDb?.itemDao()?.getAll()?.get(0)
+            if (newItem != null) {
+                newItem.potion = _potion.value!!
+                itemDb?.itemDao()?.update(newItem)
+            }
         }
         var writeThread = Thread(write)
         writeThread.start()
@@ -70,6 +82,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     fun getInitialAsset(): LiveData<Int>{return _initialAsset}
     fun getInitialMonthly(): LiveData<Int>{return _initialMonthly}
     fun getInitialSalaryRaise(): LiveData<Int>{return _initialSalaryRaise}
+    fun getPotion():LiveData<Int>{return _potion}
 
     fun applyItemRaiseSetCash(){
         _initialAsset.value = _initialAsset.value?.plus(1)
@@ -109,6 +122,11 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
 
     fun BuyStack(payment: Int){
         _stack.value = _stack.value?.plus(payment)
+        writeDataBase()
+    }
+
+    fun BuyPotion(){
+        _potion.value = _potion.value?.plus(1)
         writeDataBase()
     }
 

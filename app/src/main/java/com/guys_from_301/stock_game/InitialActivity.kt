@@ -207,6 +207,7 @@ class InitialActivity : AppCompatActivity() {
 
         val addRunnable = Runnable {
             newItem.lasttime = nowtime
+            newItem.potion = 0
             itemDb?.itemDao()?.insert(newItem)
         }
         val addThread = Thread(addRunnable)

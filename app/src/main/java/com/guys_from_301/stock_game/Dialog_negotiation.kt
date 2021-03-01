@@ -27,7 +27,7 @@ class Dialog_negotiation(context: Context) {
     fun start(theme: Int, step: Int, marketViewModel: MarketViewModel){
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dlg.setContentView(R.layout.dialog_negotiation)     //다이얼로그에 사용할 xml 파일을 불러옴
-        dlg.setCancelable(true)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        dlg.setCancelable(true)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히도록 함
         dlg.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         tv_title = dlg.findViewById(R.id.title)
         tv_price = dlg.findViewById(R.id.tv_price)
@@ -81,7 +81,7 @@ class Dialog_negotiation(context: Context) {
                     3->marketViewModel.applyItemFailtoSetSalaryRaise()
                 }
                 if (dialogUnsuccess != null) {
-                    dialogUnsuccess.start(theme)
+                    dialogUnsuccess.start(theme, 0)
                 }
                 dlg.dismiss()
             }

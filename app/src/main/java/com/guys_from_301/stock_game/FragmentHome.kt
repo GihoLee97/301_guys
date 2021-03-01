@@ -33,6 +33,8 @@ class FragmentHome : Fragment() {
 //    private var param1: String? = null
 //    private var param2: String? = null
     var profileDb : ProfileDB? = null
+    var itemDb : ItemDB? = null
+    private var item: Item? = null
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
     private var gameNormalDB: GameNormalDB? = null
@@ -54,7 +56,7 @@ class FragmentHome : Fragment() {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
         profileDb = ProfileDB.getInstace(_MainActivity!!)
-
+        itemDb = ItemDB.getInstace(_MainActivity!!)
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(_MainActivity!!)
@@ -134,6 +136,11 @@ class FragmentHome : Fragment() {
         v.findViewById<ConstraintLayout>(R.id.cl_dashboard3).setOnClickListener{
             val intent = Intent(_MainActivity, QuestActivity::class.java)
             startActivity(intent)
+        }
+
+        v.findViewById<TextView>(R.id.tv_use_potion).setOnClickListener {
+            val dialogPotion: Dialog_potion = Dialog_potion(_MainActivity!!)
+            itemDb?.itemDao()?.getAll()?.get(0)?.let { it1 -> dialogPotion.start(it1.potion) }
         }
 
         v.findViewById<TextView>(R.id.tv_userName).text = profileDb?.profileDao()?.getNickname()!!+"님"

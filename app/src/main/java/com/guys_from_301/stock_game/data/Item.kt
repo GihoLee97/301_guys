@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 @Entity
 data class Item(@PrimaryKey(autoGenerate = true) var id: Long?,
 
-    @ColumnInfo(name = "lasttime") var lasttime: Long // 피로도 저감 마지막 시점 저장
+    @ColumnInfo(name = "lasttime") var lasttime: Long, // 피로도 저감 마지막 시점 저장
+    @ColumnInfo(name = "potion") var potion: Int
 
 
 ) {
-    constructor() : this(null, 0L)
+    constructor() : this(null, 0L, 0)
 }

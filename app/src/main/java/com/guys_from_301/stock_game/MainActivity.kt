@@ -459,6 +459,7 @@ class MainActivity : AppCompatActivity() {
                 val newItem = Item()
                 newItem.id = itemDb?.itemDao()!!.getId()
                 newItem.lasttime = nowtime
+                newItem.potion = itemDb?.itemDao()?.getAll()?.get(0)?.potion ?: 0
                 itemDb?.itemDao()?.update(newItem)
                 //
 

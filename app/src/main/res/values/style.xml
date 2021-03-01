@@ -735,5 +735,19 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
+    <style name="dialog_potion_title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F68A06</item>
+    </style>
+    <style name="dialog_potion_count">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F68A06</item>
+    </style>
+    <style name="dialog_potion_contents">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+
+
 
 </resources>

@@ -14,15 +14,12 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
-import com.guys_from_301.stock_game.data.Profile
-import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
-import com.guys_from_301.stock_game.data.GameSet
-import com.guys_from_301.stock_game.data.GameSetDB
+import com.guys_from_301.stock_game.data.*
 import kotlinx.coroutines.delay
 import java.util.*
 
@@ -58,6 +55,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     private lateinit var cl_buy_stack1 : ConstraintLayout
     private lateinit var cl_buy_stack2 : ConstraintLayout
     private lateinit var cl_buy_stack3 : ConstraintLayout
+    private lateinit var cl_buy_potion : ConstraintLayout
 
     //gamesetdB
     private var gameSetDB: GameSetDB? = null
@@ -102,6 +100,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         cl_buy_stack1 = v.findViewById(R.id.cl_buy_stack1)
         cl_buy_stack2 = v.findViewById(R.id.cl_buy_stack2)
         cl_buy_stack3 = v.findViewById(R.id.cl_buy_stack3)
+        cl_buy_potion = v.findViewById(R.id.cl_potion)
         //btn
         cl_todayStack = v.findViewById(R.id.cl_todayStack)
         //btn_purchase = v.findViewById(R.id.btn_purchase)
@@ -134,13 +133,13 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         billingManager = BillingManager(mContext as Activity)
 
 
-        //초기자산 아이템 구매
+        //초기자산 협상
         cl_upgrade_asset.setOnClickListener {
             //billingManager.startConnection()
             if (marketViewModel.getStack().value!! >= ITEM_COST){
                 if(marketViewModel.getInitialMonthly().value == 4) {
                     val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                    dialogUnsuccess.start(5)
+                    dialogUnsuccess.start(5, 0)
                 }
                 else {
                     if (gameset != null) {
@@ -151,7 +150,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             }
             else {
                 val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                dialogUnsuccess.start(4)
+                dialogUnsuccess.start(4, 0)
             }
         }
 //        btn_purchase.setOnClickListener {
@@ -162,12 +161,12 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
         }
 
-        //초기월금 아이템 구매
+        //초기월금 협상
         cl_upgrade_monthly.setOnClickListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
                 if(marketViewModel.getInitialMonthly().value == 4) {
                     val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                    dialogUnsuccess.start(5)
+                    dialogUnsuccess.start(5, 0)
                 }
                 else {
                     if (gameset != null) {
@@ -178,7 +177,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             }
             else {
                 val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                dialogUnsuccess.start(4)
+                dialogUnsuccess.start(4, 0)
             }
         }
 
@@ -187,7 +186,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             if (marketViewModel.getStack().value!! >= ITEM_COST){
                 if(marketViewModel.getInitialMonthly().value == 4) {
                     val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                    dialogUnsuccess.start(5)
+                    dialogUnsuccess.start(5, 0)
                 }
                 else {
                     if (gameset != null) {
@@ -198,7 +197,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             }
             else {
                 val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-                dialogUnsuccess.start(4)
+                dialogUnsuccess.start(4, 0)
             }
         }
 
@@ -212,7 +211,12 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         cl_buy_stack3.setOnClickListener{
             marketViewModel.BuyStack(1000)
         }
-
+        //물약 구매
+        cl_buy_potion.setOnClickListener{
+            marketViewModel.BuyPotion()
+            val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+            marketViewModel.getPotion().value?.let { it1 -> dialogUnsuccess.start(6, it1) }
+        }
 
 
         return v

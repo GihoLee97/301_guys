@@ -77,6 +77,7 @@ class Dialog_game_exit(context: Context) {
                     val newItem = Item()
                     newItem.id = itemDb?.itemDao()!!.getId()
                     newItem.lasttime = nowtime
+                    newItem.potion = itemDb?.itemDao()!!.getAll()[0].potion
                     itemDb?.itemDao()?.update(newItem)
                     //
 
@@ -122,6 +123,7 @@ class Dialog_game_exit(context: Context) {
                 var nowtime = System.currentTimeMillis() // 현재 시간
                 val newItem = Item()
                 newItem.id = itemDb?.itemDao()!!.getId()
+                newItem.potion = itemDb?.itemDao()!!.getAll()[0].potion
                 newItem.lasttime = nowtime
                 itemDb?.itemDao()?.update(newItem)
                 //
