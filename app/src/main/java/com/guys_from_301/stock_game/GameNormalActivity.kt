@@ -1490,16 +1490,10 @@ class GameNormalActivity : AppCompatActivity() {
 
                                 // 자동 매수내역 DB 저장
                                 val addRunnable = Runnable {
-                                    val newGameNormalDB = GameNormal()
-                                    newGameNormalDB.id = localdatatime
-                                    newGameNormalDB.buyorsell = "자동매수"
-                                    newGameNormalDB.select = auto1x + 1
-                                    newGameNormalDB.price = price1x
-                                    newGameNormalDB.volume = autoprice
-                                    newGameNormalDB.quant = autoquant
-                                    newGameNormalDB.tradecom = autoprice * (tradecomrate - 1F)
-                                    newGameNormalDB.cash = cash
-                                    newGameNormalDB.setId = setId
+                                    var localDateTime = LocalDateTime.now()
+                                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자동 매수", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                                            bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                                 }
                                 val addThread = Thread(addRunnable)
