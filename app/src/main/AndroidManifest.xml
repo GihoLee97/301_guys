@@ -16,6 +16,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity android:name=".NoticeActivity"></activity>
+        <activity android:name=".NewResultNormalActivity"></activity>
         <activity android:name=".InitialSignUpEntranceActivity" />
         <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />

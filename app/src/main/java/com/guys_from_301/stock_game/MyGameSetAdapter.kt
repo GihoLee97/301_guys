@@ -22,6 +22,7 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, var gameNo
                 profitRate.text = ""
             }
             else {
+                //endtime gamenormal 기준
                 if(gameUnit.endtime.length>10)endtime.text = gameUnit.endtime.slice(IntRange(0,3))+"."+gameUnit.endtime.slice(IntRange(5,6))+"."+gameUnit.endtime.slice(IntRange(8,9))+" "+gameUnit.endtime.slice(IntRange(11,15))
                 gameName.text = "투자공간" + gameUnit.id
                 profitRate.text = per.format(gameUnit.profitrate).toString()+"%"

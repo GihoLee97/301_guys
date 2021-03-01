@@ -11,6 +11,7 @@ import com.guys_from_301.stock_game.data.GameNormal
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
+import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -238,18 +239,12 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
                 btnItem1ok.text = "사용됨"
                 btnItem1ok.isEnabled = false
                 val addRunnable = kotlinx.coroutines.Runnable {
-                    val newGameNormalDB = GameNormal()
-                    newGameNormalDB.id = localdatatime+itemcount
-                    newGameNormalDB.buyorsell = "시간역행 아이템 사용"
-                    newGameNormalDB.select = 1
-                    newGameNormalDB.setId = setId
-                    newGameNormalDB.item1active = item1Active
-                    newGameNormalDB.item1active = item2Active
-                    newGameNormalDB.item1active = item3Active
-                    newGameNormalDB.item1active = item4Active
-                    newGameNormalDB.item1able = item1Able
-                    newGameNormalDB.item1length = item1Length
+                    var localDateTime = LocalDateTime.now()
+                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "시간 역행 아이템 사용", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                            bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+
                 }
                 val addThread = Thread(addRunnable)
                 addThread.start()
@@ -275,17 +270,10 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
 
                 btnItem2ok.text = "변경"
                 val addRunnable = kotlinx.coroutines.Runnable {
-                    val newGameNormalDB = GameNormal()
-                    newGameNormalDB.id = localdatatime+itemcount
-                    newGameNormalDB.buyorsell = "상대성 이론 아이템 사용"
-                    newGameNormalDB.select = 2
-                    newGameNormalDB.setId = setId
-                    newGameNormalDB.item1active = item1Active
-                    newGameNormalDB.item1active = item2Active
-                    newGameNormalDB.item1active = item3Active
-                    newGameNormalDB.item1active = item4Active
-                    newGameNormalDB.item1able = item1Able
-                    newGameNormalDB.item1length = item1Length
+                    var localDateTime = LocalDateTime.now()
+                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "상대성 이론 아이템 사용", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                            bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                 }
                 val addThread = Thread(addRunnable)
@@ -309,17 +297,10 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             btnItem3ok.text = "사용중"
             btnItem3ok.isEnabled = false
             val addRunnable = kotlinx.coroutines.Runnable {
-                val newGameNormalDB = GameNormal()
-                newGameNormalDB.id = localdatatime+itemcount
-                newGameNormalDB.buyorsell = "뉴스 아이템 사용"
-                newGameNormalDB.select = 3
-                newGameNormalDB.setId = setId
-                newGameNormalDB.item1active = item1Active
-                newGameNormalDB.item1active = item2Active
-                newGameNormalDB.item1active = item3Active
-                newGameNormalDB.item1active = item4Active
-                newGameNormalDB.item1able = item1Able
-                newGameNormalDB.item1length = item1Length
+                var localDateTime = LocalDateTime.now()
+                val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "뉴스 아이템 사용", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
             }
             val addThread = Thread(addRunnable)
@@ -339,17 +320,10 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             btnItem4ok.text = "사용중"
             btnItem4ok.isEnabled = false
             val addRunnable = kotlinx.coroutines.Runnable {
-                val newGameNormalDB = GameNormal()
-                newGameNormalDB.id = localdatatime+itemcount
-                newGameNormalDB.buyorsell = "레버리지 아이템 사용"
-                newGameNormalDB.select = 4
-                newGameNormalDB.setId = setId
-                newGameNormalDB.item1active = item1Active
-                newGameNormalDB.item1active = item2Active
-                newGameNormalDB.item1active = item3Active
-                newGameNormalDB.item1active = item4Active
-                newGameNormalDB.item1able = item1Able
-                newGameNormalDB.item1length = item1Length
+                var localDateTime = LocalDateTime.now()
+                val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "레버리지 사용", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
             }
             val addThread = Thread(addRunnable)
