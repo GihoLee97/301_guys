@@ -49,6 +49,9 @@ interface ProfileDao {
     @Query("SELECT login_pw FROM Profile")
     fun getLoginpw(): String
 
+    @Query("SELECT hash FROM PROFILE")
+    fun getHash(): String
+
     @Insert
     fun insert(profile: Profile)
 

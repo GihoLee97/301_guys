@@ -153,6 +153,7 @@
                         android:src="@drawable/ic_path"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_alarmSetting"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal">

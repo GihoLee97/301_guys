@@ -28,6 +28,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
@@ -1412,16 +1413,10 @@ class GameNormalActivity : AppCompatActivity() {
                             input += monthly // 총 input 최신화
                             // 자산내역 DB 저장
                             val addRunnable = Runnable {
-                                val newGameNormalDB = GameNormal()
-                                newGameNormalDB.id = localdatatime
-                                newGameNormalDB.buyorsell = "자산 차트"
-                                newGameNormalDB.select = 1
-                                newGameNormalDB.price = price1x
-                                newGameNormalDB.volume = 0F
-                                newGameNormalDB.quant = 0
-                                newGameNormalDB.tradecom = 0F
-                                newGameNormalDB.cash = cash
-                                newGameNormalDB.setId = setId
+                                var localDateTime = LocalDateTime.now()
+                                val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자산 차트", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
                                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                             }
                             val addThread = Thread(addRunnable)

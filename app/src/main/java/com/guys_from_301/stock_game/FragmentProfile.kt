@@ -69,8 +69,8 @@ class FragmentProfile : Fragment() {
             dlg.start(profileDb)
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
-            //TODO: 공지사항
-            Toast.makeText(_MainActivity, "공지사항 구현해야 함", Toast.LENGTH_LONG).show()
+            val intent = Intent(_MainActivity, NoticeActivity::class.java)
+            startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_version_info).setOnClickListener{
             //TODO: 버전정보
@@ -79,6 +79,9 @@ class FragmentProfile : Fragment() {
         v.findViewById<LinearLayout>(R.id.ll_game_option).setOnClickListener{
             val intent = Intent(_MainActivity, SettingActivity::class.java)
             startActivity(intent)
+        }
+        v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
+            pushAlarmManager.openSetting(activity as MainActivity)
         }
         v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
             if(profileDb?.profileDao()?.getLogin()!! == 1){
@@ -113,12 +116,9 @@ class FragmentProfile : Fragment() {
                 dlg_delete.start()
             }
         }
-
-
-
-
         return v
     }
+
 //    override fun onResume() {
 //        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
 //        super.onResume()

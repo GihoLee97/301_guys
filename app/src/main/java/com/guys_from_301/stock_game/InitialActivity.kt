@@ -443,7 +443,8 @@ class InitialActivity : AppCompatActivity() {
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "")
+            var input: String = 1.toString()+"#########first_login##########"+0+0+0F+0F+0+0+1+0+0+temp+"a"+""
+            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "", getHash(input))
             profileDb?.profileDao()?.insert(newProfile)
         } else {
             profileDb = ProfileDB?.getInstace(this)
