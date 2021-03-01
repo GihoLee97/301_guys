@@ -19,7 +19,6 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
@@ -651,7 +650,7 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         val tradeBottomSheetDialog= TradeBottomDialogFragment(applicationContext)
-        val itemBottomSheetDialog= ItemBottomDialogFragment(applicationContext)
+        val autoBottomSheetDialog= AutoBottomDialogFragment(applicationContext)
 
 
         // 거래하기
@@ -663,7 +662,7 @@ class GameNormalActivity : AppCompatActivity() {
         // 자동
         ll_trade.setOnLongClickListener {
             if (!autobuy) {
-                itemBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
+                autoBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
                 click = !click ///////////////////////////////////////////////////////////////////////
             } else {
                 autobuy = false

@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
+class AutoBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
     var mContext: Context? = context
 
     private var ontemp: Boolean = true
@@ -95,16 +95,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             tv_autook.text = "자동 매수하기"
         }
 
-        if (!item4Active) {
-            cl_3x.setBackgroundResource(R.drawable.auto_lock)
-            cl_inv3x.setBackgroundResource(R.drawable.auto_lock)
-            tv_auto3xlock.text = "잠김"
-            tv_autoinv3xlock.text = "잠김"
-            tv_auto3xlock.setTextAppearance(R.style.auto_titlelock)
-            tv_autoinv3xlock.setTextAppearance(R.style.auto_titlelock)
-            cl_3x.isEnabled = false
-            cl_inv3x.isEnabled = false
-        }
+        lock()
 
         btn_autoclose.setOnClickListener {
             dismiss()
@@ -118,6 +109,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_1x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#B7B1B3"))
                 cl_autook.isEnabled = false
+                lock()
             } else {
                 ontemp = true
                 selecttemp = 0
@@ -129,6 +121,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv3x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#F4730B"))
                 cl_autook.isEnabled = true
+                lock()
             }
         }
 
@@ -140,6 +133,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_3x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#B7B1B3"))
                 cl_autook.isEnabled = false
+                lock()
             } else {
                 ontemp = true
                 selecttemp = 1
@@ -151,6 +145,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv3x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#F4730B"))
                 cl_autook.isEnabled = true
+                lock()
             }
         }
 
@@ -162,6 +157,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv1x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#B7B1B3"))
                 cl_autook.isEnabled = false
+                lock()
             } else {
                 ontemp = true
                 selecttemp = 2
@@ -173,6 +169,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv3x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#F4730B"))
                 cl_autook.isEnabled = true
+                lock()
             }
         }
 
@@ -184,6 +181,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv3x.setBackgroundResource(R.drawable.auto_unchoo)
                 cl_autook.setBackgroundColor(Color.parseColor("#B7B1B3"))
                 cl_autook.isEnabled = false
+                lock()
             } else {
                 ontemp = true
                 selecttemp = 3
@@ -195,6 +193,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                 cl_inv3x.setBackgroundResource(R.drawable.auto_choo)
                 cl_autook.setBackgroundColor(Color.parseColor("#F4730B"))
                 cl_autook.isEnabled = true
+                lock()
             }
         }
 
@@ -228,6 +227,19 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             dismiss()
         }
         return view
+    }
+
+    fun lock() {
+        if (!item4Active) {
+            cl_3x.setBackgroundResource(R.drawable.auto_lock)
+            cl_inv3x.setBackgroundResource(R.drawable.auto_lock)
+            tv_auto3xlock.text = "잠김"
+            tv_autoinv3xlock.text = "잠김"
+            tv_auto3xlock.setTextAppearance(R.style.auto_titlelock)
+            tv_autoinv3xlock.setTextAppearance(R.style.auto_titlelock)
+            cl_3x.isEnabled = false
+            cl_inv3x.isEnabled = false
+        }
     }
 
     override fun onDestroy() {
