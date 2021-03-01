@@ -19,21 +19,21 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileActivityViewModel) {
+class Dialog_nick(context: Context, first_login: Boolean, _viewModel: ProfileActivityViewModel) {
     var mContext: Context? = context
     private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감
-    private lateinit var et_nickname_change : EditText
-    private lateinit var tv_nickname_number : TextView
-    private lateinit var tv_set_nick_underline : TextView
-    private lateinit var tv_nick_change_ment_1 : TextView
-    private lateinit var btn_nickname_change : Button
-    private lateinit var ib_cancel : ImageButton
+    private lateinit var et_nickname_change: EditText
+    private lateinit var tv_nickname_number: TextView
+    private lateinit var tv_set_nick_underline: TextView
+    private lateinit var tv_nick_change_ment_1: TextView
+    private lateinit var btn_nickname_change: Button
+    private lateinit var ib_cancel: ImageButton
 
     private lateinit var listenter: Dialog_nick.NicknameDialogClickedListener
     private val viewModel = _viewModel
 
 
-    fun start(profileDb :ProfileDB?) {
+    fun start(profileDb: ProfileDB?) {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_nickname) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
@@ -49,26 +49,26 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
         et_nickname_change.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0?.length!!>=0){
-                    if(p0?.length!! == 0){
+                if (p0?.length!! >= 0) {
+                    if (p0?.length!! == 0) {
                         btn_nickname_change.setBackgroundResource(R.drawable.nickname_change_ok_box_gray)
                         tv_set_nick_underline.setBackgroundResource(R.drawable.initial_set_id_line_red)
-                    }
-                    else{
+                    } else {
                         btn_nickname_change.setBackgroundResource(R.drawable.nickname_change_ok_box)
                         tv_set_nick_underline.setBackgroundResource(R.drawable.initial_set_id_line)
                     }
                     tv_nickname_number.setText(p0?.length!!.toString() + "/10")
-                }
-                else{
+                } else {
                 }
             }
         })
 
-        ib_cancel.setOnClickListener{
+        ib_cancel.setOnClickListener {
             dlg.dismiss()
         }
 
@@ -80,24 +80,24 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
             val url = "http://stockgame.dothome.co.kr/test/nickcheck.php/"
             if (et_nickname_change.text.toString().trim() == "" || et_nickname_change.text.toString().trim() == null) {
                 Toast.makeText(mContext, "공백 닉네임은 불가합니다.", Toast.LENGTH_LONG).show()
-            }
-            else {
+            } else {
                 var gson: Gson = GsonBuilder()
-                    .setLenient()
-                    .create()
+                        .setLenient()
+                        .create()
                 //creating retrofit object
                 var retrofit =
-                    Retrofit.Builder()
-                        .baseUrl(url)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build()
+                        Retrofit.Builder()
+                                .baseUrl(url)
+                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                .build()
                 //creating our api
                 funnickcheck = retrofit.create(RetrofitNickcheck::class.java)
                 funnickcheck.nickcheck(getHash(login_id), nickname).enqueue(object :
-                    Callback<String> {
+                        Callback<String> {
                     override fun onFailure(call: Call<String>, t: Throwable) {
                         println("---fail")
                     }
+
                     override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                         if (response.isSuccessful && response.body() != null) {
                             val okcode = response.body()!!
@@ -110,18 +110,19 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
                                 viewModel.setnWriteNickname(et_nickname_change.text.toString())
                                 tv_nick_change_ment_1.visibility = View.INVISIBLE
                                 update(getHash(profileDb?.profileDao()?.getLoginid()).trim(),
-                                getHash(profileDb?.profileDao()?.getLoginpw()).trim(),
-                                    profileDb?.profileDao()?.getMoney()!!,
-                                    profileDb?.profileDao()?.getValue1()!!,
-                                    profileDb?.profileDao()?.getNickname()!!,
-                                    profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                                    profileDb?.profileDao()?.getRoundCount()!!,
-                                    profileDb?.profileDao()?.getHistory()!!,
-                                    profileDb?.profileDao()?.getLevel()!!
+                                        getHash(profileDb?.profileDao()?.getLoginpw()).trim(),
+                                        profileDb?.profileDao()?.getMoney()!!,
+                                        profileDb?.profileDao()?.getValue1()!!,
+                                        profileDb?.profileDao()?.getNickname()!!,
+                                        profileDb?.profileDao()?.getProfitRate()!!,
+                                        profileDb?.profileDao()?.getRelativeProfitRate()!!,
+                                        profileDb?.profileDao()?.getRoundCount()!!,
+                                        profileDb?.profileDao()?.getHistory()!!,
+                                        profileDb?.profileDao()?.getLevel()!!
                                 )
                                 dlg.dismiss()
                             }
-                            if(okcode =="666"){
+                            if (okcode == "666") {
                                 // 입력한 닉네임이 현재 닉네임과 일치하는 경우
                                 dlg.dismiss()
                             }
@@ -133,7 +134,8 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
         }
         dlg.show()
     }
-    private fun nickfilter(IdorPw : EditText) {
+
+    private fun nickfilter(IdorPw: EditText) {
         IdorPw.setFilters(arrayOf(InputFilter.LengthFilter(10),
                 InputFilter { src, start, end, dst, dstart, dend ->
                     if (src == " ") { // for space
@@ -144,27 +146,26 @@ class Dialog_nick(context : Context, first_login : Boolean, _viewModel: ProfileA
                         tv_set_nick_underline.setBackgroundResource(R.drawable.initial_set_id_line)
                         return@InputFilter ""
                     }
-                    if( src != "" && src != null){
+                    if (src != "" && src != null) {
                     }
                     if (src.matches(Regex("[a-zA-Z0-9ㄱ-ㅎ가-힣]+"))) {
                         return@InputFilter src
-                    }
-                    else{
+                    } else {
                         return@InputFilter ""
                     }
                 }
         ))
     }
 
-    fun setOnNicknameClickedListener(listener: (String)->Unit){
-        this.listenter = object : NicknameDialogClickedListener{
+    fun setOnNicknameClickedListener(listener: (String) -> Unit) {
+        this.listenter = object : NicknameDialogClickedListener {
             override fun onNicknameClicked(content: String) {
                 listener(content)
             }
         }
     }
 
-    interface NicknameDialogClickedListener{
+    interface NicknameDialogClickedListener {
         fun onNicknameClicked(content: String)
     }
 

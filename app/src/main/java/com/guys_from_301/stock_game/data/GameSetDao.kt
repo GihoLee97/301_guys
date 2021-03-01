@@ -20,10 +20,10 @@ interface GameSetDao {
     fun getSetWithId(id: Int): GameSet
 
     @Query("SELECT setmonthly FROM GameSet")
-    fun getSetMonthly(): Float
+    fun getSetMonthly(): Int
 
     @Query("SELECT setsalaryraise FROM GameSet")
-    fun getSetSalaryRaise(): Float
+    fun getSetSalaryRaise(): Int
 
     @Query("SELECT setgamelength FROM GameSet")
     fun getSetGameLength(): Int

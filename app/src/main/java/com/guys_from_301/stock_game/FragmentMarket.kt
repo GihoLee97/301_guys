@@ -73,6 +73,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     var value1: Int = 0
     val moneyreward: Int = 1000000
     val value1reward: Int = 5000
+    val potion_cost : Int = 1000
 
     var mContext : Context = _MainActivity!!
 
@@ -127,7 +128,14 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         mRewardedVideoAd.rewardedVideoAdListener = this
 
         loadad()
-        initLayout(marketViewModel)
+        cl_todayStack.setOnClickListener {
+            if (mRewardedVideoAd.isLoaded) {
+                mRewardedVideoAd.show()
+            }
+            else{
+                Toast.makeText(mContext, "광고가 준비될 때까지 기다려주세요", Toast.LENGTH_LONG).show()
+            }
+        }
 
         // billing Manager for purchase process
         billingManager = BillingManager(mContext as Activity)
@@ -229,15 +237,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         super.onResume()
     }
 
-    fun initLayout(marketViewModel: MarketViewModel) {
-        cl_todayStack.setOnClickListener {
-            if (mRewardedVideoAd.isLoaded) {
-                mRewardedVideoAd.show()
-                marketViewModel.BuyStack(moneyreward)
-            }
-
-        }
-    }
 
     fun dbupdate() {
         var profileDb: ProfileDB? = null
@@ -288,16 +287,13 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     override fun onRewarded(rItem: RewardItem?) {
         var profileDb: ProfileDB? = null
         profileDb = ProfileDB.getInstace(mContext)
-        profileDb = ProfileDB.getInstace(mContext)
         money = profileDb?.profileDao()?.getMoney()!!.toInt()+moneyreward
         value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
-
         if (value1 >= value1reward) {
             value1 -= value1reward
         } else {
             value1 = 0
         }
-
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
@@ -305,13 +301,15 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
                 getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
                 money, value1,
                 profileDb?.profileDao()?.getNickname()!!,
+                profileDb?.profileDao()?.getProfitRate()!!,
                 profileDb?.profileDao()?.getRelativeProfitRate()!!,
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,
                 profileDb?.profileDao()?.getLevel()!!
         )
         // profiledb에 업데이트
-        dbupdate()
+        val marketViewModel = MarketViewModel(_MainActivity!!)
+        marketViewModel.BuyStack(moneyreward)
 
     }
 

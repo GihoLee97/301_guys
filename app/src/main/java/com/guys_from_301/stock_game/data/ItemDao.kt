@@ -13,6 +13,9 @@ interface ItemDao {
     @Query("SELECT lasttime FROM Item")
     fun getLasttime(): Long
 
+    @Query("SELECT potion FROM Item")
+    fun getPotion(): Int
+
     @Insert
     fun insert(item: Item)
 

@@ -99,6 +99,7 @@ class InitialLoginActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     //noticeDb
     private var noticeDb: NoticeDB? = null
+    private lateinit var itemDB : ItemDB
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -590,6 +591,9 @@ class InitialLoginActivity : AppCompatActivity() {
                     var data: DATACLASS? = response.body()!!
                     var serverProfile = Profile(profileDb?.profileDao()?.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDb?.profileDao()?.getLogin()!!,u_id,u_pw,"")
                     profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
+                    gameSetDb = GameSetDB?.getInstace(this@InitialLoginActivity)
+                    itemDB = ItemDB?.getInstace(this@InitialLoginActivity)!!
+
                     if(profileDb?.profileDao()?.getAll()?.get(0)?.isSameProfileWith(serverProfile) == true){}
                     else{
                         val newProfile = Profile()
@@ -609,7 +613,35 @@ class InitialLoginActivity : AppCompatActivity() {
                         profileDb?.profileDao()?.update(newProfile)
                     }
                     questdecode(data?.QUEST!!)
-                    profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
+                    val newGameset = GameSet()
+                    newGameset.id = 0
+                    val SET_CASH_STEP = listOf<Float>(10000F, 50000F, 100000F, 500000F, 1000000F)
+                    val SET_MONTHLY_STEP = listOf<Float>(1000F, 1500F, 2000F, 5000F, 10000F)
+                    val SET_SALARY_RAISE_STEP = listOf<Float>(4F,5F,6F,8F,10F)
+
+                    if(data?.SETCASH == 10000F) newGameset.setcash = 0
+                    else if(data?.SETCASH == 50000F) newGameset.setcash = 1
+                    else if(data?.SETCASH == 100000F) newGameset.setcash = 2
+                    else if(data?.SETCASH == 500000F) newGameset.setcash = 3
+                    else if(data?.SETCASH == 1000000F) newGameset.setcash = 4
+
+                    if(data?.SETMONTHLY == 1000F ) newGameset.setmonthly = 0
+                    else if(data?.SETMONTHLY == 1500F ) newGameset.setmonthly = 1
+                    else if(data?.SETMONTHLY == 2000F ) newGameset.setmonthly = 2
+                    else if(data?.SETMONTHLY == 5000F ) newGameset.setmonthly = 3
+                    else if(data?.SETMONTHLY == 10000F ) newGameset.setmonthly = 4
+
+                    if(data?.SETSALARYRAISE == 4F) newGameset.setsalaryraise = 0
+                    else if(data?.SETSALARYRAISE == 5F) newGameset.setsalaryraise = 1
+                    else if(data?.SETSALARYRAISE == 6F) newGameset.setsalaryraise = 2
+                    else if(data?.SETSALARYRAISE == 8F) newGameset.setsalaryraise = 3
+                    else if(data?.SETSALARYRAISE == 10F) newGameset.setsalaryraise = 4
+
+                    gameSetDb?.gameSetDao()?.update(newGameset)
+
+                    val newItem = Item()
+                    newItem.potion = data?.POTION
+                    itemDB?.itemDao()?.update(newItem)
                 }
             }
         })
