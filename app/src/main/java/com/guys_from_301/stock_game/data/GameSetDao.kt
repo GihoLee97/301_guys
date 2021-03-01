@@ -8,7 +8,7 @@ interface GameSetDao {
     fun getAll(): MutableList<GameSet>
 
     @Query("SELECT setcash FROM GameSet")
-    fun getSetCash(): Float
+    fun getSetCash(): Int
 
     @Query("SELECT id FROM GameSet")
     fun getId(): Int

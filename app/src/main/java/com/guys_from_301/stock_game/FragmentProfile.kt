@@ -69,8 +69,8 @@ class FragmentProfile : Fragment() {
             dlg.start(profileDb)
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
-            //TODO: 공지사항
-            Toast.makeText(_MainActivity, "공지사항 구현해야 함", Toast.LENGTH_LONG).show()
+            val intent = Intent(_MainActivity, NoticeActivity::class.java)
+            startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_version_info).setOnClickListener{
             //TODO: 버전정보

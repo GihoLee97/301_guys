@@ -27,6 +27,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var login = MutableLiveData<Int>()
     private var login_id = MutableLiveData<String>()
     private var login_pw = MutableLiveData<String>()
+    private var hash = MutableLiveData<String>()
 
     init {
         profileDb = ProfileDB.getInstace(profileActivity)
@@ -44,6 +45,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         login.value = profileDb?.profileDao()?.getLogin()
         login_id.value = profileDb?.profileDao()?.getLoginid()
         login_pw.value = profileDb?.profileDao()?.getLoginpw()
+        hash.value = profileDb?.profileDao()?.getHash()
     }
 
     fun refresh(){
@@ -62,13 +64,14 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         login.value = profileDb?.profileDao()?.getLogin()
         login_id.value = profileDb?.profileDao()?.getLoginid()
         login_pw.value = profileDb?.profileDao()?.getLoginpw()
+        hash.value = profileDb?.profileDao()?.getHash()
     }
 
     fun write2database(){
         var write = Runnable {
             profileDb = ProfileDB.getInstace(profileActivity)
             var newProfile = Profile(id.value!!,nickname.value!!, money.value!!,value1.value!!,profitrate.value!!,relativeprofitrate.value!!,roundcount.value!!,history.value!!,
-                    level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!)
+                    level.value!!,exp.value!!,rank.value!!,login.value!!,login_id.value!!,login_pw.value!!,hash.value!!)
             profileDb?.profileDao()?.update(newProfile)
         }
         var writeThread = Thread(write)
@@ -90,6 +93,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setLogin(newLogin : Int){ login.value = newLogin }
     fun setLoginId(newLoginId : String){ login_id.value = newLoginId }
     fun setLoginPw(newLoginPw: String){ login_pw.value = newLoginPw }
+    fun setHash(newHash: String){hash.value = newHash}
 
     // setter
     fun setnWriteId(newId : Long){
@@ -134,6 +138,10 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setnWriteLoginPw(newLoginPw: String){
         login_pw.value = newLoginPw
         write2database() }
+    fun setWriteHash(newHash: String){
+        hash.value = newHash
+        write2database()
+    }
 
     // getter function
     fun getId(): LiveData<Long> { return id }
@@ -150,6 +158,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getLogin(): LiveData<Int> { return login }
     fun getLoginId(): LiveData<String> { return login_id }
     fun getLoginPw(): LiveData<String> { return login_pw }
+    fun getHash(): LiveData<String>{ return hash}
 
     override fun onCleared() {
         write2database()

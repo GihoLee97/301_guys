@@ -18,7 +18,16 @@ data class Profile(@PrimaryKey(autoGenerate = true) var id: Long?,
                    @ColumnInfo(name = "rank") var rank: Int,
                    @ColumnInfo(name = "login") var login: Int,
                    @ColumnInfo(name = "login_id") var login_id: String,
-                   @ColumnInfo(name = "login_pw") var login_pw: String
+                   @ColumnInfo(name = "login_pw") var login_pw: String,
+                   @ColumnInfo(name = "hash") var hash: String
 ) {
-    constructor() : this(null, "nickname", 0, 0, 0F,0F, 0,0, 1,0,0, 0, "","")
+    constructor() : this(null, "nickname", 0, 0, 0F,0F, 0,0, 1,0,0, 0, "","","")
+
+    fun isSameProfileWith(other: Profile):Boolean {
+        if(other.id==id &&other.nickname == nickname && other.money == money && other.value1 == other.value1 && other.profitrate == profitrate && other.relativeprofitrate == relativeprofitrate&&
+                other.roundcount == roundcount&& other.history == history&&other.level == level && other.exp == exp &&other.rank == rank && other.login == login && other.login_id == login_id && other.login_pw == login_pw){
+            return true
+        }
+        else return false
+    }
 }

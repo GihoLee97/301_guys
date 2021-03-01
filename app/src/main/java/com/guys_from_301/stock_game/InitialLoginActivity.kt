@@ -97,6 +97,8 @@ class InitialLoginActivity : AppCompatActivity() {
             "100,000스택")
     //gameSetDb
     private var gameSetDb: GameSetDB? = null
+    //noticeDb
+    private var noticeDb: NoticeDB? = null
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -346,6 +348,15 @@ class InitialLoginActivity : AppCompatActivity() {
         }
         val t = Thread(r)
         t.start()
+
+        //초기 공지사항 저장
+        noticeDb = NoticeDB.getInstace(this)
+        val addNotice = Runnable {
+            val newNotice = Notice(0,"타디스에 오신 걸 환영합니다!", "타디스에 오신 걸 환영합니다!", "2021.03.01")
+            noticeDb?.noticeDao()?.insert(newNotice)
+        }
+        val noticeThread = Thread(addNotice)
+        noticeThread.start()
     }
 
     // general login
@@ -512,7 +523,8 @@ class InitialLoginActivity : AppCompatActivity() {
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "")
+            var input:String = 1.toString()+"#########first_login##########"+0+0+0F+0F+0+0+1+0+0+temp+"a"+""+""
+            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "", getHash(input))
             profileDb?.profileDao()?.insert(newProfile)
         } else {
             profileDb = ProfileDB?.getInstace(this)
@@ -576,6 +588,7 @@ class InitialLoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
                     var data: DATACLASS? = response.body()!!
+                    var severProfile = Profile(profileDb?.profileDao()?.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDb?.profileDao()?.getLogin()!!,u_id,u_pw,"")
                     profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
                     val newProfile = Profile()
                     newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
@@ -709,4 +722,6 @@ class InitialLoginActivity : AppCompatActivity() {
             googleAuth.signOut()
         }
     }
+
+
 }
