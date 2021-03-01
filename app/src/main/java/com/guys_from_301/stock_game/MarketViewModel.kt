@@ -127,6 +127,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
 
     fun BuyPotion(){
         _potion.value = _potion.value?.plus(1)
+        _stack.value = _stack.value?.minus(POTION_COST)
         writeDataBase()
     }
 

@@ -99,7 +99,7 @@ class InitialLoginActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     //noticeDb
     private var noticeDb: NoticeDB? = null
-    private lateinit var itemDB : ItemDB
+    private var itemDb : ItemDB? = null
 
     // google signin
     var auth: FirebaseAuth? = null
@@ -302,7 +302,6 @@ class InitialLoginActivity : AppCompatActivity() {
         }
 
         // 피로도: 로그인 화면에서 마지막 저장시간 초기화
-        var itemDb: ItemDB? = null
         itemDb = ItemDB?.getInstace(this)
         val newItem = Item()
         var nowtime = System.currentTimeMillis() // 현재 시간
@@ -592,7 +591,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     var serverProfile = Profile(profileDb?.profileDao()?.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDb?.profileDao()?.getLogin()!!,u_id,u_pw,"")
                     profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
                     gameSetDb = GameSetDB?.getInstace(this@InitialLoginActivity)
-                    itemDB = ItemDB?.getInstace(this@InitialLoginActivity)!!
+                    itemDb = ItemDB?.getInstace(this@InitialLoginActivity)
 
                     if(profileDb?.profileDao()?.getAll()?.get(0)?.isSameProfileWith(serverProfile) == true){}
                     else{
@@ -640,8 +639,10 @@ class InitialLoginActivity : AppCompatActivity() {
                     gameSetDb?.gameSetDao()?.update(newGameset)
 
                     val newItem = Item()
+                    newItem.id = 1
+                    newItem.lasttime = itemDb?.itemDao()?.getLasttime()!!
                     newItem.potion = data?.POTION
-                    itemDB?.itemDao()?.update(newItem)
+                    itemDb?.itemDao()?.update(newItem)
                 }
             }
         })

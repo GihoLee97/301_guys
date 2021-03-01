@@ -34,6 +34,7 @@ const val ITEM_COST = 100000
 const val STACK1_COST = 100
 const val STACK2_COST = 200
 const val STACK3_COST = 1000
+const val POTION_COST = 1000
 
 class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     // TODO: Rename and change types of parameters
@@ -73,7 +74,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     var value1: Int = 0
     val moneyreward: Int = 1000000
     val value1reward: Int = 5000
-    val potion_cost : Int = 1000
 
     var mContext : Context = _MainActivity!!
 
