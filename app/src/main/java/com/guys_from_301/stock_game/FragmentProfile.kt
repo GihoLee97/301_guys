@@ -80,6 +80,9 @@ class FragmentProfile : Fragment() {
             val intent = Intent(_MainActivity, SettingActivity::class.java)
             startActivity(intent)
         }
+        v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
+            pushAlarmManager.openSetting(activity as MainActivity)
+        }
         v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
             if(profileDb?.profileDao()?.getLogin()!! == 1){
                 loginMethod = "GENERAL"
