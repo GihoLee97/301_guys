@@ -440,15 +440,13 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun go2MainActivity(){
         val intent = Intent(this, MainActivity::class.java) //Main으로 이동
         startActivity(intent)
     }
 
     private fun go2InitialActivity(){
-        val intent = Intent(this, InitialActivity::class.java) //Initial으로 이동
+        val intent = Intent(this, NewInitialActivity::class.java) //Initial으로 이동
         startActivity(intent)
     }
 
