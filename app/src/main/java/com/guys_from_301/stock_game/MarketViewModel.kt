@@ -1,10 +1,17 @@
 package com.guys_from_301.stock_game
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MarketViewModel(_marketActivity : Context): ViewModel() {
     //변수 선언
@@ -122,6 +129,8 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
 
     fun BuyStack(payment: Int){
         _stack.value = _stack.value?.plus(payment)
+        //TODO: 결제 함수가 생기면 결제가 확인되어야 buymoney 실행하게 변경해야 함
+        buymoney(getHash(profileDb?.profileDao()?.getLoginid()!!), _stack.value!!)
         writeDataBase()
     }
 
@@ -135,4 +144,39 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         writeDataBase()
         super.onCleared()
     }
+
+    fun buymoney(u_id: String, u_money : Int) {
+        var funbuymoney: RetrofitBuyMoney? = null
+        val url = "http://stockgame.dothome.co.kr/test/buymoney.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funbuymoney= retrofit.create(RetrofitBuyMoney::class.java)
+        funbuymoney.setasset(u_id, u_money).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(_MainActivity, t.message, Toast.LENGTH_LONG).show()
+            }
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                if (response.isSuccessful && response.body() != null) {
+                    if(response.body()!! == "555"){
+                        Toast.makeText(_MainActivity, "서버에 올라감", Toast.LENGTH_LONG).show()
+                    }
+                    else if(response.body()!! == "666"){
+                        Toast.makeText(_MainActivity, "오류 발생", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        Toast.makeText(_MainActivity, "앱을 종료 후 다시 실행시켜 주세요", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
+    }
+
 }
