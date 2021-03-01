@@ -226,13 +226,10 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             marketViewModel.getPotion().value?.let { it1 -> dialogUnsuccess.start(6, it1) }
         }
 
-
         return v
     }
 
-
     override fun onResume() {
-        tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
         loadad()
         super.onResume()
     }
@@ -310,7 +307,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         // profiledb에 업데이트
         val marketViewModel = MarketViewModel(_MainActivity!!)
         marketViewModel.BuyStack(moneyreward)
-
     }
 
     override fun onRewardedVideoStarted() {

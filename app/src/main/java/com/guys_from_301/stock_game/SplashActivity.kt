@@ -59,25 +59,25 @@ val kakaoMessageManager = KakaoMessageManager()
 val shareManager = ShareManager()
 //capture Manager
 val captureUtil = CaptureUtil()
+//profileDb Manager
+lateinit var profileDbManager : ProfileDbManager
 //MUST BE INITIALIZED AT FIRST-END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 
 
 class SplashActivity : AppCompatActivity() {
-    //receive profile room data
-    private var profileDb: ProfileDB? = null
     lateinit var mAdView : AdView
-
-
     private lateinit var mAuth : FirebaseAuth
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        profileDbManager = ProfileDbManager(this)
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
         TalkApiClient.instance
         //광고
         MobileAds.initialize(this){}
+        profileDbManager = ProfileDbManager(this)
 
         //push alarm channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -95,9 +95,8 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({ //delay를 위한 handler
-            profileDb = ProfileDB?.getInstace(this)
-            if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()){
-                val loginMethod = profileDb?.profileDao()?.getLogin()
+            if(!profileDbManager.isEmpty(this)){
+                val loginMethod = profileDbManager.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login
                 else if(loginMethod?.and(2)==2) { // google login
                     if (isGoogleAuthChecked()) go2MainActivity()
@@ -448,6 +447,11 @@ class SplashActivity : AppCompatActivity() {
     private fun go2InitialActivity(){
         val intent = Intent(this, NewInitialActivity::class.java) //Initial으로 이동
         startActivity(intent)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        profileDbManager.write2database()
     }
 
 }
