@@ -408,24 +408,38 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F4730B</item>
     </style>
-    <style name="game_trade">
+    <style name="game_tradeoff">
         <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
-    <style name="game_tradelong">
+    <style name="game_tradeon">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="game_tradeautooff">
         <item name="android:fontFamily">@font/paybooc_otf_light</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="game_tradeautoon">
+        <item name="android:fontFamily">@font/paybooc_otf_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
     </style>
     <style name="game_fatigue">
         <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F4730B</item>
     </style>
-    <style name="game_autotrading">
+    <style name="auto_title">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="auto_titlelock">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="game_autotrading_shadow">
         <item name="android:textSize">12sp</item>

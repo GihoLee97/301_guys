@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="224dp"
     android:orientation="vertical"
-    android:weightSum="224">
+    android:weightSum="224"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" >
 
     <ImageButton
-        android:id="@+id/btn_closeItemUseDialog"
+        android:id="@+id/btn_autoclose"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="16dp"
         android:layout_weight="16"
         android:background="#F1F5F5"
         android:src="@drawable/ic_path_close_bottom" />
@@ -17,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="152dp"
         android:background="#F1F5F5"
         android:layout_weight="152">
 
@@ -30,10 +31,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="투자금"
-            android:textAppearance="@style/game_autotrading"/>
+            android:textAppearance="@style/auto_title"/>
 
         <TextView
-            android:id="@+id/tv_autotrading_percentage"
+            android:id="@+id/tv_autoper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="24dp"
@@ -41,10 +42,10 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="90%"
-            android:textAppearance="@style/game_autotrading"/>
+            android:textAppearance="@style/auto_title"/>
 
         <SeekBar
-            android:id="@+id/sb_autotrading"
+            android:id="@+id/sb_auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
@@ -53,7 +54,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:progressDrawable="@drawable/seek_bar"
-            android:progress="40"
+            android:progress="50"
+            android:max="100"
             android:thumb="@drawable/ic_thumb"/>
 
         <TextView
@@ -61,11 +63,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginBottom="60dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sb_autotrading"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:text="투자종목"
-            android:textAppearance="@style/game_autotrading"/>
+            android:textAppearance="@style/auto_title"/>
         
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,16 +83,16 @@
             android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_x1"
+                android:id="@+id/cl_1x"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="31"
-                android:background="@drawable/ic_rectangle_autotrading">
+                android:background="@drawable/auto_unchoo">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x1"
-                    android:textAppearance="@style/game_autotrading"
+                    android:textAppearance="@style/auto_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -104,16 +106,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"/>
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_x3"
+                android:id="@+id/cl_3x"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="31"
-                android:background="@drawable/ic_rectangle_autotrading">
+                android:background="@drawable/auto_unchoo">
                 <TextView
+                    android:id="@+id/tv_auto3xlock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x3"
-                    android:textAppearance="@style/game_autotrading"
+                    android:textAppearance="@style/auto_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -128,16 +131,16 @@
                 android:layout_weight="4"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_invx1"
+                android:id="@+id/cl_inv1x"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="31"
-                android:background="@drawable/ic_rectangle_autotrading">
+                android:background="@drawable/auto_unchoo">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x1 인버스"
-                    android:textAppearance="@style/game_autotrading"
+                    android:textAppearance="@style/auto_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -152,16 +155,17 @@
                 android:layout_weight="4"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_invx3"
+                android:id="@+id/cl_inv3x"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="31"
-                android:background="@drawable/ic_rectangle_autotrading">
+                android:background="@drawable/auto_unchoo">
                 <TextView
+                    android:id="@+id/tv_autoinv3xlock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x3 인버스"
-                    android:textAppearance="@style/game_autotrading"
+                    android:textAppearance="@style/auto_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -177,14 +181,13 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_autotrading"
+        android:id="@+id/cl_autook"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="56dp"
         android:layout_weight="56"
-        android:background="@drawable/ic_dialog_bottom_sheet_item_button_activated">
-
-
+        android:background="#F4730B">
             <TextView
+                android:id="@+id/tv_autook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="자동 매매하기"

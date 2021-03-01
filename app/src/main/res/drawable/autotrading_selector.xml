@@ -4,6 +4,6 @@
         android:drawable="@drawable/ic_rectangle_selected_item"
         android:state_selected="true"/>
     <item
-        android:drawable="@drawable/ic_rectangle_autotrading"
+        android:drawable="@drawable/auto_unchoo"
         android:state_selected="false"/>
 </selector>

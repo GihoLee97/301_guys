@@ -461,8 +461,6 @@ class MainActivity : AppCompatActivity() {
                 newItem.lasttime = nowtime
                 newItem.potion = itemDb?.itemDao()?.getAll()?.get(0)?.potion ?: 0
                 itemDb?.itemDao()?.update(newItem)
-                //
-
             }
             delay(200L) // 0.2초에 한 번씩 확인
         }

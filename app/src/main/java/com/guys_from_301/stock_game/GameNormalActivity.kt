@@ -131,7 +131,7 @@ var value1now: Int = 0 // 초기화 시 ItemDB와 연동
 // 자동 기능 변수들
 var autobuy: Boolean = false // 자동 매수기능 활성여부
 var autoratio: Int = 0 // 월 투자금 가운데 자동 매수 비율
-var auto1x: Int = 100 // 자동 매수 금액 중 1x 매수 비율 (%)
+var auto1x: Int = 0 // 매수할 종목 선택 0: 1x, 1: 3x, 2: inv1x, 3: inv3x
 
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
@@ -371,6 +371,8 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var tv_news: TextView
     private lateinit var ll_item: LinearLayout
     private lateinit var ll_trade: LinearLayout
+    private lateinit var tv_trade: TextView
+    private lateinit var tv_autoon: TextView
     private lateinit var pb_fatigue: ProgressBar
 
     private var ecoselect: Int = 0 // 0: fund, 1: bond, 2: indpro, 3: unem, 4: inf
@@ -436,6 +438,8 @@ class GameNormalActivity : AppCompatActivity() {
         tv_news = findViewById(R.id.tv_news)
         ll_item = findViewById(R.id.ll_item)
         ll_trade = findViewById(R.id.ll_trade)
+        tv_trade = findViewById(R.id.tv_trade)
+        tv_autoon = findViewById(R.id.tv_autoon)
         pb_fatigue = findViewById(R.id.pb_fatigue)
 
         // findViewById<Button>(R.id.btn_auto).setBackgroundResource(R.drawable.ic_check_intersection)
@@ -646,6 +650,8 @@ class GameNormalActivity : AppCompatActivity() {
 
 
         val tradeBottomSheetDialog= TradeBottomDialogFragment(applicationContext)
+        val itemBottomSheetDialog= ItemBottomDialogFragment(applicationContext)
+
 
         // 거래하기
         ll_trade.setOnClickListener {
@@ -655,9 +661,17 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 자동
         ll_trade.setOnLongClickListener {
-            val dlgAuto = Dialog_auto(this)
-            dlgAuto.start()
-            click = !click ///////////////////////////////////////////////////////////////////////
+            if (!autobuy) {
+                itemBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
+                click = !click ///////////////////////////////////////////////////////////////////////
+            } else {
+                autobuy = false
+                autoratio = 0
+                tv_trade.setTextAppearance(R.style.game_tradeoff)
+                tv_autoon.setTextAppearance(R.style.game_tradeautooff)
+                ll_trade.setBackgroundResource(R.drawable.trade_autooff)
+                Toast.makeText(this, "자동 매수를 사용하지 않습니다", Toast.LENGTH_SHORT).show()
+            }
             true
         }
 
@@ -680,7 +694,6 @@ class GameNormalActivity : AppCompatActivity() {
         }
 
         // 경제 지표 차트
-        // TODO
         cl_fund.setOnClickListener {
             ecoselect = 0
             cht_eco.data = fundD
@@ -1148,10 +1161,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 자동 매수
         var monthly: Float = setMonthly // 월급
-        var auto1xratio: Float = 0F
-        var auto3xratio: Float = 0F
-        var auto1xquant: Int = 0
-        var auto3xquant: Int = 0
+        var autoprice: Float = 0F
+        var autoquant: Int = 0
 
         // 피로도
         var value1diff: Int = 0
@@ -1378,6 +1389,23 @@ class GameNormalActivity : AppCompatActivity() {
                         }
                         newssave.clear()
 
+
+                        if (autobuy) {
+                            runOnUiThread {
+                                tv_trade.setTextAppearance(R.style.game_tradeon)
+                                tv_autoon.setTextAppearance(R.style.game_tradeautoon)
+                                tv_autoon.text = "(길게 눌러 자동 매수 해제하기)"
+                                ll_trade.setBackgroundResource(R.drawable.trade_autoon)
+                            }
+                        } else {
+                            runOnUiThread {
+                                tv_trade.setTextAppearance(R.style.game_tradeoff)
+                                tv_autoon.setTextAppearance(R.style.game_tradeautooff)
+                                tv_autoon.text = "(길게 눌러 자동 매수하기)"
+                                ll_trade.setBackgroundResource(R.drawable.trade_autooff)
+                            }
+                        }
+
                         // 월 투자금 입금 시작
                         if (snpDate_sf.date >= 10 && monthToggle==0) {
                             cash += monthly // 월 투자금 현금으로 입금
@@ -1389,90 +1417,98 @@ class GameNormalActivity : AppCompatActivity() {
                                 newGameNormalDB.buyorsell = "자산 차트"
                                 newGameNormalDB.select = 1
                                 newGameNormalDB.price = price1x
-                                newGameNormalDB.volume = auto1xquant * price1x
-                                newGameNormalDB.quant = auto1xquant
-                                newGameNormalDB.tradecom = auto1xquant * price1x * (tradecomrate - 1F)
+                                newGameNormalDB.volume = 0F
+                                newGameNormalDB.quant = 0
+                                newGameNormalDB.tradecom = 0F
                                 newGameNormalDB.cash = cash
                                 newGameNormalDB.setId = setId
                                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                             }
                             val addThread = Thread(addRunnable)
                             addThread.start()
-//                            runOnUiThread {
-//                                findViewById<TextView>(R.id.tv_notification).text =
-//                                    "알림: 월 투자금 " + dec.format(monthly) + " 원이 입금되었습니다"
-//                            }
 
                             ////////////////////////////////////////////////////////////////////////
                             // 자동 매수
                             if (autobuy) {
-                                auto1xratio = autoratio * auto1x / 10000F
-                                auto3xratio = autoratio * (100 - auto1x) / 10000F
+                                when (auto1x) {
+                                    0 -> {
+                                        if (((monthly / (price1x * tradecomrate)).roundToInt() - (monthly / (price1x * tradecomrate)) > 0)) {
+                                            autoquant = (monthly / (price1x * tradecomrate)).roundToInt() - 1
+                                        }
+                                        else {
+                                            autoquant = (monthly / (price1x * tradecomrate)).roundToInt()
+                                        }
+                                        cash -= autoquant * price1x * tradecomrate
+                                        tradecomtot += autoquant * price1x * (tradecomrate - 1F)
+                                        quant1x += autoquant // 수량 반영
+                                        bought1x += price1x * autoquant // 매입금 반영
+                                        aver1x = bought1x / quant1x // 평균단가 반영
 
-                                if (auto1xratio!=0F) {
-                                    if (((monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() - (monthly * auto1xratio / (price1x * tradecomrate)) > 0)) {
-                                        auto1xquant = (monthly * auto1xratio / (price1x * tradecomrate)).roundToInt() - 1
+                                        autoprice = autoquant * price1x
                                     }
-                                    else {
-                                        auto1xquant = (monthly * auto1xratio / (price1x * tradecomrate)).roundToInt()
-                                    }
+                                    1 -> {
+                                        if (((monthly / (price3x * tradecomrate)).roundToInt() - (monthly / (price3x * tradecomrate)) > 0)) {
+                                            autoquant = (monthly / (price3x * tradecomrate)).roundToInt() - 1
+                                        }
+                                        else {
+                                            autoquant = (monthly / (price3x * tradecomrate)).roundToInt()
+                                        }
+                                        cash -= autoquant * price3x * tradecomrate
+                                        tradecomtot += autoquant * price3x * (tradecomrate - 1F)
+                                        quant3x += autoquant // 수량 반영
+                                        bought3x += price3x * autoquant // 매입금 반영
+                                        aver3x = bought3x / quant3x // 평균단가 반영
 
-                                    cash -= auto1xquant * price1x * tradecomrate
-                                    tradecomtot += auto1xquant * price1x * (tradecomrate - 1F)
-                                    quant1x += auto1xquant // 수량 반영
-                                    bought1x += price1x * auto1xquant // 매입금 반영
-                                    aver1x = bought1x / quant1x // 평균단가 반영
-
-                                    // 자동 매수내역 DB 저장
-                                    val addRunnable = Runnable {
-                                        val newGameNormalDB = GameNormal()
-                                        newGameNormalDB.id = localdatatime
-                                        newGameNormalDB.buyorsell = "자동매수"
-                                        newGameNormalDB.select = 1
-                                        newGameNormalDB.price = price1x
-                                        newGameNormalDB.volume = auto1xquant * price1x
-                                        newGameNormalDB.quant = auto1xquant
-                                        newGameNormalDB.tradecom = auto1xquant * price1x * (tradecomrate - 1F)
-                                        newGameNormalDB.cash = cash
-                                        newGameNormalDB.setId = setId
-                                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+                                        autoprice = autoquant * price3x
                                     }
-                                    val addThread = Thread(addRunnable)
-                                    addThread.start()
+                                    2 -> {
+                                        if (((monthly / (priceinv1x * tradecomrate)).roundToInt() - (monthly / (priceinv1x * tradecomrate)) > 0)) {
+                                            autoquant = (monthly / (priceinv1x * tradecomrate)).roundToInt() - 1
+                                        }
+                                        else {
+                                            autoquant = (monthly / (priceinv1x * tradecomrate)).roundToInt()
+                                        }
+                                        cash -= autoquant * priceinv1x * tradecomrate
+                                        tradecomtot += autoquant * priceinv1x * (tradecomrate - 1F)
+                                        quantinv1x += autoquant // 수량 반영
+                                        boughtinv1x += priceinv1x * autoquant // 매입금 반영
+                                        averinv1x = boughtinv1x / quantinv1x // 평균단가 반영
+
+                                        autoprice = autoquant * priceinv1x
+                                    }
+                                    3 -> {
+                                        if (((monthly / (priceinv3x * tradecomrate)).roundToInt() - (monthly / (priceinv3x * tradecomrate)) > 0)) {
+                                            autoquant = (monthly / (priceinv3x * tradecomrate)).roundToInt() - 1
+                                        }
+                                        else {
+                                            autoquant = (monthly / (priceinv3x * tradecomrate)).roundToInt()
+                                        }
+                                        cash -= autoquant * priceinv3x * tradecomrate
+                                        tradecomtot += autoquant * priceinv3x * (tradecomrate - 1F)
+                                        quantinv3x += autoquant // 수량 반영
+                                        boughtinv3x += priceinv3x * autoquant // 매입금 반영
+                                        averinv3x = boughtinv3x / quantinv3x // 평균단가 반영
+
+                                        autoprice = autoquant * priceinv3x
+                                    }
                                 }
 
-
-                                if (auto3xratio!=0F) {
-                                    if (((monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - (monthly * auto3xratio / (price3x * tradecomrate)) > 0)) {
-                                        auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt() - 1
-                                    }
-                                    else {
-                                        auto3xquant = (monthly * auto3xratio / (price3x * tradecomrate)).roundToInt()
-                                    }
-
-                                    cash -= auto3xquant * price3x * tradecomrate
-                                    tradecomtot += auto3xquant * price3x * (tradecomrate - 1F)
-                                    quant3x += auto3xquant
-                                    bought3x += price3x * auto3xquant
-                                    aver3x = bought3x / quant3x
-
-                                    // 자동 매수내역 DB 저장
-                                    val addRunnable = Runnable {
-                                        val newGameNormalDB = GameNormal()
-                                        newGameNormalDB.id = localdatatime
-                                        newGameNormalDB.buyorsell = "자동매수"
-                                        newGameNormalDB.select = 2
-                                        newGameNormalDB.price = price3x
-                                        newGameNormalDB.volume = auto3xquant * price3x
-                                        newGameNormalDB.quant = auto3xquant
-                                        newGameNormalDB.tradecom = auto3xquant * price3x * (tradecomrate - 1F)
-                                        newGameNormalDB.cash = cash
-                                        newGameNormalDB.setId = setId
-                                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-                                    }
-                                    val addThread = Thread(addRunnable)
-                                    addThread.start()
+                                // 자동 매수내역 DB 저장
+                                val addRunnable = Runnable {
+                                    val newGameNormalDB = GameNormal()
+                                    newGameNormalDB.id = localdatatime
+                                    newGameNormalDB.buyorsell = "자동매수"
+                                    newGameNormalDB.select = auto1x + 1
+                                    newGameNormalDB.price = price1x
+                                    newGameNormalDB.volume = autoprice
+                                    newGameNormalDB.quant = autoquant
+                                    newGameNormalDB.tradecom = autoprice * (tradecomrate - 1F)
+                                    newGameNormalDB.cash = cash
+                                    newGameNormalDB.setId = setId
+                                    gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                                 }
+                                val addThread = Thread(addRunnable)
+                                addThread.start()
                             }
                             ////////////////////////////////////////////////////////////////////////
                             monthToggle = 1 // 해당 월 투자금 지급 여부

@@ -1050,21 +1050,23 @@
                     android:orientation="vertical"
                     android:layout_weight="304"
                     android:gravity="center"
-                    android:background="#F4730B">
+                    android:background="@drawable/trade_autooff">
                     <TextView
+                        android:id="@+id/tv_trade"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_marginTop="11dp"
                         android:text="거래하기"
-                        android:textAppearance="@style/game_trade">
+                        android:textAppearance="@style/game_tradeoff">
                     </TextView>
                     <TextView
+                        android:id="@+id/tv_autoon"
                         android:layout_width="wrap_content"
                         android:layout_height="13dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="12dp"
-                        android:text="(길게 눌러 자동 매매하기)"
-                        android:textAppearance="@style/game_tradelong">
+                        android:text="(길게 눌러 자동 매수하기)"
+                        android:textAppearance="@style/game_tradeautooff">
                     </TextView>
                 </LinearLayout>
             </LinearLayout>
