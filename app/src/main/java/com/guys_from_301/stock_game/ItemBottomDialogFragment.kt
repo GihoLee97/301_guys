@@ -76,7 +76,6 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
         cl_item2detail.visibility = GONE
         cl_itemok.isEnabled = false
         pb_itemfatigue.progress = value1now
-        fatigue()
 
         if (((10000 - value1now) / 50F).roundToInt() - ((10000 - value1now) / 50F) > 0) {
             item1limbyfatigue = ((10000 - value1now) / 50F).roundToInt() - 1
@@ -115,6 +114,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             tv_item1consume.text = "피로도 " + item1ConsumeTemp.toString() + " 증가"
             cl_itemok.isEnabled = true
             cl_itemok.setBackgroundResource(R.drawable.item_ok)
+            pb_itemfatigue.progress = value1now
         }
 
         cl_item2.setOnClickListener {
@@ -122,6 +122,8 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             cl_itemselect.visibility = GONE
             cl_item2detail.visibility = VISIBLE
             sb_item2.progress = setGamespeed
+            fatigue()
+            pb_itemfatigue.progress = value1now
         }
 
         ib_item1main.setOnClickListener {
@@ -131,6 +133,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             cl_itemok.isEnabled = false
             cl_itemok.setBackgroundResource(R.drawable.item_notok)
             item1temp = item1lim
+            pb_itemfatigue.progress = value1now
         }
 
         ib_item2main.setOnClickListener {
@@ -139,6 +142,16 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             cl_itemok.isEnabled = false
             cl_itemok.setBackgroundResource(R.drawable.item_notok)
             item2temp = setGamespeed
+            pb_itemfatigue.progress = value1now
+        }
+
+        // TODO
+        btn_item1minus.setOnClickListener {
+
+        }
+
+        btn_item1plus.setOnClickListener {
+
         }
 
         sb_item1.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
