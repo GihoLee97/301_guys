@@ -22,7 +22,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textSize="16dp"
                 android:text="게임을 종료하시겠습니까?"
                 android:textAppearance="@style/game_exit_ment"
                 android:background="@color/white"/>
@@ -33,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/black"
                 android:text="(이대로 투자를 마치면 총 수익률에 반영됩니다)"
                 android:textAppearance="@style/game_exit_content"
                 android:background="@color/white"/>

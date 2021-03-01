@@ -116,12 +116,9 @@ class FragmentProfile : Fragment() {
                 dlg_delete.start()
             }
         }
-
-
-
-
         return v
     }
+
 //    override fun onResume() {
 //        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
 //        super.onResume()
