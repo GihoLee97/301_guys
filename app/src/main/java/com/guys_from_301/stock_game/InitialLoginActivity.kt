@@ -588,24 +588,27 @@ class InitialLoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
                     var data: DATACLASS? = response.body()!!
-                    var severProfile = Profile(profileDb?.profileDao()?.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDb?.profileDao()?.getLogin()!!,u_id,u_pw,"")
+                    var serverProfile = Profile(profileDb?.profileDao()?.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDb?.profileDao()?.getLogin()!!,u_id,u_pw,"")
                     profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
-                    val newProfile = Profile()
-                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                    newProfile.nickname = data?.NICKNAME!!
-                    newProfile.history = data?.HISTORY!!
-                    newProfile.level = data?.LEVEL!!
-                    newProfile.exp = data?.EXP!!
-                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                    newProfile.money = data?.MONEY!!
-                    newProfile.value1 = data?.VALUE1!!
-                    newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
-                    newProfile.roundcount = data?.ROUNDCOUNT!!
-                    newProfile.login_id = u_id
-                    newProfile.login_pw = u_pw
-                    //TODO: 업적저장
+                    if(profileDb?.profileDao()?.getAll()?.get(0)?.isSameProfileWith(serverProfile) == true){}
+                    else{
+                        val newProfile = Profile()
+                        newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                        newProfile.nickname = data?.NICKNAME!!
+                        newProfile.history = data?.HISTORY!!
+                        newProfile.level = data?.LEVEL!!
+                        newProfile.exp = data?.EXP!!
+                        newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                        newProfile.money = data?.MONEY!!
+                        newProfile.value1 = data?.VALUE1!!
+                        newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                        newProfile.roundcount = data?.ROUNDCOUNT!!
+                        newProfile.login_id = u_id
+                        newProfile.login_pw = u_pw
+                        //TODO: 서버로 전송
+                        profileDb?.profileDao()?.update(newProfile)
+                    }
                     questdecode(data?.QUEST!!)
-                    profileDb?.profileDao()?.update(newProfile)
                     profileDb = ProfileDB?.getInstace(this@InitialLoginActivity)
                 }
             }
