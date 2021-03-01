@@ -84,6 +84,7 @@ class ResultNormalActivity : AppCompatActivity() {
                 profileDb?.profileDao()?.getMoney()!!,
                 profileDb?.profileDao()?.getValue1()!!,
                 profileDb?.profileDao()?.getNickname()!!,
+                profileDb?.profileDao()?.getProfitRate()!!,
                 profileDb?.profileDao()?.getRelativeProfitRate()!!,
                 profileDb?.profileDao()?.getRoundCount()!!,
                 profileDb?.profileDao()?.getHistory()!!,

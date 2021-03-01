@@ -6,13 +6,17 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.Item
 import com.guys_from_301.stock_game.data.ItemDB
 import com.guys_from_301.stock_game.data.Profile
 import com.guys_from_301.stock_game.data.ProfileDB
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class Dialog_potion(context: Context) {
     var mContext: Context? = context
@@ -53,7 +57,9 @@ class Dialog_potion(context: Context) {
 
         btn_potion.setOnClickListener{
             var profileDb: ProfileDB? = null
+            var itemDb : ItemDB? = null
             profileDb = ProfileDB.getInstace(dlg.context)
+            itemDb = ItemDB.getInstace(dlg.context)
             var value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
             if (value1 >= value1reward) {
                 value1 -= value1reward
@@ -61,6 +67,9 @@ class Dialog_potion(context: Context) {
                 value1 = 0
             }
             dbupdate()
+            usepotion(getHash(profileDb?.profileDao()?.getLoginid()!!),
+                    profileDb?.profileDao()?.getMoney()!!,
+                    itemDb?.itemDao()?.getPotion()!!)
             dlg.dismiss()
         }
 
@@ -83,6 +92,40 @@ class Dialog_potion(context: Context) {
         }
         newItem.potion = newItem.potion - 1
         itemDb?.itemDao()?.update(newItem)
+    }
+
+    fun usepotion(u_id: String, u_money : Int, u_potion : Int) {
+        var funusepotion: RetrofitUsePotion? = null
+        val url = "http://stockgame.dothome.co.kr/test/usepotion.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funusepotion= retrofit.create(RetrofitUsePotion::class.java)
+        funusepotion.setasset(u_id, u_money, u_potion).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(mContext, t.message, Toast.LENGTH_LONG).show()
+            }
+            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
+                if (response.isSuccessful && response.body() != null) {
+                    if(response.body()!! == "555"){
+                        Toast.makeText(mContext, "서버에 올라감", Toast.LENGTH_LONG).show()
+                    }
+                    else if(response.body()!! == "666"){
+                        Toast.makeText(mContext, "오류 발생", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        Toast.makeText(mContext, "앱을 종료 후 다시 실행시켜 주세요", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
     }
 
 

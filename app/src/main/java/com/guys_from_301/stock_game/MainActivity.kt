@@ -362,15 +362,16 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // 서버에 올리는 코드(피로도)
         update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-            getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-            profileDb?.profileDao()?.getMoney()!!,
-            profileDb?.profileDao()?.getValue1()!!,
-            profileDb?.profileDao()?.getNickname()!!,
-            profileDb?.profileDao()?.getRelativeProfitRate()!!,
-            profileDb?.profileDao()?.getRoundCount()!!,
-            profileDb?.profileDao()?.getHistory()!!,
-            profileDb?.profileDao()?.getLevel()!!
-            )
+                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+                profileDb?.profileDao()?.getMoney()!!,
+                profileDb?.profileDao()?.getValue1()!!,
+                profileDb?.profileDao()?.getNickname()!!,
+                profileDb?.profileDao()?.getProfitRate()!!,
+                profileDb?.profileDao()?.getRelativeProfitRate()!!,
+                profileDb?.profileDao()?.getRoundCount()!!,
+                profileDb?.profileDao()?.getHistory()!!,
+                profileDb?.profileDao()?.getLevel()!!
+        )
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
         if (time2 in 0..2000) {

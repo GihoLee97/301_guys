@@ -368,6 +368,7 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
                     getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
                     nowmoney, nowvalue1, profileDb?.profileDao()?.getNickname()!!,
+                    profileDb?.profileDao()?.getProfitRate()!!,
                     profileDb?.profileDao()?.getRelativeProfitRate()!!,
                     profileDb?.profileDao()?.getRoundCount()!!,
                     profileDb?.profileDao()?.getHistory()!!,
