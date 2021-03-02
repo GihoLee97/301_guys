@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Dialog_nick(context: Context, first_login: Boolean, _viewModel: ProfileActivityViewModel) {
+class Dialog_nick(context: Context, first_login: Boolean) {
     var mContext: Context? = context
     private val dlg = Dialog(context) //부모 액티비티의 context 가 들어감
     private lateinit var et_nickname_change: EditText
@@ -30,10 +30,10 @@ class Dialog_nick(context: Context, first_login: Boolean, _viewModel: ProfileAct
     private lateinit var ib_cancel: ImageButton
 
     private lateinit var listenter: Dialog_nick.NicknameDialogClickedListener
-    private val viewModel = _viewModel
+//    private val viewModel = _viewModel
 
 
-    fun start(profileDb: ProfileDB?) {
+    fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_nickname) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
@@ -73,7 +73,7 @@ class Dialog_nick(context: Context, first_login: Boolean, _viewModel: ProfileAct
         }
 
         btn_nickname_change.setOnClickListener {
-            var login_id: String = profileDb?.profileDao()?.getLoginid()!!
+            var login_id: String = profileDbManager.getLoginId()!!
 
             var nickname: String = et_nickname_change.text.toString().trim()
             var funnickcheck: RetrofitNickcheck? = null
@@ -107,18 +107,19 @@ class Dialog_nick(context: Context, first_login: Boolean, _viewModel: ProfileAct
                             }
                             if (okcode == "555") {
                                 Toast.makeText(mContext, "닉네임이 변경되었습니다.", Toast.LENGTH_LONG).show()
-                                viewModel.setnWriteNickname(et_nickname_change.text.toString())
+                                profileDbManager.setNickname(et_nickname_change.text.toString())
+//                                viewModel.setnWriteNickname(et_nickname_change.text.toString())
                                 tv_nick_change_ment_1.visibility = View.INVISIBLE
-                                update(getHash(profileDb?.profileDao()?.getLoginid()).trim(),
-                                        getHash(profileDb?.profileDao()?.getLoginpw()).trim(),
-                                        profileDb?.profileDao()?.getMoney()!!,
-                                        profileDb?.profileDao()?.getValue1()!!,
-                                        profileDb?.profileDao()?.getNickname()!!,
-                                        profileDb?.profileDao()?.getProfitRate()!!,
-                                        profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                                        profileDb?.profileDao()?.getRoundCount()!!,
-                                        profileDb?.profileDao()?.getHistory()!!,
-                                        profileDb?.profileDao()?.getLevel()!!
+                                update(getHash(profileDbManager.getLoginId()!!).trim(),
+                                        getHash(profileDbManager.getLoginPw()!!).trim(),
+                                        profileDbManager.getMoney()!!,
+                                        profileDbManager.getValue1()!!,
+                                        profileDbManager.getNickname()!!,
+                                        profileDbManager.getProfitRate()!!,
+                                        profileDbManager.getRelativeProfit()!!,
+                                        profileDbManager.getRoundCount()!!,
+                                        profileDbManager.getHistory()!!,
+                                        profileDbManager.getLevel()!!
                                 )
                                 dlg.dismiss()
                             }

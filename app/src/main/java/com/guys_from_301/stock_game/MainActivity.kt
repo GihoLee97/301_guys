@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     var itemDb: ItemDB? = null
     val mContext: Context = this
-    var profileDb : ProfileDB? = null
+//    var profileDb : ProfileDB? = null
     var gameNormalDb: GameNormalDB? = null
     var questDb: QuestDB? = null
     private var tradedayQuestList:List<Quest>? = null
@@ -85,7 +85,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
-        profileDb = ProfileDB?.getInstace(mContext!!)
+        profileDbManager.refresh(this)
+//        profileDb = ProfileDB?.getInstace(mContext!!)
         questDb = QuestDB.getInstance(mContext!!)
         tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("투자 경험")
@@ -361,16 +362,16 @@ class MainActivity : AppCompatActivity() {
     var time3: Long = 0
     override fun onBackPressed() {
         // 서버에 올리는 코드(피로도)
-        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                profileDb?.profileDao()?.getMoney()!!,
-                profileDb?.profileDao()?.getValue1()!!,
-                profileDb?.profileDao()?.getNickname()!!,
-                profileDb?.profileDao()?.getProfitRate()!!,
-                profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                profileDb?.profileDao()?.getRoundCount()!!,
-                profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!
+        update(getHash(profileDbManager.getLoginId()!!).trim(),
+                getHash(profileDbManager.getLoginPw()!!).trim(),
+                profileDbManager.getMoney()!!,
+                profileDbManager.getValue1()!!,
+                profileDbManager.getNickname()!!,
+                profileDbManager.getProfitRate()!!,
+                profileDbManager.getRelativeProfit()!!,
+                profileDbManager.getRoundCount()!!,
+                profileDbManager.getHistory()!!,
+                profileDbManager.getLevel()!!
         )
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
@@ -424,6 +425,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private var value1ForWrite = 0
+
     // 피로도 저감 코드
     suspend fun value1reduc() {
         while (true) {
@@ -431,7 +434,7 @@ class MainActivity : AppCompatActivity() {
             var nowtime = System.currentTimeMillis() // 현재 시간
 
             if ((nowtime - lasttime) >= 1000L) {
-                var nowvalue1 = profileDb?.profileDao()?.getValue1()!!
+                var nowvalue1 = profileDbManager.getValue1()!!
                 var value1temp = 1 * (((nowtime - lasttime)/1000L).toFloat()).roundToInt() // 초당 1 씩 저감
 
                 if ((nowvalue1 - value1temp) <= 0 ) {
@@ -440,22 +443,9 @@ class MainActivity : AppCompatActivity() {
                     nowvalue1 -= value1temp
                 }
 
-                // DB 피로도 업데이트
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.exp = profileDb?.profileDao()?.getExp()!!
-                newProfile.rank = profileDb?.profileDao()?.getRank()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                newProfile.value1 = nowvalue1
-                newProfile.profitrate = profileDb?.profileDao()?.getProfitRate()!!
-                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                profileDb?.profileDao()?.update(newProfile)
+//                // DB 피로도 업데이트
+//                profileDbManager.setValue1(nowvalue1)
+                value1ForWrite = nowvalue1
 
                 // 피로도 저감 시간 저장
                 val newItem = Item()
@@ -505,9 +495,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     friendname.add(my_name)
-                    friendnick.add(profileDb?.profileDao()?.getNickname()!!)
-                    friendmoney.add(profileDb?.profileDao()?.getMoney()!!)
-                    friendlevel.add(profileDb?.profileDao()?.getLevel()!!)
+                    friendnick.add(profileDbManager.getNickname()!!)
+                    friendmoney.add(profileDbManager.getMoney()!!)
+                    friendlevel.add(profileDbManager.getLevel()!!)
                     friendimage.add(my_image!!)
                 }
             }
@@ -516,10 +506,8 @@ class MainActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int){
-        val newProfile = profileDb?.profileDao()?.getAll()?.get(0)
-        if (newProfile != null) {
-            newProfile.money = newProfile.money + reward
-            profileDb?.profileDao()?.update(newProfile)
+        if (!profileDbManager.isEmpty(this@MainActivity)) {
+            profileDbManager.setMoney(profileDbManager.getMoney()!! + reward)
         }
     }
 
@@ -648,12 +636,12 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
-        profileDb?.profileDao()?.getHistory()?.let { tradedayQuestList?.let { it1 ->
+        profileDbManager.getHistory()?.let { tradedayQuestList?.let { it1 ->
             checkQuestCumulativeTradingDay(it,
                 it1
             )
         } }
-        profileDb?.profileDao()?.getRoundCount()?.let { countGameQuestList?.let { it1 ->
+        profileDbManager.getRoundCount()?.let { countGameQuestList?.let { it1 ->
             checkQuestPlayedGame(it,
                 it1
             )
@@ -666,5 +654,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        // DB 피로도 업데이트
+        profileDbManager.setValue1(value1ForWrite)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        profileDbManager.write2database()
+    }
 
 }

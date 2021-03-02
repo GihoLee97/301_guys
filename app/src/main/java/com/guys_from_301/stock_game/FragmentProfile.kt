@@ -30,27 +30,21 @@ import com.guys_from_301.stock_game.data.Profile
 class FragmentProfile : Fragment() {
 
 
-    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
+//    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
-    var profileDb: ProfileDB? = null
     var loginMethod : String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        profileDb = ProfileDB.getInstace(_MainActivity!!)
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
-        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
-        v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
-        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDb?.profileDao()?.getExp()!!
-        if(profileDb?.profileDao()?.getLogin()!! != 4){
+        tv_my_nick.text = profileDbManager.getNickname()
+        v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager.getLevel().toString()
+        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager.getExp()!!
+        if(profileDbManager.getLogin() != 4){
             v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
         }
         else{
@@ -65,8 +59,8 @@ class FragmentProfile : Fragment() {
         }
 //        v.findViewById<ImageView>(R.id.iv_my_image).
         v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
-            val dlg = Dialog_nick(_MainActivity!!, false, profileActivityViewModel)
-            dlg.start(profileDb)
+            val dlg = Dialog_nick(_MainActivity!!, false)
+            dlg.start()
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
@@ -84,13 +78,13 @@ class FragmentProfile : Fragment() {
             pushAlarmManager.openSetting(activity as MainActivity)
         }
         v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
-            if(profileDb?.profileDao()?.getLogin()!! == 1){
+            if(profileDbManager.getLogin() == 1){
                 loginMethod = "GENERAL"
             }
-            else if(profileDb?.profileDao()?.getLogin()!! == 2){
+            else if(profileDbManager.getLogin() == 2){
                 loginMethod = "GOOGLE"
             }
-            else if(profileDb?.profileDao()?.getLogin()!! == 4){
+            else if(profileDbManager.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
             updatelogOutInFo2DB(loginMethod!!)
@@ -98,13 +92,13 @@ class FragmentProfile : Fragment() {
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
-            if(profileDb?.profileDao()?.getLogin()!! == 1){
+            if(profileDbManager.getLogin() == 1){
                 loginMethod = "GENERAL"
             }
-            else if(profileDb?.profileDao()?.getLogin()!! == 2){
+            else if(profileDbManager.getLogin() == 2){
                 loginMethod = "GOOGLE"
             }
-            else if(profileDb?.profileDao()?.getLogin()!! == 4){
+            else if(profileDbManager.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
             if(loginMethod == "GENERAL"){
@@ -214,22 +208,14 @@ class FragmentProfile : Fragment() {
         if(method=="GENERAL") loginMethod = 1
         else if(method=="GOOGLE") loginMethod = 2
         else if(method=="KAKAO") loginMethod = 4
-        profileDb = ProfileDB?.getInstace(_MainActivity!!)
-        if(!profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
-            val setRunnable = Runnable {
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!-loginMethod
-                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                profileDb?.profileDao()?.update(newProfile)
-            }
-            var setThread = Thread(setRunnable)
-            setThread.start()
+        if(!profileDbManager.isEmpty(_MainActivity!!)) {
+            profileDbManager.setLogin(profileDbManager.getLogin()!!-loginMethod)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        tv_my_nick.text = profileDbManager.getNickname()
     }
 }

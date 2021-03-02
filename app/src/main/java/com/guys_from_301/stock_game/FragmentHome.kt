@@ -31,7 +31,7 @@ class FragmentHome : Fragment() {
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
-    var profileDb : ProfileDB? = null
+//    var profileDb : ProfileDB? = null
     var itemDb : ItemDB? = null
     private var item: Item? = null
     private lateinit var tv_profitRate: TextView
@@ -55,11 +55,10 @@ class FragmentHome : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
-        profileDb = ProfileDB.getInstace(_MainActivity!!)
         itemDb = ItemDB.getInstace(_MainActivity!!)
 
         tv_profitRate = v.findViewById(R.id.tv_profitRate)
-        tv_profitRate.text = per.format(profileDb?.profileDao()?.getProfitRate()!!).toString()+"%"
+        tv_profitRate.text = per.format(profileDbManager.getProfitRate()!!).toString()+"%"
 
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
@@ -147,13 +146,13 @@ class FragmentHome : Fragment() {
             itemDb?.itemDao()?.getAll()?.get(0)?.let { it1 -> dialogPotion.start(it1.potion) }
         }
 
-        v.findViewById<TextView>(R.id.tv_userName).text = profileDb?.profileDao()?.getNickname()!!+"님"
+        v.findViewById<TextView>(R.id.tv_userName).text = profileDbManager.getNickname()+"님"
 
         // 피로도
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 while (true) {
-                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDb?.profileDao()?.getValue1()!!
+                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDbManager.getValue1()!!
                     delay(200L)
                 }
             }

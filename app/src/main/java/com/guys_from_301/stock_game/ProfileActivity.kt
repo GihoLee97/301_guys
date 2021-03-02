@@ -66,17 +66,17 @@ class ProfileActivity : AppCompatActivity() {
         if (profileDb?.profileDao()?.getNickname()=="#########first_login##########") { // PreSet the setting in the case of first running
             nickname_textView.text = "닉네임을 정하세요."
 
-            val dlg_nick = Dialog_nick(this,true,profileActivityViewModel)
+            val dlg_nick = Dialog_nick(this,true)
             profileDb = ProfileDB.getInstace(this)
 
-            dlg_nick.start(profileDb)
+            dlg_nick.start()
         }
 
         val startThread = Thread(startRunnable)
         startThread.start()
         nickname_btn.setOnClickListener {
-            val dlg_nick = Dialog_nick(this,false, profileActivityViewModel)
-            dlg_nick.start(profileDb)
+            val dlg_nick = Dialog_nick(this,false)
+            dlg_nick.start()
         }
 
         accountManagement_btn.setOnClickListener {
