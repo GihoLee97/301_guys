@@ -25,7 +25,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
-import com.guys_from_301.stock_game.retrofit.RetrofitIdcheck
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -500,7 +499,7 @@ class InitialLoginActivity : AppCompatActivity() {
         memorizeLogMethod(method)
         getuserinformation(id, pw)
 
-        Timer().schedule(500) {
+        Timer().schedule(1000) {
             if (profileDbManager.getNickname() == "#########first_login##########") {
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
@@ -595,18 +594,18 @@ class InitialLoginActivity : AppCompatActivity() {
                         newProfile.profitrate = data?.PROFITRATE
 
                         profileDbManager.updateManager(newProfile)
-                        profileDbManager.write2database()
                     }
-                    else if(profileDbManager.getHashRespectFromDbData()== profileDbManager.getHashRespectFromInput(serverProfile)){
+                    else if(profileDbManager.getHashRespectFromDbManager()== profileDbManager.getHashRespectFromInput(serverProfile)){
                         Log.d("Giho","서버와 동일")
                     }
                     else{
-                        if(profileDbManager.getHashRespectFromDbData()== profileDbManager.getHash()){
+                        if(profileDbManager.getHashRespectFromDbManager()== profileDbManager.getHash()){
                             Log.d("Giho","기기가 옳음")
                             //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
                         }
                         else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
                             Log.d("Giho","신뢰할 수 없는 기기 정보")
+                            Log.d("Giho","manager nickname : "+ profileDbManager.getNickname())
                             val newProfile = Profile()
                             newProfile.id = profileDbManager.getId()
                             newProfile.nickname = data?.NICKNAME!!
@@ -623,7 +622,8 @@ class InitialLoginActivity : AppCompatActivity() {
                             newProfile.profitrate = data?.PROFITRATE
 
                             profileDbManager.updateManager(newProfile)
-                            profileDbManager.write2database()
+                            Log.d("Giho","manager nickname : "+ profileDbManager.getNickname())
+
                         }
                     }
                     questdecode(data?.QUEST!!)
@@ -781,6 +781,7 @@ class InitialLoginActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        Log.d("Giho","OnStop")
         profileDbManager.write2database()
     }
 
