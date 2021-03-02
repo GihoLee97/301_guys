@@ -14,6 +14,15 @@ interface GameNormalDao {
     @Query("SELECT * FROM GameNormal WHERE setId = :setId AND buyorsell IS NOT '최종' ORDER BY id ASC")
     fun getSetWithNormal(setId: Int): List<GameNormal>
 
+    @Query("SELECT max(endtime) FROM GameNormal WHERE setId = :setId AND buyorsell IS NOT '최종' ORDER BY id ASC")
+    fun getSetWithNormalLastEndTime(setId: Int): String
+
+    @Query("SELECT item1able FROM GameNormal WHERE setId = :setId AND buyorsell IS '저장' ORDER BY id ASC")
+    fun getSetWithNormalItem1Able(setId: Int):  List<Int>
+
+    @Query("SELECT profitrate FROM GameNormal WHERE setId = :setId AND buyorsell IS NOT '최종' ORDER BY id ASC")
+    fun getSetWithNormalLastProfitRate(setId: Int): List<Float>
+
     @Query("SELECT profittot FROM GameNormal")
     fun getProfitTot(): Float
 

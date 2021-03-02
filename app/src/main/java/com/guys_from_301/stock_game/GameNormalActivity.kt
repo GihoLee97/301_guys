@@ -2274,12 +2274,14 @@ class GameNormalActivity : AppCompatActivity() {
                     100
             )
             val deleteRunnable = Runnable {
+                totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId)?.sum()!!
+                if(totaltradeday == 0) totaltradeday = item1Able
                 gameNormalDb?.gameNormalDao()?.deleteId(setId)
                 gameSetDb?.gameSetDao()?.deleteId(setId)
             }
             val deleteThread = Thread(deleteRunnable)
             deleteThread.start()
-            val intent = Intent(this@GameNormalActivity, ResultNormalActivity::class.java)
+            val intent = Intent(this@GameNormalActivity, NewResultNormalActivity::class.java)
             startActivity(intent)
         }
         else {

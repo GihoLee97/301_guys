@@ -650,6 +650,8 @@ class InitialLoginActivity : AppCompatActivity() {
                     else if(data?.SETSALARYRAISE == 6F) newGameset.setsalaryraise = 2
                     else if(data?.SETSALARYRAISE == 8F) newGameset.setsalaryraise = 3
                     else if(data?.SETSALARYRAISE == 10F) newGameset.setsalaryraise = 4
+                    newGameset.setgamelength = gameSetDb?.gameSetDao()?.getSetGameLength()!!
+                    newGameset.setgamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
 
                     gameSetDb?.gameSetDao()?.update(newGameset)
 

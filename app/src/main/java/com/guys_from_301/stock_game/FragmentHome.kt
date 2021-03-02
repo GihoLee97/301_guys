@@ -34,6 +34,7 @@ class FragmentHome : Fragment() {
     var profileDb : ProfileDB? = null
     var itemDb : ItemDB? = null
     private var item: Item? = null
+    private lateinit var tv_profitRate: TextView
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
     private var gameNormalDB: GameNormalDB? = null
@@ -56,6 +57,10 @@ class FragmentHome : Fragment() {
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
         profileDb = ProfileDB.getInstace(_MainActivity!!)
         itemDb = ItemDB.getInstace(_MainActivity!!)
+
+        tv_profitRate = v.findViewById(R.id.tv_profitRate)
+        tv_profitRate.text = per.format(profileDb?.profileDao()?.getProfitRate()!!).toString()+"%"
+
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(_MainActivity!!)
