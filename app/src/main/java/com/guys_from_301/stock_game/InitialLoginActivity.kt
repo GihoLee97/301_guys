@@ -602,6 +602,17 @@ class InitialLoginActivity : AppCompatActivity() {
                         if(profileDbManager.getHashRespectFromDbManager()== profileDbManager.getHash()){
                             Log.d("Giho","기기가 옳음")
                             //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
+                            update(getHash(profileDbManager.getLoginId()!!).trim(),
+                                    getHash(profileDbManager.getLoginPw()!!).trim(),
+                                    profileDbManager.getMoney()!!,
+                                    profileDbManager.getValue1()!!,
+                                    profileDbManager.getNickname()!!,
+                                    profileDbManager.getProfitRate()!!,
+                                    profileDbManager.getRelativeProfit()!!,
+                                    profileDbManager.getRoundCount()!!,
+                                    profileDbManager.getHistory()!!,
+                                    profileDbManager.getLevel()!!
+                            )
                         }
                         else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
                             Log.d("Giho","신뢰할 수 없는 기기 정보")
