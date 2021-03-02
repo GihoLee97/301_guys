@@ -25,6 +25,7 @@
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
         <activity android:name=".InitialSignupFinalActivity" />
+        <activity android:name=".HistoryActivity"/>
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />

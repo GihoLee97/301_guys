@@ -856,4 +856,31 @@
         <item name="android:textColor">#6C7B8E</item>
     </style>
 
+    <style name="history_ment">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="history_past_date">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+    <style name="history_past_number">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="history_past_profit_letter">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+
+    <style name="history_past_profit_number">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+
 </resources>

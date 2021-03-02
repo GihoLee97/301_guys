@@ -107,6 +107,11 @@ class FragmentHome : Fragment() {
             val dlg = Dialog_home_tip(_MainActivity!!)
             dlg.show()
         }
+
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard4).setOnClickListener{
+            val intent = Intent(_MainActivity!!, HistoryActivity::class.java)
+            startActivity(intent)
+        }
 //        val r = Runnable {
 //            try{
 //                game = gameDb?.gameSetDao()?.getPick()!!

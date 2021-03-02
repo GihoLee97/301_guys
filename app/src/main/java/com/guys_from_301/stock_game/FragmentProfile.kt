@@ -114,10 +114,6 @@ class FragmentProfile : Fragment() {
         return v
     }
 
-    override fun onResume() {
-        println("---resume")
-        super.onResume()
-    }
     override fun onPause() {
 //        profileActivityViewModel.write2database()
         println("---pause")
