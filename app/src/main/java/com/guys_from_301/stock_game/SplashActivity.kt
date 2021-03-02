@@ -46,7 +46,12 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 뉴스 데이터//////////////////////
 val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
-val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
+val news_information: ArrayList<String> = ArrayList() // 뉴스 정보
+// 팁 데이터///////////////////////
+val tip_title: ArrayList<String> = ArrayList() // 팁 제목
+val tip_information: ArrayList<String> = ArrayList() // 팁 내용
+
+
 
 //MUST BE INITIALIZED AT FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 //push alarm
@@ -150,6 +155,35 @@ class SplashActivity : AppCompatActivity() {
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : NEWS !") // 에러 메시지 출력
+                    e.printStackTrace()
+                    count = 0
+                }
+            }
+
+
+            // 팁 데이터
+
+            try{
+                fileReader = BufferedReader(InputStreamReader(getAssets().open("tip.csv"),"utf-8"))
+                // 헤더 없음 61 행까지 데이터 있음
+                csvReader = CSVReaderBuilder(fileReader).withSkipLines(0).build()
+                val tip_rs = csvReader.readAll()
+                count = 0
+                for (tip_r in tip_rs){
+                    tip_title.add(count, tip_r[0])
+                    tip_information.add(count, tip_r[1])
+                    count += 1
+                }
+            } catch (e: Exception) {
+                println("Reading CSV Error : TIP !") // 에러 메시지 출력
+                e.printStackTrace()
+            } finally {
+                try {
+                    fileReader!!.close()
+                    csvReader!!.close()
+                    count = 0
+                } catch (e: IOException) {
+                    println("Closing fileReader/csvParser Error : TIP !") // 에러 메시지 출력
                     e.printStackTrace()
                     count = 0
                 }

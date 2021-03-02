@@ -664,6 +664,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     newGameset.setgamelength = gameSetDb?.gameSetDao()?.getSetGameLength()!!
                     newGameset.setgamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
 
+                    println("---")
                     gameSetDb?.gameSetDao()?.update(newGameset)
 
                     val newItem = Item()

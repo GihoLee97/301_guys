@@ -20,8 +20,10 @@ class NewMainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_main)
+        println("---1: "+ tip_title[0] + " , " + tip_information[0])
 
         //기본설정(data 불러오기 및 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(this)

@@ -381,7 +381,9 @@ class GameNormalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
         val random = Random()
-        val dialog = Dialog_loading(this@GameNormalActivity)
+//       val dialog = Dialog_loading(this@GameNormalActivity)
+//        dialog.show()
+        val dialog = Dialog_loading_tip(this@GameNormalActivity)
         dialog.show()
 
         // view 연결
@@ -736,8 +738,8 @@ class GameNormalActivity : AppCompatActivity() {
             }
 
             job2.join()
-            dialog.dismiss()
 
+            dialog.dismiss()
 
             val job3 = launch {
                 nowdraw(sp, criteria, gl)

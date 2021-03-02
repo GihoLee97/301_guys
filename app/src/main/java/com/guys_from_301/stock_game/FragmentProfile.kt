@@ -1,6 +1,7 @@
 package com.guys_from_301.stock_game
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
@@ -113,20 +114,21 @@ class FragmentProfile : Fragment() {
         return v
     }
 
-//    override fun onResume() {
-//        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
-//        super.onResume()
-//    }
-//
-//    override fun onPause() {
+    override fun onResume() {
+        println("---resume")
+        super.onResume()
+    }
+    override fun onPause() {
 //        profileActivityViewModel.write2database()
-//        super.onPause()
-//    }
+        println("---pause")
+        super.onPause()
+    }
+
 //
-//    override fun onStart() {
+    override fun onStart() {
 //        profileActivityViewModel.refresh()
-//        super.onStart()
-//    }
+        super.onStart()
+    }
 
 
     fun <T> ImageView.loadCircularImage(

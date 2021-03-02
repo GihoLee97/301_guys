@@ -99,6 +99,14 @@ class FragmentHome : Fragment() {
         manager.stackFromEnd = true
         pRecyclerView.layoutManager = manager
 
+
+
+        //홈 팁
+
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard2).setOnClickListener{
+            val dlg = Dialog_home_tip(_MainActivity!!)
+            dlg.show()
+        }
 //        val r = Runnable {
 //            try{
 //                game = gameDb?.gameSetDao()?.getPick()!!

@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         var t : BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         NavigationUI.setupWithNavController(t, findNavController(R.id.nav_host))
         gameSetDb = GameSetDB.getInstace(this)
@@ -115,7 +116,9 @@ class MainActivity : AppCompatActivity() {
 
         //게임 저장시 gmaeset 업데이트
         if(updateGameSet){
-            val dialog = Dialog_loading(this@MainActivity)
+//            val dialog = Dialog_loading(this@MainActivity)
+//            dialog.show()
+            val dialog = Dialog_loading_tip(this@MainActivity)
             dialog.show()
             var localDateTime = LocalDateTime.now()
             var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId)
