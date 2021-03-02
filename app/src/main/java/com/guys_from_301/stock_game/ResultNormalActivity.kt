@@ -46,49 +46,32 @@ class ResultNormalActivity : AppCompatActivity() {
     }
 
     fun reflect(){
-        profileDb = ProfileDB.getInstace(this@ResultNormalActivity)
+//        profileDb = ProfileDB.getInstace(this@NewResultNormalActivity)
         gamenormalDb = GameNormalDB.getInstace(this@ResultNormalActivity)
         gamesetDB = GameSetDB.getInstace(this@ResultNormalActivity)
         var profittotal: Float = profitrate
-        var money = profileDb?.profileDao()?.getMoney()!!
-        val newProfile = Profile()
+        var money = profileDbManager.getMoney()!!
         println("---zz"+profittotal)
         println("---zz"+ profitrate)
 
 
-
         // 사용자 profiledb의 money 업데이트
-        if(isNaN(profittotal)){
-            newProfile.money = profileDb?.profileDao()?.getMoney()!!
-        }
-        else{
-            newProfile.money = Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat())
-        }
-        newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-        newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
-        newProfile.profitrate = profileDb?.profileDao()?.getProfitRate()!!
-        newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-        newProfile.history = profileDb?.profileDao()?.getHistory()!!
-        newProfile.level = profileDb?.profileDao()?.getLevel()!!
-        newProfile.exp = profileDb?.profileDao()?.getExp()!!
-        newProfile.login = profileDb?.profileDao()?.getLogin()!!
-        if(isSafeCompleted)  newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!+1
-        else newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
-        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-        profileDb?.profileDao()?.update(newProfile)
+        if(!java.lang.Float.isNaN(profittotal))
+            profileDbManager.setMoney(Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat()))
+        if(isSafeCompleted)
+            profileDbManager.setRoundCount(profileDbManager.getRoundCount()!!+1)
+
         // 서버에 올리는 코드
-        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                profileDb?.profileDao()?.getMoney()!!,
-                profileDb?.profileDao()?.getValue1()!!,
-                profileDb?.profileDao()?.getNickname()!!,
-                profileDb?.profileDao()?.getProfitRate()!!,
-                profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                profileDb?.profileDao()?.getRoundCount()!!,
-                profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!
+        update(getHash(profileDbManager.getLoginId()!!).trim(),
+                getHash(profileDbManager.getLoginPw()!!).trim(),
+                profileDbManager.getMoney()!!,
+                profileDbManager.getValue1()!!,
+                profileDbManager.getNickname()!!,
+                profileDbManager.getProfitRate()!!,
+                profileDbManager.getRelativeProfit()!!,
+                profileDbManager.getRoundCount()!!,
+                profileDbManager.getHistory()!!,
+                profileDbManager.getLevel()!!
         )
         var localDateTime = LocalDateTime.now()
         val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"최종", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,

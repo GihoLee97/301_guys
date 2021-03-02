@@ -421,8 +421,7 @@ class InitialActivity : AppCompatActivity() {
         getuserinformation(id, pw)
 
         Timer().schedule(500) {
-            profileDb = ProfileDB.getInstace(this@InitialActivity)
-            if (profileDb?.profileDao()?.getNickname() == "#########first_login##########") {
+            if (profileDbManager.getNickname() == "#########first_login##########") {
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
             } else {
@@ -436,36 +435,22 @@ class InitialActivity : AppCompatActivity() {
     // remember which login method did user used with DB
     private fun memorizeLogMethod(method : String){
         var temp = 0
-        profileDb = ProfileDB?.getInstace(this)
         // if profile DB is empty insert dummy
-        if (profileDb?.profileDao()?.getAll().isNullOrEmpty()) {
+        if (profileDbManager.isEmpty(this)) {
             if (method == "GENERAL") temp = 1
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             var input: String = 1.toString()+"#########first_login##########"+0+0+0F+0F+0+0+1+0+0+temp+"a"+""
             val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "", getHash(input))
-            profileDb?.profileDao()?.insert(newProfile)
+            profileDbManager.updateManager(newProfile)
         } else {
-            profileDb = ProfileDB?.getInstace(this)
-            temp = profileDb?.profileDao()?.getLogin()!!
+            temp = profileDbManager.getLogin()!!
             if (method == "GENERAL") temp = temp?.or(1)
             else if (method == "GOOGLE") temp = temp?.or(2)
             else if (method == "KAKAO") temp = temp?.or(4)
             // update the login method to DB
-            val newProfile = Profile()
-            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-            newProfile.history = profileDb?.profileDao()?.getHistory()!!
-            newProfile.level = profileDb?.profileDao()?.getLevel()!!
-            newProfile.exp = profileDb?.profileDao()?.getExp()!!
-            newProfile.login = temp
-            newProfile.money = profileDb?.profileDao()?.getMoney()!!
-            newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
-            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-            newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-            newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-            profileDb?.profileDao()?.update(newProfile)
+            profileDbManager.setLogin(temp)
         }
     }
 
@@ -508,14 +493,13 @@ class InitialActivity : AppCompatActivity() {
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
                     var data: DATACLASS? = response.body()!!
-                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
                     val newProfile = Profile()
-                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
+                    newProfile.id = profileDbManager.getId()?.toLong()
                     newProfile.nickname = data?.NICKNAME!!
                     newProfile.history = data?.HISTORY!!
                     newProfile.level = data?.LEVEL!!
                     newProfile.exp = data?.EXP!!
-                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
+                    newProfile.login = profileDbManager.getLogin()!!
                     newProfile.money = data?.MONEY!!
                     newProfile.value1 = data?.VALUE1!!
                     newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
@@ -524,8 +508,7 @@ class InitialActivity : AppCompatActivity() {
                     newProfile.login_pw = u_pw
                     //TODO: 업적저장
                     questdecode(data?.QUEST!!)
-                    profileDb?.profileDao()?.update(newProfile)
-                    profileDb = ProfileDB?.getInstace(this@InitialActivity)
+                    profileDbManager.updateManager(newProfile)
                 }
             }
         })

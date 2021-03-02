@@ -166,7 +166,6 @@ class GameNormalActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     private var gl: Int = 0
 
-    private var profileDb : ProfileDB? = null
     private var itemDb: ItemDB? = null
     val mContext: Context = this
 
@@ -444,6 +443,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         // findViewById<Button>(R.id.btn_auto).setBackgroundResource(R.drawable.ic_check_intersection)
 
+        profileDbManager.refresh(this)
         questDb = QuestDB.getInstance(this)
         gameSetDb = GameSetDB.getInstace(this)
         //달성할 도전과제 불러오기
@@ -566,8 +566,7 @@ class GameNormalActivity : AppCompatActivity() {
 
 
             // 피로도 불러오기
-            profileDb = ProfileDB.getInstace(this)
-            value1now = profileDb?.profileDao()?.getValue1()!!
+            value1now = profileDbManager.getValue1()!!
 
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
@@ -862,8 +861,7 @@ class GameNormalActivity : AppCompatActivity() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 피로도 불러오기
-        profileDb = ProfileDB.getInstace(this)
-        value1now = profileDb?.profileDao()?.getValue1()!!
+        value1now = profileDbManager.getValue1()!!
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
         click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
@@ -2266,11 +2264,9 @@ class GameNormalActivity : AppCompatActivity() {
     private fun endgame() {
         if (gameend && endsuccess) {
             isSafeCompleted = true
-            var profileDb: ProfileDB? = null
-            profileDb = ProfileDB.getInstace(this@GameNormalActivity)
             funlevelup(
-                    profileDb?.profileDao()?.getLoginid()!!,
-                    profileDb?.profileDao()?.getLoginpw()!!,
+                    profileDbManager.getLoginId()!!,
+                    profileDbManager.getLoginPw()!!,
                     100
             )
             val deleteRunnable = Runnable {
@@ -2310,9 +2306,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     fun funlevelup(u_id: String, u_pw: String, u_exp: Int) {
         val mContext: Context = this
-        var profileDb: ProfileDB? = null
         var funlevel_up: RetrofitLevelUp? = null
-        profileDb = ProfileDB.getInstace(mContext)
         val url = "http://stockgame.dothome.co.kr/test/levelup.php/"
         var gson: Gson = GsonBuilder()
             .setLenient()
@@ -2338,24 +2332,11 @@ class GameNormalActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         var data: DATACLASS = response.body()!!
-                        profileDb = ProfileDB?.getInstace(mContext)
-                        if (profileDb?.profileDao()?.getLevel()!! != data?.LEVEL) {
+                        if (profileDbManager.getLevel()!! != data?.LEVEL) {
                             islevelup = true
                         }
-                        val newProfile = Profile()
-                        newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                        newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                        newProfile.level = data?.LEVEL!!
-                        newProfile.exp = data?.EXP!!
-                        newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                        newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                        newProfile.value1 = profileDb?.profileDao()?.getValue1()!!
-                        newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-                        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                        profileDb?.profileDao()?.update(newProfile)
-                        profileDb = ProfileDB?.getInstace(mContext)
+                        profileDbManager.setLevel(data?.LEVEL)
+                        profileDbManager.setExp(data?.EXP)
                     }
                 }
             })
@@ -2364,10 +2345,8 @@ class GameNormalActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int){
-        val newProfile = profileDb?.profileDao()?.getAll()?.get(0)
-        if (newProfile != null) {
-            newProfile.money = newProfile.money + reward
-            profileDb?.profileDao()?.update(newProfile)
+        if (!profileDbManager.isEmpty(this@GameNormalActivity)) {
+            profileDbManager.setMoney(profileDbManager.getMoney()!!+reward)
         }
     }
 
@@ -2558,5 +2537,10 @@ class GameNormalActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        profileDbManager.write2database()
     }
 }

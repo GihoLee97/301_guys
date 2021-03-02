@@ -37,11 +37,11 @@ class Dialog_change_pw(context: Context) {
 
 
         btnOK.setOnClickListener {
-            val hashid =getHash(profileDb?.profileDao()?.getLoginid().toString().trim()).trim()
+            val hashid =getHash(profileDbManager.getLoginId().toString().trim()).trim()
             println("---")
             val hashpw =getHash(pw_present.text.toString().trim()).trim()
             val hashnewpw =getHash(pw_future.text.toString().trim()).trim()
-            if(profileDb?.profileDao()?.getLoginpw().toString().trim() == pw_present.text.toString().trim())
+            if(profileDbManager.getLoginPw().toString().trim() == pw_present.text.toString().trim())
             {
                 changepw(hashid,hashpw, hashnewpw)
                 dlg.dismiss()
@@ -90,23 +90,6 @@ class Dialog_change_pw(context: Context) {
         })
     }
     private fun updateInFo(pw : String){
-        profileDb = ProfileDB?.getInstace(mContext)
-        val setRunnable = Runnable {
-            val newProfile = Profile()
-            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-            newProfile.money = profileDb?.profileDao()?.getMoney()!!
-            newProfile.history = profileDb?.profileDao()?.getHistory()!!
-            newProfile.level = profileDb?.profileDao()?.getLevel()!!
-            newProfile.exp = profileDb?.profileDao()?.getExp()!!
-            newProfile.rank = profileDb?.profileDao()?.getRank()!!
-            newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-            newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-            newProfile.login_pw = pw
-            profileDb?.profileDao()?.update(newProfile)
-        }
-        var setThread = Thread(setRunnable)
-        setThread.start()
+        profileDbManager.setLoginPw(pw)
     }
 }

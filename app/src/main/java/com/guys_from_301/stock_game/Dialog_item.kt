@@ -339,30 +339,19 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             profileDb = ProfileDB?.getInstace(mContext!!)
             // DB에 아이템 사용여부 저장
             // 서버에 올리는 코드
-            update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                    getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                    nowmoney, nowvalue1, profileDb?.profileDao()?.getNickname()!!,
-                    profileDb?.profileDao()?.getProfitRate()!!,
-                    profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                    profileDb?.profileDao()?.getRoundCount()!!,
-                    profileDb?.profileDao()?.getHistory()!!,
-                    profileDb?.profileDao()?.getLevel()!!
+            update(getHash(profileDbManager.getLoginId()!!).trim(),
+                    getHash(profileDbManager.getLoginPw()!!).trim(),
+                    nowmoney, nowvalue1, profileDbManager.getNickname()!!,
+                    profileDbManager.getProfitRate()!!,
+                    profileDbManager.getRelativeProfit()!!,
+                    profileDbManager.getRoundCount()!!,
+                    profileDbManager.getHistory()!!,
+                    profileDbManager.getLevel()!!
             )
-                    // update money to DB
-            val newProfile = Profile()
-            newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-            newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-            newProfile.history = profileDb?.profileDao()?.getHistory()!!
-            newProfile.level = profileDb?.profileDao()?.getLevel()!!
-            newProfile.exp = profileDb?.profileDao()?.getExp()!!
-            newProfile.rank = profileDb?.profileDao()?.getRank()!!
-            newProfile.login = profileDb?.profileDao()?.getLogin()!!
-            newProfile.money = nowmoney
-            newProfile.value1 = nowvalue1
-            newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-            newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-            newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-            profileDb?.profileDao()?.update(newProfile)
+
+            // update money to DB
+            profileDbManager.setMoney(nowmoney)
+            profileDbManager.setValue1(value1now)
             //
             dlg.dismiss()
             click =

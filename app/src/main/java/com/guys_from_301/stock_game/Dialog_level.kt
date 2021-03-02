@@ -29,8 +29,8 @@ class Dialog_level(context: Context) {
         textexp = dlg.findViewById(R.id.exp)
         textlevel = dlg.findViewById(R.id.level)
 
-        textexp.text = profileDb?.profileDao()?.getExp()!!.toString()
-        textlevel.text = profileDb?.profileDao()?.getLevel()!!.toString()
+        textexp.text = profileDbManager.getExp()!!.toString()
+        textlevel.text = profileDbManager.getLevel()!!.toString()
         if(islevelup){
             Toast.makeText(mContext, "레벨 업!", Toast.LENGTH_LONG).show()
             islevelup = false

@@ -35,8 +35,8 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
 
         btnOK.setOnClickListener {
             profileDb = ProfileDB?.getInstace(mContext)
-            accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                    getHash(profileDb?.profileDao()?.getLoginpw()!!).trim())
+            accountdelete(getHash(profileDbManager.getLoginId()!!).trim(),
+                    getHash(profileDbManager.getLoginPw()!!).trim())
             signOut(loginMethod)
             dlg.dismiss()
         }

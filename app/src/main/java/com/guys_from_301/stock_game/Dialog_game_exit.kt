@@ -49,22 +49,10 @@ class Dialog_game_exit(context: Context) {
             } else {
                 eventCount = 0
                 val addRunnable = Runnable {
-                    val newProfile = Profile()
-                    newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                    newProfile.rank = profileDb?.profileDao()?.getRank()!!
-                    newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                    newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                    newProfile.exp = profileDb?.profileDao()?.getExp()!!
-                    newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                    newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                    newProfile.value1 = value1now
-                    newProfile.profitrate = (profileDb?.profileDao()?.getProfitRate()!! * profileDb?.profileDao()?.getHistory()!! + profitrate * tradeday) / (profileDb?.profileDao()?.getHistory()!! + tradeday)
-                    newProfile.relativeprofitrate = (profileDb?.profileDao()?.getRelativeProfitRate()!! * profileDb?.profileDao()?.getHistory()!! + relativeprofitrate * tradeday) / (profileDb?.profileDao()?.getHistory()!! + tradeday)
-                    newProfile.history = profileDb?.profileDao()?.getHistory()!! + tradeday
-                    newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
-                    newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                    newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                    profileDb?.profileDao()?.update(newProfile)
+                    profileDbManager.setValue1(value1now)
+                    profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+                    profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+                    profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
                     localDateTime = LocalDateTime.now()
                     val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "저장", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
@@ -103,21 +91,10 @@ class Dialog_game_exit(context: Context) {
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
             val deleteRunnable = Runnable {
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.exp = profileDb?.profileDao()?.getExp()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                newProfile.value1 = value1now
-                newProfile.profitrate = (profileDb?.profileDao()?.getProfitRate()!! * profileDb?.profileDao()?.getHistory()!! + profitrate * tradeday) / (profileDb?.profileDao()?.getHistory()!! + tradeday)
-                newProfile.relativeprofitrate = (profileDb?.profileDao()?.getRelativeProfitRate()!! * profileDb?.profileDao()?.getHistory()!! + relativeprofitrate * tradeday) / (profileDb?.profileDao()?.getHistory()!! + tradeday)
-                newProfile.history = profileDb?.profileDao()?.getHistory()!! + tradeday
-                newProfile.roundcount = profileDb?.profileDao()?.getRoundCount()!!
-                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                profileDb?.profileDao()?.update(newProfile)
+                profileDbManager.setValue1(value1now)
+                profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+                profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+                profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
 
                 // 피로도 저감 시간 저장
                 var nowtime = System.currentTimeMillis() // 현재 시간
