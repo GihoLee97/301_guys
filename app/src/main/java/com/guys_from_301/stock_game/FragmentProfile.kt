@@ -91,6 +91,7 @@ class FragmentProfile : Fragment() {
             updatelogOutInFo2DB(loginMethod!!)
             val intent = Intent(_MainActivity,NewInitialActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
             if(profileDbManager!!.getLogin() == 1){
