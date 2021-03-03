@@ -103,11 +103,11 @@ class NewResultNormalActivity: AppCompatActivity() {
     }
 
     fun GotoMainactivity() {
-        reflect()
         if (isHistory) {
             val intent = Intent(this@NewResultNormalActivity, NewHistoryActivity::class.java)
             startActivity(intent)
         } else {
+            reflect()
             val intent = Intent(this@NewResultNormalActivity, MainActivity::class.java)
             startActivity(intent)
         }

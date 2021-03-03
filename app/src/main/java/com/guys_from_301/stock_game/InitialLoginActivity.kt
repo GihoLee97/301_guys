@@ -581,17 +581,17 @@ class InitialLoginActivity : AppCompatActivity() {
                         val r = Runnable {
                             val newGameSet = GameSet()
                             setId = u_id
-                            newGameSet.id = accountID+1
+                            newGameSet.id = accountID+0
                             newGameSet.setcash = 0
                             newGameSet.setgamelength = START_GAME_LENGTH
                             newGameSet.setgamespeed = START_GAME_SPEED
                             newGameSet.setmonthly = 0
                             newGameSet.setsalaryraise = 0
-                            newGameSet.accountId = u_id
+                            newGameSet.accountId = accountID!!
                             gameSetDb?.gameSetDao()?.insert(newGameSet)
                             newGameSet.id = accountID+0
                             gameSetDb?.gameSetDao()?.insert(newGameSet)
-                            Log.d("hongz", "초기 gaemset 추가")
+                            Log.d("hongz", "초기 gaemset 추가 [id]: " +accountID+0 )
                         }
                         val t = Thread(r)
                         t.start()
@@ -717,14 +717,14 @@ class InitialLoginActivity : AppCompatActivity() {
                     else if(data?.SETSALARYRAISE == 6F) newGameset.setsalaryraise = 2
                     else if(data?.SETSALARYRAISE == 8F) newGameset.setsalaryraise = 3
                     else if(data?.SETSALARYRAISE == 10F) newGameset.setsalaryraise = 4
-                    newGameset.setgamelength = gameSetDb?.gameSetDao()?.getSetGameLength(accountID!!)!!
-                    newGameset.setgamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed(accountID!!)!!
+                    newGameset.setgamelength = START_GAME_LENGTH
+                    newGameset.setgamespeed = START_GAME_SPEED
                     newGameset.accountId = u_id
                     accountID = u_id
-                    Log.d("hongz", "초기 gameset 추가 2")
+                    Log.d("hongz", "초기 gameset 추가 2 [id]: "+u_id+"0")
                     println("---"+ newGameset.setsalaryraise)
                     println("---")
-                    gameSetDb?.gameSetDao()?.update(newGameset)
+                    gameSetDb?.gameSetDao()?.insert(newGameset)
 
                     val newItem = Item()
                     newItem.id = 1

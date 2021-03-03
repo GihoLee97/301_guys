@@ -158,13 +158,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 //예전거 누적
                 if (initialgameset != null) {
+                    val id = newGameSet.id
                     newGameSet.setcash = initialgameset.setcash
                     newGameSet.setmonthly = initialgameset.setmonthly
                     newGameSet.setsalaryraise = initialgameset.setsalaryraise
                     newGameSet.setgamespeed = initialgameset.setgamespeed
                     newGameSet.setgamelength = initialgameset.setgamelength
                     newGameSet.accountId = initialgameset.accountId
-                    Log.d("hongz", "새gameset 추가")
+                    Log.d("hongz", "새gameset 추가 [id]: "+id)
                 }
                 newGameSet.endtime = ""
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
