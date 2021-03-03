@@ -560,7 +560,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     profileDbManager.refresh(this@InitialLoginActivity)
                     var serverProfile = Profile(profileDbManager.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDbManager.getLogin()!!,u_id,u_pw,"")
                     if(profileDbManager.getNickname()=="#########first_login##########"){
-                        Log.d("Giho","#########first_login##########")
+                        Log.d("Giho","#########first_login##########AndReadFromServer")
                         val newProfile = Profile()
                         newProfile.id = profileDbManager.getId()
                         newProfile.nickname = data?.NICKNAME!!
@@ -602,42 +602,98 @@ class InitialLoginActivity : AppCompatActivity() {
                         Log.d("Giho","서버와 동일")
                     }
                     else{
-                        if(profileDbManager.getHashRespectFromDbManager()== profileDbManager.getHash()){
-                            Log.d("Giho","기기가 옳음")
-                            //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
-                            update(getHash(profileDbManager.getLoginId()!!).trim(),
-                                    getHash(profileDbManager.getLoginPw()!!).trim(),
-                                    profileDbManager.getMoney()!!,
-                                    profileDbManager.getValue1()!!,
-                                    profileDbManager.getNickname()!!,
-                                    profileDbManager.getProfitRate()!!,
-                                    profileDbManager.getRelativeProfit()!!,
-                                    profileDbManager.getRoundCount()!!,
-                                    profileDbManager.getHistory()!!,
-                                    profileDbManager.getLevel()!!
-                            )
+                        if(profileDbManager.getLoginId()==data?.USERID) {
+                            Log.d("Giho", "이전과 동일한 계정으로 로그인")
+                            if (profileDbManager.getHashRespectFromDbManager() == profileDbManager.getHash()) {
+                                Log.d("Giho", "기기가 옳음")
+                                //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
+                                update(getHash(profileDbManager.getLoginId()!!).trim(),
+                                        getHash(profileDbManager.getLoginPw()!!).trim(),
+                                        profileDbManager.getMoney()!!,
+                                        profileDbManager.getValue1()!!,
+                                        profileDbManager.getNickname()!!,
+                                        profileDbManager.getProfitRate()!!,
+                                        profileDbManager.getRelativeProfit()!!,
+                                        profileDbManager.getRoundCount()!!,
+                                        profileDbManager.getHistory()!!,
+                                        profileDbManager.getLevel()!!
+                                )
+                            } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
+                                Log.d("Giho", "신뢰할 수 없는 기기 정보")
+                                Log.d("Giho", "manager nickname : " + profileDbManager.getNickname())
+                                val newProfile = Profile()
+                                newProfile.id = profileDbManager.getId()
+                                newProfile.nickname = data?.NICKNAME!!
+                                newProfile.history = data?.HISTORY!!
+                                newProfile.level = data?.LEVEL!!
+                                newProfile.exp = data?.EXP!!
+                                newProfile.login = profileDbManager.getLogin()!!
+                                newProfile.money = data?.MONEY!!
+                                newProfile.value1 = data?.VALUE1!!
+                                newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                newProfile.roundcount = data?.ROUNDCOUNT!!
+                                newProfile.login_id = u_id
+                                newProfile.login_pw = u_pw
+                                newProfile.profitrate = data?.PROFITRATE
+
+                                profileDbManager.updateManager(newProfile)
+                                Log.d("Giho", "manager nickname : " + profileDbManager.getNickname())
+                            }
                         }
-                        else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
-                            Log.d("Giho","신뢰할 수 없는 기기 정보")
-                            Log.d("Giho","manager nickname : "+ profileDbManager.getNickname())
-                            val newProfile = Profile()
-                            newProfile.id = profileDbManager.getId()
-                            newProfile.nickname = data?.NICKNAME!!
-                            newProfile.history = data?.HISTORY!!
-                            newProfile.level = data?.LEVEL!!
-                            newProfile.exp = data?.EXP!!
-                            newProfile.login = profileDbManager.getLogin()!!
-                            newProfile.money = data?.MONEY!!
-                            newProfile.value1 = data?.VALUE1!!
-                            newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
-                            newProfile.roundcount = data?.ROUNDCOUNT!!
-                            newProfile.login_id = u_id
-                            newProfile.login_pw = u_pw
-                            newProfile.profitrate = data?.PROFITRATE
+                        else{
+                            Log.d("Giho", "이전과 다른 계정으로 로그인")
+                            if (profileDbManager.getHashRespectFromDbManager() == profileDbManager.getHash()) {
+                                Log.d("Giho", "기기 정보 옳음 및 서버 정보 새로 받아오기")
+                                //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
+                                update(getHash(profileDbManager.getLoginId()!!).trim(),
+                                        getHash(profileDbManager.getLoginPw()!!).trim(),
+                                        profileDbManager.getMoney()!!,
+                                        profileDbManager.getValue1()!!,
+                                        profileDbManager.getNickname()!!,
+                                        profileDbManager.getProfitRate()!!,
+                                        profileDbManager.getRelativeProfit()!!,
+                                        profileDbManager.getRoundCount()!!,
+                                        profileDbManager.getHistory()!!,
+                                        profileDbManager.getLevel()!!
+                                )
+                                val newProfile = Profile()
+                                newProfile.id = profileDbManager.getId()
+                                newProfile.nickname = data?.NICKNAME!!
+                                newProfile.history = data?.HISTORY!!
+                                newProfile.level = data?.LEVEL!!
+                                newProfile.exp = data?.EXP!!
+                                newProfile.login = profileDbManager.getLogin()!!
+                                newProfile.money = data?.MONEY!!
+                                newProfile.value1 = data?.VALUE1!!
+                                newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                newProfile.roundcount = data?.ROUNDCOUNT!!
+                                newProfile.login_id = u_id
+                                newProfile.login_pw = u_pw
+                                newProfile.profitrate = data?.PROFITRATE
 
-                            profileDbManager.updateManager(newProfile)
-                            Log.d("Giho","manager nickname : "+ profileDbManager.getNickname())
+                                profileDbManager.updateManager(newProfile)
+                            } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
+                                Log.d("Giho", "신뢰할 수 없는 기기 정보 및 서버 정보 받아오기")
+                                Log.d("Giho", "manager nickname : " + profileDbManager.getNickname())
+                                val newProfile = Profile()
+                                newProfile.id = profileDbManager.getId()
+                                newProfile.nickname = data?.NICKNAME!!
+                                newProfile.history = data?.HISTORY!!
+                                newProfile.level = data?.LEVEL!!
+                                newProfile.exp = data?.EXP!!
+                                newProfile.login = profileDbManager.getLogin()!!
+                                newProfile.money = data?.MONEY!!
+                                newProfile.value1 = data?.VALUE1!!
+                                newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                newProfile.roundcount = data?.ROUNDCOUNT!!
+                                newProfile.login_id = u_id
+                                newProfile.login_pw = u_pw
+                                newProfile.profitrate = data?.PROFITRATE
 
+                                profileDbManager.updateManager(newProfile)
+                                Log.d("Giho", "manager nickname : " + profileDbManager.getNickname())
+
+                            }
                         }
                     }
                     questdecode(data?.QUEST!!)
