@@ -37,11 +37,11 @@ class Dialog_change_pw(context: Context) {
 
 
         btnOK.setOnClickListener {
-            val hashid =getHash(profileDbManager.getLoginId().toString().trim()).trim()
+            val hashid =getHash(profileDbManager!!.getLoginId().toString().trim()).trim()
             println("---")
             val hashpw =getHash(pw_present.text.toString().trim()).trim()
             val hashnewpw =getHash(pw_future.text.toString().trim()).trim()
-            if(profileDbManager.getLoginPw().toString().trim() == pw_present.text.toString().trim())
+            if(profileDbManager!!.getLoginPw().toString().trim() == pw_present.text.toString().trim())
             {
                 changepw(hashid,hashpw, hashnewpw)
                 dlg.dismiss()
@@ -90,6 +90,6 @@ class Dialog_change_pw(context: Context) {
         })
     }
     private fun updateInFo(pw : String){
-        profileDbManager.setLoginPw(pw)
+        profileDbManager!!.setLoginPw(pw)
     }
 }

@@ -60,15 +60,15 @@ class Dialog_potion(context: Context) {
             var itemDb : ItemDB? = null
             profileDb = ProfileDB.getInstace(dlg.context)
             itemDb = ItemDB.getInstace(dlg.context)
-            var value1 = profileDbManager.getValue1()!!.toInt()
+            var value1 = profileDbManager!!.getValue1()!!.toInt()
             if (value1 >= value1reward) {
                 value1 -= value1reward
             } else {
                 value1 = 0
             }
             dbupdate()
-            usepotion(getHash(profileDbManager.getLoginId()!!),
-                    profileDbManager.getMoney()!!,
+            usepotion(getHash(profileDbManager!!.getLoginId()!!),
+                    profileDbManager!!.getMoney()!!,
                     itemDb?.itemDao()?.getPotion()!!)
             dlg.dismiss()
         }
@@ -85,8 +85,8 @@ class Dialog_potion(context: Context) {
         profileDb = ProfileDB.getInstace(dlg.context)
         itemDb = ItemDB.getInstace(dlg.context)
         var newItem = itemDb?.itemDao()?.getAll()!![0]
-        if (!profileDbManager.isEmpty(dlg.context)) {
-            profileDbManager.setValue1(value1)
+        if (!profileDbManager!!.isEmpty(dlg.context)) {
+            profileDbManager!!.setValue1(value1)
         }
         newItem.potion = newItem.potion - 1
         itemDb?.itemDao()?.update(newItem)

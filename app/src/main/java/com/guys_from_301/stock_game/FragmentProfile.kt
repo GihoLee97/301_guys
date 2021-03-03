@@ -42,10 +42,10 @@ class FragmentProfile : Fragment() {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
-        tv_my_nick.text = profileDbManager.getNickname()
-        v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager.getLevel().toString()
-        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager.getExp()!!
-        if(profileDbManager.getLogin() != 4){
+        tv_my_nick.text = profileDbManager!!.getNickname()
+        v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager!!.getLevel().toString()
+        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager!!.getExp()!!
+        if(profileDbManager!!.getLogin() != 4){
             v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
         }
         else{
@@ -79,27 +79,27 @@ class FragmentProfile : Fragment() {
             pushAlarmManager.openSetting(activity as MainActivity)
         }
         v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
-            if(profileDbManager.getLogin() == 1){
+            if(profileDbManager!!.getLogin() == 1){
                 loginMethod = "GENERAL"
             }
-            else if(profileDbManager.getLogin() == 2){
+            else if(profileDbManager!!.getLogin() == 2){
                 loginMethod = "GOOGLE"
             }
-            else if(profileDbManager.getLogin() == 4){
+            else if(profileDbManager!!.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
             updatelogOutInFo2DB(loginMethod!!)
-            val intent = Intent(_MainActivity,InitialActivity::class.java)
+            val intent = Intent(_MainActivity,NewInitialActivity::class.java)
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
-            if(profileDbManager.getLogin() == 1){
+            if(profileDbManager!!.getLogin() == 1){
                 loginMethod = "GENERAL"
             }
-            else if(profileDbManager.getLogin() == 2){
+            else if(profileDbManager!!.getLogin() == 2){
                 loginMethod = "GOOGLE"
             }
-            else if(profileDbManager.getLogin() == 4){
+            else if(profileDbManager!!.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
             if(loginMethod == "GENERAL"){
@@ -206,14 +206,14 @@ class FragmentProfile : Fragment() {
         if(method=="GENERAL") loginMethod = 1
         else if(method=="GOOGLE") loginMethod = 2
         else if(method=="KAKAO") loginMethod = 4
-        if(!profileDbManager.isEmpty(_MainActivity!!)) {
-            profileDbManager.setLogin(profileDbManager.getLogin()!!-loginMethod)
+        if(!profileDbManager!!.isEmpty(_MainActivity!!)) {
+            profileDbManager!!.setLogin(profileDbManager!!.getLogin()!!-loginMethod)
         }
     }
 
     override fun onResume() {
         super.onResume()
 
-        tv_my_nick.text = profileDbManager.getNickname()
+        tv_my_nick.text = profileDbManager!!.getNickname()
     }
 }

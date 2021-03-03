@@ -106,7 +106,7 @@ class AccountManagementActivity : AppCompatActivity() {
             googleAuth = FirebaseAuth.getInstance()
             googleAuth.signOut()
             updatelogOutInFo2DB("GOOGLE")
-            val intent = Intent(this,InitialActivity::class.java)
+            val intent = Intent(this,NewInitialActivity::class.java)
             startActivity(intent)
         }
 
@@ -120,7 +120,7 @@ class AccountManagementActivity : AppCompatActivity() {
                 }
             }
             updatelogOutInFo2DB("KAKAO")
-            val intent = Intent(this,InitialActivity::class.java)
+            val intent = Intent(this,NewInitialActivity::class.java)
             startActivity(intent)
         }
 
@@ -144,7 +144,7 @@ class AccountManagementActivity : AppCompatActivity() {
         }
         btn_generalAcountSignout.setOnClickListener{
             updatelogOutInFo2DB("GENERAL")
-            val intent = Intent(this,InitialActivity::class.java)
+            val intent = Intent(this,NewInitialActivity::class.java)
             startActivity(intent)
         }
         btn_generalAccountDelete.setOnClickListener{

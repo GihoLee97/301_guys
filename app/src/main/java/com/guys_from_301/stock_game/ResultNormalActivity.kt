@@ -50,28 +50,28 @@ class ResultNormalActivity : AppCompatActivity() {
         gamenormalDb = GameNormalDB.getInstace(this@ResultNormalActivity)
         gamesetDB = GameSetDB.getInstace(this@ResultNormalActivity)
         var profittotal: Float = profitrate
-        var money = profileDbManager.getMoney()!!
+        var money = profileDbManager!!.getMoney()!!
         println("---zz"+profittotal)
         println("---zz"+ profitrate)
 
 
         // 사용자 profiledb의 money 업데이트
         if(!java.lang.Float.isNaN(profittotal))
-            profileDbManager.setMoney(Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat()))
+            profileDbManager!!.setMoney(Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat()))
         if(isSafeCompleted)
-            profileDbManager.setRoundCount(profileDbManager.getRoundCount()!!+1)
+            profileDbManager!!.setRoundCount(profileDbManager!!.getRoundCount()!!+1)
 
         // 서버에 올리는 코드
-        update(getHash(profileDbManager.getLoginId()!!).trim(),
-                getHash(profileDbManager.getLoginPw()!!).trim(),
-                profileDbManager.getMoney()!!,
-                profileDbManager.getValue1()!!,
-                profileDbManager.getNickname()!!,
-                profileDbManager.getProfitRate()!!,
-                profileDbManager.getRelativeProfit()!!,
-                profileDbManager.getRoundCount()!!,
-                profileDbManager.getHistory()!!,
-                profileDbManager.getLevel()!!
+        update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                profileDbManager!!.getMoney()!!,
+                profileDbManager!!.getValue1()!!,
+                profileDbManager!!.getNickname()!!,
+                profileDbManager!!.getProfitRate()!!,
+                profileDbManager!!.getRelativeProfit()!!,
+                profileDbManager!!.getRoundCount()!!,
+                profileDbManager!!.getHistory()!!,
+                profileDbManager!!.getLevel()!!
         )
         var localDateTime = LocalDateTime.now()
         val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"최종", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,

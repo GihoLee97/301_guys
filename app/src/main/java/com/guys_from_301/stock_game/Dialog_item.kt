@@ -339,19 +339,19 @@ class Dialog_item(context: Context, _nowmoney :Int, _nowvalue1: Int) {
             profileDb = ProfileDB?.getInstace(mContext!!)
             // DB에 아이템 사용여부 저장
             // 서버에 올리는 코드
-            update(getHash(profileDbManager.getLoginId()!!).trim(),
-                    getHash(profileDbManager.getLoginPw()!!).trim(),
-                    nowmoney, nowvalue1, profileDbManager.getNickname()!!,
-                    profileDbManager.getProfitRate()!!,
-                    profileDbManager.getRelativeProfit()!!,
-                    profileDbManager.getRoundCount()!!,
-                    profileDbManager.getHistory()!!,
-                    profileDbManager.getLevel()!!
+            update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                    getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                    nowmoney, nowvalue1, profileDbManager!!.getNickname()!!,
+                    profileDbManager!!.getProfitRate()!!,
+                    profileDbManager!!.getRelativeProfit()!!,
+                    profileDbManager!!.getRoundCount()!!,
+                    profileDbManager!!.getHistory()!!,
+                    profileDbManager!!.getLevel()!!
             )
 
             // update money to DB
-            profileDbManager.setMoney(nowmoney)
-            profileDbManager.setValue1(value1now)
+            profileDbManager!!.setMoney(nowmoney)
+            profileDbManager!!.setValue1(value1now)
             //
             dlg.dismiss()
             click =

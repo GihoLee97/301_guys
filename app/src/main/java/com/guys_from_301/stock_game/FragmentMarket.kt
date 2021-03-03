@@ -120,7 +120,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         marketViewModel.getInitialSalaryRaise().observe(viewLifecycleOwner, Observer { tv_initial_salary_raise.text = SET_SALARY_RAISE_STEP[it].toString() + "%" })
 
         tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
-        tv_mountOfStack.text = dec.format(profileDbManager.getMoney()).toString()
+        tv_mountOfStack.text = dec.format(profileDbManager!!.getMoney()).toString()
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
@@ -234,8 +234,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
     fun dbupdate() {
         val newProfile = Profile()
-        profileDbManager.setMoney(money)
-        profileDbManager.setValue1(value1)
+        profileDbManager!!.setMoney(money)
+        profileDbManager!!.setValue1(value1)
     }
 
     fun loadad() {
@@ -265,8 +265,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     }
 
     override fun onRewarded(rItem: RewardItem?) {
-        money = profileDbManager.getMoney()!!.toInt()+moneyreward
-        value1 = profileDbManager.getValue1()!!.toInt()
+        money = profileDbManager!!.getMoney()!!.toInt()+moneyreward
+        value1 = profileDbManager!!.getValue1()!!.toInt()
         if (value1 >= value1reward) {
             value1 -= value1reward
         } else {
@@ -275,15 +275,15 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
-        update(getHash(profileDbManager.getLoginId()!!).trim(),
-                getHash(profileDbManager.getLoginPw()!!).trim(),
+        update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                getHash(profileDbManager!!.getLoginPw()!!).trim(),
                 money, value1,
-                profileDbManager.getNickname()!!,
-                profileDbManager.getProfitRate()!!,
-                profileDbManager.getRelativeProfit()!!,
-                profileDbManager.getRoundCount()!!,
-                profileDbManager.getHistory()!!,
-                profileDbManager.getLevel()!!
+                profileDbManager!!.getNickname()!!,
+                profileDbManager!!.getProfitRate()!!,
+                profileDbManager!!.getRelativeProfit()!!,
+                profileDbManager!!.getRoundCount()!!,
+                profileDbManager!!.getHistory()!!,
+                profileDbManager!!.getLevel()!!
         )
         // profiledb에 업데이트
         val marketViewModel = MarketViewModel(_MainActivity!!)

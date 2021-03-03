@@ -36,15 +36,15 @@ class Dialog_DeleteAlert(context: Context) {
 
         btnOK.setOnClickListener {
             profileDb = ProfileDB?.getInstace(mContext)
-            if ((pw_present.text.toString().trim() == pw_check.text.toString().trim()) && (profileDbManager.getLoginPw()!! == pw_present.text.toString().trim())) {
-                accountdelete(getHash(profileDbManager.getLoginId()!!).trim(),
+            if ((pw_present.text.toString().trim() == pw_check.text.toString().trim()) && (profileDbManager!!.getLoginPw()!! == pw_present.text.toString().trim())) {
+                accountdelete(getHash(profileDbManager!!.getLoginId()!!).trim(),
                         getHash(pw_present.text.toString().trim()).trim())
                 dlg.dismiss()
             }
-            println("---db:"+ profileDbManager.getLoginPw()!!)
+            println("---db:"+ profileDbManager!!.getLoginPw()!!)
             println("---현재:"+pw_present.text.toString().trim())
             println("---화긴: "+pw_check.text.toString().trim())
-            if(profileDbManager.getLoginPw()!! != pw_present.text.toString().trim()) {
+            if(profileDbManager!!.getLoginPw()!! != pw_present.text.toString().trim()) {
                 Toast.makeText(mContext, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
             }
             if(pw_present.text.toString().trim() != pw_check.text.toString().trim()) {
@@ -82,7 +82,7 @@ class Dialog_DeleteAlert(context: Context) {
                     println("---"+response.body()!!)
                     if(response.body()!! == "444"){
                         Toast.makeText(mContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_LONG).show()
-                        val intent = Intent(mContext, InitialActivity::class.java)
+                        val intent = Intent(mContext, NewInitialActivity::class.java)
                         mContext.startActivity(intent)
                     }
                     else{

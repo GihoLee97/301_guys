@@ -65,7 +65,7 @@ val shareManager = ShareManager()
 //capture Manager
 val captureUtil = CaptureUtil()
 //profileDb Manager
-lateinit var profileDbManager : ProfileDbManager
+var profileDbManager : ProfileDbManager? = null
 //MUST BE INITIALIZED AT FIRST-END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 
 
@@ -84,7 +84,7 @@ class SplashActivity : AppCompatActivity() {
         profileDbManager = ProfileDbManager(this)
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
         TalkApiClient.instance
-        accountID = profileDbManager.getLoginId()
+        accountID = profileDbManager!!.getLoginId()
         //광고
         MobileAds.initialize(this){}
 
@@ -104,8 +104,8 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({ //delay를 위한 handler
-            if(!profileDbManager.isEmpty(this)){
-                val loginMethod = profileDbManager.getLogin()
+            if(!profileDbManager!!.isEmpty(this)){
+                val loginMethod = profileDbManager!!.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login
                 else if(loginMethod?.and(2)==2) { // google login
                     if (isGoogleAuthChecked()) go2MainActivity()
@@ -489,7 +489,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        profileDbManager.write2database()
+        profileDbManager!!.write2database()
     }
 
 }

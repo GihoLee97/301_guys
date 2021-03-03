@@ -60,8 +60,8 @@ class Dialog_quest(context: Context) {
         btnOk = dlg.findViewById(R.id.btn_ok)
         btnQuest = dlg.findViewById(R.id.btn_quest)
         btnOk.setOnClickListener{
-            quest(getHash(profileDbManager.getLoginId()!!).toString().trim(),
-                    getHash(profileDbManager.getLoginPw()!!).toString().trim(),
+            quest(getHash(profileDbManager!!.getLoginId()!!).toString().trim(),
+                    getHash(profileDbManager!!.getLoginPw()!!).toString().trim(),
                     sum())
             dlg.dismiss()
             questAchieved = arrayListOf()
@@ -69,8 +69,8 @@ class Dialog_quest(context: Context) {
 
         btnQuest.setOnClickListener{
             //TODO: 업적 창 띄우기
-            quest(getHash(profileDbManager.getLoginId()!!).toString().trim(),
-                    getHash(profileDbManager.getLoginPw()!!).toString().trim(),
+            quest(getHash(profileDbManager!!.getLoginId()!!).toString().trim(),
+                    getHash(profileDbManager!!.getLoginPw()!!).toString().trim(),
                     sum())
             dlg.dismiss()
             val intent = Intent(mContext, QuestActivity::class.java)

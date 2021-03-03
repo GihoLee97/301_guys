@@ -73,7 +73,7 @@ class Dialog_nick(context: Context, first_login: Boolean) {
         }
 
         btn_nickname_change.setOnClickListener {
-            var login_id: String = profileDbManager.getLoginId()!!
+            var login_id: String = profileDbManager!!.getLoginId()!!
 
             var nickname: String = et_nickname_change.text.toString().trim()
             var funnickcheck: RetrofitNickcheck? = null
@@ -107,19 +107,19 @@ class Dialog_nick(context: Context, first_login: Boolean) {
                             }
                             if (okcode == "555") {
                                 Toast.makeText(mContext, "닉네임이 변경되었습니다.", Toast.LENGTH_LONG).show()
-                                profileDbManager.setNickname(et_nickname_change.text.toString())
+                                profileDbManager!!.setNickname(et_nickname_change.text.toString())
 //                                viewModel.setnWriteNickname(et_nickname_change.text.toString())
                                 tv_nick_change_ment_1.visibility = View.INVISIBLE
-                                update(getHash(profileDbManager.getLoginId()!!).trim(),
-                                        getHash(profileDbManager.getLoginPw()!!).trim(),
-                                        profileDbManager.getMoney()!!,
-                                        profileDbManager.getValue1()!!,
-                                        profileDbManager.getNickname()!!,
-                                        profileDbManager.getProfitRate()!!,
-                                        profileDbManager.getRelativeProfit()!!,
-                                        profileDbManager.getRoundCount()!!,
-                                        profileDbManager.getHistory()!!,
-                                        profileDbManager.getLevel()!!
+                                update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                                        getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                                        profileDbManager!!.getMoney()!!,
+                                        profileDbManager!!.getValue1()!!,
+                                        profileDbManager!!.getNickname()!!,
+                                        profileDbManager!!.getProfitRate()!!,
+                                        profileDbManager!!.getRelativeProfit()!!,
+                                        profileDbManager!!.getRoundCount()!!,
+                                        profileDbManager!!.getHistory()!!,
+                                        profileDbManager!!.getLevel()!!
                                 )
                                 dlg.dismiss()
                             }

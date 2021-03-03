@@ -49,10 +49,10 @@ class Dialog_game_exit(context: Context) {
                 Toast.makeText(dlg.context, "시간 역행 중에는 게임을 저장할 수 없습니다", Toast.LENGTH_SHORT).show()
             } else {
                 eventCount = 0
-                profileDbManager.setValue1(value1now)
-                profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-                profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-                profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
+                profileDbManager!!.setValue1(value1now)
+                profileDbManager!!.setProfitRate((profileDbManager!!.getProfitRate()!! * profileDbManager!!.getHistory()!! + profitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+                profileDbManager!!.setRelativeProfit((profileDbManager!!.getRelativeProfit()!! * profileDbManager!!.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+                profileDbManager!!.setHistory(profileDbManager!!.getHistory()!!+ tradeday)
                 val addRunnable = Runnable {
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
                     localDateTime = LocalDateTime.now()
@@ -91,10 +91,10 @@ class Dialog_game_exit(context: Context) {
 //            Toast.makeText(context, "메인 액티비티 종료", Toast.LENGTH_SHORT).show()
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
-            profileDbManager.setValue1(value1now)
-            profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-            profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-            profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
+            profileDbManager!!.setValue1(value1now)
+            profileDbManager!!.setProfitRate((profileDbManager!!.getProfitRate()!! * profileDbManager!!.getHistory()!! + profitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+            profileDbManager!!.setRelativeProfit((profileDbManager!!.getRelativeProfit()!! * profileDbManager!!.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+            profileDbManager!!.setHistory(profileDbManager!!.getHistory()!!+ tradeday)
             val deleteRunnable = Runnable {
                 // 피로도 저감 시간 저장
                 var nowtime = System.currentTimeMillis() // 현재 시간

@@ -59,7 +59,7 @@ class FragmentHome : Fragment() {
         itemDb = ItemDB.getInstace(_MainActivity!!)
 
         tv_profitRate = v.findViewById(R.id.tv_profitRate)
-        tv_profitRate.text = per.format(profileDbManager.getProfitRate()!!).toString()+"%"
+        tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
 
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
@@ -161,13 +161,13 @@ class FragmentHome : Fragment() {
             itemDb?.itemDao()?.getAll()?.get(0)?.let { it1 -> dialogPotion.start(it1.potion) }
         }
 
-        v.findViewById<TextView>(R.id.tv_userName).text = profileDbManager.getNickname()+"님"
+        v.findViewById<TextView>(R.id.tv_userName).text = profileDbManager!!.getNickname()+"님"
 
         // 피로도
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 while (true) {
-                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDbManager.getValue1()!!
+                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDbManager!!.getValue1()!!
                     delay(200L)
                 }
             }

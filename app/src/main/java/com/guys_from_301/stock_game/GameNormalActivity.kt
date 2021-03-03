@@ -446,7 +446,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         // findViewById<Button>(R.id.btn_auto).setBackgroundResource(R.drawable.ic_check_intersection)
 
-        profileDbManager.refresh(this)
+        profileDbManager!!.refresh(this)
         questDb = QuestDB.getInstance(this)
         gameSetDb = GameSetDB.getInstace(this)
         //달성할 도전과제 불러오기
@@ -569,7 +569,7 @@ class GameNormalActivity : AppCompatActivity() {
 
 
             // 피로도 불러오기
-            value1now = profileDbManager.getValue1()!!
+            value1now = profileDbManager!!.getValue1()!!
 
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
@@ -864,7 +864,7 @@ class GameNormalActivity : AppCompatActivity() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 피로도 불러오기
-        value1now = profileDbManager.getValue1()!!
+        value1now = profileDbManager!!.getValue1()!!
 
 // 버튼 클릭 판별자 생성 ///////////////////////////////////////////////////////////////////////////
         click = false // 매수, 매도, 자동, 아이템 다이얼로그의 버튼들에 적용
@@ -2268,8 +2268,8 @@ class GameNormalActivity : AppCompatActivity() {
         if (gameend && endsuccess) {
             isSafeCompleted = true
             funlevelup(
-                    profileDbManager.getLoginId()!!,
-                    profileDbManager.getLoginPw()!!,
+                    profileDbManager!!.getLoginId()!!,
+                    profileDbManager!!.getLoginPw()!!,
                     100
             )
             val deleteRunnable = Runnable {
@@ -2337,11 +2337,11 @@ class GameNormalActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         var data: DATACLASS = response.body()!!
-                        if (profileDbManager.getLevel()!! != data?.LEVEL) {
+                        if (profileDbManager!!.getLevel()!! != data?.LEVEL) {
                             islevelup = true
                         }
-                        profileDbManager.setLevel(data?.LEVEL)
-                        profileDbManager.setExp(data?.EXP)
+                        profileDbManager!!.setLevel(data?.LEVEL)
+                        profileDbManager!!.setExp(data?.EXP)
                     }
                 }
             })
@@ -2350,8 +2350,8 @@ class GameNormalActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int){
-        if (!profileDbManager.isEmpty(this@GameNormalActivity)) {
-            profileDbManager.setMoney(profileDbManager.getMoney()!!+reward)
+        if (!profileDbManager!!.isEmpty(this@GameNormalActivity)) {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!!+reward)
         }
     }
 
@@ -2546,7 +2546,7 @@ class GameNormalActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        profileDbManager.write2database()
+        profileDbManager!!.write2database()
     }
 
     override fun onDestroy() {
