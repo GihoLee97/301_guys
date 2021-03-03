@@ -52,8 +52,12 @@ constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucen
 
         for(i in 0..10000){
             Handler().postDelayed({
-                findViewById<View>(R.id.view_progressTardis).getBackground().setLevel(i)
+                findViewById<View>(R.id.view_progressTardis).getBackground().setLevel(i*3)
             }, 1L+i * 1)
+            if(i*3 == 9999){
+                findViewById<View>(R.id.view_progressTardis).getBackground().setLevel(i*3)
+                break
+            }
         }
 
 
