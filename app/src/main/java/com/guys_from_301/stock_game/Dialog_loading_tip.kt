@@ -44,11 +44,11 @@ constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucen
             findViewById<TextView>(R.id.tv_tip_information).text = tip_information[num_1]
         }
         findViewById<TextView>(R.id.tv_initial_asset).text =
-                "$"+dec.format(SET_CASH_STEP[gamesetDB?.gameSetDao()?.getSetCash(accountID!!)!!]).toString()
+                "$"+dec.format(SET_CASH_STEP[gamesetDB?.gameSetDao()?.getSetCashWithId(accountID!!)!!]).toString()
         findViewById<TextView>(R.id.tv_initial_monthly).text =
-                "$"+dec.format(SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly(accountID!!)!!]).toString()
+                "$"+dec.format(SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthlyWithId(accountID!!)!!]).toString()
         findViewById<TextView>(R.id.tv_initial_salary_raise).text =
-                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise(accountID!!)!!].toString()+"%"
+                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaiseWithId(accountID!!)!!].toString()+"%"
 
         for(i in 0..10000){
             Handler().postDelayed({

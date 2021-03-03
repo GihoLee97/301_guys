@@ -698,10 +698,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     }
                     questdecode(data?.QUEST!!)
                     val newGameset = GameSet()
-                    newGameset.id = u_id
-                    val SET_CASH_STEP = listOf<Float>(10000F, 50000F, 100000F, 500000F, 1000000F)
-                    val SET_MONTHLY_STEP = listOf<Float>(1000F, 1500F, 2000F, 5000F, 10000F)
-                    val SET_SALARY_RAISE_STEP = listOf<Float>(4F,5F,6F,8F,10F)
+                    newGameset.id = u_id+"0"
 
                     if(data?.SETCASH == 10000F) newGameset.setcash = 0
                     else if(data?.SETCASH == 50000F) newGameset.setcash = 1
@@ -725,7 +722,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     newGameset.accountId = u_id
                     accountID = u_id
                     Log.d("hongz", "초기 gameset 추가 2")
-
+                    println("---"+ newGameset.setsalaryraise)
                     println("---")
                     gameSetDb?.gameSetDao()?.update(newGameset)
 

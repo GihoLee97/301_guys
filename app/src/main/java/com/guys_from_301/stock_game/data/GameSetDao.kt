@@ -10,6 +10,15 @@ interface GameSetDao {
     @Query("SELECT setcash FROM GameSet WHERE accountId = :accountID")
     fun getSetCash(accountID : String): Int
 
+    @Query("SELECT setmonthly FROM GameSet WHERE accountId = :accountID AND id LIKE '%0'")
+    fun getSetMonthlyWithId(accountID : String): Int
+
+    @Query("SELECT setcash FROM GameSet WHERE accountId = :accountID AND id LIKE '%0'")
+    fun getSetCashWithId(accountID : String): Int
+
+    @Query("SELECT setsalaryraise FROM GameSet WHERE accountId = :accountID AND id LIKE '%0'")
+    fun getSetSalaryRaiseWithId(accountID : String): Int
+
     @Query("SELECT id FROM GameSet WHERE accountId = :accountID")
     fun getId(accountID : String): Int
 
