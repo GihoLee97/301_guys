@@ -78,9 +78,10 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        profileDb = ProfileDB.getInstace(this)
-        var profile = profileDb?.profileDao()?.getAll()!![0]
-        profileDbManager = ProfileDbManager(this, profile)
+//        profileDb = ProfileDB.getInstace(this)
+//        var profile = profileDb?.profileDao()?.getAll()!![0]
+//        profileDbManager = ProfileDbManager(this, profile)
+        profileDbManager = ProfileDbManager(this)
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
         TalkApiClient.instance
         accountID = profileDbManager.getLoginId()
