@@ -1,65 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:id="@+id/ll_tip_admin"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="738"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="276"
+        android:background="#F4730B"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="61dp"
+            android:text="로딩 중.."
+            android:textAppearance="@style/tip_loading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="77dp"
+            android:text="Tip."
+            android:textAppearance="@style/tip_tip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_tip_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="타이틀"
-            android:textAppearance="@style/nickname_change_title"
-            />
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="30dp"
+            android:text="상장 지수 펀드란?"
+            android:textAppearance="@style/tip_Subject"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:text="자산"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_initial_asset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="0dp"
+                    android:text="$ 000.000"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:text="연봉"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_initial_monthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="0dp"
+                    android:text="$ 00.000"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:text="연봉 인상률"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_initial_salary_raise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="0dp"
+                    android:text="5.0%"
+                    android:textAppearance="@style/tip_myInfo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="462"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_tip_information"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="내용"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="80dp"
-            android:layout_gravity="center"
-            android:textAppearance="@style/nickname_change_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="30dp"
+            android:lineSpacingExtra="4sp"
+            android:text="상장지수 펀드 또는 상장지수투자신탁은 주식시장에서 거래가 가능한, 거래 목적의 투자신탁 상품이다.\n\nETF는 주식, 원자재, 채권 등 자산으로 구성되며, 거래되면서 순자산가치로 수렴한다. 대부분의 ETF는 S&amp;P 500 또는 MSCI EAFE와 같이 인덱스를 따라간다."
+            android:textAppearance="@style/tip_description"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">
-        <ProgressBar
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="?android:attr/progressBarStyleSmall"
-            android:id="@+id/progressBar2"/>
-        <TextView
-            android:text="처리 중..."
-            android:layout_width="wrap_content"
-            android:textSize="12dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            app:layout_constraintStart_toEndOf="@+id/progressBar2"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
+        <View
+            android:id="@+id/view_progressTardis"
+            android:layout_width="177dp"
+            android:layout_height="33.72dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="33dp"
+            android:background="@drawable/progress_tardis"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

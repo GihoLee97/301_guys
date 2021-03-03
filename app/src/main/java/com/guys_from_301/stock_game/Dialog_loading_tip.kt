@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
@@ -36,5 +37,7 @@ constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucen
             findViewById<TextView>(R.id.tv_tip_information).text = tip_information[num_1]
 
         }
+
+        findViewById<View>(R.id.view_progressTardis).background.level = 20
     }
 }
