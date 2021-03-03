@@ -2273,8 +2273,8 @@ class GameNormalActivity : AppCompatActivity() {
                     100
             )
             val deleteRunnable = Runnable {
-                totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!!
-                if(totaltradeday == 0) totaltradeday = item1Able
+                if(gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = tradeday
+                else totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!!+gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!!*2
                 gameNormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
                 gameSetDb?.gameSetDao()?.deleteId(setId, accountID!!)
                 Log.d("hongz","게임 종료 gameset, gamenormal 삭제")

@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NoticeActivity"></activity>
-        <activity android:name=".NewResultNormalActivity"></activity>
+        <activity android:name=".NewHistoryActivity"></activity>
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".NewResultNormalActivity" />
         <activity android:name=".InitialSignUpEntranceActivity" />
         <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />
@@ -25,7 +26,7 @@
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
         <activity android:name=".InitialSignupFinalActivity" />
-        <activity android:name=".HistoryActivity"/>
+        <activity android:name=".HistoryActivity" />
         <activity
             android:name=".PickGameActivity"
             android:screenOrientation="portrait" />

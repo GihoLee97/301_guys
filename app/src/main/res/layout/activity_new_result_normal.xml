@@ -405,6 +405,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_monthly_profit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -412,6 +413,7 @@
                     android:textAppearance="@style/gameResult_smallTitle"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_monthly_prforitrate_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp">
@@ -426,6 +428,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_only_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -450,6 +453,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_only_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"

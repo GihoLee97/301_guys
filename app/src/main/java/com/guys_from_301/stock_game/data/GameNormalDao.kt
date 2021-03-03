@@ -35,6 +35,9 @@ interface GameNormalDao {
     @Query("SELECT * FROM GameNormal WHERE buyorsell IS '최종' AND accountId = :accountID")
     fun getLast(accountID : String): List<GameNormal>
 
+    @Query("SELECT max(profitrate) FROM GameNormal WHERE buyorsell IS '최종' AND accountId = :accountID")
+    fun getBestProfit(accountID : String): Float
+
     @Update
     fun update(gameNormal: GameNormal)
 
@@ -44,7 +47,7 @@ interface GameNormalDao {
     @Query("DELETE from GameNormal WHERE accountId = :accountID")
     fun deleteAll(accountID : String)
 
-    @Query("DELETE FROM GameNormal WHERE setId IS :id AND accountId = :accountID")
+    @Query("DELETE FROM GameNormal WHERE setId IS :id AND accountId = :accountID AND buyorsell IS NOT '최종'")
     fun deleteId(id: String, accountID : String)
 
 }

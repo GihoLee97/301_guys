@@ -2,13 +2,17 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.guys_from_301.stock_game.data.*
 import java.time.LocalDateTime
 
 var totaltradeday: Int = 0
+var isHistory: Boolean = false
+
 class NewResultNormalActivity: AppCompatActivity() {
 
     //view 요소들
@@ -24,6 +28,10 @@ class NewResultNormalActivity: AppCompatActivity() {
     private lateinit var tv_realizeGainNLoss: TextView
     private lateinit var tv_game_date: TextView
     private lateinit var tv_pinPointProfitRate: TextView
+    private lateinit var tv_monthly_profit: TextView
+    private lateinit var cl_monthly_profitrate_chart: ConstraintLayout
+    private lateinit var ll_only_result: LinearLayout
+    private lateinit var tv_only_result: TextView
     private lateinit var ll_goBackHome: LinearLayout
 
     //Db
@@ -55,12 +63,23 @@ class NewResultNormalActivity: AppCompatActivity() {
         tv_realizeGainNLoss = findViewById(R.id.tv_realizedGainNLoss)
         tv_game_date = findViewById(R.id.tv_game_date)
         tv_pinPointProfitRate = findViewById(R.id.tv_pinPointProfitRate)
+        tv_monthly_profit = findViewById(R.id.tv_monthly_profit)
+        cl_monthly_profitrate_chart = findViewById(R.id.cl_monthly_prforitrate_chart)
+        ll_only_result = findViewById(R.id.ll_only_result)
+        tv_only_result = findViewById(R.id.tv_only_result)
+
         ll_goBackHome = findViewById(R.id.ll_goBackHome)
+
+        if(isHistory){
+            tv_monthly_profit.visibility = View.INVISIBLE
+            cl_monthly_profitrate_chart.visibility = View.INVISIBLE
+            ll_only_result.visibility = View.INVISIBLE
+            tv_only_result.visibility = View.INVISIBLE
+        }
 
         if(profitrate>0) tv_profitRateFinal.text = "+"+per.format(profitrate)+"%"
         else tv_profitRateFinal.text = per.format(profitrate)+"%"
         tv_experience.text = "+100"
-
 
 
         if(relativeprofitrate>0) tv_relativeProfitRate.text ="+"+ per.format(relativeprofitrate)+"%"
@@ -87,8 +106,16 @@ class NewResultNormalActivity: AppCompatActivity() {
 
     fun GotoMainactivity(){
         reflect()
-        val intent = Intent(this@NewResultNormalActivity, MainActivity::class.java)
-        startActivity(intent)
+        if (isHistory) {
+            val intent = Intent(this@NewResultNormalActivity, NewHistoryActivity::class.java)
+            startActivity(intent)
+        }
+        else {
+            val intent = Intent(this@NewResultNormalActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+        isHistory = false
+
     }
 
     override fun onBackPressed() {
@@ -125,9 +152,9 @@ class NewResultNormalActivity: AppCompatActivity() {
                 profileDbManager!!.getLevel()!!
         )
         var localDateTime = LocalDateTime.now()
-        val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear,"최종", 0F,0F,0, 0 , quant1x, quant3x, quantinv1x, quantinv3x,
-                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot,0F, dividendtot, taxtot , "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString(), accountID!!)
+        val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "최종", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+            bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
         gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)//완료한 게임 히스토리 저장
     }
 

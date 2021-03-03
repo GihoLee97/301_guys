@@ -156,6 +156,11 @@ class FragmentHome : Fragment() {
             startActivity(intent)
         }
 
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard4).setOnClickListener {
+            val intent = Intent(_MainActivity, NewHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
         v.findViewById<TextView>(R.id.tv_use_potion).setOnClickListener {
             val dialogPotion: Dialog_potion = Dialog_potion(_MainActivity!!)
             itemDb?.itemDao()?.getAll()?.get(0)?.let { it1 -> dialogPotion.start(it1.potion) }
