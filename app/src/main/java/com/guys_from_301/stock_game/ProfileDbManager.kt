@@ -12,21 +12,21 @@ class ProfileDbManager(initialActivity : Context){
     private lateinit var mActivity : Context
     private var profileDb: ProfileDB? = null
 
-    private var id = MutableLiveData<Long>()
-    private var nickname = MutableLiveData<String>()
-    private var money = MutableLiveData<Int>()
-    private var value1 = MutableLiveData<Int>()
-    private var relativeprofitrate = MutableLiveData<Float>()
-    private var profitrate = MutableLiveData<Float>()
-    private var roundcount = MutableLiveData<Int>()
-    private var history = MutableLiveData<Int>()
-    private var level = MutableLiveData<Int>()
-    private var exp = MutableLiveData<Int>()
-    private var rank = MutableLiveData<Int>()
-    private var login = MutableLiveData<Int>()
-    private var login_id = MutableLiveData<String>()
-    private var login_pw = MutableLiveData<String>()
-    private var hash = MutableLiveData<String>()
+    private var id : Long = 0
+    private var nickname : String = ""
+    private var money : Int = 0
+    private var value1 : Int = 0
+    private var relativeprofitrate : Float = 0F
+    private var profitrate : Float = 0F
+    private var roundcount : Int = 0
+    private var history : Int = 0
+    private var level : Int = 0
+    private var exp : Int = 0
+    private var rank : Int = 0
+    private var login : Int = 0
+    private var login_id : String = ""
+    private var login_pw : String = ""
+    private var hash : String = ""
 
     private var change = false
 
@@ -35,36 +35,36 @@ class ProfileDbManager(initialActivity : Context){
         profileDb = ProfileDB.getInstace(mActivity)
         if(!isEmpty(mActivity)) {
 //            profileDb = ProfileDB.getInstace(mActivity)
-//            id.value = profile.id
-//            nickname.value = profile.nickname
-//            money.value = profile.money
-//            value1.value = profile.value1
-//            profitrate.value = profile.profitrate
-//            relativeprofitrate.value = profile.relativeprofitrate
-//            roundcount.value = profile.roundcount
-//            history.value = profile.history
-//            level.value = profile.level
-//            exp.value = profile.exp
-//            rank.value = profile.rank
-//            login.value = profile.login
-//            login_id.value = profile.login_id
-//            login_pw.value = profile.login_pw
-//            hash.value = profile.hash
-            id.value = profileDb?.profileDao()?.getId()
-            nickname.value = profileDb?.profileDao()?.getNickname()
-            money.value = profileDb?.profileDao()?.getMoney()
-            value1.value = profileDb?.profileDao()?.getValue1()
-            profitrate.value = profileDb?.profileDao()?.getProfitRate()
-            relativeprofitrate.value = profileDb?.profileDao()?.getRelativeProfitRate()
-            roundcount.value = profileDb?.profileDao()?.getRoundCount()
-            history.value = profileDb?.profileDao()?.getHistory()
-            level.value = profileDb?.profileDao()?.getLevel()
-            exp.value = profileDb?.profileDao()?.getExp()
-            rank.value = profileDb?.profileDao()?.getRank()
-            login.value = profileDb?.profileDao()?.getLogin()
-            login_id.value = profileDb?.profileDao()?.getLoginid()
-            login_pw.value = profileDb?.profileDao()?.getLoginpw()
-            hash.value = profileDb?.profileDao()?.getHash()
+//            id = profile.id
+//            nickname = profile.nickname
+//            money = profile.money
+//            value1 = profile1
+//            profitrate = profile.profitrate
+//            relativeprofitrate = profile.relativeprofitrate
+//            roundcount = profile.roundcount
+//            history = profile.history
+//            level = profile.level
+//            exp = profile.exp
+//            rank = profile.rank
+//            login = profile.login
+//            login_id = profile.login_id
+//            login_pw = profile.login_pw
+//            hash = profile.hash
+            id = profileDb?.profileDao()?.getId()!!
+            nickname = profileDb?.profileDao()?.getNickname()!!
+            money = profileDb?.profileDao()?.getMoney()!!
+            value1 = profileDb?.profileDao()?.getValue1()!!
+            profitrate = profileDb?.profileDao()?.getProfitRate()!!
+            relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
+            roundcount = profileDb?.profileDao()?.getRoundCount()!!
+            history = profileDb?.profileDao()?.getHistory()!!
+            level = profileDb?.profileDao()?.getLevel()!!
+            exp = profileDb?.profileDao()?.getExp()!!
+            rank = profileDb?.profileDao()?.getRank()!!
+            login = profileDb?.profileDao()?.getLogin()!!
+            login_id = profileDb?.profileDao()?.getLoginid()!!
+            login_pw = profileDb?.profileDao()?.getLoginpw()!!
+            hash = profileDb?.profileDao()?.getHash()!!
         }
     }
 
@@ -73,21 +73,21 @@ class ProfileDbManager(initialActivity : Context){
             write2database()
         mActivity = currentActivity
 //        profileDb = ProfileDB.getInstace(mActivity)
-//        id.value = profileDb?.profileDao()?.getId()
-//        nickname.value = profileDb?.profileDao()?.getNickname()
-//        money.value = profileDb?.profileDao()?.getMoney()
-//        value1.value = profileDb?.profileDao()?.getValue1()
-//        profitrate.value = profileDb?.profileDao()?.getProfitRate()
-//        relativeprofitrate.value = profileDb?.profileDao()?.getRelativeProfitRate()
-//        roundcount.value = profileDb?.profileDao()?.getRoundCount()
-//        history.value = profileDb?.profileDao()?.getHistory()
-//        level.value = profileDb?.profileDao()?.getLevel()
-//        exp.value = profileDb?.profileDao()?.getExp()
-//        rank.value = profileDb?.profileDao()?.getRank()
-//        login.value = profileDb?.profileDao()?.getLogin()
-//        login_id.value = profileDb?.profileDao()?.getLoginid()
-//        login_pw.value = profileDb?.profileDao()?.getLoginpw()
-//        hash.value = profileDb?.profileDao()?.getHash()
+//        id = profileDb?.profileDao()?.getId()
+//        nickname = profileDb?.profileDao()?.getNickname()
+//        money = profileDb?.profileDao()?.getMoney()
+//        value1 = profileDb?.profileDao()?.getValue1()
+//        profitrate = profileDb?.profileDao()?.getProfitRate()
+//        relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()
+//        roundcount = profileDb?.profileDao()?.getRoundCount()
+//        history = profileDb?.profileDao()?.getHistory()
+//        level = profileDb?.profileDao()?.getLevel()
+//        exp = profileDb?.profileDao()?.getExp()
+//        rank = profileDb?.profileDao()?.getRank()
+//        login = profileDb?.profileDao()?.getLogin()
+//        login_id = profileDb?.profileDao()?.getLoginid()
+//        login_pw = profileDb?.profileDao()?.getLoginpw()
+//        hash = profileDb?.profileDao()?.getHash()
 //        change = false
     }
 
@@ -95,55 +95,55 @@ class ProfileDbManager(initialActivity : Context){
         mActivity = currentActivity
         profileDb = ProfileDB.getInstace(mActivity)
 //        var profile = profileDb?.profileDao()?.getAll()!![0]
-//        id.value = profile.id
-//        nickname.value = profile.nickname
-//        money.value = profile.money
-//        value1.value = profile.value1
-//        profitrate.value = profile.profitrate
-//        relativeprofitrate.value = profile.relativeprofitrate
-//        roundcount.value = profile.roundcount
-//        history.value = profile.history
-//        level.value = profile.level
-//        exp.value = profile.exp
-//        rank.value = profile.rank
-//        login.value = profile.login
-//        login_id.value = profile.login_id
-//        login_pw.value = profile.login_pw
-//        hash.value = profile.hash
-        id.value = profileDb?.profileDao()?.getId()
-        nickname.value = profileDb?.profileDao()?.getNickname()
-        money.value = profileDb?.profileDao()?.getMoney()
-        value1.value = profileDb?.profileDao()?.getValue1()
-        profitrate.value = profileDb?.profileDao()?.getProfitRate()
-        relativeprofitrate.value = profileDb?.profileDao()?.getRelativeProfitRate()
-        roundcount.value = profileDb?.profileDao()?.getRoundCount()
-        history.value = profileDb?.profileDao()?.getHistory()
-        level.value = profileDb?.profileDao()?.getLevel()
-        exp.value = profileDb?.profileDao()?.getExp()
-        rank.value = profileDb?.profileDao()?.getRank()
-        login.value = profileDb?.profileDao()?.getLogin()
-        login_id.value = profileDb?.profileDao()?.getLoginid()
-        login_pw.value = profileDb?.profileDao()?.getLoginpw()
-        hash.value = profileDb?.profileDao()?.getHash()
+//        id = profile.id
+//        nickname = profile.nickname
+//        money = profile.money
+//        value1 = profile1
+//        profitrate = profile.profitrate
+//        relativeprofitrate = profile.relativeprofitrate
+//        roundcount = profile.roundcount
+//        history = profile.history
+//        level = profile.level
+//        exp = profile.exp
+//        rank = profile.rank
+//        login = profile.login
+//        login_id = profile.login_id
+//        login_pw = profile.login_pw
+//        hash = profile.hash
+        id = profileDb?.profileDao()?.getId()!!
+        nickname = profileDb?.profileDao()?.getNickname()!!
+        money = profileDb?.profileDao()?.getMoney()!!
+        value1 = profileDb?.profileDao()?.getValue1()!!
+        profitrate = profileDb?.profileDao()?.getProfitRate()!!
+        relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
+        roundcount = profileDb?.profileDao()?.getRoundCount()!!
+        history = profileDb?.profileDao()?.getHistory()!!
+        level = profileDb?.profileDao()?.getLevel()!!
+        exp = profileDb?.profileDao()?.getExp()!!
+        rank = profileDb?.profileDao()?.getRank()!!
+        login = profileDb?.profileDao()?.getLogin()!!
+        login_id = profileDb?.profileDao()?.getLoginid()!!
+        login_pw = profileDb?.profileDao()?.getLoginpw()!!
+        hash = profileDb?.profileDao()?.getHash()!!
         change = false
     }
 
 
     fun updateManager(newProfile : Profile){
-        id.value = newProfile.id
-        nickname.value = newProfile.nickname
-        money.value = newProfile.money
-        value1.value = newProfile.value1
-        profitrate.value = newProfile.profitrate
-        relativeprofitrate.value = newProfile.relativeprofitrate
-        roundcount.value = newProfile.roundcount
-        history.value = newProfile.history
-        level.value = newProfile.level
-        exp.value = newProfile.exp
-        rank.value = newProfile.rank
-        login.value = newProfile.login
-        login_id.value = newProfile.login_id
-        login_pw.value = newProfile.login_pw
+        id = newProfile.id!!
+        nickname = newProfile.nickname
+        money = newProfile.money
+        value1 = newProfile.value1
+        profitrate = newProfile.profitrate
+        relativeprofitrate = newProfile.relativeprofitrate
+        roundcount = newProfile.roundcount
+        history = newProfile.history
+        level = newProfile.level
+        exp = newProfile.exp
+        rank = newProfile.rank
+        login = newProfile.login
+        login_id = newProfile.login_id
+        login_pw = newProfile.login_pw
         // hash는 가져오는 것이 아니라 다시 계산 해야함!
         change = false
         updateHashValue()
@@ -154,8 +154,8 @@ class ProfileDbManager(initialActivity : Context){
             updateHashValue()
             var write = Runnable {
                 profileDb = ProfileDB.getInstace(mActivity)
-                var newProfile = Profile(id.value!!, nickname.value!!, money.value!!, value1.value!!, profitrate.value!!, relativeprofitrate.value!!, roundcount.value!!, history.value!!,
-                        level.value!!, exp.value!!, rank.value!!, login.value!!, login_id.value!!, login_pw.value!!, hash.value!!)
+                var newProfile = Profile(id!!, nickname!!, money!!, value1!!, profitrate!!, relativeprofitrate!!, roundcount!!, history!!,
+                        level!!, exp!!, rank!!, login!!, login_id!!, login_pw!!, hash!!)
                 if(profileDb?.profileDao()?.getAll().isNullOrEmpty())
                     profileDb?.profileDao()?.insert(newProfile)
                 else
@@ -169,144 +169,144 @@ class ProfileDbManager(initialActivity : Context){
 
     // setter
     fun setId(newId : Long){
-        id.value = newId
+        id = newId
         change = true
         updateHashValue()
     }
     fun setNickname(newNickname : String){
-        nickname.value = newNickname
+        nickname = newNickname
         change = true
         updateHashValue()
     }
     fun setMoney(newMoney : Int){
-        money.value = newMoney
+        money = newMoney
         change = true
         updateHashValue()
     }
     fun setValue1(newMoney : Int){
-        value1.value = newMoney
+        value1 = newMoney
         change = true
         updateHashValue()
     }
     fun setProfitRate(newProfitRate: Float){
-        profitrate.value = newProfitRate
+        profitrate = newProfitRate
         change = true
         updateHashValue()
     }
     fun setRelativeProfit(newRelativeProfit : Float){
-        relativeprofitrate.value = newRelativeProfit
+        relativeprofitrate = newRelativeProfit
         change = true
         updateHashValue()
     }
     fun setRoundCount(newRoundCount : Int){
-        roundcount.value = newRoundCount
+        roundcount = newRoundCount
         change = true
         updateHashValue()
     }
     fun setHistory(newHistory : Int){
-        history.value = newHistory
+        history = newHistory
         change = true
         updateHashValue()
     }
     fun setLevel(newLevel : Int){
-        level.value = newLevel
+        level = newLevel
         change = true
         updateHashValue()
     }
     fun setExp(newExp: Int){
-        exp.value = newExp
+        exp = newExp
         change = true
         updateHashValue()
     }
     fun setRank(newRank : Int){
-        rank.value = profileDb?.profileDao()?.getRank()
+        rank = newRank
         change = true
         updateHashValue()
     }
     fun setLogin(newLogin : Int){
-        login.value = newLogin
+        login = newLogin
         change = true
         updateHashValue()
     }
     fun setLoginId(newLoginId : String){
         change = true
-        login_id.value = newLoginId
+        login_id = newLoginId
         updateHashValue()
     }
     fun setLoginPw(newLoginPw: String){
-        login_pw.value = newLoginPw
+        login_pw = newLoginPw
         change = true
         updateHashValue()
     }
 
     // setter
     fun setnWriteId(newId : Long){
-        id.value = newId
+        id = newId
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteNickname(newNickname : String){
-        nickname.value = newNickname
+        nickname = newNickname
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteMoney(newMoney: Int){
-        money.value = newMoney
+        money = newMoney
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteValue1(newValue1: Int){
-        value1.value = newValue1
+        value1 = newValue1
         change = true
         updateHashValue()
         write2database() }
     fun setWriteProfit(newProfitRate: Float){
-        profitrate.value = newProfitRate
+        profitrate = newProfitRate
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteRelativeProfit(newRelativeProfit: Float){
-        relativeprofitrate.value = newRelativeProfit
+        relativeprofitrate = newRelativeProfit
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteRoundCount(newRoundCount: Int ){
-        roundcount.value = newRoundCount
+        roundcount = newRoundCount
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteHistory(newHistory : Int){
-        history.value = newHistory
+        history = newHistory
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteLevel(newLevel : Int){
-        level.value = newLevel
+        level = newLevel
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteExp(newExp: Int){
-        exp.value = newExp
+        exp = newExp
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteRank(newRank : Int){
-        rank.value = newRank
+        rank = newRank
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteLogin(newLogin : Int){
-        login.value = newLogin
+        login = newLogin
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteLoginId(newLoginId : String){
-        login_id.value = newLoginId
+        login_id = newLoginId
         change = true
         updateHashValue()
         write2database() }
     fun setnWriteLoginPw(newLoginPw: String){
-        login_pw.value = newLoginPw
+        login_pw = newLoginPw
         change = true
         updateHashValue()
         write2database() }
@@ -318,42 +318,42 @@ class ProfileDbManager(initialActivity : Context){
     }
 
     // getter function
-    fun getId(): Long? { return id.value }
-    fun getNickname(): String? { return nickname.value }
-    fun getMoney(): Int? {return money.value}
-    fun getValue1(): Int? {return value1.value}
-    fun getProfitRate(): Float? {return profitrate.value}
-    fun getRelativeProfit(): Float? { return relativeprofitrate.value }
-    fun getRoundCount(): Int? {return roundcount.value}
-    fun getHistory(): Int? { return history.value }
-    fun getLevel(): Int? { return level.value }
-    fun getExp(): Int? { return exp.value }
-    fun getRank(): Int? { return rank.value }
-    fun getLogin(): Int? { return login.value }
-    fun getLoginId(): String? { return login_id.value }
-    fun getLoginPw(): String? { return login_pw.value }
-    fun getHash(): String? { return hash.value}
+    fun getId(): Long? { return id }
+    fun getNickname(): String? { return nickname }
+    fun getMoney(): Int? {return money}
+    fun getValue1(): Int? {return value1}
+    fun getProfitRate(): Float? {return profitrate}
+    fun getRelativeProfit(): Float? { return relativeprofitrate }
+    fun getRoundCount(): Int? {return roundcount}
+    fun getHistory(): Int? { return history }
+    fun getLevel(): Int? { return level }
+    fun getExp(): Int? { return exp }
+    fun getRank(): Int? { return rank }
+    fun getLogin(): Int? { return login }
+    fun getLoginId(): String? { return login_id }
+    fun getLoginPw(): String? { return login_pw }
+    fun getHash(): String? { return hash}
 
     fun updateHashValue(){
         change = true
-        val hashInput = id.value.toString()+ nickname.value + money.value.toString()+
-                value1.value.toString()+ profitrate.value.toString() +
-                relativeprofitrate.value.toString() + roundcount.value.toString()+
-                history.value.toString() + level.value.toString() +
-                exp.value.toString() + rank.value.toString() + login.value.toString()+
-                login_id.value + login_pw.value
+        val hashInput = id.toString()+ nickname + money.toString()+
+                value1.toString()+ profitrate.toString() +
+                relativeprofitrate.toString() + roundcount.toString()+
+                history.toString() + level.toString() +
+                exp.toString() + rank.toString() + login.toString()+
+                login_id + login_pw
         val hashValue = getHash(hashInput)
-        hash.value = hashValue
+        hash = hashValue
         Log.d("Giho","updateHashValue : "+hashValue)
     }
 
     fun getHashRespectFromDbManager():String{
-        val hashInput = id.value.toString()+ nickname.value + money.value.toString()+
-                value1.value.toString()+ profitrate.value.toString() +
-                relativeprofitrate.value.toString() + roundcount.value.toString()+
-                history.value.toString() + level.value.toString() +
-                exp.value.toString() + rank.value.toString() + login.value.toString()+
-                login_id.value + login_pw.value
+        val hashInput = id.toString()+ nickname + money.toString()+
+                value1.toString()+ profitrate.toString() +
+                relativeprofitrate.toString() + roundcount.toString()+
+                history.toString() + level.toString() +
+                exp.toString() + rank.toString() + login.toString()+
+                login_id + login_pw
         Log.d("Giho","getHashRespectFromDbData : "+getHash(hashInput))
         return getHash(hashInput)
     }
