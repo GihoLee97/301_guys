@@ -35,7 +35,7 @@ class PickGameActivity : AppCompatActivity() {
         val r = Runnable {
             try{
                 //초기자산값 변수
-                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
                 if (initialgameset != null) {
                     setCash = SET_CASH_STEP[initialgameset.setcash]
                     setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
@@ -43,9 +43,9 @@ class PickGameActivity : AppCompatActivity() {
                     setGamelength = initialgameset.setgamelength
                     setGamespeed = initialgameset.setgamespeed
                 }
-                game = gameDb?.gameSetDao()?.getPick()!!
-                for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
-                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getPick()!![i].id).isNullOrEmpty()) {
+                game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
+                for (i in 0..gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!![i].id, accountID!!).isNullOrEmpty()) {
                     }
                 }
                 mAdapter = PickAdapter(this, game, gameNormalDB!!){

@@ -35,7 +35,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
         itemDb = ItemDB.getInstace(marketActivity)
         _stack.value = profileDbManager.getMoney()
-        gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        gameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
         itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value =  gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
@@ -50,7 +50,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
         itemDb = ItemDB.getInstace(marketActivity)
         _stack.value = profileDbManager.getMoney()
-        gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        gameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
         itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value = gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
@@ -64,7 +64,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
         }
         var write = Runnable {
             gameSetDb = GameSetDB.getInstace(marketActivity)
-            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
             if (newGameSet != null) {
                 newGameSet.setcash = _initialAsset.value!!
                 newGameSet.setmonthly = _initialMonthly.value!!

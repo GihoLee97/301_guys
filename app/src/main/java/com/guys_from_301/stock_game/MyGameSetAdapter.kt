@@ -16,7 +16,7 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, var gameNo
         val gameName = itemView.findViewById<TextView>(R.id.gameName)
         val profitRate = itemView.findViewById<TextView>(R.id.profitrate)
         fun bind(gameUnit : GameSet){
-            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id).isNullOrEmpty()) {
+            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id, accountID!!).isNullOrEmpty()) {
                 endtime.text = ""
                 gameName.text = "새 게임 추가하기"
                 profitRate.text = ""
@@ -24,7 +24,8 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, var gameNo
             else {
                 //endtime gamenormal 기준
                 if(gameUnit.endtime.length>10)endtime.text = gameUnit.endtime.slice(IntRange(0,3))+"."+gameUnit.endtime.slice(IntRange(5,6))+"."+gameUnit.endtime.slice(IntRange(8,9))+" "+gameUnit.endtime.slice(IntRange(11,15))
-                gameName.text = "투자공간" + gameUnit.id
+                else endtime.text = gameUnit.endtime
+                gameName.text = "투자공간" + gameUnit.id.last()
                 profitRate.text = per.format(gameUnit.profitrate).toString()+"%"
             }
             itemView.setOnClickListener{ itemClick(gameUnit) }

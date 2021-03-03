@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
@@ -55,11 +56,11 @@ class Dialog_game_exit(context: Context) {
                 val addRunnable = Runnable {
                     bought = bought1x * aver1x + bought3x * aver3x + boughtinv1x * averinv1x + boughtinv3x * averinv3x
                     localDateTime = LocalDateTime.now()
-                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "저장", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                    val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "저장", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
                             bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
+                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-
+                    Log.d("hongz", "gamenormal"+ accountID+ "저장")
                     // 피로도 저감 시간 저장
                     var nowtime = System.currentTimeMillis() // 현재 시간
                     val newItem = Item()
@@ -90,12 +91,11 @@ class Dialog_game_exit(context: Context) {
 //            Toast.makeText(context, "메인 액티비티 종료", Toast.LENGTH_SHORT).show()
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
+            profileDbManager.setValue1(value1now)
+            profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+            profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
+            profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
             val deleteRunnable = Runnable {
-                profileDbManager.setValue1(value1now)
-                profileDbManager.setProfitRate((profileDbManager.getProfitRate()!! * profileDbManager.getHistory()!! + profitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-                profileDbManager.setRelativeProfit((profileDbManager.getRelativeProfit()!! * profileDbManager.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager.getHistory()!! + tradeday))
-                profileDbManager.setHistory(profileDbManager.getHistory()!!+ tradeday)
-
                 // 피로도 저감 시간 저장
                 var nowtime = System.currentTimeMillis() // 현재 시간
                 val newItem = Item()

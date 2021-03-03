@@ -50,9 +50,9 @@ class Dialog_negotiation_unsuccess(context: Context) {
             6->tv_fail_message.text = "피로도 물약 구매 성공 ! 현재 개수 " + potion +"개"
         }
         setasset(getHash(profileDbManager.getLoginId()!!),
-            SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash()!!],
-            SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly()!!],
-            SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise()!!],
+            SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash(accountID!!)!!],
+            SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly(accountID!!)!!],
+            SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise(accountID!!)!!],
             profileDbManager.getMoney()!!,
             itemDB?.itemDao()?.getPotion()!!)
         btn_close.setOnClickListener{

@@ -330,24 +330,6 @@ class InitialLoginActivity : AppCompatActivity() {
             }
         }
 
-        //초기 게임 setting 저장
-        gameSetDb = GameSetDB.getInstace(this)
-        val r = Runnable {
-            val newGameSet = GameSet()
-            setId = 1
-            newGameSet.id = 1
-            newGameSet.setcash = 0
-            newGameSet.setgamelength = START_GAME_LENGTH
-            newGameSet.setgamespeed = START_GAME_SPEED
-            newGameSet.setmonthly = 0
-            newGameSet.setsalaryraise = 0
-            gameSetDb?.gameSetDao()?.insert(newGameSet)
-            newGameSet.id = 0
-            gameSetDb?.gameSetDao()?.insert(newGameSet)
-        }
-        val t = Thread(r)
-        t.start()
-
         //초기 공지사항 저장
         noticeDb = NoticeDB.getInstace(this)
         val addNotice = Runnable {
@@ -552,6 +534,7 @@ class InitialLoginActivity : AppCompatActivity() {
 
     fun getuserinformation(u_id: String, u_pw: String) {
         var fungetuserinformation: RetrofitGet? = null
+        accountID = u_id//사용자 아이디 식별에 사용할 변수 설정
         val url = "http://stockgame.dothome.co.kr/test/getall.php/"
         var gson: Gson = GsonBuilder()
                 .setLenient()
@@ -592,6 +575,26 @@ class InitialLoginActivity : AppCompatActivity() {
                         newProfile.login_id = u_id
                         newProfile.login_pw = u_pw
                         newProfile.profitrate = data?.PROFITRATE
+
+                        //초기 게임 setting 저장
+                        gameSetDb = GameSetDB.getInstace(this@InitialLoginActivity)
+                        val r = Runnable {
+                            val newGameSet = GameSet()
+                            setId = u_id
+                            newGameSet.id = accountID+1
+                            newGameSet.setcash = 0
+                            newGameSet.setgamelength = START_GAME_LENGTH
+                            newGameSet.setgamespeed = START_GAME_SPEED
+                            newGameSet.setmonthly = 0
+                            newGameSet.setsalaryraise = 0
+                            newGameSet.accountId = u_id
+                            gameSetDb?.gameSetDao()?.insert(newGameSet)
+                            newGameSet.id = accountID+0
+                            gameSetDb?.gameSetDao()?.insert(newGameSet)
+                            Log.d("hongz", "초기 gaemset 추가")
+                        }
+                        val t = Thread(r)
+                        t.start()
 
                         profileDbManager.updateManager(newProfile)
                     }
@@ -639,7 +642,7 @@ class InitialLoginActivity : AppCompatActivity() {
                     }
                     questdecode(data?.QUEST!!)
                     val newGameset = GameSet()
-                    newGameset.id = 0
+                    newGameset.id = u_id
                     val SET_CASH_STEP = listOf<Float>(10000F, 50000F, 100000F, 500000F, 1000000F)
                     val SET_MONTHLY_STEP = listOf<Float>(1000F, 1500F, 2000F, 5000F, 10000F)
                     val SET_SALARY_RAISE_STEP = listOf<Float>(4F,5F,6F,8F,10F)
@@ -661,8 +664,11 @@ class InitialLoginActivity : AppCompatActivity() {
                     else if(data?.SETSALARYRAISE == 6F) newGameset.setsalaryraise = 2
                     else if(data?.SETSALARYRAISE == 8F) newGameset.setsalaryraise = 3
                     else if(data?.SETSALARYRAISE == 10F) newGameset.setsalaryraise = 4
-                    newGameset.setgamelength = gameSetDb?.gameSetDao()?.getSetGameLength()!!
-                    newGameset.setgamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed()!!
+                    newGameset.setgamelength = gameSetDb?.gameSetDao()?.getSetGameLength(accountID!!)!!
+                    newGameset.setgamespeed = gameSetDb?.gameSetDao()?.getSetGameSpeed(accountID!!)!!
+                    newGameset.accountId = u_id
+                    accountID = u_id
+                    Log.d("hongz", "초기 gameset 추가 2")
 
                     println("---")
                     gameSetDb?.gameSetDao()?.update(newGameset)

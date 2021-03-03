@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -40,6 +41,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
+var accountID: String? = null
 var _MainActivity : Context? = null
 const val START_CASH = 10000F
 const val START_MONTHLY = 1000F
@@ -85,14 +87,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
-        profileDbManager.refresh(this)
 //        profileDb = ProfileDB?.getInstace(mContext!!)
         questDb = QuestDB.getInstance(mContext!!)
         tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("투자 경험")
-
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("게임 플레이하기")
         _MainActivity = this
+        profileDbManager.refresh(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         OneSignal.setAppId(ONESIGNAL_APP_ID)
 
         //초기자산값 변수
-        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(0)
+        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
 
         //게임 저장시 gmaeset 업데이트
         if(updateGameSet){
@@ -121,20 +122,21 @@ class MainActivity : AppCompatActivity() {
             val dialog = Dialog_loading_tip(this@MainActivity)
             dialog.show()
             var localDateTime = LocalDateTime.now()
-            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
             if (newGameSet != null) {
                 newGameSet.endtime = localDateTime.toString()
                 newGameSet.profitrate = profitrate
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
+                Log.d("hongz", "gameset 업데이트")
             }
             updateGameSet = false
             dialog.dismiss()
         }
         //새로운 빈 게임 생성
-        var gamesetList = gameSetDb?.gameSetDao()?.getPick()
+        var gamesetList = gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
         var existence = false   //새 게임 존재 여부
-        for (i in 0..gameSetDb?.gameSetDao()?.getPick()?.size!!-1) {
-            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick()!![i].id).isNullOrEmpty()) {
+        for (i in 0..gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!![i].id, accountID!!).isNullOrEmpty()) {
                 existence = true
             }
         }
@@ -143,15 +145,17 @@ class MainActivity : AppCompatActivity() {
                 val newGameSet = GameSet()
 
                 if (gamesetList.size == 1) {
-                    if (gamesetList.last().id == 1) newGameSet.id = 2
-                    else if (gamesetList.last().id == 2) newGameSet.id = 3
-                    else if (gamesetList.last().id == 3) newGameSet.id = 1
+                    if (gamesetList.last().id.last() == '1') newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList.last().id.last() == '2') newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList.last().id.last() == '3') newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외1"
                 } else if (gamesetList.size == 2) {
-                    if (gamesetList[0].id + gamesetList[1].id == 3) newGameSet.id = 3
-                    if (gamesetList[0].id + gamesetList[1].id == 4) newGameSet.id = 2
-                    if (gamesetList[0].id + gamesetList[1].id == 5) newGameSet.id = 1
+                    if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'3'.toInt()) newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '3'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외2"
                 } else if (gamesetList.size == 0){
-                    newGameSet.id = 1
+                    newGameSet.id = accountID+1
                 }
                 //예전거 누적
                 if (initialgameset != null) {
@@ -160,6 +164,8 @@ class MainActivity : AppCompatActivity() {
                     newGameSet.setsalaryraise = initialgameset.setsalaryraise
                     newGameSet.setgamespeed = initialgameset.setgamespeed
                     newGameSet.setgamelength = initialgameset.setgamelength
+                    newGameSet.accountId = initialgameset.accountId
+                    Log.d("hongz", "새gameset 추가")
                 }
                 newGameSet.endtime = ""
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
@@ -661,12 +667,12 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         // DB 피로도 업데이트
         profileDbManager.setValue1(value1ForWrite)
+        profileDbManager.write2database()
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        profileDbManager.write2database()
     }
 
 }

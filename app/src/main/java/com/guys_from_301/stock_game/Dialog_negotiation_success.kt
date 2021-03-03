@@ -58,9 +58,9 @@ class Dialog_negotiation_success(context: Context) {
         }
         println("---돈: " + profileDbManager.getMoney()!!)
         setasset(getHash(profileDbManager.getLoginId()!!),
-                SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash()!!],
-                SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly()!!],
-                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise()!!],
+                SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash(accountID!!)!!],
+                SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly(accountID!!)!!],
+                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise(accountID!!)!!],
                 profileDbManager.getMoney()!!,
                 itemDB?.itemDao()?.getPotion()!!)
         btn_close.setOnClickListener{

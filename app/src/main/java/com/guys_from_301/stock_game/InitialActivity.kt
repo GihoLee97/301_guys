@@ -235,15 +235,15 @@ class InitialActivity : AppCompatActivity() {
         gameSetDb = GameSetDB.getInstace(this)
         val r = Runnable {
             val newGameSet = GameSet()
-            setId = 1
-            newGameSet.id = 1
+            setId = accountID+1
+            newGameSet.id = accountID+1
             newGameSet.setcash = 0
             newGameSet.setgamelength = START_GAME_LENGTH
             newGameSet.setgamespeed = START_GAME_SPEED
             newGameSet.setmonthly = 0
             newGameSet.setsalaryraise = 0
             gameSetDb?.gameSetDao()?.insert(newGameSet)
-            newGameSet.id = 0
+            newGameSet.id = accountID+0
             gameSetDb?.gameSetDao()?.insert(newGameSet)
         }
         val t = Thread(r)

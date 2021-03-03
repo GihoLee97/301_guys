@@ -2,6 +2,7 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -64,6 +65,7 @@ class FragmentHome : Fragment() {
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(_MainActivity!!)
         gameNormalDB = GameNormalDB.getInstace(_MainActivity!!)
+        Log.d("hongz", "사용자 계정: "+ accountID!!)
         mAdapter = gameNormalDB?.let {
             MyGameSetAdapter(_MainActivity!!, game, it){ game -> setId = game.id }
         }!!
@@ -71,9 +73,9 @@ class FragmentHome : Fragment() {
         val pRecyclerView = v.findViewById<RecyclerView>(R.id.rv_games)
         pRecyclerView.layoutManager = layoutManager
 
-        game = gameDb?.gameSetDao()?.getPick()!!
+        game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
         //초기자산값 변수
-        val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+        val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
         if (initialgameset != null) {
             setCash = SET_CASH_STEP[initialgameset.setcash]
             setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
@@ -81,10 +83,10 @@ class FragmentHome : Fragment() {
             setGamelength = initialgameset.setgamelength
             setGamespeed = initialgameset.setgamespeed
         }
-        for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
-            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll()!![i].id).isNullOrEmpty()) {
-            }
-        }
+//        for (i in 0..gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+//            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
+//            }
+//        }
         mAdapter = MyGameSetAdapter(_MainActivity!!, game,gameNormalDB!!){
             gameUnit -> setId = gameUnit.id
             val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)

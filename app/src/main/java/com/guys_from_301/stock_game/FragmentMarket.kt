@@ -86,7 +86,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_market, container, false)
         gameSetDB = GameSetDB.getInstace(mContext)
-        var gameset = gameSetDB?.gameSetDao()?.getAll()?.get(0)
+        var gameset = gameSetDB?.gameSetDao()?.getAll(accountID!!)?.get(0)
         //viewmodel
         val marketViewModel = MarketViewModel(_MainActivity!!)
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -49,7 +50,7 @@ var profityear: Float = 0F // 세금 계산을 위한 연 실현수익(손실이
 var localdatatime: String = "0"
 var endpoint: Int = 0
 var monthToggle = 1
-var setId: Int = 0
+var setId: String = ""
 var tradeday: Int = 0//누적 거래일에 더할 거래일
 var marketrate: Float = 0F//시장 수익률
 
@@ -452,8 +453,8 @@ class GameNormalActivity : AppCompatActivity() {
         questList = questDb?.questDao()?.getQuestByTheme("수익률")!!
         relativeQuestList = questDb?.questDao()?.getQuestByTheme("시장대비 수익률")!!
         surplusQuestList = questDb?.questDao()?.getQuestByTheme("연속 흑자")
-        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(0)
-        var gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
+        var gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
         //setId = gameSetDb?.gameSetDao()?.getId()!!
         if (gameset != null) { gl = 250 * gameset.setgamelength }
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
@@ -463,11 +464,11 @@ class GameNormalActivity : AppCompatActivity() {
         tradeday = 0
 
         gameNormalDb = GameNormalDB.getInstace(this)
-        tv_gameName.text = "투자공간"+ setId
-        if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.isEmpty() == false) {
-            sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)?.last()?.endpoint!!
+        tv_gameName.text = "투자공간"+ setId.last()
+        if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId, accountID!!)?.isEmpty() == false) {
+            sp = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId, accountID!!)?.last()?.endpoint!!
             // 차트 ////////////////////////////////////////////////////////////////////////////////////
-            val gamehistory = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId)!!.last()
+            val gamehistory = gameNormalDb?.gameNormalDao()?.getSetWithNormal(setId, accountID!!)!!.last()
             // 차트 전역 변수 초기화
             if (gameset != null) {
                 setGamelength = gameset.setgamelength!!
@@ -1410,9 +1411,9 @@ class GameNormalActivity : AppCompatActivity() {
                             // 자산내역 DB 저장
                             val addRunnable = Runnable {
                                 var localDateTime = LocalDateTime.now()
-                                val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자산 차트", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                                val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자산 차트", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
                                         bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
+                                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
                                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                             }
                             val addThread = Thread(addRunnable)
@@ -1487,9 +1488,9 @@ class GameNormalActivity : AppCompatActivity() {
                                 // 자동 매수내역 DB 저장
                                 val addRunnable = Runnable {
                                     var localDateTime = LocalDateTime.now()
-                                    val newGameNormalDB = GameNormal(localdatatime, asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자동 매수", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                                    val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자동 매수", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
                                             bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localDateTime.toString())
+                                            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
                                     gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
                                 }
                                 val addThread = Thread(addRunnable)
@@ -2272,10 +2273,11 @@ class GameNormalActivity : AppCompatActivity() {
                     100
             )
             val deleteRunnable = Runnable {
-                totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId)?.sum()!!
+                totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!!
                 if(totaltradeday == 0) totaltradeday = item1Able
-                gameNormalDb?.gameNormalDao()?.deleteId(setId)
-                gameSetDb?.gameSetDao()?.deleteId(setId)
+                gameNormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
+                gameSetDb?.gameSetDao()?.deleteId(setId, accountID!!)
+                Log.d("hongz","게임 종료 gameset, gamenormal 삭제")
             }
             val deleteThread = Thread(deleteRunnable)
             deleteThread.start()
@@ -2285,20 +2287,21 @@ class GameNormalActivity : AppCompatActivity() {
         else {
             // save gameSpeed setting on the database
             val gameDb = GameSetDB.getInstace(this)
-            val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId)
-            val updateSettingRunnable = Runnable {
-                var newGameSetDB = GameSet()
-                newGameSetDB.id =  gameset!!.id
-                newGameSetDB.setcash = gameset.setcash
-                newGameSetDB.setgamelength = gameset.setgamelength
-                newGameSetDB.setgamespeed = setGamespeed
-                newGameSetDB.setmonthly = gameset.setmonthly
-                newGameSetDB.setsalaryraise = gameset.setsalaryraise
-                newGameSetDB.profitrate = profitrate
-                gameDb?.gameSetDao()?.update(newGameSetDB)
-            }
-            val updateSettingThread = Thread(updateSettingRunnable)
-            updateSettingThread.start()
+            val gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
+//            val updateSettingRunnable = Runnable {
+//                var newGameSetDB = GameSet()
+//                newGameSetDB.id =  gameset!!.id
+//                newGameSetDB.setcash = gameset.setcash
+//                newGameSetDB.setgamelength = gameset.setgamelength
+//                newGameSetDB.setgamespeed = setGamespeed
+//                newGameSetDB.setmonthly = gameset.setmonthly
+//                newGameSetDB.setsalaryraise = gameset.setsalaryraise
+//                newGameSetDB.profitrate = profitrate
+//                gameDb?.gameSetDao()?.update(newGameSetDB)
+//                Log.d("hongz","이건 뭘까")
+//            }
+//            val updateSettingThread = Thread(updateSettingRunnable)
+//            updateSettingThread.start()
             val intent = Intent(this@GameNormalActivity, MainActivity::class.java)
             startActivity(intent)
         }
@@ -2541,8 +2544,12 @@ class GameNormalActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        profileDbManager.write2database()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        profileDbManager.write2database()
     }
 }

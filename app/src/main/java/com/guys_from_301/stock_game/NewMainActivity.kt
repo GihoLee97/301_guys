@@ -38,9 +38,9 @@ class NewMainActivity : AppCompatActivity() {
         pRecyclerView.layoutManager = layoutManager
         val r = Runnable {
             try{
-                game = gameDb?.gameSetDao()?.getPick()!!
+                game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
                 //초기자산값 변수
-                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
                 if (initialgameset != null) {
                     setCash = SET_CASH_STEP[initialgameset.setcash]
                     setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
@@ -48,8 +48,8 @@ class NewMainActivity : AppCompatActivity() {
                     setGamelength = initialgameset.setgamelength
                     setGamespeed = initialgameset.setgamespeed
                 }
-                for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
-                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll()!![i].id).isNullOrEmpty()) {
+                for (i in 0..gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
                     }
                 }
                 mAdapter = MyGameSetAdapter(this, game,gameNormalDB!!){
