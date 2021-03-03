@@ -38,9 +38,9 @@ class NewHistoryActivity : AppCompatActivity() {
         gameNormalDB = GameNormalDB.getInstace(this)
         game = gameNormalDB?.gameNormalDao()?.getLast(accountID!!)!!
 
-        tv_nickname.text = profileDbManager.getNickname()
-        tv_tradeday.text = "투자한지 "+ dec.format(profileDbManager.getHistory())+"일 째"
-        tv_cumulative_profitrate.text = per.format(profileDbManager.getProfitRate())+"%"
+        tv_nickname.text = profileDbManager!!.getNickname()
+        tv_tradeday.text = "투자한지 "+ dec.format(profileDbManager!!.getHistory())+"일 째"
+        tv_cumulative_profitrate.text = per.format(profileDbManager!!.getProfitRate())+"%"
         tv_best_profitrate.text = per.format(gameNormalDB?.gameNormalDao()?.getBestProfit(accountID!!))+"%"
         if(tv_best_profitrate.text.isNullOrBlank()) tv_best_profitrate.text ="00.00%"
 
