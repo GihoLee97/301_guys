@@ -35,7 +35,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     private lateinit var ll_goBackHome: LinearLayout
 
     //Db
-    private var profileDb : ProfileDB? = null
+    private var profileDb: ProfileDB? = null
     private var gamenormalDb: GameNormalDB? = null
     private var gamesetDB: GameSetDB? = null
 
@@ -70,47 +70,44 @@ class NewResultNormalActivity: AppCompatActivity() {
 
         ll_goBackHome = findViewById(R.id.ll_goBackHome)
 
-        if(isHistory){
+        if (isHistory) {
             tv_monthly_profit.visibility = View.INVISIBLE
             cl_monthly_profitrate_chart.visibility = View.INVISIBLE
             ll_only_result.visibility = View.INVISIBLE
             tv_only_result.visibility = View.INVISIBLE
         }
 
-        if(profitrate>0) tv_profitRateFinal.text = "+"+per.format(profitrate)+"%"
-        else tv_profitRateFinal.text = per.format(profitrate)+"%"
+        if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
+        else tv_profitRateFinal.text = per.format(profitrate) + "%"
         tv_experience.text = "+100"
 
 
-        if(relativeprofitrate>0) tv_relativeProfitRate.text ="+"+ per.format(relativeprofitrate)+"%"
+        if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"
         else {
-            tv_relativeProfitRate.text =per.format(relativeprofitrate)+"%"
+            tv_relativeProfitRate.text = per.format(relativeprofitrate) + "%"
             tv_relativeProfitRate.setTextAppearance(applicationContext, R.style.gameResult_relativeProfitValueDown)
             tv_yourProfit.setTextAppearance(applicationContext, R.style.gameResult_descriptionChangeDown)
         }
-        tv_yourProfit.text = "당신은 "+dec.format(10000*(100+ relativeprofitrate)/100)+"원"
-        tv_totalTax.text = "+$"+dec.format(taxtot)
-        tv_totalDividend.text = "+$"+dec.format(dividendtot)
-        tv_totalFee.text = "+$"+dec.format(tradecomtot)
-        tv_realizeGainNLoss.text = "+$"+dec.format(profit)
-        tv_tradeday.text = totaltradeday.toString()+"일"
+        tv_yourProfit.text = "당신은 " + dec.format(10000 * (100 + relativeprofitrate) / 100) + "원"
+        tv_totalTax.text = "+$" + dec.format(taxtot)
+        tv_totalDividend.text = "+$" + dec.format(dividendtot)
+        tv_totalFee.text = "+$" + dec.format(tradecomtot)
+        tv_realizeGainNLoss.text = "+$" + dec.format(profit)
+        tv_tradeday.text = totaltradeday.toString() + "일"
 
         ll_goBackHome.setOnClickListener {
             GotoMainactivity()
         }
 
 
-
-
     }
 
-    fun GotoMainactivity(){
+    fun GotoMainactivity() {
         reflect()
         if (isHistory) {
             val intent = Intent(this@NewResultNormalActivity, NewHistoryActivity::class.java)
             startActivity(intent)
-        }
-        else {
+        } else {
             val intent = Intent(this@NewResultNormalActivity, MainActivity::class.java)
             startActivity(intent)
         }
@@ -120,24 +117,25 @@ class NewResultNormalActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         GotoMainactivity()
+        finish()
     }
 
 
-    fun reflect(){
+    fun reflect() {
 //        profileDb = ProfileDB.getInstace(this@NewResultNormalActivity)
         gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
         gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
         var profittotal: Float = profitrate
         var money = profileDbManager!!.getMoney()!!
-        println("---zz"+profittotal)
-        println("---zz"+ profitrate)
+        println("---zz" + profittotal)
+        println("---zz" + profitrate)
 
 
         // 사용자 profiledb의 money 업데이트
-        if(!java.lang.Float.isNaN(profittotal))
-            profileDbManager!!.setMoney(Math.round(money.toFloat() * (1.0 +profittotal*0.01).toFloat()))
-        if(isSafeCompleted)
-            profileDbManager!!.setRoundCount(profileDbManager!!.getRoundCount()!!+1)
+        if (!java.lang.Float.isNaN(profittotal))
+            profileDbManager!!.setMoney(Math.round(money.toFloat() * (1.0 + profittotal * 0.01).toFloat()))
+        if (isSafeCompleted)
+            profileDbManager!!.setRoundCount(profileDbManager!!.getRoundCount()!! + 1)
 
         // 서버에 올리는 코드
         update(getHash(profileDbManager!!.getLoginId()!!).trim(),
@@ -153,17 +151,19 @@ class NewResultNormalActivity: AppCompatActivity() {
         )
         var localDateTime = LocalDateTime.now()
         val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "최종", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
-            bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-            pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
         gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)//완료한 게임 히스토리 저장
     }
 
     override fun onStop() {
         super.onStop()
         profileDbManager!!.write2database()
+        finish()
     }
 
     override fun onDestroy() {
         super.onDestroy()
     }
+
 }
