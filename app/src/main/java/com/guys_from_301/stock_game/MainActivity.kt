@@ -665,9 +665,12 @@ class MainActivity : AppCompatActivity() {
         } }
         var textView1 = findViewById<TextView>(R.id.textView2)
 
+        Log.d("hongz","도전과제 다이얼로그 생성 전")
         if(questAchieved.isEmpty() == false){
-            for(quest in questAchieved){
-                val dlgQuest = Dialog_new_quest(this)
+            Log.d("hongz","도전과제 다이얼로그 생성")
+            for(i in 0..questAchieved.size-1){
+                var quest = questAchieved[i]
+                val dlgQuest = Dialog_new_quest(_MainActivity!!)
                 dlgQuest.start(quest)
             }
             questAchieved = arrayListOf()

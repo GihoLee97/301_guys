@@ -31,5 +31,6 @@ class Dialog_new_quest(context: Context) {
         btn_close.setOnClickListener {
             dlg.dismiss()
         }
+        dlg.show()
     }
 }
