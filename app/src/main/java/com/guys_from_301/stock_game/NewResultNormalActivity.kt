@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -33,9 +34,9 @@ class NewResultNormalActivity: AppCompatActivity() {
     private lateinit var ll_only_result: LinearLayout
     private lateinit var tv_only_result: TextView
     private lateinit var ll_goBackHome: LinearLayout
+    private lateinit var btn_share: Button
 
     //Db
-    private var profileDb: ProfileDB? = null
     private var gamenormalDb: GameNormalDB? = null
     private var gamesetDB: GameSetDB? = null
 
@@ -67,6 +68,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         cl_monthly_profitrate_chart = findViewById(R.id.cl_monthly_prforitrate_chart)
         ll_only_result = findViewById(R.id.ll_only_result)
         tv_only_result = findViewById(R.id.tv_only_result)
+        btn_share = findViewById(R.id.btn_share)
 
         ll_goBackHome = findViewById(R.id.ll_goBackHome)
 
@@ -99,6 +101,10 @@ class NewResultNormalActivity: AppCompatActivity() {
             GotoMainactivity()
         }
 
+        btn_share.setOnClickListener {
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox))
+            shareManager.shareBinaryWithKakao(this, path)
+        }
 
     }
 

@@ -439,7 +439,7 @@
                             android:layout_height="96dp"
                             android:layout_weight="1"
                             android:background="@drawable/ic_stack_purchase_background"
-                            android:alpha="0.75"
+                            android:alpha="0.6"
                             android:elevation="10dp"
                             >
 
@@ -492,7 +492,7 @@
                             android:layout_marginLeft="12dp"
                             android:layout_weight="1"
                             android:background="@drawable/ic_stack_purchase_background"
-                            android:alpha="0.75"
+                            android:alpha="0.6"
                             android:elevation="10dp"
                             >
 
@@ -545,7 +545,7 @@
                             android:layout_marginLeft="12dp"
                             android:layout_weight="1"
                             android:background="@drawable/ic_stack_purchase_background"
-                            android:alpha="0.75"
+                            android:alpha="0.6"
                             android:elevation="10dp"
                             >
 

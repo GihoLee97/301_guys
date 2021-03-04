@@ -45,6 +45,11 @@ class NewHistoryActivity : AppCompatActivity() {
         if(tv_best_profitrate.text.isNullOrBlank()) tv_best_profitrate.text ="00.00%"
 
 
+        iv_share.setOnClickListener {
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox))
+            shareManager.shareBinaryWithKakao(this,path)
+        }
+
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val hRecyclerView = findViewById<RecyclerView>(R.id.hRecyclerView)
