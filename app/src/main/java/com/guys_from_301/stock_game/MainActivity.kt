@@ -666,8 +666,11 @@ class MainActivity : AppCompatActivity() {
         var textView1 = findViewById<TextView>(R.id.textView2)
 
         if(questAchieved.isEmpty() == false){
-            val dlgQuest = Dialog_quest(this)
-            dlgQuest.start()
+            for(quest in questAchieved){
+                val dlgQuest = Dialog_new_quest(this)
+                dlgQuest.start(quest)
+            }
+            questAchieved = arrayListOf()
         }
     }
 

@@ -97,11 +97,17 @@ class QuestActivity : AppCompatActivity() {
                 manager.stackFromEnd = true
                 qRecyclerView.layoutManager = manager
             }catch (e: Exception){
-                Log.d("tag", "Error - $e")
+                Log.d("hongz", "Error - $e")
             }
         }
         val thread = Thread(r)
         thread.start()
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
