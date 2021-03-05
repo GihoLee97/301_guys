@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
@@ -20,6 +24,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
     private var item1temp: Int = 0
     private var item2temp: Int = 0
     private var itemSelect: Int = 0
+    private var isRunning = true
 
     private lateinit var ib_itemclose: ImageButton
     private lateinit var cl_itemselect: ConstraintLayout
@@ -72,11 +77,18 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
         tv_item4debug = view.findViewById(R.id.tv_item4debug)
 
         // 초기화
+        isRunning = true
         cl_itemselect.visibility = VISIBLE
         cl_item1detail.visibility = GONE
         cl_item2detail.visibility = GONE
         cl_itemok.isEnabled = false
         pb_itemfatigue.progress = value1now
+
+        CoroutineScope(Dispatchers.Default).launch {
+            val job1 =launch {
+                updatefatigue()
+            }
+        }
 
         if (((10000 - value1now) / 50F).roundToInt() - ((10000 - value1now) / 50F) > 0) {
             item1limbyfatigue = ((10000 - value1now) / 50F).roundToInt() - 1
@@ -244,6 +256,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
                     setGamespeed = item2temp
                 }
             }
+            isRunning = false
             dismiss()
         }
         return view
@@ -274,6 +287,13 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
         } else if (item2temp==7) {
             tv_item2speed.text =
                     "피로도 초당 4 증가, 진행속도 10 day/sec"
+        }
+    }
+
+    suspend fun updatefatigue() {
+        while(isRunning) {
+            pb_itemfatigue.progress = value1now
+            delay(50L)
         }
     }
 

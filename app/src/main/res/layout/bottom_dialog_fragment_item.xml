@@ -277,9 +277,9 @@
 
         <TextView
             android:id="@+id/tv_item4debug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="피로도"
             android:textAppearance="@style/game_dialog_bottom_sheet_item_tiredness"/>
 
@@ -288,7 +288,6 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
             android:layout_marginRight="24dp"
             android:progress="5000"
             android:max="10000"
