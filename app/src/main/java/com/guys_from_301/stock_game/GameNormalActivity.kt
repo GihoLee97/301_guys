@@ -323,6 +323,7 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var btn_gameBack: Button
     private lateinit var tv_gameName: TextView
     private lateinit var tv_assetTot: TextView
+    private lateinit var tv_timeleft: TextView
     private lateinit var tv_profitRate: TextView
     private lateinit var tv_profitTot: TextView
 
@@ -391,6 +392,7 @@ class GameNormalActivity : AppCompatActivity() {
         btn_gameBack = findViewById(R.id.btn_gameBack)
         tv_gameName = findViewById(R.id.tv_gameName)
         tv_assetTot = findViewById(R.id.tv_assetTot)
+        tv_timeleft = findViewById(R.id.tv_timeleft)
         tv_profitRate = findViewById(R.id.tv_profitRate)
         tv_profitTot = findViewById(R.id.tv_profitTot)
 
@@ -1045,6 +1047,8 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////
         runOnUiThread {
+            tv_timeleft.text = (29).toString()+"년 "+(12).toString()+"개월"
+
             // 차트 생성
             cht_snp.animateXY(1, 1)
             cht_eco.animateXY(1, 1)
@@ -2261,6 +2265,16 @@ class GameNormalActivity : AppCompatActivity() {
                 }
             }
         }
+
+        if (countMonth==12) {
+            runOnUiThread {
+                tv_timeleft.text = (29 - countYear - 1).toString()+"년 "+(12).toString()+"개월"
+            }
+        } else {
+            runOnUiThread {
+                tv_timeleft.text = (29 - countYear).toString()+"년 "+(12-countMonth).toString()+"개월"
+            }
+        }
     }
 
     // 게임 종료 시 결과창으로 이동
@@ -2272,15 +2286,6 @@ class GameNormalActivity : AppCompatActivity() {
                     profileDbManager!!.getLoginPw()!!,
                     100
             )
-            val deleteRunnable = Runnable {
-                if(gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = tradeday
-                else totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!!+gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!!*2
-                gameNormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
-                gameSetDb?.gameSetDao()?.deleteId(setId, accountID!!)
-                Log.d("hongz","게임 종료 gameset, gamenormal 삭제")
-            }
-            val deleteThread = Thread(deleteRunnable)
-            deleteThread.start()
             val intent = Intent(this@GameNormalActivity, NewResultNormalActivity::class.java)
             startActivity(intent)
             finish()

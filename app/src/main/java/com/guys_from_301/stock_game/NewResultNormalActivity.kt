@@ -2,12 +2,18 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.guys_from_301.stock_game.data.*
 import java.time.LocalDateTime
 
@@ -31,6 +37,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     private lateinit var tv_pinPointProfitRate: TextView
     private lateinit var tv_monthly_profit: TextView
     private lateinit var cl_monthly_profitrate_chart: ConstraintLayout
+    private lateinit var cht_monthlyProfitRate: LineChart
     private lateinit var ll_only_result: LinearLayout
     private lateinit var tv_only_result: TextView
     private lateinit var ll_goBackHome: LinearLayout
@@ -39,6 +46,11 @@ class NewResultNormalActivity: AppCompatActivity() {
     //Db
     private var gamenormalDb: GameNormalDB? = null
     private var gamesetDB: GameSetDB? = null
+
+    // 자산 차트 데이터
+    private val assetEn: ArrayList<Entry> = ArrayList()
+    private val assetDs: LineDataSet = LineDataSet(assetEn, "asset")
+    private val assetD: LineData = LineData(assetDs)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,11 +76,20 @@ class NewResultNormalActivity: AppCompatActivity() {
         tv_pinPointProfitRate = findViewById(R.id.tv_pinPointProfitRate)
         tv_monthly_profit = findViewById(R.id.tv_monthly_profit)
         cl_monthly_profitrate_chart = findViewById(R.id.cl_monthly_prforitrate_chart)
+        cht_monthlyProfitRate = findViewById(R.id.cht_monthlyProfitRate)
         ll_only_result = findViewById(R.id.ll_only_result)
         tv_only_result = findViewById(R.id.tv_only_result)
         btn_share = findViewById(R.id.btn_share)
 
         ll_goBackHome = findViewById(R.id.ll_goBackHome)
+
+
+        // 차트
+        assetchart()
+
+        // 해당 게임 db 삭제
+        deletedata()
+
 
         if (isHistory) {
             tv_monthly_profit.visibility = View.INVISIBLE
@@ -104,6 +125,42 @@ class NewResultNormalActivity: AppCompatActivity() {
             shareManager.shareBinaryWithKakao(this, path)
         }
 
+    }
+
+    fun assetchart() {
+        gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
+
+//        assetEn.add(Entry(0F, 1000F))
+
+        val assetMonthly = gamenormalDb?.gameNormalDao()?.getChart(accountID!!)
+
+        if (assetMonthly != null) {
+            for (i in assetMonthly.indices) {
+                assetD.addEntry(Entry((i+1).toFloat(), assetMonthly[i]), 0)
+                println("월: "+i.toString()+" | 자산: "+assetMonthly[i])
+            }
+        }
+
+        cht_monthlyProfitRate.data = assetD
+
+        cht_monthlyProfitRate.animateXY(1,1)
+        cht_monthlyProfitRate.notifyDataSetChanged()
+        assetD.notifyDataChanged()
+    }
+
+    fun deletedata() {
+        gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
+        gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
+
+        val deleteRunnable = kotlinx.coroutines.Runnable {
+            if (gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = tradeday
+            else totaltradeday = gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!! + gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! * 2
+            gamenormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
+            gamesetDB?.gameSetDao()?.deleteId(setId, accountID!!)
+            Log.d("hongz", "게임 종료 gameset, gamenormal 삭제")
+        }
+        val deleteThread = Thread(deleteRunnable)
+        deleteThread.start()
     }
 
     fun GotoMainactivity() {
