@@ -67,7 +67,7 @@ class FragmentHome : Fragment() {
         gameNormalDB = GameNormalDB.getInstace(_MainActivity!!)
         Log.d("hongz", "사용자 계정: "+ accountID!!)
         mAdapter = gameNormalDB?.let {
-            MyGameSetAdapter(_MainActivity!!, game, it){ game -> setId = game.id }
+            MyGameSetAdapter(_MainActivity!!, game){ game -> setId = game.id }
         }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(_MainActivity!!)
         val pRecyclerView = v.findViewById<RecyclerView>(R.id.rv_games)
@@ -87,7 +87,7 @@ class FragmentHome : Fragment() {
 //            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
 //            }
 //        }
-        mAdapter = MyGameSetAdapter(_MainActivity!!, game,gameNormalDB!!){
+        mAdapter = MyGameSetAdapter(_MainActivity!!, game){
             gameUnit -> setId = gameUnit.id
             val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)
             startActivity(intent)

@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //gamesetviewmodel
 
         var t : BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         NavigationUI.setupWithNavController(t, findNavController(R.id.nav_host))

@@ -29,7 +29,7 @@ class NewMainActivity : AppCompatActivity() {
         gameDb = GameSetDB.getInstace(this)
         gameNormalDB = GameNormalDB.getInstace(this)
         mAdapter = gameNormalDB?.let {
-            MyGameSetAdapter(this, game, it){ game -> setId = game.id }
+            MyGameSetAdapter(this, game){ game -> setId = game.id }
         }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val pRecyclerView = findViewById<RecyclerView>(R.id.rv_games)
@@ -52,7 +52,7 @@ class NewMainActivity : AppCompatActivity() {
                     if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
                     }
                 }
-                mAdapter = MyGameSetAdapter(this, game,gameNormalDB!!){
+                mAdapter = MyGameSetAdapter(this, game){
                     gameUnit -> setId = gameUnit.id
                     val intent = Intent(this, GameNormalActivity::class.java)
                     startActivity(intent)

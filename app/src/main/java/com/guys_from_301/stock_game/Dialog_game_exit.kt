@@ -79,7 +79,7 @@ class Dialog_game_exit(context: Context) {
                 gameend = !gameend /////////////////////////////////////////////////////////////////////
                 endsuccess = false
                 val intent = Intent(mContext, MainActivity::class.java)
-//                (mContext as Activity).finish()
+                (mContext as Activity).finish()//수정함
                 mContext?.startActivity(intent)
             }
 

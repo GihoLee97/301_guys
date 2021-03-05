@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.guys_from_301.stock_game.data.GameNormalDB
 import com.guys_from_301.stock_game.data.GameSet
 
-class MyGameSetAdapter(val context: Context, var game: List<GameSet>, var gameNormalDB: GameNormalDB, val itemClick: (GameSet) -> Unit): RecyclerView.Adapter<MyGameSetAdapter.MyViewHolder>(){
+class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemClick: (GameSet) -> Unit): RecyclerView.Adapter<MyGameSetAdapter.MyViewHolder>(){
     inner class MyViewHolder(itemView: View, itemClick: (GameSet) -> Unit): RecyclerView.ViewHolder(itemView) {
         var view: View = itemView
         val endtime = itemView.findViewById<TextView>(R.id.endtime)
         val gameName = itemView.findViewById<TextView>(R.id.gameName)
         val profitRate = itemView.findViewById<TextView>(R.id.profitrate)
         fun bind(gameUnit : GameSet){
-            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id, accountID!!).isNullOrEmpty()) {
+            if(gameUnit.endtime == "") {
                 endtime.text = ""
                 gameName.text = "새 게임 추가하기"
                 profitRate.text = ""

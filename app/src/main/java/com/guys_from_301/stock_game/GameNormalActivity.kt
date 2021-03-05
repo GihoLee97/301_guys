@@ -2283,6 +2283,7 @@ class GameNormalActivity : AppCompatActivity() {
             deleteThread.start()
             val intent = Intent(this@GameNormalActivity, NewResultNormalActivity::class.java)
             startActivity(intent)
+            finish()
         }
         else {
             // save gameSpeed setting on the database
@@ -2304,6 +2305,7 @@ class GameNormalActivity : AppCompatActivity() {
 //            updateSettingThread.start()
             val intent = Intent(this@GameNormalActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
