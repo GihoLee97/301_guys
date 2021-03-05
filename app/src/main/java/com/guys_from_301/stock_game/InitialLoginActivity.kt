@@ -745,13 +745,13 @@ class InitialLoginActivity : AppCompatActivity() {
 
         //가져온 string은 숫자앞에서부터 저장된다. 13=1101(2) 1, 1, 0, 1 순서
         // '0' 은 48 '1'은 49
-
         for(i in 0..stringquest.length - 1){
             val newQuest = Quest()
             newQuest.id = stringquest.length -i
             newQuest.achievement = stringquest[i].toInt()-48
             newQuest.theme = questDb?.questDao()?.getAll()!![stringquest.length -i -1].theme
             newQuest.questcontents = questDb?.questDao()?.getAll()!![stringquest.length -i -1].questcontents
+            newQuest.reward = questDb?.questDao()?.getAll()!![stringquest.length -i -1].reward
             questDb?.questDao()?.update(newQuest)
         }
     }

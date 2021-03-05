@@ -186,6 +186,10 @@ class FragmentRanking : Fragment() {
         tv_my_stack.text = profileDbManager!!.getMoney()!!.toString()
         tv_my_nick.text = profileDbManager!!.getNickname()!!
         tv_my_level.text = "레벨 " + profileDbManager!!.getLevel()!!.toString()
+        v.findViewById<TextView>(R.id.tv_friend_invite).setOnClickListener{
+            val dialog = Dialog_friend_invite(_MainActivity!!)
+            dialog.start()
+        }
         return v
     }
 

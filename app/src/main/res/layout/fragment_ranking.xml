@@ -56,15 +56,36 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="42dp"
-                android:lineSpacingExtra="7sp"
-                android:text="친구와\n수익률을 통해\n경쟁해보세요!"
-                android:textAppearance="@style/ranking_description" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:lineSpacingExtra="7sp"
+                    android:text="친구와\n수익률을 통해\n경쟁해보세요!"
+                    android:textAppearance="@style/ranking_description"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom">
+                    <TextView
+                        android:id="@+id/tv_friend_invite"
+                        android:background="@drawable/friend_invite_background"
+                        android:layout_width="92dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="right"
+                        android:layout_marginEnd="24dp"
+                        android:gravity="center"
+                        android:textAppearance="@style/friend_invite"
+                        android:text="친구 초대하기" />
+                </LinearLayout>
 
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
