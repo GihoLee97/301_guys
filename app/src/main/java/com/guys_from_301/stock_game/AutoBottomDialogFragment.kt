@@ -214,7 +214,7 @@ class AutoBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
         })
 
         cl_autook.setOnClickListener {
-            if (autobuy) {
+            if (!autobuy) {
                 Toast.makeText(view.context, "자동 매수를 시작합니다", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(view.context, "자동 매수 설정을 변경합니다", Toast.LENGTH_SHORT).show()
