@@ -40,6 +40,7 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
     private lateinit var pb_itemfatigue: ProgressBar
     private lateinit var tv_item4debug: TextView
 
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?
@@ -231,7 +232,6 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
             }
             dismiss()
         }
-
         return view
     }
 

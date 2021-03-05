@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="visible"
             android:weightSum="360">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_item1"
@@ -185,7 +185,7 @@
             android:id="@+id/cl_item2detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:visibility="gone">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
