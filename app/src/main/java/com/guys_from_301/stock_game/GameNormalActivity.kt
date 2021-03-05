@@ -685,6 +685,11 @@ class GameNormalActivity : AppCompatActivity() {
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
+        // 게임 내 뒤로가기 버튼
+        btn_gameBack.setOnClickListener {
+            onBackPressed()
+        }
+
         // 레버리지 언락
         if (item4Active) {
             ll_hide3x.visibility = VISIBLE
