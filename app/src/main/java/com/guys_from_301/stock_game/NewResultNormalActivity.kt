@@ -48,8 +48,6 @@ class NewResultNormalActivity: AppCompatActivity() {
         gameend = false // 게임 전역번수 초기화
         endsuccess = false // 게임 전역번수 초기화
 
-        profileDbManager!!.refresh(this)
-
 
         //view에 연결
         tv_profitRateFinal = findViewById(R.id.tv_profitRateFinal)
@@ -161,6 +159,12 @@ class NewResultNormalActivity: AppCompatActivity() {
                 pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
         gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)//완료한 게임 히스토리 저장
     }
+
+    override fun onResume() {
+        super.onResume()
+        profileDbManager!!.refresh(this)
+    }
+
 
     override fun onStop() {
         super.onStop()

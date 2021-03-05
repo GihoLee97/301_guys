@@ -682,7 +682,6 @@ class MainActivity : AppCompatActivity() {
         // DB 피로도 업데이트
         profileDbManager!!.setValue1(value1ForWrite)
         profileDbManager!!.write2database()
-        finish()
     }
 
 
