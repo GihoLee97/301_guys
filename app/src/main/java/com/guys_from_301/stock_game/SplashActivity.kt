@@ -1,19 +1,23 @@
 package com.guys_from_301.stock_game
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
-import com.guys_from_301.stock_game.data.Item
-import com.guys_from_301.stock_game.data.ItemDB
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
@@ -68,6 +72,10 @@ val captureUtil = CaptureUtil()
 var profileDbManager : ProfileDbManager? = null
 //MUST BE INITIALIZED AT FIRST-END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 
+val windowMetrics = DisplayMetrics()
+var dpWidth :Int = 0
+var dpHeight :Int = 0
+
 
 class SplashActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
@@ -87,6 +95,12 @@ class SplashActivity : AppCompatActivity() {
         accountID = profileDbManager!!.getLoginId()
         //광고
         MobileAds.initialize(this){}
+        //getWindowSize
+        getWindowManager().getDefaultDisplay().getMetrics(windowMetrics)
+        val density = getBaseContext().getResources().getDisplayMetrics().density
+        dpWidth  = windowMetrics.widthPixels/density.toInt()
+        dpHeight = windowMetrics.heightPixels/density.toInt()
+
 
         //push alarm channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -101,7 +115,6 @@ class SplashActivity : AppCompatActivity() {
             notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
         }
-
 
         Handler().postDelayed({ //delay를 위한 handler
             if(!profileDbManager!!.isEmpty(this)){
