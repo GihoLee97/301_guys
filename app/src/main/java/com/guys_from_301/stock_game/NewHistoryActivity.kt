@@ -46,7 +46,7 @@ class NewHistoryActivity : AppCompatActivity() {
 
 
         iv_share.setOnClickListener {
-            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox))
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox),this,this)
             shareManager.shareBinaryWithKakao(this,path)
         }
 

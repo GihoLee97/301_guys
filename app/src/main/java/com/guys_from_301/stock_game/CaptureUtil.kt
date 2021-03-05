@@ -1,11 +1,17 @@
 package com.guys_from_301.stock_game
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import java.io.File
 import java.io.FileNotFoundException
@@ -73,14 +79,16 @@ class CaptureUtil(){
         return strFolderPath+strFilename
     }
 
-    fun captureAndSaveViewWithKakao(view: View) :String{
+    fun captureAndSaveViewWithKakao(view: View, context: Context, activity: Activity) :String{
+        requestPermission(context,activity)
         Log.d("Giho","CaptureAndSaveViewStart")
         val path = saveCaptureWithKakao(captureView(view)!!)
         return path
     }
 
 
-    fun captureAndSaveView(view: View) :Uri{
+    fun captureAndSaveView(view: View, context: Context, activity: Activity) :Uri{
+        requestPermission(context,activity)
         Log.d("Giho","CaptureAndSaveViewStart")
         val uri = saveCapture(captureView(view)!!)
         return uri
@@ -88,4 +96,16 @@ class CaptureUtil(){
 
 
 }
+
+
+fun requestPermission(context: Context, activity: Activity){
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+            ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+    }
+    else{
+        Log.d("Giho","WRITE_EXTERNAL_STORAGE AND READ_EXTERNAL_STORAGE PASS")
+    }
+}
+
 
