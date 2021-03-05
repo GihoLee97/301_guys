@@ -17,15 +17,18 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".NewHistoryActivity"></activity>
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".NewResultNormalActivity" />
-        <activity android:name=".InitialSignUpEntranceActivity" />
+        <activity android:name=".NewResultNormalActivity"
+            android:noHistory="true"/>
+        <activity android:name=".InitialSignUpEntranceActivity"
+            android:noHistory="true"/>
         <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />
         <activity android:name=".NewMainActivity" />
         <activity android:name=".QuestActivity" />
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
-        <activity android:name=".InitialSignupFinalActivity" />
+        <activity android:name=".InitialSignupFinalActivity"
+            android:noHistory="true"/>
         <activity android:name=".HistoryActivity" />
         <activity
             android:name=".PickGameActivity"
@@ -63,17 +66,17 @@
             android:value="true" />
 
         <activity
-            android:name=".InitialActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ResultNormalActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".GameNormalActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".SettingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />

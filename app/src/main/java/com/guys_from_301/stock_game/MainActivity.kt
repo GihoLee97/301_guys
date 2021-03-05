@@ -395,7 +395,6 @@ class MainActivity : AppCompatActivity() {
             time3 = time1
             Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
-        finish()
     }
 
     // 랭킹 받아오는 코드

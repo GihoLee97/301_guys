@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cl_recyclerview_game_item"
     android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,6 +49,7 @@
             android:textAppearance="@style/rv_games_item_profitRate"/>
 
         <TextView
+            android:id="@+id/tv_currentProfitTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
@@ -57,7 +59,7 @@
             android:text="현재 수익률"
             android:textAppearance="@style/rv_games_item_profitText"/>
 
-        <com.github.mikephil.charting.charts.LineChart
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="12dp"
@@ -67,7 +69,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_addGame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_add_game_box"
+                android:text="클릭하여 새로운 투자 생성"
+                android:gravity="center"
+                android:textAppearance="@style/rv_games_item_addGame"/>
+
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

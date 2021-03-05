@@ -123,6 +123,12 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#B7B1B3</item>
     </style>
+    <style name="rv_games_item_addGame">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F4730B</item>
+    </style>
+
     <style name="market_title">
         <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
         <item name="android:textSize">20sp</item>
