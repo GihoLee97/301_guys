@@ -148,11 +148,25 @@ class ItemBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
 
         // TODO
         btn_item1minus.setOnClickListener {
-
+            if (item1temp>1) {
+                item1temp -= 1
+                item1ConsumeTemp = item1temp * 50 // 피로도 증가
+                tv_item1consume.text = "피로도 " + item1ConsumeTemp.toString() + " 증가"
+                sb_item1.progress = item1temp
+            } else {
+                Toast.makeText(view.context, "되돌아갈 거래일은 하루이상 이어야 합니다", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btn_item1plus.setOnClickListener {
-
+            if (item1temp<item1lim) {
+                item1temp += 1
+                item1ConsumeTemp = item1temp * 50 // 피로도 증가
+                tv_item1consume.text = "피로도 " + item1ConsumeTemp.toString() + " 증가"
+                sb_item1.progress = item1temp
+            } else {
+                Toast.makeText(view.context, "되돌아갈 수 있는 최대 범위입니다", Toast.LENGTH_SHORT).show()
+            }
         }
 
         sb_item1.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
