@@ -288,6 +288,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         // profiledb에 업데이트
         val marketViewModel = MarketViewModel(_MainActivity!!)
         marketViewModel.BuyStack(moneyreward)
+        tv_mountOfStack.text = dec.format(profileDbManager!!.getMoney()).toString()
     }
 
     override fun onRewardedVideoStarted() {
