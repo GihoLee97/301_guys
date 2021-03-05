@@ -56,12 +56,12 @@ class Dialog_negotiation_success(context: Context) {
                 tv_after.text = SET_SALARY_RAISE_STEP[step+1].toString()+ "%  "
             }
         }
-        println("---돈: " + profileDB?.profileDao()?.getMoney()!!)
-        setasset(getHash(profileDB?.profileDao()?.getLoginid()!!),
-                SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash()!!],
-                SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly()!!],
-                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise()!!],
-                profileDB?.profileDao()?.getMoney()!!,
+        println("---돈: " + profileDbManager!!.getMoney()!!)
+        setasset(getHash(profileDbManager!!.getLoginId()!!),
+                SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCashWithId(accountID!!)!!],
+                SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthlyWithId(accountID!!)!!],
+                SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaiseWithId(accountID!!)!!],
+                profileDbManager!!.getMoney()!!,
                 itemDB?.itemDao()?.getPotion()!!)
         btn_close.setOnClickListener{
             dlg.dismiss()

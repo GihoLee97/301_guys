@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class GameNormal(
-    @PrimaryKey(autoGenerate = false) var id: String,
+    @PrimaryKey(autoGenerate = false) var id: String,//실제 현재 시각
     @ColumnInfo(name = "assets") var assets: Float,
     @ColumnInfo(name = "cash") var cash: Float,
     @ColumnInfo(name = "input") var input: Float,
@@ -72,12 +72,13 @@ data class GameNormal(
     @ColumnInfo(name = "snpnowdays") var snpnowdays: Int,
     @ColumnInfo(name = " snpnowval") var snpnowval: Float,
     @ColumnInfo(name = "snpdiff") var snpdiff: Float,
-    @ColumnInfo(name = "setId") var setId: Int,
+    @ColumnInfo(name = "setId") var setId: String,
     @ColumnInfo(name = "relativeprofitrate") var relativeprofitrate: Float,
-    @ColumnInfo(name = "endtime") var endtime: String //게임 종료 현재 시각
+    @ColumnInfo(name = "endtime") var endtime: String, //게임 상 날짜
+    @ColumnInfo(name = "accountId") var accountId:String
 )
 {
     constructor() : this("",0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,"초기값",0F,0F,0,0,0,0,0,0,0F,0F,
     0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0,0F,0F,0F,0F,"nothing",
-    false,0,0,false,false,false,false,0,0,0,0,0,0,0F,0F,0,0F,"")
+    false,0,0,false,false,false,false,0,0,0,0,0,0,0F,0F,"",0F,"","")
 }

@@ -28,7 +28,7 @@ class GameHistoryActivity : AppCompatActivity() {
         hRecyclerView.layoutManager = layoutManager
         val r= Runnable {
             try{
-                history = historyDb?.gameNormalDao()?.getHistory()!!
+                history = historyDb?.gameNormalDao()?.getHistory(accountID!!)!!
                 mAdapter = HistoryAdapter(this, history)
                 mAdapter.notifyDataSetChanged()
 

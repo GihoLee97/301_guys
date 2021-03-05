@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MarketViewModel(_marketActivity : Context): ViewModel() {
     //변수 선언
     private var marketActivity = _marketActivity
-    private var profileDb: ProfileDB? = null
+//    private var profileDb: ProfileDB? = null
     private var gameSetDb: GameSetDB? = null
     private var gameset: GameSet? = null
     private var gameNormalDb: GameNormalDB? = null
@@ -31,12 +31,11 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     private var _potion = MutableLiveData<Int>()
 
     init{
-        profileDb = ProfileDB.getInstace(marketActivity)
         gameSetDb = GameSetDB.getInstace(marketActivity)
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
         itemDb = ItemDB.getInstace(marketActivity)
-        _stack.value = profileDb?.profileDao()?.getMoney()
-        gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        _stack.value = profileDbManager!!.getMoney()
+        gameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
         itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value =  gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
@@ -45,12 +44,13 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     }
 
     fun refresh(){
-        profileDb = ProfileDB.getInstace(marketActivity)
+        profileDbManager!!.refresh(marketActivity)
+//        profileDb = ProfileDB.getInstace(marketActivity)
         gameSetDb = GameSetDB.getInstace(marketActivity)
         gameNormalDb = GameNormalDB.getInstace(marketActivity)
         itemDb = ItemDB.getInstace(marketActivity)
-        _stack.value = profileDb?.profileDao()?.getMoney()
-        gameset = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+        _stack.value = profileDbManager!!.getMoney()
+        gameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
         itemList = itemDb?.itemDao()?.getAll()?.get(0)
         _initialAsset.value = gameset?.setcash
         _initialMonthly.value = gameset?.setmonthly
@@ -59,15 +59,12 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     }
 
     fun writeDataBase(){
+        if (!profileDbManager!!.isEmpty(marketActivity)) {
+            profileDbManager!!.setMoney(_stack.value!!)
+        }
         var write = Runnable {
-            profileDb = ProfileDB.getInstace(marketActivity)
-            var newProfile = profileDb?.profileDao()?.getAll()?.get(0)
-            if (newProfile != null) {
-                newProfile.money = _stack.value!!
-                profileDb?.profileDao()?.update(newProfile)
-            }
             gameSetDb = GameSetDB.getInstace(marketActivity)
-            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(initialId)
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(accountID+initialId, accountID!!)
             if (newGameSet != null) {
                 newGameSet.setcash = _initialAsset.value!!
                 newGameSet.setmonthly = _initialMonthly.value!!
@@ -130,7 +127,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     fun BuyStack(payment: Int){
         _stack.value = _stack.value?.plus(payment)
         //TODO: 결제 함수가 생기면 결제가 확인되어야 buymoney 실행하게 변경해야 함
-        buymoney(getHash(profileDb?.profileDao()?.getLoginid()!!), _stack.value!!)
+        buymoney(getHash(profileDbManager!!.getLoginId()!!), _stack.value!!)
         writeDataBase()
     }
 

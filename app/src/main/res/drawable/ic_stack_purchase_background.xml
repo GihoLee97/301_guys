@@ -19,8 +19,8 @@
         android:topRightRadius="10dp" />
 
     <gradient
-        android:endColor="#FFED9D0B"
-        android:startColor="#FFF4730B"
+        android:endColor="#CCED9D0B"
+        android:startColor="#CCF4730B"
         android:angle="135"
         android:type="linear">
     </gradient>

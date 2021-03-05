@@ -58,6 +58,12 @@ class NoticeActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     override fun onDestroy() {
         GameNormalDB.destroyINSTANCE()
         noticeDb = null

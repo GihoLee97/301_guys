@@ -62,8 +62,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     private var gameSetDB: GameSetDB? = null
     private lateinit var tv_marketReceipt : TextView
 
-    private var profileDb: ProfileDB? = null
-
     //TextView
     private lateinit var tv_mountOfStack : TextView
     private lateinit var tv_initial_asset: TextView
@@ -87,9 +85,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     ): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_market, container, false)
-        profileDb = ProfileDB.getInstace(mContext)
         gameSetDB = GameSetDB.getInstace(mContext)
-        var gameset = gameSetDB?.gameSetDao()?.getAll()?.get(0)
+        var gameset = gameSetDB?.gameSetDao()?.getAll(accountID!!)?.get(0)
         //viewmodel
         val marketViewModel = MarketViewModel(_MainActivity!!)
 
@@ -123,7 +120,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         marketViewModel.getInitialSalaryRaise().observe(viewLifecycleOwner, Observer { tv_initial_salary_raise.text = SET_SALARY_RAISE_STEP[it].toString() + "%" })
 
         tv_mountOfStack = v.findViewById(R.id.tv_mountOfStack)
-        tv_mountOfStack.text = dec.format(profileDb?.profileDao()?.getMoney()!!).toString()
+        tv_mountOfStack.text = dec.format(profileDbManager!!.getMoney()).toString()
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext)
         mRewardedVideoAd.rewardedVideoAdListener = this
 
@@ -236,23 +233,9 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
 
     fun dbupdate() {
-        var profileDb: ProfileDB? = null
-        profileDb = ProfileDB.getInstace(mContext)
         val newProfile = Profile()
-
-        newProfile.id = profileDb?.profileDao()?.getId()!!
-        newProfile.login = profileDb?.profileDao()?.getLogin()!!
-        newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-        newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-        newProfile.history = profileDb?.profileDao()?.getHistory()!!
-        newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-        newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-        newProfile.level = profileDb?.profileDao()?.getLevel()!!
-        newProfile.exp = profileDb?.profileDao()?.getExp()!!
-        newProfile.rank = profileDb?.profileDao()?.getRank()!!
-        newProfile.money = money
-        newProfile.value1 = value1
-        profileDb?.profileDao()?.update(newProfile)
+        profileDbManager!!.setMoney(money)
+        profileDbManager!!.setValue1(value1)
     }
 
     fun loadad() {
@@ -282,10 +265,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     }
 
     override fun onRewarded(rItem: RewardItem?) {
-        var profileDb: ProfileDB? = null
-        profileDb = ProfileDB.getInstace(mContext)
-        money = profileDb?.profileDao()?.getMoney()!!.toInt()+moneyreward
-        value1 = profileDb?.profileDao()?.getValue1()!!.toInt()
+        money = profileDbManager!!.getMoney()!!.toInt()+moneyreward
+        value1 = profileDbManager!!.getValue1()!!.toInt()
         if (value1 >= value1reward) {
             value1 -= value1reward
         } else {
@@ -294,15 +275,15 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
         Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
-        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
+        update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                getHash(profileDbManager!!.getLoginPw()!!).trim(),
                 money, value1,
-                profileDb?.profileDao()?.getNickname()!!,
-                profileDb?.profileDao()?.getProfitRate()!!,
-                profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                profileDb?.profileDao()?.getRoundCount()!!,
-                profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!
+                profileDbManager!!.getNickname()!!,
+                profileDbManager!!.getProfitRate()!!,
+                profileDbManager!!.getRelativeProfit()!!,
+                profileDbManager!!.getRoundCount()!!,
+                profileDbManager!!.getHistory()!!,
+                profileDbManager!!.getLevel()!!
         )
         // profiledb에 업데이트
         val marketViewModel = MarketViewModel(_MainActivity!!)

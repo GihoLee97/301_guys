@@ -22,7 +22,7 @@ var arrayimage = mutableListOf<Int>()
 class FragmentRanking : Fragment() {
     val coloron = "#F68A06"
     val coloroff = "#FFFFFF"
-    var profileDb : ProfileDB? = null
+//    var profileDb : ProfileDB? = null
     private lateinit var tv_my_level: TextView
     private lateinit var tv_my_stack: TextView
     private lateinit var tv_my_nick: TextView
@@ -35,9 +35,9 @@ class FragmentRanking : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var v : View = inflater.inflate(R.layout.fragment_ranking, container, false)
-        profileDb = ProfileDB.getInstace(_MainActivity!!)
+//        profileDb = ProfileDB.getInstace(_MainActivity!!)
 
-        if(profileDb?.profileDao()?.getLogin()!! != 4 ){
+        if(profileDbManager!!.getLogin()!! != 4 ){
             v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
         }
         v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
@@ -88,7 +88,7 @@ class FragmentRanking : Fragment() {
 
 
         friendsort()
-        if(profileDb?.profileDao()?.getLogin() != 4){
+        if(profileDbManager!!.getLogin() != 4){
 //            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE TODO!! check
             v.findViewById<TextView>(R.id.tv_local_space).visibility=View.GONE
         }
@@ -183,9 +183,9 @@ class FragmentRanking : Fragment() {
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
         tv_my_stack = v.findViewById(R.id.tv_my_stack)
-        tv_my_stack.text = profileDb?.profileDao()?.getMoney()!!.toString()
-        tv_my_nick.text = profileDb?.profileDao()?.getNickname()!!
-        tv_my_level.text = "레벨 " + profileDb?.profileDao()?.getLevel()!!.toString()
+        tv_my_stack.text = profileDbManager!!.getMoney()!!.toString()
+        tv_my_nick.text = profileDbManager!!.getNickname()!!
+        tv_my_level.text = "레벨 " + profileDbManager!!.getLevel()!!.toString()
         return v
     }
 

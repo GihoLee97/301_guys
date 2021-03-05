@@ -49,11 +49,11 @@ class Dialog_negotiation_unsuccess(context: Context) {
             5->tv_fail_message.text = "더 이상 협상을 진행할 수 없습니다"
             6->tv_fail_message.text = "피로도 물약 구매 성공 ! 현재 개수 " + potion +"개"
         }
-        setasset(getHash(profileDB?.profileDao()?.getLoginid()!!),
-            SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCash()!!],
-            SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthly()!!],
-            SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaise()!!],
-            profileDB?.profileDao()?.getMoney()!!,
+        setasset(getHash(profileDbManager!!.getLoginId()!!),
+            SET_CASH_STEP [gamesetDB?.gameSetDao()?.getSetCashWithId(accountID!!)!!],
+            SET_MONTHLY_STEP[gamesetDB?.gameSetDao()?.getSetMonthlyWithId(accountID!!)!!],
+            SET_SALARY_RAISE_STEP[gamesetDB?.gameSetDao()?.getSetSalaryRaiseWithId(accountID!!)!!],
+            profileDbManager!!.getMoney()!!,
             itemDB?.itemDao()?.getPotion()!!)
         btn_close.setOnClickListener{
             dlg.dismiss()

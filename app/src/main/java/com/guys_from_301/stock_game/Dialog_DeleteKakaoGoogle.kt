@@ -35,8 +35,8 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
 
         btnOK.setOnClickListener {
             profileDb = ProfileDB?.getInstace(mContext)
-            accountdelete(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                    getHash(profileDb?.profileDao()?.getLoginpw()!!).trim())
+            accountdelete(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                    getHash(profileDbManager!!.getLoginPw()!!).trim())
             signOut(loginMethod)
             dlg.dismiss()
         }
@@ -71,7 +71,7 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
                     println("---"+response.body()!!)
                     if(response.body()!! == "444"){
                         Toast.makeText(mContext, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_LONG).show()
-                        val intent = Intent(mContext, InitialActivity::class.java)
+                        val intent = Intent(mContext, NewInitialActivity::class.java)
                         mContext.startActivity(intent)
                     }
                     else{

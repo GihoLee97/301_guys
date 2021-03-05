@@ -1,130 +1,257 @@
 package com.guys_from_301.stock_game
 
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.guys_from_301.stock_game.data.GameNormal
+import com.guys_from_301.stock_game.data.GameNormalDB
+import com.guys_from_301.stock_game.data.GameSetDB
+import java.time.LocalDateTime
 
-class GameNormalActivityVeiwModel: ViewModel() {
-//    //변수 선언
-//    var finished = MutableLiveData<Boolean>()
-//    val fees: Float = 0.001F
-//    private var _assets =MutableLiveData<Float>()
-//    private var _purchase =MutableLiveData<Float>()
-//    private var _cash = MutableLiveData<Float>()
-//    private var _evaluation = MutableLiveData<Float>()
-//    private var _profit = MutableLiveData<Float>()
-//    private var _item1 = MutableLiveData<Int>()
-//    private var _item2 = MutableLiveData<Int>()
-//    private var _item3 = MutableLiveData<Int>()
-//    private var _priceNow = MutableLiveData<Float>()
-//    private var _priceBefore = MutableLiveData<Float>()
-//    //게임 초기화
-//    fun initialize(startcash:Float,startpurchase:Float, startevaluation:Float, startprofit: Float, startitem1 : Int, startitem2 : Int, startitem3 : Int){
-//        _cash.value = startcash
-//        _evaluation.value = startevaluation
-//        _purchase.value = startpurchase
-//        _profit.value = startprofit
-//        finished.value = true
-//        _item1.value = startitem1
-//        _item2.value = startitem2
-//        _item3.value = startitem3
-//        _assets.value = _cash.value?.plus(_evaluation.value!!)
-//    }
-//
-//    init {
-//        viewModelScope.launch {
-//
-//        }
-//    }
-//
-//    //현금 반환
-//    fun cash(): LiveData<Float>{
-//        return _cash
-//    }
-//    //원화평가금액 반환
-//    fun evaluation(): LiveData<Float>{
-//        return _evaluation
-//    }
-//    //수익률 반환
-//    fun profit(): LiveData<Float>{
-//        return _profit
-//    }
-//    //자산 반환
-//    fun assets(): LiveData<Float>{
-//        _assets.value = _cash.value?.plus(_evaluation.value!!)
-//        return _assets
-//    }
-//    //매입금액 반환
-//    fun purchase(): LiveData<Float>{
-//        return _purchase
-//    }
-//    //시세 현재가
-//    fun priceNow(): LiveData<Float>{
-//        return _priceNow
-//    }
-//    fun priceBefore(): LiveData<Float>{
-//        return _priceBefore
-//    }
-//    //아이템 반환
-//    fun item1(): LiveData<Int>{
-//        return _item1
-//    }
-//    fun item2(): LiveData<Int>{
-//        return _item2
-//    }
-//    fun item3(): LiveData<Int>{
-//        return _item3
-//    }
-//    // 아이템 값 입력
-//    fun setitem(item1:Int, item2:Int, item3:Int){
-//        _item1.value = item1
-//        _item2.value = item2
-//        _item3.value = item3
-//
-//    }
-//    //게임 진행시 실시간 데이터 반영
-//    //주식 등락 fluctuation: 등락율
-//    fun fluctuate(fluctuation: Float){
-//        _evaluation.value = _evaluation.value?.times(fluctuation)
-//        update()
-//    }
-//    //시세 받아오기
-//    fun priceUpdate(priceNow: Float, priceBefore:Float){
-//        _priceBefore.value = priceBefore
-//        _priceNow.value = priceNow
-//        val fluctuation = (_priceNow.value!! - _priceBefore.value!!)/ _priceBefore.value!!
-//        fluctuate(fluctuation)
-//    }
-//    //매수
-//    fun buyStock(price:Float, fees:Float){
-//        _cash.value = (_cash.value?.minus(price) ?: 0F) -fees
-//        _evaluation.value = _evaluation.value?.plus(price)
-//        _purchase.value = _purchase.value?.plus(price)
-//        update()
-//    }
-//    //매도
-//    fun sellStock(price:Float, fees:Float){
-//        _cash.value = (_cash.value?.plus(price) ?: 0F) -fees
-//        _purchase.value = _purchase.value?.minus(price/(1F+((_evaluation.value?.minus(_purchase.value!!))?.div(_purchase.value!!)!!)))
-//        _evaluation.value = _evaluation.value?.minus(price)
-//        update()
-//    }
-//    //세금 징수
-//    fun payTax(tax:Float){
-//        _cash.value = _cash.value?.minus(tax)
-//        _assets.value = _cash.value?.plus(_evaluation.value!!)//세금 내는 방법 논의 필요(현금으로? 현금이 없을때는 주식으로?)
-//        update()
-//    }
-//    //총자산, 수익률(수수료를 제외한 수익) 업데이트
-//    fun update(){
-//        _assets.value = _cash.value?.plus(_evaluation.value!!)
-//        if(_purchase.value == 0F){_profit.value=0F}
-//        else{_profit.value = ((_evaluation.value?.times((1-fees).toFloat()) ?:0F ) - _purchase.value!!)?.div(_purchase.value!!)?.times(100)}
-//    }
-//    //게임 종료
-//    fun result(): List<Float?> {
-//        return listOf(_assets.value, _cash.value, _purchase.value ,_evaluation.value, _profit.value)
-//    }
-//
-//    override fun onCleared() {
-//        super.onCleared()
-//    }
+class GameNormalActivityVeiwModel(_gameNormalActivity : Context): ViewModel() {
+    //변수 선언
+    private var gameNormalActivity = _gameNormalActivity
+    private var gamenormalDb: GameNormalDB? = null
+    private var currentGame: GameNormal? = null
+    private var gameSetDb: GameSetDB? = null
+
+    private var _setId = MutableLiveData<String>()
+    private var _asset = MutableLiveData<Float>()
+    private var _cash = MutableLiveData<Float>()
+    private var _input = MutableLiveData<Float>()
+    private var _bought = MutableLiveData<Float>()
+    private var _sold = MutableLiveData<Float>()
+    private var _evaluation = MutableLiveData<Float>()
+    private var _profit = MutableLiveData<Float>()
+    private var _profitrate = MutableLiveData<Float>()
+    private var _profittot = MutableLiveData<Float>()
+    private var _profityear = MutableLiveData<Float>()
+    private var _buyorsell = MutableLiveData<String>()
+    private var _volume = MutableLiveData<Float>()
+    private var _price = MutableLiveData<Float>()
+    private var _select = MutableLiveData<Int>()
+    private var _quant = MutableLiveData<Int>()
+    private var _quant1x = MutableLiveData<Int>()
+    private var _quant3x = MutableLiveData<Int>()
+    private var _quantinv1x = MutableLiveData<Int>()
+    private var _quantinv3x = MutableLiveData<Int>()
+    private var _bought1x = MutableLiveData<Float>()
+    private var _bought3x = MutableLiveData<Float>()
+    private var _boughtinv1x = MutableLiveData<Float>()
+    private var _boughtinv3x = MutableLiveData<Float>()
+    private var _aver1x = MutableLiveData<Float>()
+    private var _aver3x = MutableLiveData<Float>()
+    private var _averinv1x = MutableLiveData<Float>()
+    private var _averinv3x = MutableLiveData<Float>()
+    private var _buylim1x = MutableLiveData<Float>()
+    private var _buylim3x = MutableLiveData<Float>()
+    private var _buyliminv1x = MutableLiveData<Float>()
+    private var _buyliminv3x = MutableLiveData<Float>()
+    private var _price1x = MutableLiveData<Float>()
+    private var _price3x = MutableLiveData<Float>()
+    private var _priceinv1x = MutableLiveData<Float>()
+    private var _priceinv3x = MutableLiveData<Float>()
+    private var _val1x = MutableLiveData<Float>()
+    private var _val3x = MutableLiveData<Float>()
+    private var _valinv1x = MutableLiveData<Float>()
+    private var _valinv3x = MutableLiveData<Float>()
+    private var _pr1x = MutableLiveData<Float>()
+    private var _pr3x = MutableLiveData<Float>()
+    private var _prinv1x = MutableLiveData<Float>()
+    private var _prinv3x = MutableLiveData<Float>()
+    private var _monthly = MutableLiveData<Float>()
+    private var _monthtoggle = MutableLiveData<Int>()
+    private var _tradecomtot = MutableLiveData<Float>()
+    private var _tradecom = MutableLiveData<Float>()
+    private var _dividendtot = MutableLiveData<Float>()
+    private var _taxtot = MutableLiveData<Float>()
+    private var _item = MutableLiveData<String>()
+    private var _item1active = MutableLiveData<Boolean>()
+    private var _item1length = MutableLiveData<Int>()
+    private var _item1able = MutableLiveData<Int>()
+    private var _item2active = MutableLiveData<Boolean>()
+    private var _item3active = MutableLiveData<Boolean>()
+    private var _item4active = MutableLiveData<Boolean>()
+    private var _autobuy = MutableLiveData<Boolean>()
+    private var _autoratio = MutableLiveData<Int>()
+    private var _auto1x = MutableLiveData<Int>()
+    private var _endpoint = MutableLiveData<Int>()
+    private var _countyear = MutableLiveData<Int>()
+    private var _countmonth = MutableLiveData<Int>()
+    private var _snpnowdays = MutableLiveData<Int>()
+    private var _snpnowval = MutableLiveData<Float>()
+    private var _snpdiff = MutableLiveData<Float>()
+    private var _relativeprofitrate = MutableLiveData<Float>()
+    private var _endtime = MutableLiveData<String>()
+
+    init{
+        gameSetDb = GameSetDB.getInstace(gameNormalActivity)
+        gamenormalDb = GameNormalDB.getInstace(gameNormalActivity)
+        _setId.value = setId
+        currentGame = gamenormalDb?.gameNormalDao()?.getSetWithNormal(_setId.value!!, accountID!!)?.last()
+        _asset.value = currentGame?.assets
+        _cash.value = currentGame?.cash
+        _input.value = currentGame?.input
+        _sold.value = currentGame?.sold
+        _bought.value = currentGame?.bought
+        _evaluation.value = currentGame?.evaluation
+        _profit.value = currentGame?.profit
+        _profitrate.value = currentGame?.profitrate
+        _profittot.value = currentGame?.profittot
+        _profityear.value = currentGame?.profityear
+        _buyorsell.value = currentGame?.buyorsell
+        _volume.value = currentGame?.volume
+        _price.value = currentGame?.price
+        _select.value = currentGame?.select
+        _quant.value = currentGame?.quant
+        _quant1x.value = currentGame?.quant1x
+        _quant3x.value = currentGame?.quant3x
+        _quantinv1x.value = currentGame?.quantinv1x
+        _quantinv3x.value = currentGame?.quantinv3x
+        _bought1x.value = currentGame?.bought1x
+        _bought3x.value = currentGame?.bought3x
+        _boughtinv1x.value = currentGame?.boughtinv1x
+        _boughtinv3x.value = currentGame?.boughtinv3x
+        _aver1x.value = currentGame?.aver1x
+        _aver3x.value = currentGame?.aver3x
+        _averinv1x.value = currentGame?.averinv1x
+        _averinv3x.value = currentGame?.averinv3x
+        _buylim1x.value = currentGame?.buylim1x
+        _buylim3x.value = currentGame?.buylim3x
+        _buyliminv1x.value = currentGame?.buyliminv1x
+        _buyliminv3x.value = currentGame?.buyliminv3x
+        _price1x.value = currentGame?.price1x
+        _price3x.value = currentGame?.price3x
+        _priceinv1x.value = currentGame?.priceinv1x
+        _priceinv3x.value = currentGame?.priceinv3x
+        _val1x.value = currentGame?.val1x
+        _val3x.value = currentGame?.val3x
+        _valinv1x.value = currentGame?.valinv1x
+        _valinv3x.value = currentGame?.valinv3x
+        _pr1x.value = currentGame?.pr1x
+        _pr3x.value = currentGame?.pr3x
+        _prinv1x.value = currentGame?.prinv1x
+        _prinv3x.value = currentGame?.prinv3x
+        _monthly.value = currentGame?.monthly
+        _monthtoggle.value = currentGame?.monthtoggle
+        _tradecomtot.value = currentGame?.tradecomtot
+        _tradecom.value = currentGame?.tradecom
+        _dividendtot.value = currentGame?.dividendtot
+        _taxtot.value = currentGame?.taxtot
+        _item.value = currentGame?.item
+        _item1active.value = currentGame?.item1active
+        _item1length.value = currentGame?.item1length
+        _item1able.value = currentGame?.item1able
+        _item2active.value = currentGame?.item2active
+        _item3active.value = currentGame?.item3active
+        _item4active.value = currentGame?.item4active
+        _autobuy.value = currentGame?.autobuy
+        _autoratio.value = currentGame?.autoratio
+        _auto1x.value = currentGame?.auto1x
+        _endpoint.value = currentGame?.endpoint
+        _countyear.value = currentGame?.countyear
+        _countmonth.value = currentGame?.countmonth
+        _snpnowdays.value = currentGame?.snpnowdays
+        _snpnowval.value = currentGame?.snpnowval
+        _snpdiff.value = currentGame?.snpdiff
+        _relativeprofitrate.value = currentGame?.relativeprofitrate
+        _endtime.value = currentGame?.endtime
+    }
+
+    fun refresh(){
+        gameSetDb = GameSetDB.getInstace(gameNormalActivity)
+        gamenormalDb = GameNormalDB.getInstace(gameNormalActivity)
+        _setId.value = setId
+        currentGame = gamenormalDb?.gameNormalDao()?.getSetWithNormal(_setId.value!!, accountID!!)?.last()
+        _asset.value = currentGame?.assets
+        _cash.value = currentGame?.cash
+        _input.value = currentGame?.input
+        _sold.value = currentGame?.sold
+        _bought.value = currentGame?.bought
+        _evaluation.value = currentGame?.evaluation
+        _profit.value = currentGame?.profit
+        _profitrate.value = currentGame?.profitrate
+        _profittot.value = currentGame?.profittot
+        _profityear.value = currentGame?.profityear
+        _buyorsell.value = currentGame?.buyorsell
+        _volume.value = currentGame?.volume
+        _price.value = currentGame?.price
+        _select.value = currentGame?.select
+        _quant.value = currentGame?.quant
+        _quant1x.value = currentGame?.quant1x
+        _quant3x.value = currentGame?.quant3x
+        _quantinv1x.value = currentGame?.quantinv1x
+        _quantinv3x.value = currentGame?.quantinv3x
+        _bought1x.value = currentGame?.bought1x
+        _bought3x.value = currentGame?.bought3x
+        _boughtinv1x.value = currentGame?.boughtinv1x
+        _boughtinv3x.value = currentGame?.boughtinv3x
+        _aver1x.value = currentGame?.aver1x
+        _aver3x.value = currentGame?.aver3x
+        _averinv1x.value = currentGame?.averinv1x
+        _averinv3x.value = currentGame?.averinv3x
+        _buylim1x.value = currentGame?.buylim1x
+        _buylim3x.value = currentGame?.buylim3x
+        _buyliminv1x.value = currentGame?.buyliminv1x
+        _buyliminv3x.value = currentGame?.buyliminv3x
+        _price1x.value = currentGame?.price1x
+        _price3x.value = currentGame?.price3x
+        _priceinv1x.value = currentGame?.priceinv1x
+        _priceinv3x.value = currentGame?.priceinv3x
+        _val1x.value = currentGame?.val1x
+        _val3x.value = currentGame?.val3x
+        _valinv1x.value = currentGame?.valinv1x
+        _valinv3x.value = currentGame?.valinv3x
+        _pr1x.value = currentGame?.pr1x
+        _pr3x.value = currentGame?.pr3x
+        _prinv1x.value = currentGame?.prinv1x
+        _prinv3x.value = currentGame?.prinv3x
+        _monthly.value = currentGame?.monthly
+        _monthtoggle.value = currentGame?.monthtoggle
+        _tradecomtot.value = currentGame?.tradecomtot
+        _tradecom.value = currentGame?.tradecom
+        _dividendtot.value = currentGame?.dividendtot
+        _taxtot.value = currentGame?.taxtot
+        _item.value = currentGame?.item
+        _item1active.value = currentGame?.item1active
+        _item1length.value = currentGame?.item1length
+        _item1able.value = currentGame?.item1able
+        _item2active.value = currentGame?.item2active
+        _item3active.value = currentGame?.item3active
+        _item4active.value = currentGame?.item4active
+        _autobuy.value = currentGame?.autobuy
+        _autoratio.value = currentGame?.autoratio
+        _auto1x.value = currentGame?.auto1x
+        _endpoint.value = currentGame?.endpoint
+        _countyear.value = currentGame?.countyear
+        _countmonth.value = currentGame?.countmonth
+        _snpnowdays.value = currentGame?.snpnowdays
+        _snpnowval.value = currentGame?.snpnowval
+        _snpdiff.value = currentGame?.snpdiff
+        _relativeprofitrate.value = currentGame?.relativeprofitrate
+        _endtime.value = currentGame?.endtime
+
+    }
+
+    fun writeDataBase(situation: String){
+        var write = Runnable{
+            var localDateTime = LocalDateTime.now()
+            val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, situation, 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+            gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+        }
+        var writeThread = Thread(write)
+        writeThread.start()
+
+    }
+
+    fun deleteDataBase(){
+        
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
 }

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="8dp"
+            android:text="히스토리"
+            android:textAppearance="@style/quest_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginBottom="3dp"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:src="@drawable/ic_path_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tiredness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 기록 보기"
+                android:textAppearance="@style/history_ment"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_shareBox"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="312:186"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_history_main"
+                android:text="다음 레벨까지 300,000 포인트 남았습니다."
+                android:padding="16dp"
+                android:textAppearance="@style/quest_levelDescription"
+                app:layout_goneMarginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_level">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_history_main_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="21"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="25">
+
+                            <TextView
+                                android:id="@+id/tv_nickname"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:autoSizeTextType="uniform"
+                                android:text="오상훈"
+                                android:textAppearance="@style/history_main_name"
+                                android:layout_alignParentLeft="true"/>
+
+                            <ImageButton
+                                android:id="@+id/iv_share"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/ic_history_share"/>
+                        </RelativeLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4"/>
+
+                        <TextView
+                            android:id="@+id/tv_tradeday"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="15"
+                            android:autoSizeTextType="uniform"
+                            android:text="투자한지 0,000일 째"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:textAppearance="@style/history_main_tradeday"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="24"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="44"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="115"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_group_one_arrow"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="41"/>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="74"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="15"
+                                        android:text="최고 수익률"
+                                        android:autoSizeTextType="uniform"
+                                        android:textAppearance="@style/history_main_subtitle"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_best_profitrate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="25"
+                                        android:autoSizeTextType="uniform"
+                                        android:text="00.00%"
+                                        android:textAppearance="@style/history_main_percetage"/>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="24"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="115"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_group_two_arrow">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="41"/>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="74"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="15"
+                                        android:text="누적 수익률"
+                                        android:autoSizeTextType="uniform"
+                                        android:textAppearance="@style/history_main_subtitle"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_cumulative_profitrate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="25"
+                                        android:autoSizeTextType="uniform"
+                                        android:text="00.00%"
+                                        android:textAppearance="@style/history_main_percetage"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="21"/>
+
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="지난 기록 다시 보기"
+            android:textAppearance="@style/history_ment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <!-- recyclerview 버튼 하나하나는 recyclerview_history_past.xml -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="12dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

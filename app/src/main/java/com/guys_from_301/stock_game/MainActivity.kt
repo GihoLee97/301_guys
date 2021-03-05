@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -40,6 +41,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
+var accountID: String? = null
 var _MainActivity : Context? = null
 const val START_CASH = 10000F
 const val START_MONTHLY = 1000F
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     private var gameSetDb: GameSetDB? = null
     var itemDb: ItemDB? = null
     val mContext: Context = this
-    var profileDb : ProfileDB? = null
+//    var profileDb : ProfileDB? = null
     var gameNormalDb: GameNormalDB? = null
     var questDb: QuestDB? = null
     private var tradedayQuestList:List<Quest>? = null
@@ -85,15 +87,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         itemDb = ItemDB?.getInstace(mContext!!)
-        profileDb = ProfileDB?.getInstace(mContext!!)
+//        profileDb = ProfileDB?.getInstace(mContext!!)
         questDb = QuestDB.getInstance(mContext!!)
         tradedayQuestList = questDb?.questDao()?.getQuestByTheme("누적 거래일")
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("투자 경험")
-
         countGameQuestList = questDb?.questDao()?.getQuestByTheme("게임 플레이하기")
         _MainActivity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //gamesetviewmodel
+
         var t : BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         NavigationUI.setupWithNavController(t, findNavController(R.id.nav_host))
         gameSetDb = GameSetDB.getInstace(this)
@@ -110,27 +113,30 @@ class MainActivity : AppCompatActivity() {
         OneSignal.setAppId(ONESIGNAL_APP_ID)
 
         //초기자산값 변수
-        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(0)
+        val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
 
         //게임 저장시 gmaeset 업데이트
         if(updateGameSet){
-            val dialog = Dialog_loading(this@MainActivity)
+//            val dialog = Dialog_loading(this@MainActivity)
+//            dialog.show()
+            val dialog = Dialog_loading_tip(this@MainActivity)
             dialog.show()
             var localDateTime = LocalDateTime.now()
-            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId)
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
             if (newGameSet != null) {
                 newGameSet.endtime = localDateTime.toString()
                 newGameSet.profitrate = profitrate
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
+                Log.d("hongz", "gameset 업데이트")
             }
             updateGameSet = false
             dialog.dismiss()
         }
         //새로운 빈 게임 생성
-        var gamesetList = gameSetDb?.gameSetDao()?.getPick()
+        var gamesetList = gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
         var existence = false   //새 게임 존재 여부
-        for (i in 0..gameSetDb?.gameSetDao()?.getPick()?.size!!-1) {
-            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick()!![i].id).isNullOrEmpty()) {
+        for (i in 0..gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!![i].id, accountID!!).isNullOrEmpty()) {
                 existence = true
             }
         }
@@ -139,23 +145,28 @@ class MainActivity : AppCompatActivity() {
                 val newGameSet = GameSet()
 
                 if (gamesetList.size == 1) {
-                    if (gamesetList.last().id == 1) newGameSet.id = 2
-                    else if (gamesetList.last().id == 2) newGameSet.id = 3
-                    else if (gamesetList.last().id == 3) newGameSet.id = 1
+                    if (gamesetList.last().id.last() == '1') newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList.last().id.last() == '2') newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList.last().id.last() == '3') newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외1"
                 } else if (gamesetList.size == 2) {
-                    if (gamesetList[0].id + gamesetList[1].id == 3) newGameSet.id = 3
-                    if (gamesetList[0].id + gamesetList[1].id == 4) newGameSet.id = 2
-                    if (gamesetList[0].id + gamesetList[1].id == 5) newGameSet.id = 1
+                    if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'3'.toInt()) newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '3'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외2"
                 } else if (gamesetList.size == 0){
-                    newGameSet.id = 1
+                    newGameSet.id = accountID+1
                 }
                 //예전거 누적
                 if (initialgameset != null) {
+                    val id = newGameSet.id
                     newGameSet.setcash = initialgameset.setcash
                     newGameSet.setmonthly = initialgameset.setmonthly
                     newGameSet.setsalaryraise = initialgameset.setsalaryraise
                     newGameSet.setgamespeed = initialgameset.setgamespeed
                     newGameSet.setgamelength = initialgameset.setgamelength
+                    newGameSet.accountId = initialgameset.accountId
+                    Log.d("hongz", "새gameset 추가 [id]: "+id)
                 }
                 newGameSet.endtime = ""
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
@@ -361,16 +372,16 @@ class MainActivity : AppCompatActivity() {
     var time3: Long = 0
     override fun onBackPressed() {
         // 서버에 올리는 코드(피로도)
-        update(getHash(profileDb?.profileDao()?.getLoginid()!!).trim(),
-                getHash(profileDb?.profileDao()?.getLoginpw()!!).trim(),
-                profileDb?.profileDao()?.getMoney()!!,
-                profileDb?.profileDao()?.getValue1()!!,
-                profileDb?.profileDao()?.getNickname()!!,
-                profileDb?.profileDao()?.getProfitRate()!!,
-                profileDb?.profileDao()?.getRelativeProfitRate()!!,
-                profileDb?.profileDao()?.getRoundCount()!!,
-                profileDb?.profileDao()?.getHistory()!!,
-                profileDb?.profileDao()?.getLevel()!!
+        update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                profileDbManager!!.getMoney()!!,
+                profileDbManager!!.getValue1()!!,
+                profileDbManager!!.getNickname()!!,
+                profileDbManager!!.getProfitRate()!!,
+                profileDbManager!!.getRelativeProfit()!!,
+                profileDbManager!!.getRoundCount()!!,
+                profileDbManager!!.getHistory()!!,
+                profileDbManager!!.getLevel()!!
         )
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
@@ -384,6 +395,7 @@ class MainActivity : AppCompatActivity() {
             time3 = time1
             Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
         }
+        finish()
     }
 
     // 랭킹 받아오는 코드
@@ -424,6 +436,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private var value1ForWrite = 0
+
     // 피로도 저감 코드
     suspend fun value1reduc() {
         while (true) {
@@ -431,7 +445,7 @@ class MainActivity : AppCompatActivity() {
             var nowtime = System.currentTimeMillis() // 현재 시간
 
             if ((nowtime - lasttime) >= 1000L) {
-                var nowvalue1 = profileDb?.profileDao()?.getValue1()!!
+                var nowvalue1 = profileDbManager!!.getValue1()!!
                 var value1temp = 1 * (((nowtime - lasttime)/1000L).toFloat()).roundToInt() // 초당 1 씩 저감
 
                 if ((nowvalue1 - value1temp) <= 0 ) {
@@ -440,21 +454,9 @@ class MainActivity : AppCompatActivity() {
                     nowvalue1 -= value1temp
                 }
 
-                // DB 피로도 업데이트
-                val newProfile = Profile()
-                newProfile.id = profileDb?.profileDao()?.getId()?.toLong()
-                newProfile.nickname = profileDb?.profileDao()?.getNickname()!!
-                newProfile.history = profileDb?.profileDao()?.getHistory()!!
-                newProfile.level = profileDb?.profileDao()?.getLevel()!!
-                newProfile.exp = profileDb?.profileDao()?.getExp()!!
-                newProfile.rank = profileDb?.profileDao()?.getRank()!!
-                newProfile.login = profileDb?.profileDao()?.getLogin()!!
-                newProfile.money = profileDb?.profileDao()?.getMoney()!!
-                newProfile.value1 = nowvalue1
-                newProfile.relativeprofitrate = profileDb?.profileDao()?.getRelativeProfitRate()!!
-                newProfile.login_id = profileDb?.profileDao()?.getLoginid()!!
-                newProfile.login_pw = profileDb?.profileDao()?.getLoginpw()!!
-                profileDb?.profileDao()?.update(newProfile)
+//                // DB 피로도 업데이트
+//                profileDbManager!!.setValue1(nowvalue1)
+                value1ForWrite = nowvalue1
 
                 // 피로도 저감 시간 저장
                 val newItem = Item()
@@ -504,9 +506,9 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     friendname.add(my_name)
-                    friendnick.add(profileDb?.profileDao()?.getNickname()!!)
-                    friendmoney.add(profileDb?.profileDao()?.getMoney()!!)
-                    friendlevel.add(profileDb?.profileDao()?.getLevel()!!)
+                    friendnick.add(profileDbManager!!.getNickname()!!)
+                    friendmoney.add(profileDbManager!!.getMoney()!!)
+                    friendlevel.add(profileDbManager!!.getLevel()!!)
                     friendimage.add(my_image!!)
                 }
             }
@@ -515,10 +517,8 @@ class MainActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int){
-        val newProfile = profileDb?.profileDao()?.getAll()?.get(0)
-        if (newProfile != null) {
-            newProfile.money = newProfile.money + reward
-            profileDb?.profileDao()?.update(newProfile)
+        if (!profileDbManager!!.isEmpty(this@MainActivity)) {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
         }
     }
 
@@ -646,24 +646,48 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        if(profileDbManager==null){
+            profileDbManager = ProfileDbManager(this)
+        }
+        else{
+            profileDbManager!!.refresh(this)
+        }
+
         //누적거래일, 완료한 게임수 관련 도전과제 성공여부 확인
-        profileDb?.profileDao()?.getHistory()?.let { tradedayQuestList?.let { it1 ->
+        profileDbManager!!.getHistory()?.let { tradedayQuestList?.let { it1 ->
             checkQuestCumulativeTradingDay(it,
                 it1
             )
         } }
-        profileDb?.profileDao()?.getRoundCount()?.let { countGameQuestList?.let { it1 ->
+        profileDbManager!!.getRoundCount()?.let { countGameQuestList?.let { it1 ->
             checkQuestPlayedGame(it,
                 it1
             )
         } }
         var textView1 = findViewById<TextView>(R.id.textView2)
 
+        Log.d("hongz","도전과제 다이얼로그 생성 전")
         if(questAchieved.isEmpty() == false){
-            val dlgQuest = Dialog_quest(this)
-            dlgQuest.start()
+            Log.d("hongz","도전과제 다이얼로그 생성")
+            for(i in 0..questAchieved.size-1){
+                var quest = questAchieved[i]
+                val dlgQuest = Dialog_new_quest(_MainActivity!!)
+                dlgQuest.start(quest)
+            }
+            questAchieved = arrayListOf()
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        // DB 피로도 업데이트
+        profileDbManager!!.setValue1(value1ForWrite)
+        profileDbManager!!.write2database()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
 }

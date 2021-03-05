@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="8dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/borderline2"
+        android:paddingVertical="8dp"
+        android:elevation="5dp">
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_recyclerview_date"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="2021년 7월 31일"
+                android:textAppearance="@style/history_past_date"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_gravity="center|right"
+                android:gravity="center|right"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="20dp">
+                <ImageButton
+                    android:layout_gravity="center|right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_path"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginVertical="5dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_recyclerview_tradeday"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:text="진행 거래일 : 0000일"
+                android:layout_gravity=""
+                android:textAppearance="@style/history_past_number"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:gravity="right"
+                android:text="수익률"
+                android:textAppearance="@style/history_past_profit_letter"/>
+            <TextView
+                android:id="@+id/tv_recyclerview_profitrate"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="bottom|right"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="11.8%"
+                android:textAppearance="@style/history_past_profit_number"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

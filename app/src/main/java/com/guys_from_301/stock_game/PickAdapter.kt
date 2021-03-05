@@ -15,7 +15,7 @@ class PickAdapter (val context: Context, var game: List<GameSet>,var gameNormalD
         var view: View = itemView
         val name = itemView.findViewById<TextView>(R.id.gameName)
         fun bind(gameUnit : GameSet){
-            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id).isNullOrEmpty()) name.text = "새 게임 추가하기"
+            if(gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameUnit.id, accountID!!).isNullOrEmpty()) name.text = "새 게임 추가하기"
             else name.text = gameUnit.endtime
             itemView.setOnClickListener{ itemClick(gameUnit) }
         }

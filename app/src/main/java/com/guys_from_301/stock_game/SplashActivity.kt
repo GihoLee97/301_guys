@@ -46,7 +46,12 @@ var loadcomp: Boolean = false // 데이터 로드 완료 여부(미완료:0, 완
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // 뉴스 데이터//////////////////////
 val news_date: ArrayList<String> = ArrayList() // 뉴스 날짜
-val news_information: ArrayList<String> = ArrayList() // 뉴스 정볼
+val news_information: ArrayList<String> = ArrayList() // 뉴스 정보
+// 팁 데이터///////////////////////
+val tip_title: ArrayList<String> = ArrayList() // 팁 제목
+val tip_information: ArrayList<String> = ArrayList() // 팁 내용
+
+
 
 //MUST BE INITIALIZED AT FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 //push alarm
@@ -60,24 +65,28 @@ val shareManager = ShareManager()
 //capture Manager
 val captureUtil = CaptureUtil()
 //profileDb Manager
-lateinit var profileDbManager : ProfileDbManager
+var profileDbManager : ProfileDbManager? = null
 //MUST BE INITIALIZED AT FIRST-END!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//////////////////////////////////
 
 
 class SplashActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     private lateinit var mAuth : FirebaseAuth
+    private var profileDb : ProfileDB? = null
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        profileDb = ProfileDB.getInstace(this)
+//        var profile = profileDb?.profileDao()?.getAll()!![0]
+//        profileDbManager = ProfileDbManager(this, profile)
         profileDbManager = ProfileDbManager(this)
         KakaoSdk.init(this, "0c9ac0ead6e3f965c35fa7c9d0973b7f")
         TalkApiClient.instance
+        accountID = profileDbManager!!.getLoginId()
         //광고
         MobileAds.initialize(this){}
-        profileDbManager = ProfileDbManager(this)
 
         //push alarm channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -95,8 +104,8 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({ //delay를 위한 handler
-            if(!profileDbManager.isEmpty(this)){
-                val loginMethod = profileDbManager.getLogin()
+            if(!profileDbManager!!.isEmpty(this)){
+                val loginMethod = profileDbManager!!.getLogin()
                 if(loginMethod?.and(1)==1) go2MainActivity() // general login
                 else if(loginMethod?.and(2)==2) { // google login
                     if (isGoogleAuthChecked()) go2MainActivity()
@@ -150,6 +159,35 @@ class SplashActivity : AppCompatActivity() {
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : NEWS !") // 에러 메시지 출력
+                    e.printStackTrace()
+                    count = 0
+                }
+            }
+
+
+            // 팁 데이터
+
+            try{
+                fileReader = BufferedReader(InputStreamReader(getAssets().open("tip.csv"),"utf-8"))
+                // 헤더 없음 61 행까지 데이터 있음
+                csvReader = CSVReaderBuilder(fileReader).withSkipLines(0).build()
+                val tip_rs = csvReader.readAll()
+                count = 0
+                for (tip_r in tip_rs){
+                    tip_title.add(count, tip_r[0])
+                    tip_information.add(count, tip_r[1])
+                    count += 1
+                }
+            } catch (e: Exception) {
+                println("Reading CSV Error : TIP !") // 에러 메시지 출력
+                e.printStackTrace()
+            } finally {
+                try {
+                    fileReader!!.close()
+                    csvReader!!.close()
+                    count = 0
+                } catch (e: IOException) {
+                    println("Closing fileReader/csvParser Error : TIP !") // 에러 메시지 출력
                     e.printStackTrace()
                     count = 0
                 }
@@ -451,7 +489,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        profileDbManager.write2database()
+        profileDbManager!!.write2database()
     }
 
 }

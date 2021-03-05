@@ -2,6 +2,7 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +32,10 @@ class FragmentHome : Fragment() {
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
-    var profileDb : ProfileDB? = null
+//    var profileDb : ProfileDB? = null
     var itemDb : ItemDB? = null
     private var item: Item? = null
+    private lateinit var tv_profitRate: TextView
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
     private var gameNormalDB: GameNormalDB? = null
@@ -54,22 +56,26 @@ class FragmentHome : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
-        profileDb = ProfileDB.getInstace(_MainActivity!!)
         itemDb = ItemDB.getInstace(_MainActivity!!)
+
+        tv_profitRate = v.findViewById(R.id.tv_profitRate)
+        tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
+
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(_MainActivity!!)
         gameNormalDB = GameNormalDB.getInstace(_MainActivity!!)
+        Log.d("hongz", "사용자 계정: "+ accountID!!)
         mAdapter = gameNormalDB?.let {
-            MyGameSetAdapter(_MainActivity!!, game, it){ game -> setId = game.id }
+            MyGameSetAdapter(_MainActivity!!, game){ game -> setId = game.id }
         }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(_MainActivity!!)
         val pRecyclerView = v.findViewById<RecyclerView>(R.id.rv_games)
         pRecyclerView.layoutManager = layoutManager
 
-        game = gameDb?.gameSetDao()?.getPick()!!
+        game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
         //초기자산값 변수
-        val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+        val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
         if (initialgameset != null) {
             setCash = SET_CASH_STEP[initialgameset.setcash]
             setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
@@ -77,11 +83,11 @@ class FragmentHome : Fragment() {
             setGamelength = initialgameset.setgamelength
             setGamespeed = initialgameset.setgamespeed
         }
-        for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
-            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll()!![i].id).isNullOrEmpty()) {
-            }
-        }
-        mAdapter = MyGameSetAdapter(_MainActivity!!, game,gameNormalDB!!){
+//        for (i in 0..gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+//            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
+//            }
+//        }
+        mAdapter = MyGameSetAdapter(_MainActivity!!, game){
             gameUnit -> setId = gameUnit.id
             val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)
             startActivity(intent)
@@ -95,6 +101,19 @@ class FragmentHome : Fragment() {
         manager.stackFromEnd = true
         pRecyclerView.layoutManager = manager
 
+
+
+        //홈 팁
+
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard2).setOnClickListener{
+            val dlg = Dialog_home_tip(_MainActivity!!)
+            dlg.show()
+        }
+
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard4).setOnClickListener{
+            val intent = Intent(_MainActivity!!, HistoryActivity::class.java)
+            startActivity(intent)
+        }
 //        val r = Runnable {
 //            try{
 //                game = gameDb?.gameSetDao()?.getPick()!!
@@ -137,18 +156,23 @@ class FragmentHome : Fragment() {
             startActivity(intent)
         }
 
+        v.findViewById<ConstraintLayout>(R.id.cl_dashboard4).setOnClickListener {
+            val intent = Intent(_MainActivity, NewHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
         v.findViewById<TextView>(R.id.tv_use_potion).setOnClickListener {
             val dialogPotion: Dialog_potion = Dialog_potion(_MainActivity!!)
             itemDb?.itemDao()?.getAll()?.get(0)?.let { it1 -> dialogPotion.start(it1.potion) }
         }
 
-        v.findViewById<TextView>(R.id.tv_userName).text = profileDb?.profileDao()?.getNickname()!!+"님"
+        v.findViewById<TextView>(R.id.tv_userName).text = profileDbManager!!.getNickname()+"님"
 
         // 피로도
         CoroutineScope(Dispatchers.Default).launch {
             val job1 = launch {
                 while (true) {
-                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDb?.profileDao()?.getValue1()!!
+                    v.findViewById<ProgressBar>(R.id.pb_itemfatigue).progress = profileDbManager!!.getValue1()!!
                     delay(200L)
                 }
             }

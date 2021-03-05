@@ -20,14 +20,16 @@ class NewMainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_main)
+        println("---1: "+ tip_title[0] + " , " + tip_information[0])
 
         //기본설정(data 불러오기 및 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(this)
         gameNormalDB = GameNormalDB.getInstace(this)
         mAdapter = gameNormalDB?.let {
-            MyGameSetAdapter(this, game, it){ game -> setId = game.id }
+            MyGameSetAdapter(this, game){ game -> setId = game.id }
         }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val pRecyclerView = findViewById<RecyclerView>(R.id.rv_games)
@@ -36,9 +38,9 @@ class NewMainActivity : AppCompatActivity() {
         pRecyclerView.layoutManager = layoutManager
         val r = Runnable {
             try{
-                game = gameDb?.gameSetDao()?.getPick()!!
+                game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
                 //초기자산값 변수
-                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(0)
+                val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
                 if (initialgameset != null) {
                     setCash = SET_CASH_STEP[initialgameset.setcash]
                     setMonthly = SET_MONTHLY_STEP[initialgameset.setmonthly]
@@ -46,11 +48,11 @@ class NewMainActivity : AppCompatActivity() {
                     setGamelength = initialgameset.setgamelength
                     setGamespeed = initialgameset.setgamespeed
                 }
-                for (i in 0..gameDb?.gameSetDao()?.getPick()?.size!!-1) {
-                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll()!![i].id).isNullOrEmpty()) {
+                for (i in 0..gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
+                    if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
                     }
                 }
-                mAdapter = MyGameSetAdapter(this, game,gameNormalDB!!){
+                mAdapter = MyGameSetAdapter(this, game){
                     gameUnit -> setId = gameUnit.id
                     val intent = Intent(this, GameNormalActivity::class.java)
                     startActivity(intent)
