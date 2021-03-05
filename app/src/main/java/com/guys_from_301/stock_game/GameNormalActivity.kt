@@ -1428,11 +1428,11 @@ class GameNormalActivity : AppCompatActivity() {
                             if (autobuy) {
                                 when (auto1x) {
                                     0 -> {
-                                        if (((monthly / (price1x * tradecomrate)).roundToInt() - (monthly / (price1x * tradecomrate)) > 0)) {
-                                            autoquant = (monthly / (price1x * tradecomrate)).roundToInt() - 1
+                                        if (((monthly / (price1x * tradecomrate) * (autoratio/100F)).roundToInt() - (monthly / (price1x * tradecomrate) * (autoratio/100F)) > 0)) {
+                                            autoquant = (monthly / (price1x * tradecomrate) * (autoratio/100F)).roundToInt() - 1
                                         }
                                         else {
-                                            autoquant = (monthly / (price1x * tradecomrate)).roundToInt()
+                                            autoquant = (monthly / (price1x * tradecomrate) * (autoratio/100F)).roundToInt()
                                         }
                                         cash -= autoquant * price1x * tradecomrate
                                         tradecomtot += autoquant * price1x * (tradecomrate - 1F)
@@ -1443,11 +1443,11 @@ class GameNormalActivity : AppCompatActivity() {
                                         autoprice = autoquant * price1x
                                     }
                                     1 -> {
-                                        if (((monthly / (price3x * tradecomrate)).roundToInt() - (monthly / (price3x * tradecomrate)) > 0)) {
-                                            autoquant = (monthly / (price3x * tradecomrate)).roundToInt() - 1
+                                        if (((monthly / (price3x * tradecomrate) * (autoratio/100F)).roundToInt() - (monthly / (price3x * tradecomrate) * (autoratio/100F)) > 0)) {
+                                            autoquant = (monthly / (price3x * tradecomrate) * (autoratio/100F)).roundToInt() - 1
                                         }
                                         else {
-                                            autoquant = (monthly / (price3x * tradecomrate)).roundToInt()
+                                            autoquant = (monthly / (price3x * tradecomrate) * (autoratio/100F)).roundToInt()
                                         }
                                         cash -= autoquant * price3x * tradecomrate
                                         tradecomtot += autoquant * price3x * (tradecomrate - 1F)
@@ -1458,11 +1458,11 @@ class GameNormalActivity : AppCompatActivity() {
                                         autoprice = autoquant * price3x
                                     }
                                     2 -> {
-                                        if (((monthly / (priceinv1x * tradecomrate)).roundToInt() - (monthly / (priceinv1x * tradecomrate)) > 0)) {
-                                            autoquant = (monthly / (priceinv1x * tradecomrate)).roundToInt() - 1
+                                        if (((monthly / (priceinv1x * tradecomrate) * (autoratio/100F)).roundToInt() - (monthly / (priceinv1x * tradecomrate) * (autoratio/100F)) > 0)) {
+                                            autoquant = (monthly / (priceinv1x * tradecomrate) * (autoratio/100F)).roundToInt() - 1
                                         }
                                         else {
-                                            autoquant = (monthly / (priceinv1x * tradecomrate)).roundToInt()
+                                            autoquant = (monthly / (priceinv1x * tradecomrate) * (autoratio/100F)).roundToInt()
                                         }
                                         cash -= autoquant * priceinv1x * tradecomrate
                                         tradecomtot += autoquant * priceinv1x * (tradecomrate - 1F)
@@ -1473,11 +1473,11 @@ class GameNormalActivity : AppCompatActivity() {
                                         autoprice = autoquant * priceinv1x
                                     }
                                     3 -> {
-                                        if (((monthly / (priceinv3x * tradecomrate)).roundToInt() - (monthly / (priceinv3x * tradecomrate)) > 0)) {
-                                            autoquant = (monthly / (priceinv3x * tradecomrate)).roundToInt() - 1
+                                        if (((monthly / (priceinv3x * tradecomrate) * (autoratio/100F)).roundToInt() - (monthly / (priceinv3x * tradecomrate) * (autoratio/100F)) > 0)) {
+                                            autoquant = (monthly / (priceinv3x * tradecomrate) * (autoratio/100F)).roundToInt() - 1
                                         }
                                         else {
-                                            autoquant = (monthly / (priceinv3x * tradecomrate)).roundToInt()
+                                            autoquant = (monthly / (priceinv3x * tradecomrate) * (autoratio/100F)).roundToInt()
                                         }
                                         cash -= autoquant * priceinv3x * tradecomrate
                                         tradecomtot += autoquant * priceinv3x * (tradecomrate - 1F)
