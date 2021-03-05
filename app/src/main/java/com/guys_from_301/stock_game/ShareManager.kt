@@ -7,6 +7,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import androidx.core.net.toUri
+import java.io.File
 
 class ShareManager {
 

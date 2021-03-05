@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -44,6 +45,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
@@ -688,11 +690,22 @@ class MainActivity : AppCompatActivity() {
         // DB 피로도 업데이트
         profileDbManager!!.setValue1(value1ForWrite)
         profileDbManager!!.write2database()
+
+        val CAPTURE_PATH = "/Tardis"
+        val strFolderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath+CAPTURE_PATH
+
+        val file = File(strFolderPath)
+        if(file.exists()) {
+            file.deleteRecursively()
+            Log.d("Giho","delete files")
+        }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
+
+
     }
 
 }

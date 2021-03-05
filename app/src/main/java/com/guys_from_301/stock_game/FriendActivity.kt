@@ -81,7 +81,7 @@ class FriendActivity  : AppCompatActivity() {
 
         button_invite.setOnClickListener{
             if(friendlevel[count]==-1){
-                kakaoMessageManager.sendMessageonlyone(frienduuid[count])
+                kakaoMessageManager.sendMessageonlyone(frienduuid[count], kakaoMessageManager.dummy)
                 friendquest.achievement = friendquest.achievement+1
                 val addRunnable = kotlinx.coroutines.Runnable {
                     questDb?.questDao()?.insert(friendquest)
