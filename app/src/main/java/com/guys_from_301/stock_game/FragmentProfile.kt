@@ -133,6 +133,10 @@ class FragmentProfile : Fragment() {
                 dlg_delete.start()
             }
         }
+        v.findViewById<LinearLayout>(R.id.ll_support).setOnClickListener {
+            val intent = Intent(_MainActivity,SupportActivity::class.java)
+            startActivity(intent)
+        }
         return v
     }
 

@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NoticeDetailActivity"></activity>
+        <activity android:name=".SupportActivity"></activity>
+        <activity android:name=".NoticeDetailActivity" />
         <activity android:name=".TipDetailActivity" />
         <activity android:name=".TipMainActivity" />
         <activity android:name=".NewHistoryActivity" />
@@ -73,11 +74,6 @@
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />
-
-        <activity
-            android:name=".ResultNormalActivity"
-            android:noHistory="true"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".GameNormalActivity"
             android:noHistory="true"

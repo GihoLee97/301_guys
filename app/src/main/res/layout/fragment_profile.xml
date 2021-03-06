@@ -213,6 +213,7 @@
                     android:background="#EAEEEF"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_support"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal">
