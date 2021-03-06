@@ -33,6 +33,7 @@ class FragmentProfile : Fragment() {
 
 //    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
+    private lateinit var tv_pw_change : TextView
     var loginMethod : String? = null
 
     override fun onCreateView(
@@ -41,14 +42,12 @@ class FragmentProfile : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
+        tv_pw_change = v.findViewById(R.id.tv_pw_change)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
         tv_my_nick.text = profileDbManager!!.getNickname()
         v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager!!.getLevel().toString()
         v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager!!.getExp()!!
-        if(profileDbManager!!.getLogin() != 4){
-            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
-        }
-        else{
+        if(profileDbManager!!.getLogin() == 4){ // kakao login
             UserApiClient.instance.me { user, error ->
                 if (error!=null)
                     Toast.makeText(_MainActivity,"사용자 정보 요청 실패(카카오)", Toast.LENGTH_SHORT)
@@ -56,6 +55,16 @@ class FragmentProfile : Fragment() {
                     v.findViewById<ImageView>(R.id.iv_my_image).loadCircularImage(user?.kakaoAccount?.profile?.thumbnailImageUrl, 5F, Color.parseColor("#F4730B"))
 //                    Glide.with(_MainActivity!!).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(v.findViewById<ImageView>(R.id.iv_my_image))
                 }
+            }
+        }
+        else if(profileDbManager!!.getLogin() == 2){ // google login
+            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+        }
+        else{ // general login
+            tv_pw_change.visibility = View.VISIBLE
+            tv_pw_change.setOnClickListener {
+                val dlg = Dialog_change_pw(_MainActivity!!)
+                dlg.start()
             }
         }
 //        v.findViewById<ImageView>(R.id.iv_my_image).

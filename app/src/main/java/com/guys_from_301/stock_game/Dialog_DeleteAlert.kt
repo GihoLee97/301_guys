@@ -36,7 +36,7 @@ class Dialog_DeleteAlert(context: Context) {
         btnOK = dlg.findViewById(R.id.btn_deleteok)
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
         et_pw = dlg.findViewById(R.id.et_pw)
-        tv_pw_change_ment_1 = dlg.findViewById(R.id.tv_pw_change_ment_1)
+        tv_pw_change_ment_1 = dlg.findViewById(R.id.tv_pwChangeNotice)
 
         var profileDb: ProfileDB? = null
 

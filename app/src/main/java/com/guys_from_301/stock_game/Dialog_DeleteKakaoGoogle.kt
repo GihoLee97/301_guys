@@ -39,7 +39,7 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
         btnOK = dlg.findViewById(R.id.btn_deleteok)
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
         et_nickname = dlg.findViewById(R.id.et_nickname)
-        tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_pw_change_ment_1)
+        tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_pwChangeNotice)
 
         et_nickname.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

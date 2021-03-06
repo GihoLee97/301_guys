@@ -50,8 +50,8 @@
                     android:id="@+id/et_pw"
                     android:layout_width="182dp"
                     android:layout_height="35dp"
-                    android:inputType="text"
-                    android:hint="비밀번 입력하고 탈퇴하기"
+                    android:inputType="textPassword"
+                    android:hint="비밀번호 입력"
                     android:textAppearance="@style/nickname_change_content"
                     android:background="@null"
                     android:layout_gravity="center"
@@ -73,7 +73,7 @@
                 android:gravity="center"
                 android:background="@drawable/initial_set_id_line"/>
             <TextView
-                android:id="@+id/tv_pw_change_ment_1"
+                android:id="@+id/tv_pwChangeNotice"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
