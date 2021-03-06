@@ -21,6 +21,7 @@ import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
 import org.w3c.dom.Text
 import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.retrofit.getnotice
 
 
 /**
@@ -64,6 +65,7 @@ class FragmentProfile : Fragment() {
             dlg.start()
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
+            getnotice("1")
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
