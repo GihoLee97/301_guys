@@ -71,6 +71,8 @@ var startGameSet: Boolean = false
 
 var friend_all_array : Friends<Friend>? = null
 
+var Notice_array : MutableList<DATACLASS_NOTICE>? = null
+
 var my_name: String = ""; var my_image: String = ""
 class MainActivity : AppCompatActivity() {
     // fragment 관련

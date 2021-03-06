@@ -17,10 +17,19 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.Notice
+import com.guys_from_301.stock_game.data.NoticeDB
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
 import org.w3c.dom.Text
 import com.guys_from_301.stock_game.data.Profile
+import com.guys_from_301.stock_game.retrofit.RetrofitNotice
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 /**
@@ -40,6 +49,7 @@ class FragmentProfile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        getnotice("1")
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
         tv_pw_change = v.findViewById(R.id.tv_pw_change)
@@ -73,6 +83,7 @@ class FragmentProfile : Fragment() {
             dlg.start()
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
+            getnotice("1")
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
@@ -226,5 +237,54 @@ class FragmentProfile : Fragment() {
         super.onResume()
 
         tv_my_nick.text = profileDbManager!!.getNickname()
+    }
+
+    // NOTICE
+    fun getnotice(u_id: String) {
+        var funnotice: RetrofitNotice? = null
+        var noticedb : NoticeDB? = null
+        noticedb = NoticeDB.getInstace(_MainActivity!!)
+        val url = "http://stockgame.dothome.co.kr/test/notice_get.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funnotice= retrofit.create(RetrofitNotice::class.java)
+        funnotice.getnotice(u_id).enqueue(object : Callback<MutableList<DATACLASS_NOTICE>> {
+            override fun onFailure(call: Call<MutableList<DATACLASS_NOTICE>>, t: Throwable) {
+                println("---서버통신실패: "+t.message)
+            }
+            override fun onResponse(call: Call<MutableList<DATACLASS_NOTICE>>, response: retrofit2.Response<MutableList<DATACLASS_NOTICE>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    println("---서버통신성공")
+                    var data = response.body()!!
+                    println("---"+ response.body()!![0].TITLE)
+                    println("---"+ response.body()!![0].CONTENT)
+                    println("---"+ response.body()!![1].TITLE)
+                    println("---"+ response.body()!![1].CONTENT)
+                    if(Notice_array == null){
+                        Notice_array = response.body()!!
+                        for(i in 0..data.size-1){
+                            val newNotice = Notice()
+                            newNotice.id = data[i].ID
+                            newNotice.title = data[i].TITLE
+                            newNotice.contents = data[i].CONTENT
+                            newNotice.date = data[i].DATE
+                            noticedb?.noticeDao()?.insert(newNotice)
+
+                        }
+
+                    }
+
+                }
+            }
+        })
+
     }
 }
