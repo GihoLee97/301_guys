@@ -40,6 +40,8 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemCl
             else {
                 lc_chart.visibility = View.VISIBLE
                 tv_addGame.visibility = View.GONE
+
+
                 //endtime gamenormal 기준
                 if(gameUnit.endtime.length>10)endtime.text = gameUnit.endtime.slice(IntRange(0,3))+"."+gameUnit.endtime.slice(IntRange(5,6))+"."+gameUnit.endtime.slice(IntRange(8,9))+" "+gameUnit.endtime.slice(IntRange(11,15))
                 else endtime.text = gameUnit.endtime
