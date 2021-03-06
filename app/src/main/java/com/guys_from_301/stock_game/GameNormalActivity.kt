@@ -714,7 +714,7 @@ class GameNormalActivity : AppCompatActivity() {
         cl_fund.setOnClickListener {
             ecoselect = 0
             cht_eco.data = fundD
-            tv_ecoindex.text = "금리"
+            tv_ecoindex.text = "연준 기금 금리"
             tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
         }
         cl_bond.setOnClickListener {
@@ -1554,6 +1554,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     cash += val1x * dividendrate * 0.846F // 15.4% 세금 공제
                                     dividendtot += val1x * dividendrate
                                     taxtot += val1x * dividendrate * 0.154F // 세금 납부 내역 최신화
+                                    taxlast = val1x * dividendrate * 0.154F
                                     divlast = val1x * dividendrate
 //                                    runOnUiThread {
 //                                        findViewById<TextView>(R.id.tv_notification).text =
