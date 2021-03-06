@@ -1593,7 +1593,9 @@ class GameNormalActivity : AppCompatActivity() {
 
                             // 해가 바뀔 시
                             if (snpDate_sf.year != preYear) {
-                                tax += (profityear - 2200F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
+                                if (profityear>2200F) {
+                                    tax += (profityear - 2200F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
+                                }
                                 profityear = 0F // 연 수익률 초기화
                                 if (cash >= tax && tax > 0F) {
 //                                    runOnUiThread {
@@ -2269,7 +2271,7 @@ class GameNormalActivity : AppCompatActivity() {
         runOnUiThread {
             when (ecoselect) {
                 0 -> {
-                    tv_ecoindex.text = "금리"
+                    tv_ecoindex.text = "연준 기금 금리"
                     tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
                 }
                 1 -> {
