@@ -149,9 +149,12 @@ class MainActivity : AppCompatActivity() {
         var gamesetList = gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
         var existence = false   //새 게임 존재 여부
         for (game in gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!) {
+            var emptyCount : Int = 0
             if (game.endtime == "") {
                 existence = true
+                emptyCount++
             }
+            if(emptyCount == 2) gameSetDb?.gameSetDao()?.delete(game)
         }
         if (gamesetList != null) {
             if (!existence && gamesetList.size < 3) {
