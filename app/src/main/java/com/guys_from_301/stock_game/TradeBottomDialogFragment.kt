@@ -780,6 +780,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash -= quant * price1x * tradecomrate
                             bought += quant * price1x
                             tradecomtot += quant * price1x * (tradecomrate - 1F)
+                            comlast = quant * price1x * (tradecomrate - 1F)
                             quant1x += quant
                             bought1x += price1x * quant
                             aver1x = bought1x / quant1x
@@ -791,6 +792,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash -= quant * price3x * tradecomrate
                             bought += quant * price3x
                             tradecomtot += quant * price3x * (tradecomrate - 1F)
+                            comlast = quant * price3x * (tradecomrate - 1F)
                             quant3x += quant
                             bought3x += price3x * quant
                             aver3x = bought3x / quant3x
@@ -802,6 +804,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash -= quant * priceinv1x * tradecomrate
                             bought += quant * priceinv1x
                             tradecomtot += quant * priceinv1x * (tradecomrate - 1F)
+                            comlast = quant * priceinv1x * (tradecomrate - 1F)
                             quantinv1x += quant
                             boughtinv1x += priceinv1x * quant
                             averinv1x = boughtinv1x / quantinv1x
@@ -813,6 +816,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash -= quant * priceinv3x * tradecomrate
                             bought += quant * priceinv3x
                             tradecomtot += quant * priceinv3x * (tradecomrate - 1F)
+                            comlast = quant * priceinv3x * (tradecomrate - 1F)
                             quantinv3x += quant
                             boughtinv3x += priceinv3x * quant
                             averinv3x = boughtinv3x / quantinv3x
@@ -838,6 +842,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash += quant * price1x * (2F - tradecomrate)// 현금에 매도금액 추가
                             sold += quant * price1x // 총 매도 금액 최신화
                             tradecomtot += quant * price1x * (tradecomrate - 1F) // 총 수수로 최신화
+                            comlast = quant * price1x * (tradecomrate - 1F)
                             if (price1x >= aver1x) {
                                 profityear += (price1x - aver1x) * quant
                             }
@@ -853,6 +858,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash += quant * price3x * (2F - tradecomrate)// 현금에 매도금액 추가
                             sold += quant * price3x // 총 매도 금액 최신화
                             tradecomtot += quant * price3x * (tradecomrate - 1F) // 총 수수로 최신화
+                            comlast = quant * price3x * (tradecomrate - 1F)
                             if (price3x >= aver3x) {
                                 profityear += (price3x - aver3x) * quant
                             }
@@ -868,6 +874,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash += quant * priceinv1x * (2F - tradecomrate)// 현금에 매도금액 추가
                             sold += quant * priceinv1x // 총 매도 금액 최신화
                             tradecomtot += quant * priceinv1x * (tradecomrate - 1F) // 총 수수로 최신화
+                            comlast = quant * priceinv1x * (tradecomrate - 1F)
                             if (priceinv1x >= averinv1x) {
                                 profityear += (priceinv1x - averinv1x) * quant
                             }
@@ -883,6 +890,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             cash += quant * priceinv3x * (2F - tradecomrate)// 현금에 매도금액 추가
                             sold += quant * priceinv3x // 총 매도 금액 최신화
                             tradecomtot += quant * priceinv3x * (tradecomrate - 1F) // 총 수수로 최신화
+                            comlast = quant * priceinv3x * (tradecomrate - 1F)
                             if (priceinv3x >= averinv3x) {
                                 profityear += (priceinv3x - averinv3x) * quant
                             }

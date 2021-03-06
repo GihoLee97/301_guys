@@ -989,7 +989,7 @@
                                         android:layout_height="20dp"
                                         app:layout_constraintLeft_toLeftOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        android:text="금리"
+                                        android:text="연준 기금 금리"
                                         android:textAppearance="@style/game_ecoindextitlebig">
                                     </TextView>
                                     <com.github.mikephil.charting.charts.LineChart

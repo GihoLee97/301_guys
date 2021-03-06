@@ -152,6 +152,8 @@ var newssave = mutableListOf<Int>()
 //이벤트 횟수(종료 다이알로그 중복 생성 방지용)/////////////////////////
 var eventCount: Int = 0
 
+var comlast: Float = 0F
+
 class GameNormalActivity : AppCompatActivity() {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -378,6 +380,9 @@ class GameNormalActivity : AppCompatActivity() {
 
     private var ecoselect: Int = 0 // 0: fund, 1: bond, 2: indpro, 3: unem, 4: inf
 
+    private var monthlytemp: Float = 0F
+    private var divlast: Float = 0F
+    private var taxlast: Float = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -682,6 +687,12 @@ class GameNormalActivity : AppCompatActivity() {
         // 아이템
         ll_item.setOnClickListener {
             itemBottomSheetDialog.show(supportFragmentManager, itemBottomSheetDialog.tag)
+            click = !click /////////////////////////////////////////////////////////////////////////
+        }
+
+        tv_assetTot.setOnClickListener {
+            val dlg_asset = Dialog_asset(this@GameNormalActivity, monthlytemp, divlast, taxlast)
+            dlg_asset.start()
             click = !click /////////////////////////////////////////////////////////////////////////
         }
 
@@ -1417,6 +1428,7 @@ class GameNormalActivity : AppCompatActivity() {
                         if (snpDate_sf.date >= 10 && monthToggle==0) {
                             cash += monthly // 월 투자금 현금으로 입금
                             input += monthly // 총 input 최신화
+                            monthlytemp = monthly
                             // 자산내역 DB 저장
                             val addRunnable = Runnable {
                                 var localDateTime = LocalDateTime.now()
@@ -1441,6 +1453,7 @@ class GameNormalActivity : AppCompatActivity() {
                                         }
                                         cash -= autoquant * price1x * tradecomrate
                                         tradecomtot += autoquant * price1x * (tradecomrate - 1F)
+                                        comlast = autoquant * price1x * (tradecomrate - 1F)
                                         quant1x += autoquant // 수량 반영
                                         bought1x += price1x * autoquant // 매입금 반영
                                         aver1x = bought1x / quant1x // 평균단가 반영
@@ -1456,6 +1469,7 @@ class GameNormalActivity : AppCompatActivity() {
                                         }
                                         cash -= autoquant * price3x * tradecomrate
                                         tradecomtot += autoquant * price3x * (tradecomrate - 1F)
+                                        comlast = autoquant * price3x * (tradecomrate - 1F)
                                         quant3x += autoquant // 수량 반영
                                         bought3x += price3x * autoquant // 매입금 반영
                                         aver3x = bought3x / quant3x // 평균단가 반영
@@ -1471,6 +1485,7 @@ class GameNormalActivity : AppCompatActivity() {
                                         }
                                         cash -= autoquant * priceinv1x * tradecomrate
                                         tradecomtot += autoquant * priceinv1x * (tradecomrate - 1F)
+                                        comlast = autoquant * priceinv1x * (tradecomrate - 1F)
                                         quantinv1x += autoquant // 수량 반영
                                         boughtinv1x += priceinv1x * autoquant // 매입금 반영
                                         averinv1x = boughtinv1x / quantinv1x // 평균단가 반영
@@ -1486,6 +1501,7 @@ class GameNormalActivity : AppCompatActivity() {
                                         }
                                         cash -= autoquant * priceinv3x * tradecomrate
                                         tradecomtot += autoquant * priceinv3x * (tradecomrate - 1F)
+                                        comlast = autoquant * priceinv3x * (tradecomrate - 1F)
                                         quantinv3x += autoquant // 수량 반영
                                         boughtinv3x += priceinv3x * autoquant // 매입금 반영
                                         averinv3x = boughtinv3x / quantinv3x // 평균단가 반영
@@ -1538,6 +1554,7 @@ class GameNormalActivity : AppCompatActivity() {
                                     cash += val1x * dividendrate * 0.846F // 15.4% 세금 공제
                                     dividendtot += val1x * dividendrate
                                     taxtot += val1x * dividendrate * 0.154F // 세금 납부 내역 최신화
+                                    divlast = val1x * dividendrate
 //                                    runOnUiThread {
 //                                        findViewById<TextView>(R.id.tv_notification).text =
 //                                            "알림: 배당금 " + dec.format(val1x * dividendrate) + " 원이 입금되었습니다"
@@ -1561,6 +1578,7 @@ class GameNormalActivity : AppCompatActivity() {
 //                                            "알림: 세금 " + dec.format(tax) + " 원이 납부 되었습니다"
 //                                    }
                                     taxtot += tax
+                                    taxlast = tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
                                 } else {
@@ -1574,7 +1592,7 @@ class GameNormalActivity : AppCompatActivity() {
 
                             // 해가 바뀔 시
                             if (snpDate_sf.year != preYear) {
-                                tax += (profityear - 2500000F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
+                                tax += (profityear - 2200F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
                                 profityear = 0F // 연 수익률 초기화
                                 if (cash >= tax && tax > 0F) {
 //                                    runOnUiThread {
@@ -1583,6 +1601,7 @@ class GameNormalActivity : AppCompatActivity() {
 //                                    }
                                     cash -= tax
                                     taxtot += tax
+                                    taxlast = tax
                                     delay(10L) // UI에서의 알림메시지 출력시간 확보
                                     tax = 0F
                                 } else if (cash < tax && tax > 0F) {
@@ -1644,11 +1663,11 @@ class GameNormalActivity : AppCompatActivity() {
 
 
                         evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
+                        profit = evaluation + cash - input // input 대비 수익률
                         profitrate = 100F * profit / input
                         relativeprofitrate = (profitrate+100) / marketrate*100-100
                         questList?.let { checkQuestInGameProfit(profitrate, it) }
                         relativeQuestList?.let { checkQuestRelativeProfit(relativeprofitrate, it) }
-                        profit = evaluation + cash - input // input 대비 수익률
                         pastAsset = asset
                         asset = cash + evaluation // 총 자산
                         // 자산 관련 데이터 계산 종료
@@ -2285,6 +2304,82 @@ class GameNormalActivity : AppCompatActivity() {
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
         if (gameend && endsuccess) {
+            // TODO 종료시 모두 매도 후 수수료 및 세금 계산
+            cash += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (2F - tradecomrate)// 현금에 매도금액 추가
+            sold += quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x // 총 매도 금액 최신화
+            tradecomtot += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F) // 총 수수로 최신화
+            comlast = (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F)
+            if (price1x >= aver1x) {
+                profityear += (price1x - aver1x) * quant1x
+            }
+            if (price3x >= aver3x) {
+                profityear += (price3x - aver3x) * quant3x
+            }
+            if (priceinv1x >= averinv1x) {
+                profityear += (priceinv1x - averinv1x) * quantinv1x
+            }
+            if (priceinv3x >= averinv3x) {
+                profityear += (priceinv3x - averinv3x) * quantinv3x
+            }
+
+            quant1x -= quant1x
+            quant3x -= quant3x
+            quantinv1x -= quantinv1x
+            quantinv3x -= quantinv3x
+
+            bought1x -= aver1x * quant1x
+            bought3x -= aver3x * quant3x
+            boughtinv1x -= averinv1x * quantinv1x
+            boughtinv3x -= averinv3x * quantinv3x
+
+            aver1x = 0F
+            aver3x = 0F
+            averinv1x = 0F
+            averinv3x = 0F
+
+            if (profityear>2200F) {
+                tax += (profityear - 2200F) * 0.22F // 양도 소득세: 연간 실현수익에서 250만원 공제 후 22% 부과
+            }
+            profityear = 0F // 연 수익률 초기화
+            cash -= tax
+            taxtot += tax
+            taxlast = tax
+            tax = 0F
+
+            val1x = quant1x * price1x //
+            val3x = quant3x * price3x //
+            valinv1x = quantinv1x * priceinv1x //
+            valinv3x = quantinv3x * priceinv3x //
+
+            buylim1x = (cash / (price1x * tradecomrate)) //
+            buylim3x = (cash / (price3x * tradecomrate)) //
+            buyliminv1x = (cash / (priceinv1x * tradecomrate)) //
+            buyliminv3x = (cash / (priceinv3x * tradecomrate)) //
+
+            evaluation = val1x + val3x + valinv1x + valinv3x // 평가금액
+            profit = evaluation + cash - input // input 대비 수익률
+            profitrate = 100F * profit / input
+            relativeprofitrate = (profitrate+100) / marketrate*100-100
+            questList?.let { checkQuestInGameProfit(profitrate, it) }
+            relativeQuestList?.let { checkQuestRelativeProfit(relativeprofitrate, it) }
+            pastAsset = asset
+            asset = cash + evaluation // 총 자산
+            // 자산 관련 데이터 계산 종료
+            if(asset> pastAsset) surplusCount++
+            else surplusCount = 0
+            surplusQuestList?.let { checkQuestSurplus(surplusCount, it) }
+
+            // 자산내역 DB 저장
+            val addRunnable = Runnable {
+                var localDateTime = LocalDateTime.now()
+                val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자산 차트", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+                gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+            }
+            val addThread = Thread(addRunnable)
+            addThread.start()
+
             isSafeCompleted = true
             funlevelup(
                     profileDbManager!!.getLoginId()!!,
