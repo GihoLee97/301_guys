@@ -27,6 +27,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     private var login = MutableLiveData<Int>()
     private var login_id = MutableLiveData<String>()
     private var login_pw = MutableLiveData<String>()
+    private var imageNum = MutableLiveData<Int>()
     private var hash = MutableLiveData<String>()
 
     init {
@@ -46,6 +47,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
             login.value = profileDbManager!!.getLogin()
             login_id.value = profileDbManager!!.getLoginId()
             login_pw.value = profileDbManager!!.getLoginPw()
+            imageNum.value = profileDbManager!!.getImageNum()
             hash.value = profileDbManager!!.getHash()
         }
     }
@@ -124,6 +126,10 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
         login_pw.value = newLoginPw
         profileDbManager!!.setLoginPw(newLoginPw)
     }
+    fun setImageNum(newImageNum: Int){
+        imageNum.value = newImageNum
+        profileDbManager!!.setImageNum(newImageNum)
+    }
 
     // setter
     fun setnWriteId(newId : Long){
@@ -169,6 +175,9 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun setnWriteLoginPw(newLoginPw: String){
         setLoginPw(newLoginPw)
         write2database() }
+    fun setnWriteImageNum(newImageNum: Int){
+        setImageNum(newImageNum)
+        write2database() }
 
     // getter function
     fun getId(): LiveData<Long> { return id }
@@ -185,6 +194,7 @@ class ProfileActivityViewModel(_profileActivity : Context): ViewModel() {
     fun getLogin(): LiveData<Int> { return login }
     fun getLoginId(): LiveData<String> { return login_id }
     fun getLoginPw(): LiveData<String> { return login_pw }
+    fun getImageNum(): LiveData<Int> {return imageNum}
     fun getHash(): LiveData<String>{ return hash}
 
     override fun onCleared() {

@@ -216,7 +216,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="28"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -333,7 +333,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="36"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -450,7 +450,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="28"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -531,7 +531,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user4_nickname_local"
@@ -568,7 +568,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user5_nickname_local"
@@ -605,7 +605,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user6_nickname_local"
@@ -642,7 +642,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user7_nickname_local"
@@ -679,7 +679,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user8_nickname_local"
@@ -716,7 +716,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user9_nickname_local"
@@ -753,7 +753,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user10_nickname_local"
@@ -862,7 +862,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="28"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -980,7 +980,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="36"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -1099,7 +1099,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="28"
-                                    android:src="@drawable/ic_profile_image_templete" />
+                                    android:src="@drawable/ic_profile_image_templete1" />
 
                                 <View
                                     android:layout_width="0dp"
@@ -1183,7 +1183,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user4_nickname_kakao"
@@ -1222,7 +1222,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user5_nickname_kakao"
@@ -1261,7 +1261,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user6_nickname_kakao"
@@ -1300,7 +1300,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user7_nickname_kakao"
@@ -1339,7 +1339,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user8_nickname_kakao"
@@ -1378,7 +1378,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user9_nickname_kakao"
@@ -1417,7 +1417,7 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
-                            android:src="@drawable/ic_profile_image_templete"/>
+                            android:src="@drawable/ic_profile_image_templete1"/>
 
                         <TextView
                             android:id="@+id/tv_user10_nickname_kakao"
@@ -1460,7 +1460,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="18dp"
-            android:src="@drawable/ic_profile_image_templete"/>
+            android:src="@drawable/ic_profile_image_templete1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
