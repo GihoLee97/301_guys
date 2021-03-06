@@ -38,6 +38,7 @@ class FragmentRanking : Fragment() {
 //        profileDb = ProfileDB.getInstace(_MainActivity!!)
 
         if(profileDbManager!!.getLogin()!! != 4 ){
+            v.findViewById<TextView>(R.id.tv_friend_invite).visibility = View.GONE
             v.findViewById<TextView>(R.id.tv_kakaoRanking).visibility = View.GONE
         }
         v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))

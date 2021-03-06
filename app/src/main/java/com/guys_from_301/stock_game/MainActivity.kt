@@ -35,6 +35,8 @@ import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitFriend
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import com.kakao.sdk.talk.TalkApiClient
+import com.kakao.sdk.talk.model.Friend
+import com.kakao.sdk.talk.model.Friends
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,6 +68,8 @@ var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :Stri
 //gameset update 여부
 var updateGameSet: Boolean = false
 var startGameSet: Boolean = false
+
+var friend_all_array : Friends<Friend>? = null
 
 var my_name: String = ""; var my_image: String = ""
 class MainActivity : AppCompatActivity() {
@@ -206,6 +210,10 @@ class MainActivity : AppCompatActivity() {
                 println("카카오톡 친구 목록 실패"+error)
             }
             else if (friends != null) {
+                if(friend_all_array != null){
+                    friend_all_array = null
+                }
+                friend_all_array = friends
                 if(friendlevel != null){
                     friendid.clear()
                     friendmoney.clear()
