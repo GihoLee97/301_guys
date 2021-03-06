@@ -3,11 +3,13 @@ package com.guys_from_301.stock_game
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import com.guys_from_301.stock_game.data.Profile
+import android.widget.*
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitDelete
 import com.google.gson.Gson
@@ -21,34 +23,50 @@ class Dialog_DeleteAlert(context: Context) {
     var mContext: Context = context
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnOK: Button
-    private lateinit var btnCancel: Button
-    private lateinit var pw_present: EditText
-    private lateinit var pw_check: EditText
+    private lateinit var btnCancel: ImageButton
+    private lateinit var et_pw: EditText
+    private lateinit var tv_pw_change_ment_1 : TextView
+
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_deletealert) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        dlg.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         btnOK = dlg.findViewById(R.id.btn_deleteok)
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
-        pw_present = dlg.findViewById(R.id.pw_present)
-        pw_check = dlg.findViewById(R.id.pw_check)
+        et_pw = dlg.findViewById(R.id.et_pw)
+        tv_pw_change_ment_1 = dlg.findViewById(R.id.tv_pw_change_ment_1)
+
         var profileDb: ProfileDB? = null
+
+        et_pw.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.isNullOrEmpty()){
+                    btnOK.setBackgroundResource(R.drawable.nickname_change_ok_box_gray)
+                }
+                else{
+                    btnOK.setBackgroundResource(R.drawable.nickname_change_ok_box)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
         btnOK.setOnClickListener {
             profileDb = ProfileDB?.getInstace(mContext)
-            if ((pw_present.text.toString().trim() == pw_check.text.toString().trim()) && (profileDbManager!!.getLoginPw()!! == pw_present.text.toString().trim())) {
+            if (profileDbManager!!.getLoginPw()!! == et_pw.text.toString().trim()) {
                 accountdelete(getHash(profileDbManager!!.getLoginId()!!).trim(),
-                        getHash(pw_present.text.toString().trim()).trim())
+                        getHash(et_pw.text.toString().trim()).trim())
                 dlg.dismiss()
             }
             println("---db:"+ profileDbManager!!.getLoginPw()!!)
-            println("---현재:"+pw_present.text.toString().trim())
-            println("---화긴: "+pw_check.text.toString().trim())
-            if(profileDbManager!!.getLoginPw()!! != pw_present.text.toString().trim()) {
-                Toast.makeText(mContext, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show()
-            }
-            if(pw_present.text.toString().trim() != pw_check.text.toString().trim()) {
-                Toast.makeText(mContext, "비밀번호와 비밀번호 확인이 일치하지 않습니다.", Toast.LENGTH_LONG).show()
+            println("---현재:"+et_pw.text.toString().trim())
+            if(profileDbManager!!.getLoginPw()!! != et_pw.text.toString().trim()) {
+                tv_pw_change_ment_1.visibility = View.VISIBLE
+                tv_pw_change_ment_1.text = "비밀번호가 틀렸습니다."
             }
         }
         btnCancel.setOnClickListener {

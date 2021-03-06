@@ -1018,4 +1018,9 @@
         <item name="android:textColor">#4B586B</item>
     </style>
 
+    <style name="profile_dialog_deletealert_notice">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
 </resources>

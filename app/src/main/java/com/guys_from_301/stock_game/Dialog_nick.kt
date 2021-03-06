@@ -11,7 +11,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.Window
 import android.widget.*
-import com.guys_from_301.stock_game.data.ProfileDB
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -42,7 +41,7 @@ class Dialog_nick(context: Context, first_login: Boolean) {
         et_nickname_change = dlg.findViewById(R.id.et_nickname_change)
         tv_nickname_number = dlg.findViewById(R.id.tv_nickname_number)
         tv_set_nick_underline = dlg.findViewById(R.id.tv_set_nick_underline)
-        tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_nick_change_ment_1)
+        tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_pw_change_ment_1)
         btn_nickname_change = dlg.findViewById(R.id.btn_nickname_change)
         ib_cancel = dlg.findViewById(R.id.ib_cancel)
         nickfilter(et_nickname_change)

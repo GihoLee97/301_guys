@@ -3,12 +3,15 @@ package com.guys_from_301.stock_game
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
-import com.guys_from_301.stock_game.data.ProfileDB
 import com.guys_from_301.stock_game.retrofit.RetrofitDelete
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,22 +26,49 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
     var loginMethod : String = method
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var btnOK: Button
-    private lateinit var btnCancel: Button
+    private lateinit var btnCancel: ImageButton
+    private lateinit var et_nickname: EditText
+    private lateinit var tv_nick_change_ment_1 : TextView
+
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
         dlg.setContentView(R.layout.dialog_deletekakaogoogle) //다이얼로그에 사용할 xml 파일을 불러옴
         dlg.setCancelable(false) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+        dlg.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         btnOK = dlg.findViewById(R.id.btn_deleteok)
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
+        et_nickname = dlg.findViewById(R.id.et_nickname)
+        tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_pw_change_ment_1)
 
-        var profileDb: ProfileDB? = null
+        et_nickname.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.isNullOrEmpty()){
+                    btnOK.setBackgroundResource(R.drawable.nickname_change_ok_box_gray)
+                }
+                else{
+                    btnOK.setBackgroundResource(R.drawable.nickname_change_ok_box)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
         btnOK.setOnClickListener {
-            profileDb = ProfileDB?.getInstace(mContext)
-            accountdelete(getHash(profileDbManager!!.getLoginId()!!).trim(),
-                    getHash(profileDbManager!!.getLoginPw()!!).trim())
-            signOut(loginMethod)
-            dlg.dismiss()
+            if(et_nickname.text.toString()==profileDbManager!!.getNickname()) {
+                accountdelete(
+                    getHash(profileDbManager!!.getLoginId()!!).trim(),
+                    getHash(profileDbManager!!.getLoginPw()!!).trim()
+                )
+                signOut(loginMethod)
+                dlg.dismiss()
+            }
+            else{
+                tv_nick_change_ment_1.visibility = View.VISIBLE
+                tv_nick_change_ment_1.text = "닉네임이 틀렸습니다."
+            }
         }
         btnCancel.setOnClickListener {
             dlg.dismiss()
@@ -76,6 +106,8 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
                     }
                     else{
                         Toast.makeText(mContext, "잠시 후 다시 시도해 주세요.", Toast.LENGTH_LONG).show()
+                        tv_nick_change_ment_1.visibility = View.VISIBLE
+                        tv_nick_change_ment_1.text = "잠시 후 다시 시도해 주세요"
                     }
                 }
             }
