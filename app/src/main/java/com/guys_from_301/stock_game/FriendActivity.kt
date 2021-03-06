@@ -28,14 +28,7 @@ import com.guys_from_301.stock_game.MainActivity
 import com.guys_from_301.stock_game.data.Quest
 import com.guys_from_301.stock_game.data.QuestDB
 
-// 친구 정보
-var friendid = mutableListOf<String>()
-var friendmoney = mutableListOf<Int>()
-var friendlevel = mutableListOf<Int>()
-var friendnick = mutableListOf<String>()
-var friendname = mutableListOf<String>()
-var frienduuid = mutableListOf<String>()
-var friendimage = mutableListOf<String>()
+
 
 class FriendActivity  : AppCompatActivity() {
     val coloroff = "#FF808080"

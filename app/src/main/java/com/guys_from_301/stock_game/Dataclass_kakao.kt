@@ -13,6 +13,10 @@ class Dataclass_kakao {
     @Expose
     var NICKNAME : String
 
+    @SerializedName("ID")
+    @Expose
+    var ID : String
+
     @SerializedName("MONEY")
     @Expose
     var MONEY : Int
@@ -25,9 +29,10 @@ class Dataclass_kakao {
     @Expose
     var IMAGE : String
 
-    constructor(NAME :String, NICKNAME:String, MONEY:Int, LEVEL:Int, IMAGE :String) {
+    constructor(NAME :String, NICKNAME:String, ID:String, MONEY:Int, LEVEL:Int, IMAGE :String) {
         this.NAME = NAME
         this.NICKNAME = NICKNAME
+        this.ID = ID
         this.MONEY = MONEY
         this.LEVEL = LEVEL
         this.IMAGE = IMAGE
