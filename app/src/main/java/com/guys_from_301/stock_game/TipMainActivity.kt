@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ class TipMainActivity : AppCompatActivity() {
     private lateinit var tipList : ArrayList<MyPost>
     private lateinit var rAdapter: TipRowAdapter // 팁 어뎁터
     private lateinit var viewPager: ViewPager
-    private lateinit var btn_back: Button
+    private lateinit var btn_back: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
