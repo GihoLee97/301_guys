@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +13,14 @@ import com.guys_from_301.stock_game.data.Notice
 import com.guys_from_301.stock_game.data.NoticeDB
 
 var noticeId : Int = 0
+var noticeTitle : String = ""
+var noticeDate : String = ""
+var noticeContent : String = ""
+
 class NoticeActivity : AppCompatActivity() {
     private var noticeDb: NoticeDB? = null
     private var notice = listOf<Notice>()
-    private lateinit var btn_back: Button
+    private lateinit var ib_back: ImageButton
     lateinit var mAdapter: NoticeAdapter
 
 
@@ -24,8 +28,8 @@ class NoticeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notice)
         noticeDb = NoticeDB.getInstace(this)
-        mAdapter = NoticeAdapter(this, notice, {notice ->  noticeId=notice.id})
-        btn_back = findViewById(R.id.btn_back)
+
+        ib_back = findViewById(R.id.ib_back)
 
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val nRecyclerView = findViewById<RecyclerView>(R.id.nRecyclerView)
@@ -34,7 +38,15 @@ class NoticeActivity : AppCompatActivity() {
         val r = Runnable {
             try{
                 notice = noticeDb?.noticeDao()?.getAll()!!
-                mAdapter = NoticeAdapter(this, notice,{notice ->  noticeId=notice.id})
+                mAdapter = NoticeAdapter(this, notice) {
+                    notice ->
+                    noticeId=notice.id
+                    noticeTitle = notice.title
+                    noticeDate = notice.date
+                    noticeContent = notice.contents
+                    val intent = Intent(this,NoticeDetailActivity::class.java)
+                    startActivity(intent)
+                }
 
                 mAdapter.notifyDataSetChanged()
 
@@ -52,7 +64,7 @@ class NoticeActivity : AppCompatActivity() {
         val thread = Thread(r)
         thread.start()
 
-        btn_back.setOnClickListener {
+        ib_back.setOnClickListener {
             onBackPressed()
         }
 

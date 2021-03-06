@@ -42,15 +42,52 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="61dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="68dp"
+        android:paddingHorizontal="24dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_notice_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="S&amp;P 500이란 무엇인가?"
+            android:textAppearance="@style/tip_detail_title"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/nRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_notice_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021.03.01"
+            android:textAppearance="@style/activity_notice_recyclerview_date"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_tip_line"
+            />
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_notice_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="S&amp;P 500은 500개 대형기업의 주식을 포함한 지수입니다."
+                android:textAppearance="@style/tip_detail_description"
+                android:paddingTop="32dp"
+                />
+
+        </ScrollView>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -4,9 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
-import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,18 +20,18 @@ class TipMainActivity : AppCompatActivity() {
     private lateinit var tipList : ArrayList<MyPost>
     private lateinit var rAdapter: TipRowAdapter // 팁 어뎁터
     private lateinit var viewPager: ViewPager
-    private lateinit var btn_back: ImageButton
+    private lateinit var ib_back: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tip_main)
-        btn_back = findViewById(R.id.btn_back)
+        ib_back = findViewById(R.id.ib_back)
         viewPager = findViewById(R.id.vp_tip)
 
         loadCards()
         loadTip()
 
-        btn_back.setOnClickListener {
+        ib_back.setOnClickListener {
             onBackPressed()
         }
 

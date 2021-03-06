@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TipDetailActivity"></activity>
+        <activity android:name=".NoticeDetailActivity"></activity>
+        <activity android:name=".TipDetailActivity" />
         <activity android:name=".TipMainActivity" />
         <activity android:name=".NewHistoryActivity" />
         <activity android:name=".NoticeActivity" />
