@@ -7,7 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.Notice
+import com.guys_from_301.stock_game.retrofit.RetrofitNotice
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class NoticeAdapter(val context: Context, var notice: List<Notice>, val itemClick: (Notice)->Unit):RecyclerView.Adapter<NoticeAdapter.MyViewHolder>() {
     inner class MyViewHolder(itemView: View, itemClick: (Notice) -> Unit): RecyclerView.ViewHolder(itemView){
@@ -17,6 +24,7 @@ class NoticeAdapter(val context: Context, var notice: List<Notice>, val itemClic
         fun bind(notice : Notice){
             itemView.setOnClickListener{ itemClick(notice) }
             tv_notice_date.text = notice.date
+
             tv_notice_title.text = notice.title
         }
 
@@ -36,4 +44,9 @@ class NoticeAdapter(val context: Context, var notice: List<Notice>, val itemClic
     override fun getItemCount(): Int {
         return notice.size
     }
+
+
+
+
+
 }

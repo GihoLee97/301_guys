@@ -17,9 +17,14 @@ class DATACLASS_NOTICE {
     @Expose
     var CONTENT : String
 
-    constructor(ID: Int, TITLE: String, CONTENT: String) {
+    @SerializedName("DATE")
+    @Expose
+    var DATE : String
+
+    constructor(ID: Int, TITLE: String, CONTENT: String, DATE : String) {
         this.ID = ID
         this.TITLE = TITLE
         this.CONTENT = CONTENT
+        this.DATE = DATE
     }
 }
