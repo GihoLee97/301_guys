@@ -65,6 +65,7 @@ var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :Strin
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
 //gameset update 여부
 var updateGameSet: Boolean = false
+var startGameSet: Boolean = false
 
 var my_name: String = ""; var my_image: String = ""
 class MainActivity : AppCompatActivity() {
@@ -74,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     var itemDb: ItemDB? = null
     val mContext: Context = this
 //    var profileDb : ProfileDB? = null
-    var gameNormalDb: GameNormalDB? = null
     var questDb: QuestDB? = null
     private var tradedayQuestList:List<Quest>? = null
     private var countGameQuestList:List<Quest>? = null
@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("hongz","MainActivity 시작")
         itemDb = ItemDB?.getInstace(mContext!!)
 //        profileDb = ProfileDB?.getInstace(mContext!!)
         questDb = QuestDB.getInstance(mContext!!)
@@ -108,7 +109,6 @@ class MainActivity : AppCompatActivity() {
         var t : BottomNavigationView = findViewById(R.id.main_bottom_navigation)
         NavigationUI.setupWithNavController(t, findNavController(R.id.nav_host))
         gameSetDb = GameSetDB.getInstace(this)
-        gameNormalDb = GameNormalDB.getInstace(this)
         // 광고 관련 코드
 //        mAdView = findViewById(R.id.adView)
 //        val adRequest = AdRequest.Builder().build()
@@ -123,28 +123,27 @@ class MainActivity : AppCompatActivity() {
         //초기자산값 변수
         val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
 
+
+
         //게임 저장시 gmaeset 업데이트
         if(updateGameSet){
 //            val dialog = Dialog_loading(this@MainActivity)
 //            dialog.show()
-            val dialog = Dialog_loading_tip(this@MainActivity)
-            dialog.show()
             var localDateTime = LocalDateTime.now()
             var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
             if (newGameSet != null) {
                 newGameSet.endtime = localDateTime.toString()
                 newGameSet.profitrate = profitrate
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
-                Log.d("hongz", "gameset 업데이트")
+                Log.d("hongz", "MainActivity: gameset 업데이트")
             }
             updateGameSet = false
-            dialog.dismiss()
         }
         //새로운 빈 게임 생성
         var gamesetList = gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
         var existence = false   //새 게임 존재 여부
-        for (i in 0..gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)?.size!!-1) {
-            if (gameNormalDb?.gameNormalDao()?.getSetWithNormal(gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!![i].id, accountID!!).isNullOrEmpty()) {
+        for (game in gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!) {
+            if (game.endtime == "") {
                 existence = true
             }
         }
@@ -673,9 +672,9 @@ class MainActivity : AppCompatActivity() {
         } }
         var textView1 = findViewById<TextView>(R.id.textView2)
 
-        Log.d("hongz","도전과제 다이얼로그 생성 전")
+        Log.d("hongz","MainActivity: 도전과제 다이얼로그 생성 전")
         if(questAchieved.isEmpty() == false){
-            Log.d("hongz","도전과제 다이얼로그 생성")
+            Log.d("hongz","MainActivity: 도전과제 다이얼로그 생성")
             for(i in 0..questAchieved.size-1){
                 var quest = questAchieved[i]
                 val dlgQuest = Dialog_new_quest(_MainActivity!!)

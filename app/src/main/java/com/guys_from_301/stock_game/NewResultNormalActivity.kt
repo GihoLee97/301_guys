@@ -165,8 +165,7 @@ class NewResultNormalActivity: AppCompatActivity() {
 
     fun GotoMainactivity() {
         if (isHistory) {
-            val intent = Intent(this@NewResultNormalActivity, NewHistoryActivity::class.java)
-            startActivity(intent)
+            finish()
         } else {
             reflect()
             val intent = Intent(this@NewResultNormalActivity, MainActivity::class.java)

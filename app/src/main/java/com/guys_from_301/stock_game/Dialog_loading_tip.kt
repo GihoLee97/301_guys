@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -11,10 +12,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.postDelayed
 import com.guys_from_301.stock_game.data.GameSetDB
+import java.time.LocalDateTime
 import java.util.*
 
 class Dialog_loading_tip
 constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen){
+    private var gameSetDb: GameSetDB? = null
     init {
         setContentView(R.layout.dialog_loading_tip)
         val random = Random()
@@ -59,6 +62,22 @@ constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucen
                 break
             }
         }
+
+        gameSetDb = GameSetDB.getInstace(mContext)
+        if(startGameSet){
+//            val dialog = Dialog_loading(this@MainActivity)
+//            dialog.show()
+            var localDateTime = LocalDateTime.now()
+            var newGameSet = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
+            if (newGameSet != null) {
+                newGameSet.endtime = localDateTime.toString()
+                newGameSet.profitrate = profitrate
+                gameSetDb?.gameSetDao()?.insert(newGameSet)
+                Log.d("hongz", "gameset 업데이트")
+            }
+            startGameSet = false
+        }
+
 
 
 

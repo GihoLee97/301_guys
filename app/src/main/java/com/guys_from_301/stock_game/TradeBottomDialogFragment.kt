@@ -822,15 +822,15 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                         }
                     }
 
-                    val addRunnable = Runnable {
-                        var localDateTime = LocalDateTime.now()
-                        val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "매수", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
-                                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
-                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-                    }
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
+//                    val addRunnable = Runnable {
+//                        var localDateTime = LocalDateTime.now()
+//                        val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "매수", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+//                                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+//                                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+//                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+//                    }
+//                    val addThread = Thread(addRunnable)
+//                    addThread.start()
                 }
                 1 -> {
                     when (select) {
@@ -898,15 +898,15 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
 
                     profittot += profityear // 순손익 최신화
 
-                    val addRunnable = Runnable {
-                        var localDateTime = LocalDateTime.now()
-                        val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "매도", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
-                                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
-                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
-                    }
-                    val addThread = Thread(addRunnable)
-                    addThread.start()
+//                    val addRunnable = Runnable {
+//                        var localDateTime = LocalDateTime.now()
+//                        val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "매도", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
+//                                bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+//                                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+//                        gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
+//                    }
+//                    val addThread = Thread(addRunnable)
+//                    addThread.start()
                 }
             }
             dismiss()

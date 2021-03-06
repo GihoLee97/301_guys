@@ -3,8 +3,8 @@
     package="com.guys_from_301.stock_game">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- queries에 카카오톡 패키지 추가 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <queries>
         <package android:name="com.kakao.talk" />
@@ -18,20 +18,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewHistoryActivity"></activity>
+        <activity android:name=".TipDetailActivity"></activity>
+        <activity android:name=".TipMainActivity" />
+        <activity android:name=".NewHistoryActivity" />
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".NewResultNormalActivity"
-            android:noHistory="true"/>
-        <activity android:name=".InitialSignUpEntranceActivity"
-            android:noHistory="true"/>
+        <activity
+            android:name=".NewResultNormalActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".InitialSignUpEntranceActivity"
+            android:noHistory="true" />
         <activity android:name=".NewInitialActivity" />
         <activity android:name=".InitialLoginActivity" />
         <activity android:name=".NewMainActivity" />
         <activity android:name=".QuestActivity" />
         <activity android:name=".InitialSetIdActivity" />
         <activity android:name=".InitialSetPwActivity" />
-        <activity android:name=".InitialSignupFinalActivity"
-            android:noHistory="true"/>
+        <activity
+            android:name=".InitialSignupFinalActivity"
+            android:noHistory="true" />
         <activity android:name=".HistoryActivity" />
         <activity
             android:name=".PickGameActivity"
@@ -70,16 +75,16 @@
 
         <activity
             android:name=".ResultNormalActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GameNormalActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SettingActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />

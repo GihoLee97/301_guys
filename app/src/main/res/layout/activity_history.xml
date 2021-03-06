@@ -70,7 +70,6 @@
                 app:layout_constraintDimensionRatio="312:186"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ic_history_main"
-                android:text="다음 레벨까지 300,000 포인트 남았습니다."
                 android:padding="16dp"
                 android:textAppearance="@style/quest_levelDescription"
                 app:layout_goneMarginTop="20dp"
