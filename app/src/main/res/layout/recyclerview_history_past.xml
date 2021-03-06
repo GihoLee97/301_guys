@@ -54,14 +54,14 @@
             <TextView
                 android:id="@+id/tv_recyclerview_tradeday"
                 android:layout_width="0dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:layout_height="wrap_content"
                 android:text="진행 거래일 : 0000일"
                 android:layout_gravity=""
                 android:textAppearance="@style/history_past_number"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:gravity="right"
@@ -70,11 +70,11 @@
             <TextView
                 android:id="@+id/tv_recyclerview_profitrate"
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:gravity="bottom|right"
+                android:layout_weight="2.5"
+                android:gravity="bottom|left"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:text="11.8%"
+                android:text="1001.8%"
                 android:textAppearance="@style/history_past_profit_number"/>
         </LinearLayout>
 

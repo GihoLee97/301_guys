@@ -766,26 +766,27 @@
         <item name="android:textColor">#F8FAFB</item>
     </style>
     <style name="dialog_potion_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#F68A06</item>
     </style>
     <style name="dialog_potion_count">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F68A06</item>
     </style>
     <style name="dialog_potion_contents">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#4B586B</item>
     </style>
-    <style name="activity_notice_title">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#4B586B</item>
-    </style>
     <style name="activity_notice_recyclerview_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#4B586B</item>
     </style>
     <style name="activity_notice_recyclerview_date">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#6C7B8E</item>
     </style>
@@ -925,36 +926,96 @@
         <item name="android:textColor">#6C7B8E</item>
     </style>
     <style name="history_main_name">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
     <style name="history_main_tradeday">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
     <style name="history_main_subtitle">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
     <style name="history_main_percetage">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#F8FAFB</item>
     </style>
-    <style name="history_recyclerview_date">
+
+
+    <style name="tip_title">
+        <item name="android:fontFamily">@font/paybooc_otf_extrabold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="tip_swipe_view_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#F4730B</item>
     </style>
-    <style name="history_recyclerview_tradeday">
+    <style name="tip_swipe_view_contents">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+    <style name="tip_sub_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">#4B586B</item>
     </style>
-    <style name="history_recyclerview_profitrate">
+    <style name="tip_item_title">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+
+    <style name="friend_invite">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F4730B</item>
     </style>
-    <style name="history_recyclerview_percentage">
-        <item name="android:textSize">20sp</item>
+
+    <style name="friend_invite_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#F68A06</item>
+    </style>
+    <style name="friend_invite_number">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">#F4730B</item>
+    </style>
+
+    <style name="friend_invite_recycler_btn">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#F8FAFB</item>
+    </style>
+
+    <style name="friend_invite_recycler_name">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#6C7B8E</item>
+    </style>
+    <style name="tip_row_title">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+
+    <style name="tip_detail_title">
+        <item name="android:fontFamily">@font/paybooc_otf_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
+    </style>
+    <style name="tip_detail_description">
+        <item name="android:fontFamily">@font/paybooc_otf_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#4B586B</item>
     </style>
 
 </resources>

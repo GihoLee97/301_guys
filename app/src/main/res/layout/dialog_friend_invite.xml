@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="256dp"
+    android:layout_height="320dp"
+    android:orientation="vertical"
+    android:background="@drawable/friend_invite_dialog_background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="카카오톡 친구\n초대하기"
+                android:lineSpacingExtra="4sp"
+                android:textAppearance="@style/friend_invite_title"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="현대 초대 : 000명"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp"
+                    android:textAppearance="@style/friend_invite_number"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="256dp"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/btn_friend_invite_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="닫기"
+            android:textAppearance="@style/game_save_button"
+            android:background="@drawable/nickname_change_ok_box"
+            />
+    </LinearLayout>
+
+</LinearLayout>

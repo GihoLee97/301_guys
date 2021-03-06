@@ -233,7 +233,6 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
 
     fun dbupdate() {
-        val newProfile = Profile()
         profileDbManager!!.setMoney(money)
         profileDbManager!!.setValue1(value1)
     }

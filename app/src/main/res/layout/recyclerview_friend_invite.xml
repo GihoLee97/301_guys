@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="256dp"
+    android:layout_height="49dp"
+    android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/ib_recycler_image"
+        android:layout_marginLeft="20dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/tv_recyclerview_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:text="전성원"
+        android:textAppearance="@style/friend_invite_recycler_name"
+        android:layout_marginLeft="9dp"
+        android:gravity="center|left"
+        />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:text="초대하기"
+            android:gravity="center"
+            android:textAppearance="@style/friend_invite_recycler_btn"
+            android:background="@drawable/friend_invite_button_background"
+            />
+    </LinearLayout>
+</LinearLayout>

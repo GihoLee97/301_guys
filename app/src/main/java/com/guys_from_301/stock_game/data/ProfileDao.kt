@@ -49,6 +49,9 @@ interface ProfileDao {
     @Query("SELECT login_pw FROM Profile")
     fun getLoginpw(): String
 
+    @Query("SELECT imageNum FROM PROFILE")
+    fun getImageNum(): Int
+
     @Query("SELECT hash FROM PROFILE")
     fun getHash(): String
 

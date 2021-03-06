@@ -91,6 +91,7 @@ class FragmentHome : Fragment() {
             gameUnit -> setId = gameUnit.id
             val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)
             startActivity(intent)
+            startGameSet = true
         }
 //                mAdapter.notifyDataSetChanged()
 
@@ -106,8 +107,8 @@ class FragmentHome : Fragment() {
         //홈 팁
 
         v.findViewById<ConstraintLayout>(R.id.cl_dashboard2).setOnClickListener{
-            val dlg = Dialog_home_tip(_MainActivity!!)
-            dlg.show()
+            val intent = Intent(_MainActivity!!, TipMainActivity::class.java)
+            startActivity(intent)
         }
 
         v.findViewById<ConstraintLayout>(R.id.cl_dashboard4).setOnClickListener{

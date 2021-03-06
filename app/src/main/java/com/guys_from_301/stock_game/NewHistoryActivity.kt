@@ -82,8 +82,9 @@ class NewHistoryActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+        super.onBackPressed()
         finish()
     }
 }

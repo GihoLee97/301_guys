@@ -26,6 +26,7 @@ class ProfileDbManager(initialActivity : Context){
     private var login : Int = 0
     private var login_id : String = ""
     private var login_pw : String = ""
+    private var imageNum : Int = 0
     private var hash : String = ""
 
     private var change = false
@@ -64,6 +65,7 @@ class ProfileDbManager(initialActivity : Context){
             login = profileDb?.profileDao()?.getLogin()!!
             login_id = profileDb?.profileDao()?.getLoginid()!!
             login_pw = profileDb?.profileDao()?.getLoginpw()!!
+            imageNum = profileDb?.profileDao()?.getImageNum()!!
             hash = profileDb?.profileDao()?.getHash()!!
         }
     }
@@ -87,6 +89,7 @@ class ProfileDbManager(initialActivity : Context){
 //        login = profileDb?.profileDao()?.getLogin()
 //        login_id = profileDb?.profileDao()?.getLoginid()
 //        login_pw = profileDb?.profileDao()?.getLoginpw()
+//        imageNum = profileDb?.profileDao()?.getImageNum()!!
 //        hash = profileDb?.profileDao()?.getHash()
 //        change = false
     }
@@ -109,6 +112,7 @@ class ProfileDbManager(initialActivity : Context){
 //        login = profile.login
 //        login_id = profile.login_id
 //        login_pw = profile.login_pw
+//        imageNum = profile.imageNum
 //        hash = profile.hash
         id = profileDb?.profileDao()?.getId()!!
         nickname = profileDb?.profileDao()?.getNickname()!!
@@ -124,6 +128,7 @@ class ProfileDbManager(initialActivity : Context){
         login = profileDb?.profileDao()?.getLogin()!!
         login_id = profileDb?.profileDao()?.getLoginid()!!
         login_pw = profileDb?.profileDao()?.getLoginpw()!!
+        imageNum = profileDb?.profileDao()?.getImageNum()!!
         hash = profileDb?.profileDao()?.getHash()!!
         change = false
     }
@@ -144,6 +149,7 @@ class ProfileDbManager(initialActivity : Context){
         login = newProfile.login
         login_id = newProfile.login_id
         login_pw = newProfile.login_pw
+        imageNum = newProfile.imageNum
         // hash는 가져오는 것이 아니라 다시 계산 해야함!
         change = false
         updateHashValue()
@@ -154,8 +160,8 @@ class ProfileDbManager(initialActivity : Context){
             updateHashValue()
             var write = Runnable {
                 profileDb = ProfileDB.getInstace(mActivity)
-                var newProfile = Profile(id!!, nickname!!, money!!, value1!!, profitrate!!, relativeprofitrate!!, roundcount!!, history!!,
-                        level!!, exp!!, rank!!, login!!, login_id!!, login_pw!!, hash!!)
+                var newProfile = Profile(id, nickname, money, value1, profitrate, relativeprofitrate,
+                    roundcount, history, level, exp, rank, login, login_id, login_pw, imageNum, hash)
                 if(profileDb?.profileDao()?.getAll().isNullOrEmpty())
                     profileDb?.profileDao()?.insert(newProfile)
                 else
@@ -238,6 +244,11 @@ class ProfileDbManager(initialActivity : Context){
         change = true
         updateHashValue()
     }
+    fun setImageNum(newImageNum: Int){
+        imageNum = newImageNum
+        change = true
+        updateHashValue()
+    }
 
     // setter
     fun setnWriteId(newId : Long){
@@ -310,6 +321,11 @@ class ProfileDbManager(initialActivity : Context){
         change = true
         updateHashValue()
         write2database() }
+    fun setnWriteImageNum(newImageNum: Int){
+        imageNum = newImageNum
+        change = true
+        updateHashValue()
+        write2database() }
 
     fun isEmpty(currentActivity : Context): Boolean{
         mActivity = currentActivity
@@ -332,6 +348,7 @@ class ProfileDbManager(initialActivity : Context){
     fun getLogin(): Int? { return login }
     fun getLoginId(): String? { return login_id }
     fun getLoginPw(): String? { return login_pw }
+    fun getImageNum(): Int? {return imageNum}
     fun getHash(): String? { return hash}
 
     fun updateHashValue(){
@@ -341,7 +358,7 @@ class ProfileDbManager(initialActivity : Context){
                 relativeprofitrate.toString() + roundcount.toString()+
                 history.toString() + level.toString() +
                 exp.toString() + rank.toString() + login.toString()+
-                login_id + login_pw
+                login_id + login_pw + imageNum.toString()
         val hashValue = getHash(hashInput)
         hash = hashValue
         Log.d("Giho","updateHashValue : "+hashValue)
@@ -353,7 +370,7 @@ class ProfileDbManager(initialActivity : Context){
                 relativeprofitrate.toString() + roundcount.toString()+
                 history.toString() + level.toString() +
                 exp.toString() + rank.toString() + login.toString()+
-                login_id + login_pw
+                login_id + login_pw + imageNum.toString()
         Log.d("Giho","getHashRespectFromDbData : "+getHash(hashInput))
         return getHash(hashInput)
     }
@@ -364,7 +381,7 @@ class ProfileDbManager(initialActivity : Context){
                 inputProfile.relativeprofitrate.toString() + inputProfile.roundcount.toString()+
                 inputProfile.history.toString() + inputProfile.level.toString() +
                 inputProfile.exp.toString() + inputProfile.rank.toString() + inputProfile.login.toString()+
-                inputProfile.login_id + inputProfile.login_pw
+                inputProfile.login_id + inputProfile.login_pw + inputProfile.imageNum.toString()
         Log.d("Giho","getHashRespectFromInput : "+getHash(hashInput))
         return getHash(hashInput)
     }

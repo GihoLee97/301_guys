@@ -502,8 +502,8 @@ class InitialLoginActivity : AppCompatActivity() {
             else if (method == "GOOGLE") temp = 2
             else if (method == "KAKAO") temp = 4
             // save which login method user have used // 절대 지우면 안됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            var input:String = 1.toString()+"#########first_login##########"+0+0+0F+0F+0+0+1+0+0+temp+"a"+""+""
-            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "", getHash(input))
+            var input:String = 1.toString()+"#########first_login##########"+0+0+0F+0F+0+0+1+0+0+temp+"a"+""+""+"0"
+            val newProfile = Profile(1, "#########first_login##########",0,0, 0F,0F, 0, 0, 1,0,0, temp, "a", "", 0, getHash(input))
             profileDbManager!!.updateManager(newProfile)
         } else {
             temp = profileDbManager!!.getLogin()!!
@@ -558,7 +558,8 @@ class InitialLoginActivity : AppCompatActivity() {
                     gameSetDb = GameSetDB?.getInstace(this@InitialLoginActivity)
                     itemDb = ItemDB?.getInstace(this@InitialLoginActivity)
                     profileDbManager!!.refresh(this@InitialLoginActivity)
-                    var serverProfile = Profile(profileDbManager!!.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDbManager!!.getLogin()!!,u_id,u_pw,"")
+                    var serverProfile = Profile(profileDbManager!!.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDbManager!!.getLogin()!!,u_id,u_pw,0,"")
+                    //TODO!! data?.imageNum
                     if(profileDbManager!!.getNickname()=="#########first_login##########"){
                         Log.d("Giho","#########first_login##########AndReadFromServer")
                         val newProfile = Profile()
@@ -574,6 +575,7 @@ class InitialLoginActivity : AppCompatActivity() {
                         newProfile.roundcount = data?.ROUNDCOUNT!!
                         newProfile.login_id = u_id
                         newProfile.login_pw = u_pw
+                        newProfile.imageNum = 0                     //TODO!! data?.imageNum
                         newProfile.profitrate = data?.PROFITRATE
 
                         //초기 게임 setting 저장
@@ -634,6 +636,7 @@ class InitialLoginActivity : AppCompatActivity() {
                                 newProfile.roundcount = data?.ROUNDCOUNT!!
                                 newProfile.login_id = u_id
                                 newProfile.login_pw = u_pw
+                                newProfile.imageNum = 0                     //TODO!! data?.imageNum
                                 newProfile.profitrate = data?.PROFITRATE
 
                                 profileDbManager!!.updateManager(newProfile)
@@ -669,6 +672,7 @@ class InitialLoginActivity : AppCompatActivity() {
                                 newProfile.roundcount = data?.ROUNDCOUNT!!
                                 newProfile.login_id = u_id
                                 newProfile.login_pw = u_pw
+                                newProfile.imageNum = 0                     //TODO!! data?.imageNum
                                 newProfile.profitrate = data?.PROFITRATE
 
                                 profileDbManager!!.updateManager(newProfile)
@@ -688,6 +692,7 @@ class InitialLoginActivity : AppCompatActivity() {
                                 newProfile.roundcount = data?.ROUNDCOUNT!!
                                 newProfile.login_id = u_id
                                 newProfile.login_pw = u_pw
+                                newProfile.imageNum = 0                     //TODO!! data?.imageNum
                                 newProfile.profitrate = data?.PROFITRATE
 
                                 profileDbManager!!.updateManager(newProfile)
@@ -745,13 +750,13 @@ class InitialLoginActivity : AppCompatActivity() {
 
         //가져온 string은 숫자앞에서부터 저장된다. 13=1101(2) 1, 1, 0, 1 순서
         // '0' 은 48 '1'은 49
-
         for(i in 0..stringquest.length - 1){
             val newQuest = Quest()
             newQuest.id = stringquest.length -i
             newQuest.achievement = stringquest[i].toInt()-48
             newQuest.theme = questDb?.questDao()?.getAll()!![stringquest.length -i -1].theme
             newQuest.questcontents = questDb?.questDao()?.getAll()!![stringquest.length -i -1].questcontents
+            newQuest.reward = questDb?.questDao()?.getAll()!![stringquest.length -i -1].reward
             questDb?.questDao()?.update(newQuest)
         }
     }
