@@ -524,6 +524,7 @@ class MainActivity : AppCompatActivity() {
                             friendnick.add(data[i].NICKNAME)
                         }
                     }
+                    friendid.add(getHash(profileDbManager!!.getLoginId()!!))
                     friendname.add(my_name)
                     friendnick.add(profileDbManager!!.getNickname()!!)
                     friendmoney.add(profileDbManager!!.getMoney()!!)

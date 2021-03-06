@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
+import org.w3c.dom.Text
 
 
 var realkakaoplayer = mutableListOf<Dataclass_kakao>()
@@ -18,7 +19,14 @@ var arrayll = mutableListOf<Int>()
 var arraytvname = mutableListOf<Int>()
 var arraytvmoney = mutableListOf<Int>()
 var arrayimage = mutableListOf<Int>()
-
+// 친구 정보
+var friendid = mutableListOf<String>()
+var friendmoney = mutableListOf<Int>()
+var friendlevel = mutableListOf<Int>()
+var friendnick = mutableListOf<String>()
+var friendname = mutableListOf<String>()
+var frienduuid = mutableListOf<String>()
+var friendimage = mutableListOf<String>()
 class FragmentRanking : Fragment() {
     val coloron = "#F68A06"
     val coloroff = "#FFFFFF"
@@ -63,16 +71,26 @@ class FragmentRanking : Fragment() {
             v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
         }
         // local ranking
-        v.findViewById<TextView>(R.id.tv_user1_nickname_local).text = rank1_nick
-        v.findViewById<TextView>(R.id.tv_user2_nickname_local).text = rank2_nick
-        v.findViewById<TextView>(R.id.tv_user3_nickname_local).text = rank3_nick
-        v.findViewById<TextView>(R.id.tv_user4_nickname_local).text = rank4_nick
-        v.findViewById<TextView>(R.id.tv_user5_nickname_local).text = rank5_nick
-        v.findViewById<TextView>(R.id.tv_user6_nickname_local).text = rank6_nick
-        v.findViewById<TextView>(R.id.tv_user7_nickname_local).text = rank7_nick
-        v.findViewById<TextView>(R.id.tv_user8_nickname_local).text = rank8_nick
-        v.findViewById<TextView>(R.id.tv_user9_nickname_local).text = rank9_nick
-        v.findViewById<TextView>(R.id.tv_user10_nickname_local).text = rank10_nick
+        val ranker_list : MutableList<String> = mutableListOf(rank1_nick, rank2_nick, rank3_nick, rank4_nick,
+                rank5_nick,rank6_nick,rank7_nick,rank8_nick,rank9_nick,rank10_nick)
+        var rank_number : Int = 0
+        var ranker_local_nick = mutableListOf<Int>()
+        for(i in 1..10){
+            if(ranker_list[i-1] == profileDbManager!!.getNickname()!!){
+                rank_number = i
+            }
+        }
+
+        v.findViewById<TextView>(R.id.tv_user1_nickname_local).text = rank1_nick; ranker_local_nick.add(R.id.tv_user1_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user2_nickname_local).text = rank2_nick; ranker_local_nick.add(R.id.tv_user2_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user3_nickname_local).text = rank3_nick; ranker_local_nick.add(R.id.tv_user3_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user4_nickname_local).text = rank4_nick; ranker_local_nick.add(R.id.tv_user4_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user5_nickname_local).text = rank5_nick; ranker_local_nick.add(R.id.tv_user5_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user6_nickname_local).text = rank6_nick; ranker_local_nick.add(R.id.tv_user6_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user7_nickname_local).text = rank7_nick; ranker_local_nick.add(R.id.tv_user7_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user8_nickname_local).text = rank8_nick; ranker_local_nick.add(R.id.tv_user8_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user9_nickname_local).text = rank9_nick; ranker_local_nick.add(R.id.tv_user9_nickname_local)
+        v.findViewById<TextView>(R.id.tv_user10_nickname_local).text = rank10_nick; ranker_local_nick.add(R.id.tv_user10_nickname_local)
 
         v.findViewById<TextView>(R.id.tv_user1_money_local).text = rank1_money
         v.findViewById<TextView>(R.id.tv_user2_money_local).text = rank2_money
@@ -84,7 +102,12 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user8_money_local).text = rank8_money
         v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money
-
+        if(rank_number==1 ||rank_number==2||rank_number==3){
+            v.findViewById<TextView>(ranker_local_nick!![rank_number-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
+        }
+        else if(rank_number>=4 && rank_number<=10){
+              v.findViewById<TextView>(ranker_local_nick!![rank_number-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
+        }
         // kakao ranking
 
 
@@ -148,9 +171,22 @@ class FragmentRanking : Fragment() {
             arrayimage.add(R.id.iv_user10_image_kakao)
             if(realkakaoplayer.size>=10){
                 for(i in 1..10){
-                    v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
-                    v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                    Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    if(realkakaoplayer[i-1].ID == getHash(profileDbManager!!.getLoginId()!!) ){
+                        if(i==1 || i==2 || i==3){
+                            v.findViewById<TextView>(arraytvname[i-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
+                        }
+                        else if(i>=4 && i<=10){
+                            //TODO: 아직
+                        }
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
+                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    }
+                    else{
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
+                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    }
                 }
             }
             else if(realkakaoplayer == null || realkakaoplayer.size ==0){
@@ -160,9 +196,22 @@ class FragmentRanking : Fragment() {
             }
             else{
                 for(i in 1..realkakaoplayer.size){
-                    v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
-                    v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                    Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    if(realkakaoplayer[i-1].ID == getHash(profileDbManager!!.getLoginId()!!)){
+                        if(i==1 || i==2 || i==3){
+                            v.findViewById<TextView>(arraytvname[i-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
+                        }
+                        else if(i>=4 && i<=10){
+                            //TODO: 아직
+                        }
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
+                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    }
+                    else{
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
+                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                    }
                     if(i==4){
                         v.findViewById<LinearLayout>(R.id.ll_kakaoUser4to10).visibility = View.VISIBLE
                     }
@@ -200,10 +249,10 @@ class FragmentRanking : Fragment() {
         }
         for (cnt in 1..friendlevel.size){
             if(friendlevel[cnt-1] != -1){
-                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", 0, 0, "c")
-                friendlevel[cnt-1]
+                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", "c", 0, 0, "d")
                 tmp?.NAME = friendname[cnt-1];
                 tmp?.NICKNAME = friendnick[cnt-1];
+                tmp?.ID = friendid[cnt-1]
                 tmp?.MONEY = friendmoney[cnt-1];
                 tmp?.LEVEL = friendlevel[cnt-1]
                 tmp?.IMAGE = friendimage[cnt-1]
