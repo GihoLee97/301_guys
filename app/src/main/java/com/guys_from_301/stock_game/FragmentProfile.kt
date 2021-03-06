@@ -277,7 +277,6 @@ class FragmentProfile : Fragment() {
                             newNotice.contents = data[i].CONTENT
                             newNotice.date = data[i].DATE
                             noticedb?.noticeDao()?.insert(newNotice)
-
                         }
 
                     }

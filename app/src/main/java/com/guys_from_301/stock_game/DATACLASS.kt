@@ -73,7 +73,14 @@ class DATACLASS {
     @Expose
     var SETSALARYRAISE : Float
 
-    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, VALUE1: Int, NICKNAME:String,PROFITRATE:Float, RELATIVEPROFITRATE:Float,ROUNDCOUNT:Int, HISTORY:Int, LEVEL : Int, EXP:Int, QUEST:Int, POTION:Int, SETCASH : Float, SETMONTHLY:Float, SETSALARYRAISE:Float) {
+    @SerializedName("IMAGENUMBER")
+    @Expose
+    var IMAGENUMBER : Int
+
+
+
+    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, VALUE1: Int, NICKNAME:String,PROFITRATE:Float, RELATIVEPROFITRATE:Float,ROUNDCOUNT:Int, HISTORY:Int, LEVEL : Int, EXP:Int, QUEST:Int, POTION:Int, SETCASH : Float, SETMONTHLY:Float, SETSALARYRAISE:Float,
+                IMAGENUMBER : Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
         this.DATE = DATE
@@ -91,5 +98,6 @@ class DATACLASS {
         this.SETCASH = SETCASH
         this.SETMONTHLY = SETMONTHLY
         this.SETSALARYRAISE = SETSALARYRAISE
+        this.IMAGENUMBER = IMAGENUMBER
     }
 }
