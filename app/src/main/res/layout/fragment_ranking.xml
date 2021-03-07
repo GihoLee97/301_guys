@@ -528,6 +528,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user4_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -565,6 +566,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user5_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -602,6 +604,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user6_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -639,6 +642,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user7_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -676,6 +680,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user8_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -713,6 +718,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user9_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"
@@ -750,6 +756,7 @@
                             android:textAppearance="@style/ranking_rank_num"/>
 
                         <ImageView
+                            android:id="@+id/iv_user10_image_local"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_marginLeft="16dp"

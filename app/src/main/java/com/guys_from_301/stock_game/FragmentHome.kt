@@ -35,6 +35,17 @@ class FragmentHome : Fragment() {
 //    var profileDb : ProfileDB? = null
     var itemDb : ItemDB? = null
     private var item: Item? = null
+    private var questDb: QuestDB? = null
+    private var questList = listOf<Quest>()
+    private var achievementList = listOf<Int>()
+    private var questInGameProfitRateList = listOf<Quest>()
+    private var questRelativeProfitRateList = listOf<Quest>()
+    private lateinit var tv_questName1 : TextView
+    private lateinit var tv_questName2 : TextView
+    private lateinit var tv_questDescription1: TextView
+    private lateinit var tv_questDescription2: TextView
+    private lateinit var pb_quest1: ProgressBar
+    private lateinit var pb_quest2: ProgressBar
     private lateinit var tv_profitRate: TextView
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
@@ -59,8 +70,38 @@ class FragmentHome : Fragment() {
         itemDb = ItemDB.getInstace(_MainActivity!!)
 
         tv_profitRate = v.findViewById(R.id.tv_profitRate)
+        tv_questName1 = v.findViewById(R.id.tv_questName1)
+        tv_questName2 = v.findViewById(R.id.tv_questName2)
+        tv_questDescription1 = v.findViewById(R.id.tv_questDescription1)
+        tv_questDescription2 = v.findViewById(R.id.tv_questDescription2)
+        pb_quest1 = v.findViewById(R.id.pb_quest1)
+        pb_quest2 = v.findViewById(R.id.pb_quest2)
         tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
 
+        //도전과제 실시간 반영
+        var profitAchievement = 0
+        var relativeProfitAchievement = 0
+        questDb = QuestDB.getInstance(_MainActivity!!)
+        questInGameProfitRateList = questDb?.questDao()?.getQuestToAdapterByTheme("수익률")!!
+        questRelativeProfitRateList = questDb?.questDao()?.getQuestToAdapterByTheme("시장대비 수익률")!!
+        profitAchievement = 100 - questInGameProfitRateList.size * 10
+        relativeProfitAchievement = 100 - questRelativeProfitRateList.size * 20
+        if (questInGameProfitRateList.isEmpty()) {
+            questInGameProfitRateList = listOf(Quest(0, "수익률", "투자왕","모든 도전과제 달성", 1))
+            profitAchievement = 100
+        }
+        if (questRelativeProfitRateList.isEmpty()) {
+            questRelativeProfitRateList = listOf(Quest(0, "시장대비 수익률", "시장을 이기는 투자자","모든 도전과제 달성", 1))
+            relativeProfitAchievement = 100
+        }
+        questList = listOf(questInGameProfitRateList.first(), questRelativeProfitRateList.first())
+        achievementList = listOf(profitAchievement,relativeProfitAchievement)
+        tv_questName1.text = questList[0].theme
+        tv_questName2.text = questList[1].theme
+        tv_questDescription1.text = questList[0].questcontents.slice(IntRange(9,14))
+        tv_questDescription2.text = questList[1].questcontents.slice(IntRange(11,16))
+        pb_quest1.setProgress(achievementList[0])
+        pb_quest2.setProgress(achievementList[1])
 
         //기본설정(data 불러오기 및 게임 선택창 리사이클러뷰 바인딩)
         gameDb = GameSetDB.getInstace(_MainActivity!!)

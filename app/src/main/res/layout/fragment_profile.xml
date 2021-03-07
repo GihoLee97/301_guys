@@ -35,6 +35,17 @@
                 android:layout_marginTop="79dp"
                 android:textAppearance="@style/profile_nickname_change"
                 android:text="닉네임 변경 > "/>
+            <TextView
+                android:id="@+id/tv_pw_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tv_my_nick"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="59dp"
+                android:textAppearance="@style/profile_nickname_change"
+                android:visibility="gone"
+                android:text="비밀번호 변경 > "/>
             <ImageView
                 android:id="@+id/iv_my_image"
                 android:layout_width="56dp"
@@ -202,6 +213,7 @@
                     android:background="#EAEEEF"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_support"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal">

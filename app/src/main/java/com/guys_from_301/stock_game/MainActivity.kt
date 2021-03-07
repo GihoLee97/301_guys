@@ -35,6 +35,8 @@ import com.guys_from_301.stock_game.data.*
 import com.guys_from_301.stock_game.retrofit.RetrofitFriend
 import com.guys_from_301.stock_game.retrofit.RetrofitRanking
 import com.kakao.sdk.talk.TalkApiClient
+import com.kakao.sdk.talk.model.Friend
+import com.kakao.sdk.talk.model.Friends
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,9 +65,15 @@ var rank3_nick :String = ""; var rank3_money :String = ""; var rank4_nick :Strin
 var rank5_nick :String = ""; var rank5_money :String = ""; var rank6_nick :String = ""; var rank6_money :String = ""
 var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :String = ""; var rank8_money :String = ""
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
+// ranker image
+var ranker_image = mutableListOf<Int>()
 //gameset update 여부
 var updateGameSet: Boolean = false
 var startGameSet: Boolean = false
+
+var friend_all_array : Friends<Friend>? = null
+
+var Notice_array : MutableList<DATACLASS_NOTICE>? = null
 
 var my_name: String = ""; var my_image: String = ""
 class MainActivity : AppCompatActivity() {
@@ -143,9 +151,12 @@ class MainActivity : AppCompatActivity() {
         var gamesetList = gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
         var existence = false   //새 게임 존재 여부
         for (game in gameSetDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!) {
+            var emptyCount : Int = 0
             if (game.endtime == "") {
                 existence = true
+                emptyCount++
             }
+            if(emptyCount == 2) gameSetDb?.gameSetDao()?.delete(game)
         }
         if (gamesetList != null) {
             if (!existence && gamesetList.size < 3) {
@@ -206,6 +217,10 @@ class MainActivity : AppCompatActivity() {
                 println("카카오톡 친구 목록 실패"+error)
             }
             else if (friends != null) {
+                if(friend_all_array != null){
+                    friend_all_array = null
+                }
+                friend_all_array = friends
                 if(friendlevel != null){
                     friendid.clear()
                     friendmoney.clear()
@@ -437,6 +452,12 @@ class MainActivity : AppCompatActivity() {
                     rank8_nick = response.body()!![7]; rank8_money = response.body()!![17]
                     rank9_nick = response.body()!![8]; rank9_money = response.body()!![18]
                     rank10_nick = response.body()!![9]; rank10_money = response.body()!![19]
+                    if(ranker_image == null){
+                        ranker_image.clear()
+                    }
+                    for(i in 0..9){
+                        ranker_image.add(response.body()!![20+i].toInt())
+                    }
                 }
             }
         })
@@ -511,6 +532,7 @@ class MainActivity : AppCompatActivity() {
                             friendnick.add(data[i].NICKNAME)
                         }
                     }
+                    friendid.add(getHash(profileDbManager!!.getLoginId()!!))
                     friendname.add(my_name)
                     friendnick.add(profileDbManager!!.getNickname()!!)
                     friendmoney.add(profileDbManager!!.getMoney()!!)

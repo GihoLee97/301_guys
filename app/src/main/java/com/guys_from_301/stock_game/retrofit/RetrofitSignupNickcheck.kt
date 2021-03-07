@@ -12,6 +12,7 @@ interface RetrofitSignupNickcheck  {
             @Field("u_id") u_id: String,
             @Field("u_pw") u_pw: String,
             @Field("u_date") u_date: String,
-            @Field("u_nickname") u_nickname: String)
-            : Call<String>
+            @Field("u_nickname") u_nickname: String,
+            @Field("u_imageNumber") u_imageNumber: Int)
+    : Call<String>
 }

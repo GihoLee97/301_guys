@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -22,6 +23,9 @@ import java.time.format.DateTimeFormatter
 class InitialSignupFinalActivity : AppCompatActivity()  {
     var mContext : Context? = null
     private lateinit var et_signup_nick : EditText
+    private lateinit var rg_profileImageSelect : RadioGroup
+    private var isRadioGroupChecked = false
+
     var _u_id : String = ""
     var _u_pw : String = ""
     var _u_method : String = "general"
@@ -45,21 +49,43 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         findViewById<LinearLayout>(R.id.ll_signup_nick_delete).setOnClickListener{
             findViewById<EditText>(R.id.et_signup_nick).text = null
         }
+
         et_signup_nick = findViewById(R.id.et_signup_nick)
         nickfilter(et_signup_nick)
         findViewById<ImageButton>(R.id.ib_go_setpw).setOnClickListener {
             onBackPressed()
         }
+
+        isRadioGroupChecked = false
+        rg_profileImageSelect = findViewById(R.id.rg_profileImageSelect)
+        rg_profileImageSelect.setOnCheckedChangeListener{ group, checkedId ->
+            isRadioGroupChecked = true
+            Log.d("Giho","checkedId : "+checkedId.toString())
+        }
+
+
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
-            val time1: LocalDateTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            val formatted = time1.format(formatter)
-            val SignupDate : String = formatted.toString().trim()
-            signupnickcheck(getHash(_u_id).toString().trim(),
-                    getHash(_u_pw).toString().trim(),
-                    SignupDate, et_signup_nick.text.toString(),
-                    _u_method)
+            if(isRadioGroupChecked) {
+                var _u_imageNumber = 0
+                when(rg_profileImageSelect.checkedRadioButtonId){
+                    R.id.rb_image1 -> _u_imageNumber=0
+                    R.id.rb_image2 -> _u_imageNumber=1
+                    R.id.rb_image3 -> _u_imageNumber=2
+                    R.id.rb_image4 -> _u_imageNumber=3
+                    R.id.rb_image5 -> _u_imageNumber=4
+                }
+                val time1: LocalDateTime = LocalDateTime.now()
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                val formatted = time1.format(formatter)
+                val SignupDate: String = formatted.toString().trim()
+                signupnickcheck(getHash(_u_id).toString().trim(),
+                        getHash(_u_pw).toString().trim(),
+                        SignupDate, et_signup_nick.text.toString(),
+                        _u_imageNumber, _u_method)
 //            Toast.makeText(this, "아이디: "+ u_id +"\n비밀번호: "+u_pw, Toast.LENGTH_LONG).show()
+            } else{
+                findViewById<TextView>(R.id.tv_signup_final_ment_2).visibility = View.VISIBLE
+            }
         }
     }
     private fun nickfilter(IdorPw : EditText) {
@@ -88,7 +114,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         ))
     }
 
-    fun signupnickcheck(u_id: String, u_pw: String, u_date : String,u_nickname: String, method : String) {
+    fun signupnickcheck(u_id: String, u_pw: String, u_date : String,u_nickname: String, u_imageNumber : Int ,method : String) {
         var funsignupnickcheck: RetrofitSignupNickcheck? = null
         val url = "http://stockgame.dothome.co.kr/test/signupnickcheck.php/"
         var gson: Gson = GsonBuilder()
@@ -102,7 +128,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
                         .build()
         //creating our api
         funsignupnickcheck= retrofit.create(RetrofitSignupNickcheck::class.java)
-        funsignupnickcheck.signupnickcheck(u_id, u_pw, u_date, u_nickname).enqueue(object : Callback<String> {
+        funsignupnickcheck.signupnickcheck(u_id, u_pw, u_date, u_nickname, u_imageNumber).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 println("---서버업데이트실패: "+t.message)
             }

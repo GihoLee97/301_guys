@@ -1,67 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff">
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        android:text="회원탈퇴"
-        android:background="@color/red"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/white"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text =
-            "회원탈퇴 시 계정의 모든 정보가 삭제됩니다.\n회원탈퇴가 이루어진 계정은 복구가 불가능합니다."
-        android:gravity="center"
-    />
+    android:layout_height="match_parent">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_deleteok"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="256dp"
+        android:layout_height="212dp"
+        android:background="@drawable/nickname_change_borderline">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="탈퇴"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:backgroundTint="@color/red"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/title"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="계정 탈퇴"
+                android:textAppearance="@style/nickname_change_title"
+                android:background="@color/white"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:text="정말로 탈퇴하시겠습니까?\n삭제된 데이터는 복구할 수 없습니다."
+                android:lineSpacingExtra="3sp"
+                android:textAppearance="@style/profile_dialog_deletealert_notice"/>
 
-        <Button
-            android:id="@+id/btn_deletecancel"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="취소"
-            android:textColor="#000000"
-            android:textSize="16dp"
-            android:backgroundTint="@color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <EditText
+                    android:id="@+id/et_nickname"
+                    android:layout_width="182dp"
+                    android:layout_height="35dp"
+                    android:inputType="text"
+                    android:hint="닉네임 입력하고 탈퇴하기"
+                    android:textAppearance="@style/nickname_change_content"
+                    android:background="@null"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_nickname_number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_set_nick_underline"
+                android:layout_width="182dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/initial_set_id_line"/>
+            <TextView
+                android:id="@+id/tv_pwChangeNotice"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="틀렸습니다."
+                android:textAppearance="@style/initial_signUp_pw_notice"
+                android:visibility="invisible"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="256dp"
+            android:layout_height="36dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_deleteok"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="타디스 탈퇴하기"
+                android:textAppearance="@style/game_save_button"
+                android:background="@drawable/nickname_change_ok_box_gray"
+                />
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+    <ImageButton
+        android:id="@+id/btn_deletecancel"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_exit_cancel"/>
 </LinearLayout>

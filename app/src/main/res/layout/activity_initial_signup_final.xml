@@ -60,27 +60,17 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당신의 닉네임을 설정해주세요 :)"
+        android:layout_marginTop="60dp"
+        android:layout_marginHorizontal="24dp"
+        android:textAppearance="@style/initial_signUp_id_ment" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="24dp">
-
-        <TextView
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="당신의 닉네임을 설정해주세요 :)"
-            android:textAppearance="@style/initial_signUp_id_ment" />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -129,7 +119,73 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|left"
         android:gravity="center"
-        android:text="이미 존재하는 이름입니다."
+        android:text="이미 존재하는 닉네임입니다."
+        android:textAppearance="@style/initial_signUp_pw_notice"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당신의 프로필 이미지을 설정해주세요 :)"
+        android:layout_marginTop="28dp"
+        android:layout_marginHorizontal="24dp"
+        android:textAppearance="@style/initial_signUp_id_ment" />
+
+    <RadioGroup
+        android:id="@+id/rg_profileImageSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginHorizontal="24dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_image1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:button="@drawable/profile_image_selector1"/>
+
+        <RadioButton
+            android:id="@+id/rb_image2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/profile_image_selector2"/>
+
+        <RadioButton
+            android:id="@+id/rb_image3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/profile_image_selector3"/>
+
+        <RadioButton
+            android:id="@+id/rb_image4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/profile_image_selector4"/>
+
+        <RadioButton
+            android:id="@+id/rb_image5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@drawable/profile_image_selector5"/>
+    </RadioGroup>
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_signup_final_ment_2"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:gravity="center"
+        android:text="이미지를 선택해 주세요."
         android:textAppearance="@style/initial_signUp_pw_notice"
         />
 
