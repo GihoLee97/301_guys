@@ -57,6 +57,10 @@ class DATACLASS {
     @Expose
     var QUEST : Int
 
+    @SerializedName("QUEST2")
+    @Expose
+    var QUEST2 : Int
+
     @SerializedName("POTION")
     @Expose
     var POTION : Int
@@ -83,7 +87,9 @@ class DATACLASS {
 
 
 
-    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, VALUE1: Int, NICKNAME:String,PROFITRATE:Float, RELATIVEPROFITRATE:Float,ROUNDCOUNT:Int, HISTORY:Int, LEVEL : Int, EXP:Int, QUEST:Int, POTION:Int, SETCASH : Float, SETMONTHLY:Float, SETSALARYRAISE:Float,
+    constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, VALUE1: Int, NICKNAME:String,
+                PROFITRATE:Float, RELATIVEPROFITRATE:Float,ROUNDCOUNT:Int, HISTORY:Int, LEVEL : Int, EXP:Int,
+                QUEST:Int, QUEST2:Int, POTION:Int, SETCASH : Float, SETMONTHLY:Float, SETSALARYRAISE:Float,
                 IMAGENUMBER : Int, OVERWRITE : Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
@@ -98,6 +104,7 @@ class DATACLASS {
         this.LEVEL = LEVEL
         this.EXP = EXP
         this.QUEST = QUEST
+        this.QUEST2 = QUEST2
         this.POTION = POTION
         this.SETCASH = SETCASH
         this.SETMONTHLY = SETMONTHLY

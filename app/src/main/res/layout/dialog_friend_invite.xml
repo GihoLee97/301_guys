@@ -28,9 +28,10 @@
                 android:orientation="vertical"
                 android:gravity="bottom">
                 <TextView
+                    android:id="@+id/tv_friend_invite_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="현대 초대 : 000명"
+                    android:text="현재 초대 : 000명"
                     android:layout_gravity="right"
                     android:gravity="center"
                     android:layout_marginEnd="16dp"
