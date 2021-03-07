@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="256dp"
+        android:layout_height="212dp"
+        android:background="@drawable/nickname_change_borderline">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="프로필 이미지 변경"
+                android:textAppearance="@style/nickname_change_title"
+                android:background="@color/white"/>
+
+            <RadioGroup
+                android:id="@+id/rg_profileImageChange"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="24dp">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="2">
+
+                    <RadioButton
+                        android:id="@+id/rb_image1"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="0"
+                        android:layout_row="0"
+                        android:layout_gravity="center"
+                        android:button="@drawable/profile_image_selector1"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_image2"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="1"
+                        android:layout_row="0"
+                        android:layout_gravity="center"
+                        android:button="@drawable/profile_image_selector2"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_image3"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="2"
+                        android:layout_row="0"
+                        android:layout_gravity="center"
+                        android:button="@drawable/profile_image_selector3"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_image4"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="0"
+                        android:layout_row="1"
+                        android:layout_gravity="center"
+                        android:button="@drawable/profile_image_selector4"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_image5"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        android:layout_column="1"
+                        android:layout_row="1"
+                        android:layout_gravity="center"
+                        android:button="@drawable/profile_image_selector5"/>
+
+                </GridLayout>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_profileImageChangeNotice"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="이미지를 선택해 주세요."
+                android:textAppearance="@style/initial_signUp_pw_notice"
+                android:visibility="invisible"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="256dp"
+            android:layout_height="36dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_image_change"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="프로필 이미지 변경"
+                android:textAppearance="@style/game_save_button"
+                android:background="@drawable/nickname_change_ok_box_gray"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ib_cancel"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_exit_cancel"/>
+</LinearLayout>

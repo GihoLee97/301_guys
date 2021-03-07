@@ -43,6 +43,7 @@ class FragmentProfile : Fragment() {
 //    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
     private lateinit var tv_pw_change : TextView
+    private lateinit var googleAuth : FirebaseAuth
     var loginMethod : String? = null
 
     override fun onCreateView(
@@ -68,9 +69,12 @@ class FragmentProfile : Fragment() {
             }
         }
         else if(profileDbManager!!.getLogin() == 2){ // google login
-            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE
+            googleAuth = FirebaseAuth.getInstance()
+            val currUser = googleAuth.currentUser
+            v.findViewById<ImageView>(R.id.iv_my_image).loadCircularImage(currUser?.photoUrl, 5F, Color.parseColor("#F4730B"))
         }
         else{ // general login
+            v.findViewById<ImageView>(R.id.iv_my_image).loadCircularImage(profileImageId[profileDbManager!!.getImageNum()!!], 5F, Color.parseColor("#F4730B"))
             tv_pw_change.visibility = View.VISIBLE
             tv_pw_change.setOnClickListener {
                 val dlg = Dialog_change_pw(_MainActivity!!)

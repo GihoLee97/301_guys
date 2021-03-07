@@ -97,7 +97,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         // 해당 게임 db 삭제
         deletedata()
 
-
+        var gamePlayDay = totaltradeday+ tradeday
         if (isHistory) {
             tv_monthly_profit.visibility = View.INVISIBLE
             cl_monthly_profitrate_chart.visibility = View.INVISIBLE
@@ -108,15 +108,15 @@ class NewResultNormalActivity: AppCompatActivity() {
             funlevelup(
                     profileDbManager!!.getLoginId()!!,
                     profileDbManager!!.getLoginPw()!!,
-                    Math.round(totaltradeday*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
+                    Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
             )
-            rewardByStack(Math.round(totaltradeday*1000* (relativeprofitrate+100)/100))
+            rewardByStack(Math.round(gamePlayDay*1000* (relativeprofitrate+100)/100))
         }
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
-        tv_experience.text = "+"+totaltradeday+"exp"
-        tv_rewardStack.text = "+"+dec.format(Math.round(totaltradeday*1000* (relativeprofitrate+100)/100))
+        tv_experience.text = "+"+gamePlayDay+"exp"
+        tv_rewardStack.text = "+"+dec.format(Math.round(gamePlayDay*1000* (relativeprofitrate+100)/100))
 
 
         if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"
@@ -272,7 +272,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         var localDateTime = LocalDateTime.now()
         val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "최종", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
                 bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+                pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday+ tradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
         gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)//완료한 게임 히스토리 저장
     }
 

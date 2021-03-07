@@ -2,6 +2,7 @@ package com.guys_from_301.stock_game
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -162,8 +163,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 //            billingManager.startConnection()
 //        }
         tv_marketReceipt.setOnClickListener{
-            Toast.makeText(mContext, "구매 내역!", Toast.LENGTH_LONG).show()
-
+            val intent = Intent(_MainActivity!!, PurchaseHistoryAcitivity::class.java)
+            startActivity(intent)
         }
 
         //초기월금 협상
