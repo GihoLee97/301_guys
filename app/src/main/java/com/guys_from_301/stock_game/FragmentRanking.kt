@@ -30,6 +30,8 @@ var friendnick = mutableListOf<String>()
 var friendname = mutableListOf<String>()
 var frienduuid = mutableListOf<String>()
 var friendimage = mutableListOf<String>()
+
+
 class FragmentRanking : Fragment() {
     val coloron = "#F68A06"
     val coloroff = "#FFFFFF"
