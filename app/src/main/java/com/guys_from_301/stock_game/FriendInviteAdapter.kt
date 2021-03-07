@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.QuestDB
 import com.guys_from_301.stock_game.kakaoMessageManager
 import com.guys_from_301.stock_game.retrofit.RetrofitFriendCheck
 import com.kakao.sdk.talk.model.Friend
@@ -162,6 +163,18 @@ class FriendInviteAdapter(val context: Context, var friends: Friends<Friend>, va
                     }
                     else if(response.body()!! == "555"){
                         // 친구 아이디가 없다.
+                        var questDb: QuestDB? = null
+                        questDb = QuestDB.getInstance(context)
+                        var friendquest = questDb?.questDao()?.getQuestByTheme("초대하기")?.get(0)
+                        friendquest!!.achievement = friendquest!!.achievement+1
+                        val addRunnable = kotlinx.coroutines.Runnable {
+                            questDb?.questDao()?.insert(friendquest)
+                        }
+                        val addThread = Thread(addRunnable)
+                        addThread.start()
+                        rewardByStack(100000)
+                        questAchieved.add(friendquest)
+
                         Toast.makeText(context, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
                         kakaoMessageManager.sendMessageonlyone(uuid, kakaoMessageManager.dummy)
                     }
@@ -173,4 +186,11 @@ class FriendInviteAdapter(val context: Context, var friends: Friends<Friend>, va
         })
 
     }
+    //도전과제 스텍 보상 함수
+    fun rewardByStack(reward: Int){
+        if (!profileDbManager!!.isEmpty(context)) {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
+        }
+    }
+
 }
