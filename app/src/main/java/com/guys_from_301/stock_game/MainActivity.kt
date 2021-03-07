@@ -452,7 +452,7 @@ class MainActivity : AppCompatActivity() {
                     rank8_nick = response.body()!![7]; rank8_money = response.body()!![17]
                     rank9_nick = response.body()!![8]; rank9_money = response.body()!![18]
                     rank10_nick = response.body()!![9]; rank10_money = response.body()!![19]
-                    if(ranker_image == null){
+                    if(ranker_image != null){
                         ranker_image.clear()
                     }
                     for(i in 0..9){

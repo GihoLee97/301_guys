@@ -246,7 +246,6 @@ class FragmentRanking : Fragment() {
                     }
                 }
             }
-
         }
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
