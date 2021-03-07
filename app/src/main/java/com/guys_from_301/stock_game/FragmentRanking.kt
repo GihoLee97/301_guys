@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
-import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
-import org.w3c.dom.Text
 
 val profileImageId = arrayOf(R.drawable.ic_profile_image_templete1,
         R.drawable.ic_profile_image_templete2,R.drawable.ic_profile_image_templete3,
@@ -39,6 +38,9 @@ class FragmentRanking : Fragment() {
     private lateinit var tv_my_level: TextView
     private lateinit var tv_my_stack: TextView
     private lateinit var tv_my_nick: TextView
+
+    private var myLocalImageViewId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -58,6 +60,8 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_local_space).setBackgroundColor(Color.parseColor(coloroff))
         v.findViewById<ScrollView>(R.id.sv_ranking_kakao).visibility = View.GONE
         v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
+        v.findViewById<ImageView>(R.id.iv_my_image_kakao).visibility = View.GONE
+        v.findViewById<ImageView>(R.id.iv_my_image_local).visibility = View.VISIBLE
 
         v.findViewById<TextView>(R.id.tv_kakaoRanking).setOnClickListener{
             v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloroff))
@@ -66,6 +70,8 @@ class FragmentRanking : Fragment() {
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.GONE
             v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
             v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
+            v.findViewById<ImageView>(R.id.iv_my_image_kakao).visibility = View.VISIBLE
+            v.findViewById<ImageView>(R.id.iv_my_image_local).visibility = View.GONE
         }
         v.findViewById<TextView>(R.id.tv_localRanking).setOnClickListener {
             v.findViewById<TextView>(R.id.tv_kakao_space).setBackgroundColor(Color.parseColor(coloron))
@@ -74,6 +80,14 @@ class FragmentRanking : Fragment() {
             v.findViewById<ScrollView>(R.id.sv_ranking_local).visibility = View.VISIBLE
             v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
             v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
+            v.findViewById<ImageView>(R.id.iv_my_image_kakao).visibility = View.GONE
+            v.findViewById<ImageView>(R.id.iv_my_image_local).visibility = View.VISIBLE
+        }
+
+
+        v.findViewById<ImageView>(R.id.iv_my_image_local).setOnClickListener {
+            val dlg = Dialog_imageChange(_MainActivity!!)
+            dlg.start()
         }
 
         // local ranking
@@ -81,6 +95,8 @@ class FragmentRanking : Fragment() {
                 rank5_nick,rank6_nick,rank7_nick,rank8_nick,rank9_nick,rank10_nick)
         var rank_number : Int = 0
         var ranker_local_nick = mutableListOf<Int>()
+        var ranker_local_image = mutableListOf<Int>()
+
         for(i in 1..10){
             if(ranker_list[i-1] == profileDbManager!!.getNickname()!!){
                 rank_number = i
@@ -109,16 +125,18 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money
 
-        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]])
-        v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]])
-        v.findViewById<ImageView>(R.id.iv_user3_image_local).setImageResource(profileImageId[ranker_image[2]])
-        v.findViewById<ImageView>(R.id.iv_user4_image_local).setImageResource(profileImageId[ranker_image[3]])
-        v.findViewById<ImageView>(R.id.iv_user5_image_local).setImageResource(profileImageId[ranker_image[4]])
-        v.findViewById<ImageView>(R.id.iv_user6_image_local).setImageResource(profileImageId[ranker_image[5]])
-        v.findViewById<ImageView>(R.id.iv_user7_image_local).setImageResource(profileImageId[ranker_image[6]])
-        v.findViewById<ImageView>(R.id.iv_user8_image_local).setImageResource(profileImageId[ranker_image[7]])
-        v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]])
-        v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]])
+        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]]); ranker_local_image.add(R.id.iv_user1_image_local)
+        v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]]); ranker_local_image.add(R.id.iv_user2_image_local)
+        v.findViewById<ImageView>(R.id.iv_user3_image_local).setImageResource(profileImageId[ranker_image[2]]); ranker_local_image.add(R.id.iv_user3_image_local)
+        v.findViewById<ImageView>(R.id.iv_user4_image_local).setImageResource(profileImageId[ranker_image[3]]); ranker_local_image.add(R.id.iv_user4_image_local)
+        v.findViewById<ImageView>(R.id.iv_user5_image_local).setImageResource(profileImageId[ranker_image[4]]); ranker_local_image.add(R.id.iv_user5_image_local)
+        v.findViewById<ImageView>(R.id.iv_user6_image_local).setImageResource(profileImageId[ranker_image[5]]); ranker_local_image.add(R.id.iv_user6_image_local)
+        v.findViewById<ImageView>(R.id.iv_user7_image_local).setImageResource(profileImageId[ranker_image[6]]); ranker_local_image.add(R.id.iv_user7_image_local)
+        v.findViewById<ImageView>(R.id.iv_user8_image_local).setImageResource(profileImageId[ranker_image[7]]); ranker_local_image.add(R.id.iv_user8_image_local)
+        v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]]); ranker_local_image.add(R.id.iv_user9_image_local)
+        v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]]); ranker_local_image.add(R.id.iv_user10_image_local)
+
+        myLocalImageViewId = ranker_local_image[rank_number-1]
 
         if(rank_number==1 ||rank_number==2||rank_number==3){
             v.findViewById<TextView>(ranker_local_nick!![rank_number-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
@@ -128,20 +146,22 @@ class FragmentRanking : Fragment() {
         }
         // kakao ranking
 
+        Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
+
 
         friendsort()
         if(profileDbManager!!.getLogin() != 4){
-//            v.findViewById<ImageView>(R.id.iv_my_image).visibility=View.INVISIBLE TODO!! check
-            v.findViewById<TextView>(R.id.tv_local_space).visibility=View.GONE
+                v.findViewById<TextView>(R.id.tv_local_space).visibility = View.GONE
         }
         else{
             UserApiClient.instance.me { user, error ->
                 if (error!=null)
                     Toast.makeText(_MainActivity,"사용자 정보 요청 실패(카카오)", Toast.LENGTH_SHORT)
                 else if (user!=null) {
-                    Glide.with(_MainActivity!!).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(v.findViewById<ImageView>(R.id.iv_my_image))
+                    Glide.with(_MainActivity!!).load(user?.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(v.findViewById(R.id.iv_my_image_kakao))
                 }
             }
+
             if(arrayll !=null || arraytvname != null || arraytvmoney != null){
                 arrayll.clear()
                 arraytvmoney.clear()
@@ -280,5 +300,13 @@ class FragmentRanking : Fragment() {
         //sort
         realkakaoplayer.sortByDescending { it.MONEY }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().runOnUiThread {
+            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
+        }
     }
 }

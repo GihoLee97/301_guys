@@ -1460,14 +1460,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/ic_ranking_my_box">
 
-        <ImageView
-            android:id="@+id/iv_my_image"
+        <FrameLayout
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_gravity="center"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="18dp"
-            android:src="@drawable/ic_profile_image_templete1"/>
+            android:layout_marginRight="18dp">
+
+            <ImageView
+                android:id="@+id/iv_my_image_kakao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile_image_templete1"/>
+
+            <ImageView
+                android:id="@+id/iv_my_image_local"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile_image_templete1"/>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

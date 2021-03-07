@@ -23,7 +23,7 @@ interface RetrofitImage {
 }
 
 // setimage
-fun setimage(u_id: String, u_imagenumber: Int) {
+fun setImage(u_id: String, u_imagenumber: Int) {
     var funsetimage: RetrofitImage? = null
     val url = "http://stockgame.dothome.co.kr/test/setimage.php/"
     var gson: Gson = GsonBuilder()
