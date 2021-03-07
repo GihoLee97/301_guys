@@ -64,7 +64,7 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemCl
         }
 
         fun assetchart() {
-//            gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
+            gamenormalDb = GameNormalDB.getInstace(context)
 
             // 자산 차트 데이터
             val assetEn: ArrayList<Entry> = ArrayList()
@@ -86,8 +86,8 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemCl
 
             val resultDs: ArrayList<ILineDataSet> = ArrayList()
 
-            resultDs.add(assetDs)
             resultDs.add(inputDs)
+            resultDs.add(assetDs)
 
             val resultD: LineData = LineData(resultDs)
 

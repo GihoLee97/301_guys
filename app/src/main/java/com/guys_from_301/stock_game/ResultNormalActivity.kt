@@ -149,8 +149,8 @@ class NewResultNormalActivity: AppCompatActivity() {
 
         val resultDs: ArrayList<ILineDataSet> = ArrayList()
 
-        resultDs.add(assetDs)
         resultDs.add(inputDs)
+        resultDs.add(assetDs)
 
         val resultD: LineData = LineData(resultDs)
 
