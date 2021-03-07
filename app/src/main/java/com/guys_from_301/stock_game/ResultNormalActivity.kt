@@ -128,13 +128,14 @@ class NewResultNormalActivity: AppCompatActivity() {
 
     fun assetchart() {
         gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
+        gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
 
         // 자산 차트 데이터
         val assetEn: ArrayList<Entry> = ArrayList()
         val inputEn: ArrayList<Entry> = ArrayList()
 
-        val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!)
-        val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!)
+        val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!, setId)
+        val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!, setId)
 
         if (assetMonthly != null && inputMonthly != null) {
             for (i in assetMonthly.indices) {

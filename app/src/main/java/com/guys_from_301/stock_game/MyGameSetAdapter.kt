@@ -52,7 +52,8 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemCl
                 lc_chart.visibility = View.VISIBLE
                 tv_addGame.visibility = View.GONE
 
-                assetchart()
+                // 차트
+                assetchart(gameUnit)
 
                 //endtime gamenormal 기준
                 if(gameUnit.endtime.length>10)endtime.text = gameUnit.endtime.slice(IntRange(0,3))+"."+gameUnit.endtime.slice(IntRange(5,6))+"."+gameUnit.endtime.slice(IntRange(8,9))+" "+gameUnit.endtime.slice(IntRange(11,15))
@@ -63,15 +64,17 @@ class MyGameSetAdapter(val context: Context, var game: List<GameSet>, val itemCl
             itemView.setOnClickListener{ itemClick(gameUnit) }
         }
 
-        fun assetchart() {
+        fun assetchart(gameUnit : GameSet) {
             gamenormalDb = GameNormalDB.getInstace(context)
 
             // 자산 차트 데이터
             val assetEn: ArrayList<Entry> = ArrayList()
             val inputEn: ArrayList<Entry> = ArrayList()
 
-            val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!)
-            val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!)
+            val idtemp = gameUnit.id
+
+            val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!, idtemp)
+            val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!, idtemp)
 
             if (assetMonthly != null && inputMonthly != null) {
                 for (i in assetMonthly.indices) {
