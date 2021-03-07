@@ -1007,7 +1007,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
     }
 
     override fun onDestroy() {
-        click = !click /////////////////////////////////////////////////////////////////////////////
         super.onDestroy()
+        click = false /////////////////////////////////////////////////////////////////////////////
     }
 }

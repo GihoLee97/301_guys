@@ -242,7 +242,7 @@ class AutoBottomDialogFragment(context: Context) : BottomSheetDialogFragment() {
     }
 
     override fun onDestroy() {
-        click = !click /////////////////////////////////////////////////////////////////////////////
         super.onDestroy()
+        click = false /////////////////////////////////////////////////////////////////////////////
     }
 }
