@@ -33,6 +33,7 @@
                 android:layout_weight="15"
                 android:text="수익률"
                 android:textAppearance="@style/quest_gradualItemName"
+                android:autoSizeMinTextSize="2sp"
                 android:autoSizeTextType="uniform"/>
 
             <View
@@ -47,6 +48,7 @@
                 android:layout_weight="10"
                 android:text="한 게임 수익률 10% 달성"
                 android:textAppearance="@style/quest_gradualItemDescription"
+                android:autoSizeMinTextSize="2sp"
                 android:autoSizeTextType="uniform"/>
 
             <View
@@ -61,6 +63,7 @@
                 android:layout_weight="15"
                 android:text="보상 : 인버스 오픈"
                 android:textAppearance="@style/quest_gradualItemReward"
+                android:autoSizeMinTextSize="2sp"
                 android:autoSizeTextType="uniform"/>
 
             <View

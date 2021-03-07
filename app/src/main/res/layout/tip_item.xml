@@ -70,6 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="남들이 욕심을 낼때 두려워하고 남들이 두려워 할때 욕심을 내라"
+                        android:lineSpacingExtra="3sp"
                         android:textAppearance="@style/tip_swipe_view_contents"/>
 
                 </ScrollView>

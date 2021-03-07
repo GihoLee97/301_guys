@@ -67,7 +67,9 @@
                     android:layout_height="120dp"
                     android:lineSpacingExtra="7sp"
                     android:text="친구와\n수익률을 통해\n경쟁해보세요!"
-                    android:textAppearance="@style/ranking_description"/>
+                    android:textAppearance="@style/ranking_description"
+                    android:autoSizeMinTextSize="2sp"
+                    android:autoSizeTextType="uniform"/>
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
@@ -243,6 +245,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -257,6 +260,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -360,6 +364,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -374,6 +379,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -477,6 +483,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -491,6 +498,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -896,6 +904,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -910,6 +919,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -1014,6 +1024,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -1028,6 +1039,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -1133,6 +1145,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_nickName"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
@@ -1147,6 +1160,7 @@
                                     android:layout_weight="15"
                                     android:gravity="center"
                                     android:textAppearance="@style/ranking_top3_money"
+                                    android:autoSizeMinTextSize="2sp"
                                     android:autoSizeTextType="uniform" />
 
                                 <View
