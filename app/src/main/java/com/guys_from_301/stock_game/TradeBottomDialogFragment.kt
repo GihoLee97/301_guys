@@ -95,16 +95,48 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
         ll_tradebefore.visibility = VISIBLE
         ll_tradeafter.visibility = GONE
 
-        if (item4Active) {
-            btn_trade3x.isEnabled = true
-            btn_trade3x.text = "x3\n레버리지"
-            btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
-            btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+        if (cash < price1x * tradecomrate) {
+            btn_trade1x.isEnabled = false
+            btn_trade1x.setTextAppearance(R.style.trade_optionsellnone)
+        } else {
+            btn_trade1x.isEnabled = true
+            btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+        }
 
-            btn_tradeinv3x.isEnabled = true
-            btn_tradeinv3x.text = "x3\n인버스"
-            btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
-            btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+        if (cash < priceinv1x * tradecomrate) {
+            btn_tradeinv1x.isEnabled = false
+            btn_tradeinv1x.setTextAppearance(R.style.trade_optionsellnone)
+        } else {
+            btn_tradeinv1x.isEnabled = true
+            btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+        }
+
+
+        if (item4Active) {
+            if (cash < price3x * tradecomrate) {
+                btn_trade3x.isEnabled = false
+                btn_trade3x.text = "x3\n레버리지"
+                btn_trade3x.setTextAppearance(R.style.trade_optionsellnone)
+                btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+            } else {
+                btn_trade3x.isEnabled = true
+                btn_trade3x.text = "x3\n레버리지"
+                btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
+                btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+            }
+
+            if (cash < priceinv3x * tradecomrate) {
+                btn_tradeinv3x.isEnabled = false
+                btn_tradeinv3x.text = "x3\n인버스"
+                btn_tradeinv3x.setTextAppearance(R.style.trade_optionsellnone)
+                btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+            } else {
+                btn_tradeinv3x.isEnabled = true
+                btn_tradeinv3x.text = "x3\n인버스"
+                btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
+                btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+            }
+
         } else {
             btn_trade3x.isEnabled = false
             btn_trade3x.text = "잠김"
@@ -160,22 +192,48 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                     btn_sell.setBackgroundResource(R.drawable.trade_unchoosen)
                     btn_sell.setTextAppearance(R.style.trade_unchoosen)
 
-                    btn_trade1x.isEnabled = true
-                    btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+                    if (cash < price1x * tradecomrate) {
+                        btn_trade1x.isEnabled = false
+                        btn_trade1x.setTextAppearance(R.style.trade_optionsellnone)
+                    } else {
+                        btn_trade1x.isEnabled = true
+                        btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+                    }
 
-                    btn_tradeinv1x.isEnabled = true
-                    btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+                    if (cash < priceinv1x * tradecomrate) {
+                        btn_tradeinv1x.isEnabled = false
+                        btn_tradeinv1x.setTextAppearance(R.style.trade_optionsellnone)
+                    } else {
+                        btn_tradeinv1x.isEnabled = true
+                        btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+                    }
+
 
                     if (item4Active) {
-                        btn_trade3x.isEnabled = true
-                        btn_trade3x.text = "x3\n레버리지"
-                        btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
-                        btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                        if (cash < price3x * tradecomrate) {
+                            btn_trade3x.isEnabled = false
+                            btn_trade3x.text = "x3\n레버리지"
+                            btn_trade3x.setTextAppearance(R.style.trade_optionsellnone)
+                            btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                        } else {
+                            btn_trade3x.isEnabled = true
+                            btn_trade3x.text = "x3\n레버리지"
+                            btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
+                            btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                        }
 
-                        btn_tradeinv3x.isEnabled = true
-                        btn_tradeinv3x.text = "x3\n인버스"
-                        btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
-                        btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                        if (cash < priceinv3x * tradecomrate) {
+                            btn_tradeinv3x.isEnabled = false
+                            btn_tradeinv3x.text = "x3\n인버스"
+                            btn_tradeinv3x.setTextAppearance(R.style.trade_optionsellnone)
+                            btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                        } else {
+                            btn_tradeinv3x.isEnabled = true
+                            btn_tradeinv3x.text = "x3\n인버스"
+                            btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
+                            btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                        }
+
                     } else {
                         btn_trade3x.isEnabled = false
                         btn_trade3x.text = "잠김"
@@ -257,22 +315,48 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
             btn_sell.setBackgroundResource(R.drawable.trade_unchoosen)
             btn_sell.setTextAppearance(R.style.trade_unchoosen)
 
-            btn_trade1x.isEnabled = true
-            btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+            if (cash < price1x * tradecomrate) {
+                btn_trade1x.isEnabled = false
+                btn_trade1x.setTextAppearance(R.style.trade_optionsellnone)
+            } else {
+                btn_trade1x.isEnabled = true
+                btn_trade1x.setTextAppearance(R.style.trade_optionbuy)
+            }
 
-            btn_tradeinv1x.isEnabled = true
-            btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+            if (cash < priceinv1x * tradecomrate) {
+                btn_tradeinv1x.isEnabled = false
+                btn_tradeinv1x.setTextAppearance(R.style.trade_optionsellnone)
+            } else {
+                btn_tradeinv1x.isEnabled = true
+                btn_tradeinv1x.setTextAppearance(R.style.trade_optionbuy)
+            }
+
 
             if (item4Active) {
-                btn_trade3x.isEnabled = true
-                btn_trade3x.text = "x3\n레버리지"
-                btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
-                btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                if (cash < price3x * tradecomrate) {
+                    btn_trade3x.isEnabled = false
+                    btn_trade3x.text = "x3\n레버리지"
+                    btn_trade3x.setTextAppearance(R.style.trade_optionsellnone)
+                    btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                } else {
+                    btn_trade3x.isEnabled = true
+                    btn_trade3x.text = "x3\n레버리지"
+                    btn_trade3x.setTextAppearance(R.style.trade_optionbuy)
+                    btn_trade3x.setBackgroundResource(R.drawable.trade_option)
+                }
 
-                btn_tradeinv3x.isEnabled = true
-                btn_tradeinv3x.text = "x3\n인버스"
-                btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
-                btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                if (cash < priceinv3x * tradecomrate) {
+                    btn_tradeinv3x.isEnabled = false
+                    btn_tradeinv3x.text = "x3\n인버스"
+                    btn_tradeinv3x.setTextAppearance(R.style.trade_optionsellnone)
+                    btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                } else {
+                    btn_tradeinv3x.isEnabled = true
+                    btn_tradeinv3x.text = "x3\n인버스"
+                    btn_tradeinv3x.setTextAppearance(R.style.trade_optionbuy)
+                    btn_tradeinv3x.setBackgroundResource(R.drawable.trade_option)
+                }
+
             } else {
                 btn_trade3x.isEnabled = false
                 btn_trade3x.text = "잠김"
