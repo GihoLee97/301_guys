@@ -81,6 +81,7 @@ class FriendActivity  : AppCompatActivity() {
                 }
                 val addThread = Thread(addRunnable)
                 addThread.start()
+                rewardByStack(100000)
                 questAchieved.add(friendquest)
                 Toast.makeText(this, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
             }
@@ -104,6 +105,14 @@ class FriendActivity  : AppCompatActivity() {
         layout.addView(button_info)
         layout.addView(button_invite)
         findViewById<LinearLayout>(R.id.layout_admin).addView(layout)
+    }
+
+
+    //도전과제 스텍 보상 함수
+    fun rewardByStack(reward: Int){
+        if (!profileDbManager!!.isEmpty(this)) {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
+        }
     }
 
 

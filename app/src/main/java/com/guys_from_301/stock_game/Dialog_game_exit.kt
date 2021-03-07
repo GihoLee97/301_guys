@@ -111,6 +111,7 @@ class Dialog_game_exit(context: Context) {
             }
             val deleteThread = Thread(deleteRunnable)
             deleteThread.start()
+
             dlg.dismiss()
             gameend = !gameend //////////////////////////////////////////////////////////////////////
             endsuccess = true
