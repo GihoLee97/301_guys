@@ -333,8 +333,13 @@ class InitialLoginActivity : AppCompatActivity() {
         //초기 공지사항 저장
         noticeDb = NoticeDB.getInstace(this)
         val addNotice = Runnable {
-            val newNotice = Notice(0,"타디스에 오신 걸 환영합니다!", "타디스에 오신 걸 환영합니다!", "2021.03.01")
-            noticeDb?.noticeDao()?.insert(newNotice)
+            if(noticeDb?.noticeDao()?.getAll()?.size!!>1){
+                //이미 있는 상태
+            }
+            else{
+                val newNotice = Notice(0,"타디스에 오신 걸 환영합니다!", "타디스에 오신 걸 환영합니다!", "2021.03.01")
+                noticeDb?.noticeDao()?.insert(newNotice)
+            }
         }
         val noticeThread = Thread(addNotice)
         noticeThread.start()

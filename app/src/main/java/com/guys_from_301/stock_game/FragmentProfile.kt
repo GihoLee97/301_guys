@@ -83,7 +83,6 @@ class FragmentProfile : Fragment() {
             dlg.start()
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
-            getnotice("1")
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
@@ -268,10 +267,6 @@ class FragmentProfile : Fragment() {
                 if (response.isSuccessful && response.body() != null) {
                     println("---서버통신성공")
                     var data = response.body()!!
-                    println("---"+ response.body()!![0].TITLE)
-                    println("---"+ response.body()!![0].CONTENT)
-                    println("---"+ response.body()!![1].TITLE)
-                    println("---"+ response.body()!![1].CONTENT)
                     if(Notice_array == null){
                         Notice_array = response.body()!!
                         for(i in 0..data.size-1){
