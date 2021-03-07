@@ -421,7 +421,7 @@
                     android:layout_marginTop="8dp">
 
                     <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/cht_monthlyProfitRate"
+                        android:id="@+id/cht_result"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         app:layout_constraintDimensionRatio="312:119"

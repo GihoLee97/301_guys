@@ -909,6 +909,8 @@ class GameNormalActivity : AppCompatActivity() {
         val yl_snp : YAxis = cht_snp.getAxis(YAxis.AxisDependency.LEFT)
         val yr_snp : YAxis = cht_snp.getAxis(YAxis.AxisDependency.RIGHT)
 
+        cht_snp.description.isEnabled = false
+
         legend_snp.isEnabled = false
         x_snp.isEnabled = false
         yl_snp.isEnabled = false
@@ -929,6 +931,8 @@ class GameNormalActivity : AppCompatActivity() {
         val x_eco : XAxis = cht_eco.xAxis
         val yl_eco : YAxis = cht_eco.getAxis(YAxis.AxisDependency.LEFT)
         val yr_eco : YAxis = cht_eco.getAxis(YAxis.AxisDependency.RIGHT)
+
+        cht_eco.description.isEnabled = false
 
         legend_eco.isEnabled = false
         x_eco.isEnabled = false

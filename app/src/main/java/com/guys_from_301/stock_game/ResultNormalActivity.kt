@@ -1,6 +1,7 @@
 package com.guys_from_301.stock_game
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -38,7 +41,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     private lateinit var tv_pinPointProfitRate: TextView
     private lateinit var tv_monthly_profit: TextView
     private lateinit var cl_monthly_profitrate_chart: ConstraintLayout
-    private lateinit var cht_monthlyProfitRate: LineChart
+    private lateinit var cht_result: LineChart
     private lateinit var ll_only_result: LinearLayout
     private lateinit var tv_only_result: TextView
     private lateinit var ll_goBackHome: LinearLayout
@@ -47,14 +50,6 @@ class NewResultNormalActivity: AppCompatActivity() {
     //Db
     private var gamenormalDb: GameNormalDB? = null
     private var gamesetDB: GameSetDB? = null
-
-    // 자산 차트 데이터
-    private val assetEn: ArrayList<Entry> = ArrayList()
-    private val inputEn: ArrayList<Entry> = ArrayList()
-    private val assetDs: LineDataSet = LineDataSet(assetEn, "asset")
-    private val inputDs: LineDataSet = LineDataSet(inputEn, "input")
-    private val resultDs: List<ILineDataSet> = ArrayList<ILineDataSet>()
-    private val resultD: LineData = LineData(resultDs)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +75,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         tv_pinPointProfitRate = findViewById(R.id.tv_pinPointProfitRate)
         tv_monthly_profit = findViewById(R.id.tv_monthly_profit)
         cl_monthly_profitrate_chart = findViewById(R.id.cl_monthly_prforitrate_chart)
-        cht_monthlyProfitRate = findViewById(R.id.cht_monthlyProfitRate)
+        cht_result = findViewById(R.id.cht_result)
         ll_only_result = findViewById(R.id.ll_only_result)
         tv_only_result = findViewById(R.id.tv_only_result)
         btn_share = findViewById(R.id.btn_share)
@@ -125,7 +120,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         }
 
         btn_share.setOnClickListener {
-            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox),this,this)
+            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox), this, this)
             shareManager.shareBinaryWithKakao(this, path)
         }
 
@@ -134,27 +129,66 @@ class NewResultNormalActivity: AppCompatActivity() {
     fun assetchart() {
         gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
 
+        // 자산 차트 데이터
+        val assetEn: ArrayList<Entry> = ArrayList()
+        val inputEn: ArrayList<Entry> = ArrayList()
 
         val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!)
         val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!)
 
         if (assetMonthly != null && inputMonthly != null) {
             for (i in assetMonthly.indices) {
-                assetEn.add(Entry((i+1).toFloat(), assetMonthly[i]))
-                inputEn.add(Entry((i+1).toFloat(), inputMonthly[i]))
-                println("월: "+i.toString()+" | 자산: "+assetMonthly[i]+" | 인풋: "+inputMonthly[i])
+                assetEn.add(Entry((i + 1).toFloat(), assetMonthly[i]))
+                inputEn.add(Entry((i + 1).toFloat(), inputMonthly[i]))
+                println("월: " + i.toString() + " | 자산: " + assetMonthly[i] + " | 인풋: " + inputMonthly[i])
             }
         }
 
-        assetDs.axisDependency = YAxis.AxisDependency.LEFT
-        inputDs.axisDependency = YAxis.AxisDependency.LEFT
+        val assetDs: LineDataSet = LineDataSet(assetEn, "asset")
+        val inputDs: LineDataSet = LineDataSet(inputEn, "input")
 
+        val resultDs: ArrayList<ILineDataSet> = ArrayList()
 
+        resultDs.add(assetDs)
+        resultDs.add(inputDs)
 
-        cht_monthlyProfitRate.data = resultD
+        val resultD: LineData = LineData(resultDs)
 
-        cht_monthlyProfitRate.animateXY(1,1)
-        cht_monthlyProfitRate.notifyDataSetChanged()
+        cht_result.data = resultD
+
+        cht_result.isClickable = false
+
+        // 차트 레이아웃 설정
+        val legend_result : Legend = cht_result.legend
+        val x_result : XAxis = cht_result.xAxis
+        val yl_result : YAxis = cht_result.getAxis(YAxis.AxisDependency.LEFT)
+        val yr_result : YAxis = cht_result.getAxis(YAxis.AxisDependency.RIGHT)
+
+        cht_result.isClickable = false
+        cht_result.description.isEnabled = false
+
+        legend_result.isEnabled = true
+        x_result.isEnabled = false
+        yl_result.isEnabled = false
+        yr_result.isEnabled = false
+
+        assetDs.color = Color.parseColor("#F4730B") // 차트 선
+        assetDs.setDrawCircles(false)
+        assetDs.setDrawValues(false) // 차트 지점마다 값 표시
+        assetDs.lineWidth = 1.5F
+        assetDs.highLightColor = Color.parseColor("#B71C1C") // 터치 시 하이라이트
+        assetDs.highlightLineWidth = 1F
+
+        inputDs.color = Color.parseColor("#B7B1B3") // 차트 선
+        inputDs.setDrawCircles(false)
+        inputDs.setDrawValues(false) // 차트 지점마다 값 표시
+        inputDs.lineWidth = 1.5F
+        inputDs.highLightColor = Color.parseColor("#B71C1C") // 터치 시 하이라이트
+        inputDs.highlightLineWidth = 1F
+
+        // 차트 생성
+        cht_result.animateXY(1, 1)
+        cht_result.notifyDataSetChanged()
         resultD.notifyDataChanged()
     }
 
