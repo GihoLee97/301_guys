@@ -657,6 +657,9 @@ class GameNormalActivity : AppCompatActivity() {
 //        }
 
 
+        pb_fatigue.setOnClickListener {
+            value1now = 100
+        }
 
         val tradeBottomSheetDialog = TradeBottomDialogFragment(applicationContext)
         val autoBottomSheetDialog = AutoBottomDialogFragment(applicationContext)
@@ -1194,7 +1197,6 @@ class GameNormalActivity : AppCompatActivity() {
         var newscount: Int = 0 // 일별 뉴스 길이 카운트. 현재 < 5
 
         while (true) {
-            //dialog_result = Dialog_result(this)
             if (!gameend) {
                 if (!click) {
                     if (dayPlus <= gl && !item1Active) {
@@ -1763,35 +1765,35 @@ class GameNormalActivity : AppCompatActivity() {
                         ////////////////////////////////////////////////////////////////////////////
                         // 시간 진행 속도 조절 아이템
                         if ((setGamespeed==0) && (value1now <= 10000 - 3)) {
-                            oneday = 7995L - 80L // 8 sec/day
+                            oneday = 7995L - 95L // 8 sec/day
                             value1diff = 3
                             value1now += value1diff
                         } else if ((setGamespeed==1) && (value1now <= 10000 - 2)) {
-                            oneday = 3995L - 80L // 4 sec/day
+                            oneday = 3995L - 95L // 4 sec/day
                             value1diff = 2
                             value1now += value1diff
                         } else if ((setGamespeed==2) && (value1now <= 10000 - 1)) {
-                            oneday = 1995L - 80L // 2 sec/day
+                            oneday = 1995L - 95L // 2 sec/day
                             value1diff = 1
                             value1now += value1diff
                         } else if ((setGamespeed==4) && (value1now <= 10000 - 1)) {
-                            oneday = 495L - 80L // 2 day/sec
+                            oneday = 495L - 95L // 2 day/sec
                             value1diff = 1
                             value1now += value1diff
                         } else if ((setGamespeed==5) && (value1now <= 10000 - 2)) {
-                            oneday = 245L - 80L // 4 day/sec
+                            oneday = 245L - 95L // 4 day/sec
                             value1diff = 2
                             value1now += value1diff
                         } else if ((setGamespeed==6) && (value1now <= 10000 - 3)) {
-                            oneday = 115L - 80L // 8 day/sec
+                            oneday = 115L - 95L // 8 day/sec
                             value1diff = 3
                             value1now += value1diff
                         } else if ((setGamespeed==7) && (value1now <= 10000 - 4)) {
-                            oneday = 95L - 80L // 10 day/sec
+                            oneday = 95L - 95L // 10 day/sec
                             value1diff = 4
                             value1now += value1diff
                         } else { // 피로도 == 10000, or setGamespeed == 3
-                            oneday = 995L - 80L // 1 day/sec
+                            oneday = 995L - 95L // 1 day/sec
                             setGamespeed = 3
                         }
                         ////////////////////////////////////////////////////////////////////////////
@@ -2311,7 +2313,6 @@ class GameNormalActivity : AppCompatActivity() {
     // 게임 종료 시 결과창으로 이동
     private fun endgame() {
         if (gameend && endsuccess) {
-            // TODO 종료시 모두 매도 후 수수료 및 세금 계산, 배당금 계산 추가
             cash += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (2F - tradecomrate)// 현금에 매도금액 추가
             sold += quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x // 총 매도 금액 최신화
             tradecomtot += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F) // 총 수수로 최신화
