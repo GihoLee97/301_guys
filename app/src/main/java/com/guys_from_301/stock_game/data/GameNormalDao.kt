@@ -9,7 +9,10 @@ interface GameNormalDao {
     fun getAll(accountID : String): List<GameNormal>
 
     @Query("SELECT assets FROM GameNormal WHERE buyorsell IS '자산 차트' AND accountId = :accountID ORDER BY id ASC")
-    fun getChart(accountID : String): List<Float>
+    fun getAsset(accountID : String): List<Float>
+
+    @Query("SELECT input FROM GameNormal WHERE buyorsell IS '자산 차트' AND accountId = :accountID ORDER BY id ASC")
+    fun getInput(accountID : String): List<Float>
 
     @Query("SELECT * FROM GameNormal WHERE setId = :setId AND buyorsell IS NOT '최종' AND accountId = :accountID ORDER BY id ASC")
     fun getSetWithNormal(setId: String, accountID : String): List<GameNormal>

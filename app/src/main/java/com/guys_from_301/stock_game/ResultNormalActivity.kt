@@ -9,11 +9,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.guys_from_301.stock_game.data.*
 import java.time.LocalDateTime
 
@@ -49,8 +50,11 @@ class NewResultNormalActivity: AppCompatActivity() {
 
     // 자산 차트 데이터
     private val assetEn: ArrayList<Entry> = ArrayList()
+    private val inputEn: ArrayList<Entry> = ArrayList()
     private val assetDs: LineDataSet = LineDataSet(assetEn, "asset")
-    private val assetD: LineData = LineData(assetDs)
+    private val inputDs: LineDataSet = LineDataSet(inputEn, "input")
+    private val resultDs: List<ILineDataSet> = ArrayList<ILineDataSet>()
+    private val resultD: LineData = LineData(resultDs)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,10 +114,10 @@ class NewResultNormalActivity: AppCompatActivity() {
             tv_yourProfit.setTextAppearance(applicationContext, R.style.gameResult_descriptionChangeDown)
         }
         tv_yourProfit.text = "당신은 " + dec.format(10000 * (100 + relativeprofitrate) / 100) + "원"
-        tv_totalTax.text = "+$" + dec.format(taxtot)
-        tv_totalDividend.text = "+$" + dec.format(dividendtot)
-        tv_totalFee.text = "+$" + dec.format(tradecomtot)
-        tv_realizeGainNLoss.text = "+$" + dec.format(profit)
+        tv_totalTax.text = "$" + dec.format(taxtot)
+        tv_totalDividend.text = "$" + dec.format(dividendtot)
+        tv_totalFee.text = "$" + dec.format(tradecomtot)
+        tv_realizeGainNLoss.text = "$" + dec.format(profit)
         tv_tradeday.text = totaltradeday.toString() + "일"
 
         ll_goBackHome.setOnClickListener {
@@ -130,22 +134,28 @@ class NewResultNormalActivity: AppCompatActivity() {
     fun assetchart() {
         gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
 
-//        assetEn.add(Entry(0F, 1000F))
 
-        val assetMonthly = gamenormalDb?.gameNormalDao()?.getChart(accountID!!)
+        val assetMonthly = gamenormalDb?.gameNormalDao()?.getAsset(accountID!!)
+        val inputMonthly = gamenormalDb?.gameNormalDao()?.getInput(accountID!!)
 
-        if (assetMonthly != null) {
+        if (assetMonthly != null && inputMonthly != null) {
             for (i in assetMonthly.indices) {
-                assetD.addEntry(Entry((i+1).toFloat(), assetMonthly[i]), 0)
-                println("월: "+i.toString()+" | 자산: "+assetMonthly[i])
+                assetEn.add(Entry((i+1).toFloat(), assetMonthly[i]))
+                inputEn.add(Entry((i+1).toFloat(), inputMonthly[i]))
+                println("월: "+i.toString()+" | 자산: "+assetMonthly[i]+" | 인풋: "+inputMonthly[i])
             }
         }
 
-        cht_monthlyProfitRate.data = assetD
+        assetDs.axisDependency = YAxis.AxisDependency.LEFT
+        inputDs.axisDependency = YAxis.AxisDependency.LEFT
+
+
+
+        cht_monthlyProfitRate.data = resultD
 
         cht_monthlyProfitRate.animateXY(1,1)
         cht_monthlyProfitRate.notifyDataSetChanged()
-        assetD.notifyDataChanged()
+        resultD.notifyDataChanged()
     }
 
     fun deletedata() {
