@@ -536,7 +536,6 @@ class InitialLoginActivity : AppCompatActivity() {
 //            Toast.makeText(applicationContext, "한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show()
 //        }
 //    }
-
     fun getuserinformation(u_id: String, u_pw: String) {
         var fungetuserinformation: RetrofitGet? = null
         accountID = u_id//사용자 아이디 식별에 사용할 변수 설정
@@ -555,7 +554,7 @@ class InitialLoginActivity : AppCompatActivity() {
         fungetuserinformation.getall(
                 com.guys_from_301.stock_game.getHash(u_id).trim(), com.guys_from_301.stock_game.getHash(u_pw).trim()).enqueue(object : Callback<DATACLASS> {
             override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
-//                println("---"+t.message)
+                println("---"+t.message)
             }
             override fun onResponse(call: Call<DATACLASS>, response: retrofit2.Response<DATACLASS>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -564,56 +563,57 @@ class InitialLoginActivity : AppCompatActivity() {
                     itemDb = ItemDB?.getInstace(this@InitialLoginActivity)
                     profileDbManager!!.refresh(this@InitialLoginActivity)
                     var serverProfile = Profile(profileDbManager!!.getId(), data?.NICKNAME!!, data?.MONEY, data?.VALUE1!!, data?.PROFITRATE!!, data?.RELATIVEPROFITRATE, data?.ROUNDCOUNT, data?.HISTORY,data?.LEVEL,data?.EXP,0,profileDbManager!!.getLogin()!!,u_id,u_pw,data?.IMAGENUMBER!!,"")
-                    if(profileDbManager!!.getNickname()=="#########first_login##########"){
-                        Log.d("Giho","#########first_login##########AndReadFromServer")
-                        val newProfile = Profile()
-                        newProfile.id = profileDbManager!!.getId()
-                        newProfile.nickname = data?.NICKNAME!!
-                        newProfile.history = data?.HISTORY!!
-                        newProfile.level = data?.LEVEL!!
-                        newProfile.exp = data?.EXP!!
-                        newProfile.login = profileDbManager!!.getLogin()!!
-                        newProfile.money = data?.MONEY!!
-                        newProfile.value1 = data?.VALUE1!!
-                        newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
-                        newProfile.roundcount = data?.ROUNDCOUNT!!
-                        newProfile.login_id = u_id
-                        newProfile.login_pw = u_pw
-                        newProfile.imageNum = data?.IMAGENUMBER!!
-                        newProfile.profitrate = data?.PROFITRATE
+                    if(data?.OVERWRITE!! == 0){
+                        if(profileDbManager!!.getNickname()=="#########first_login##########"){
+                            Log.d("Giho","#########first_login##########AndReadFromServer")
+                            val newProfile = Profile()
+                            newProfile.id = profileDbManager!!.getId()
+                            newProfile.nickname = data?.NICKNAME!!
+                            newProfile.history = data?.HISTORY!!
+                            newProfile.level = data?.LEVEL!!
+                            newProfile.exp = data?.EXP!!
+                            newProfile.login = profileDbManager!!.getLogin()!!
+                            newProfile.money = data?.MONEY!!
+                            newProfile.value1 = data?.VALUE1!!
+                            newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                            newProfile.roundcount = data?.ROUNDCOUNT!!
+                            newProfile.login_id = u_id
+                            newProfile.login_pw = u_pw
+                            newProfile.imageNum = data?.IMAGENUMBER!!
+                            newProfile.profitrate = data?.PROFITRATE
 
-                        //초기 게임 setting 저장
-                        gameSetDb = GameSetDB.getInstace(this@InitialLoginActivity)
-                        val r = Runnable {
-                            val newGameSet = GameSet()
-                            setId = u_id
-                            newGameSet.id = accountID+0
-                            newGameSet.setcash = 0
-                            newGameSet.setgamelength = START_GAME_LENGTH
-                            newGameSet.setgamespeed = START_GAME_SPEED
-                            newGameSet.setmonthly = 0
-                            newGameSet.setsalaryraise = 0
-                            newGameSet.accountId = accountID!!
-                            gameSetDb?.gameSetDao()?.insert(newGameSet)
-                            newGameSet.id = accountID+0
-                            gameSetDb?.gameSetDao()?.insert(newGameSet)
-                            Log.d("hongz", "초기 gaemset 추가 [id]: " +accountID+0 )
+                            //초기 게임 setting 저장
+                            gameSetDb = GameSetDB.getInstace(this@InitialLoginActivity)
+                            val r = Runnable {
+                                val newGameSet = GameSet()
+                                setId = u_id
+                                newGameSet.id = accountID+0
+                                newGameSet.setcash = 0
+                                newGameSet.setgamelength = START_GAME_LENGTH
+                                newGameSet.setgamespeed = START_GAME_SPEED
+                                newGameSet.setmonthly = 0
+                                newGameSet.setsalaryraise = 0
+                                newGameSet.accountId = accountID!!
+                                gameSetDb?.gameSetDao()?.insert(newGameSet)
+                                newGameSet.id = accountID+0
+                                gameSetDb?.gameSetDao()?.insert(newGameSet)
+                                Log.d("hongz", "초기 gaemset 추가 [id]: " +accountID+0 )
+                            }
+                            val t = Thread(r)
+                            t.start()
+
+                            profileDbManager!!.updateManager(newProfile)
                         }
-                        val t = Thread(r)
-                        t.start()
-
-                        profileDbManager!!.updateManager(newProfile)
-                    }
-                    else if(profileDbManager!!.getHashRespectFromDbManager()== profileDbManager!!.getHashRespectFromInput(serverProfile)){
-                        Log.d("Giho","서버와 동일")
-                    }
-                    else{
-                        if(profileDbManager!!.getLoginId()==data?.USERID) {
-                            Log.d("Giho", "이전과 동일한 계정으로 로그인")
-                            if (profileDbManager!!.getHashRespectFromDbManager() == profileDbManager!!.getHash()) {
-                                Log.d("Giho", "기기가 옳음")
-                                //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
-                                update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                        else if(profileDbManager!!.getHashRespectFromDbManager()== profileDbManager!!.getHashRespectFromInput(serverProfile)){
+                            Log.d("Giho","서버와 동일")
+                        }
+                        else{
+                            if(getHash(profileDbManager!!.getLoginId()!!) ==data?.USERID) {
+                                Log.d("Giho", "이전과 동일한 계정으로 로그인")
+                                if (profileDbManager!!.getHashRespectFromDbManager() == profileDbManager!!.getHash()) {
+                                    Log.d("Giho", "기기가 옳음")
+                                    //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
+                                    update(getHash(profileDbManager!!.getLoginId()!!).trim(),
                                         getHash(profileDbManager!!.getLoginPw()!!).trim(),
                                         profileDbManager!!.getMoney()!!,
                                         profileDbManager!!.getValue1()!!,
@@ -623,45 +623,124 @@ class InitialLoginActivity : AppCompatActivity() {
                                         profileDbManager!!.getRoundCount()!!,
                                         profileDbManager!!.getHistory()!!,
                                         profileDbManager!!.getLevel()!!
-                                )
-                            } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
-                                Log.d("Giho", "신뢰할 수 없는 기기 정보")
-                                Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
-                                val newProfile = Profile()
-                                newProfile.id = profileDbManager!!.getId()
-                                newProfile.nickname = data?.NICKNAME!!
-                                newProfile.history = data?.HISTORY!!
-                                newProfile.level = data?.LEVEL!!
-                                newProfile.exp = data?.EXP!!
-                                newProfile.login = profileDbManager!!.getLogin()!!
-                                newProfile.money = data?.MONEY!!
-                                newProfile.value1 = data?.VALUE1!!
-                                newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
-                                newProfile.roundcount = data?.ROUNDCOUNT!!
-                                newProfile.login_id = u_id
-                                newProfile.login_pw = u_pw
-                                newProfile.imageNum = data?.IMAGENUMBER!!
-                                newProfile.profitrate = data?.PROFITRATE
+                                    )
+                                } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
+                                    Log.d("Giho", "신뢰할 수 없는 기기 정보")
+                                    Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                    val newProfile = Profile()
+                                    newProfile.id = profileDbManager!!.getId()
+                                    newProfile.nickname = data?.NICKNAME!!
+                                    newProfile.history = data?.HISTORY!!
+                                    newProfile.level = data?.LEVEL!!
+                                    newProfile.exp = data?.EXP!!
+                                    newProfile.login = profileDbManager!!.getLogin()!!
+                                    newProfile.money = data?.MONEY!!
+                                    newProfile.value1 = data?.VALUE1!!
+                                    newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                    newProfile.roundcount = data?.ROUNDCOUNT!!
+                                    newProfile.login_id = u_id
+                                    newProfile.login_pw = u_pw
+                                    newProfile.imageNum = data?.IMAGENUMBER!!
+                                    newProfile.profitrate = data?.PROFITRATE
 
-                                profileDbManager!!.updateManager(newProfile)
-                                Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                    profileDbManager!!.updateManager(newProfile)
+                                    Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                }
+                            }
+                            else{
+                                Log.d("Giho", "이전과 다른 계정으로 로그인")
+                                if (profileDbManager!!.getHashRespectFromDbManager() == profileDbManager!!.getHash()) {
+                                    Log.d("Giho", "기기 정보 옳음 및 서버 정보 새로 받아오기")
+                                    //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
+                                    update(getHash(profileDbManager!!.getLoginId()!!).trim(),
+                                        getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                                        profileDbManager!!.getMoney()!!,
+                                        profileDbManager!!.getValue1()!!,
+                                        profileDbManager!!.getNickname()!!,
+                                        profileDbManager!!.getProfitRate()!!,
+                                        profileDbManager!!.getRelativeProfit()!!,
+                                        profileDbManager!!.getRoundCount()!!,
+                                        profileDbManager!!.getHistory()!!,
+                                        profileDbManager!!.getLevel()!!
+                                    )
+                                    val newProfile = Profile()
+                                    newProfile.id = profileDbManager!!.getId()
+                                    newProfile.nickname = data?.NICKNAME!!
+                                    newProfile.history = data?.HISTORY!!
+                                    newProfile.level = data?.LEVEL!!
+                                    newProfile.exp = data?.EXP!!
+                                    newProfile.login = profileDbManager!!.getLogin()!!
+                                    newProfile.money = data?.MONEY!!
+                                    newProfile.value1 = data?.VALUE1!!
+                                    newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                    newProfile.roundcount = data?.ROUNDCOUNT!!
+                                    newProfile.login_id = u_id
+                                    newProfile.login_pw = u_pw
+                                    newProfile.imageNum = data?.IMAGENUMBER!!
+                                    newProfile.profitrate = data?.PROFITRATE
+
+                                    profileDbManager!!.updateManager(newProfile)
+                                } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
+                                    Log.d("Giho", "신뢰할 수 없는 기기 정보 및 서버 정보 받아오기")
+                                    Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                    val newProfile = Profile()
+                                    newProfile.id = profileDbManager!!.getId()
+                                    newProfile.nickname = data?.NICKNAME!!
+                                    newProfile.history = data?.HISTORY!!
+                                    newProfile.level = data?.LEVEL!!
+                                    newProfile.exp = data?.EXP!!
+                                    newProfile.login = profileDbManager!!.getLogin()!!
+                                    newProfile.money = data?.MONEY!!
+                                    newProfile.value1 = data?.VALUE1!!
+                                    newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                                    newProfile.roundcount = data?.ROUNDCOUNT!!
+                                    newProfile.login_id = u_id
+                                    newProfile.login_pw = u_pw
+                                    newProfile.imageNum = data?.IMAGENUMBER!!
+                                    newProfile.profitrate = data?.PROFITRATE
+
+                                    profileDbManager!!.updateManager(newProfile)
+                                    Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                }
                             }
                         }
-                        else{
+                    }
+                    else if(data?.OVERWRITE!! == 1) {
+                        println("---overwrite : 1")
+                        if (getHash(profileDbManager!!.getLoginId()!!) == data?.USERID) {
+                            Log.d("Giho", "이전과 동일한 계정으로 로그인")
+                            val newProfile = Profile()
+                            newProfile.id = profileDbManager!!.getId()
+                            newProfile.nickname = data?.NICKNAME!!
+                            newProfile.history = data?.HISTORY!!
+                            newProfile.level = data?.LEVEL!!
+                            newProfile.exp = data?.EXP!!
+                            newProfile.login = profileDbManager!!.getLogin()!!
+                            newProfile.money = data?.MONEY!!
+                            newProfile.value1 = data?.VALUE1!!
+                            newProfile.relativeprofitrate = data?.RELATIVEPROFITRATE!!
+                            newProfile.roundcount = data?.ROUNDCOUNT!!
+                            newProfile.login_id = u_id
+                            newProfile.login_pw = u_pw
+                            newProfile.imageNum = data?.IMAGENUMBER!!
+                            newProfile.profitrate = data?.PROFITRATE
+                            profileDbManager!!.updateManager(newProfile)
+                        } else {
                             Log.d("Giho", "이전과 다른 계정으로 로그인")
                             if (profileDbManager!!.getHashRespectFromDbManager() == profileDbManager!!.getHash()) {
                                 Log.d("Giho", "기기 정보 옳음 및 서버 정보 새로 받아오기")
                                 //TODO: 서버로 전송 : 기기의 정보가 신뢰할 수 있으며 최신
-                                update(getHash(profileDbManager!!.getLoginId()!!).trim(),
-                                        getHash(profileDbManager!!.getLoginPw()!!).trim(),
-                                        profileDbManager!!.getMoney()!!,
-                                        profileDbManager!!.getValue1()!!,
-                                        profileDbManager!!.getNickname()!!,
-                                        profileDbManager!!.getProfitRate()!!,
-                                        profileDbManager!!.getRelativeProfit()!!,
-                                        profileDbManager!!.getRoundCount()!!,
-                                        profileDbManager!!.getHistory()!!,
-                                        profileDbManager!!.getLevel()!!
+                                update(
+                                    getHash(profileDbManager!!.getLoginId()!!).trim(),
+                                    getHash(profileDbManager!!.getLoginPw()!!).trim(),
+                                    profileDbManager!!.getMoney()!!,
+                                    profileDbManager!!.getValue1()!!,
+                                    profileDbManager!!.getNickname()!!,
+                                    profileDbManager!!.getProfitRate()!!,
+                                    profileDbManager!!.getRelativeProfit()!!,
+                                    profileDbManager!!.getRoundCount()!!,
+                                    profileDbManager!!.getHistory()!!,
+                                    profileDbManager!!.getLevel()!!
                                 )
                                 val newProfile = Profile()
                                 newProfile.id = profileDbManager!!.getId()
@@ -682,7 +761,10 @@ class InitialLoginActivity : AppCompatActivity() {
                                 profileDbManager!!.updateManager(newProfile)
                             } else { // 신뢰할 수 없는 기기정보 -> 서버 것으로 리셋
                                 Log.d("Giho", "신뢰할 수 없는 기기 정보 및 서버 정보 받아오기")
-                                Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
+                                Log.d(
+                                    "Giho",
+                                    "manager nickname : " + profileDbManager!!.getNickname()
+                                )
                                 val newProfile = Profile()
                                 newProfile.id = profileDbManager!!.getId()
                                 newProfile.nickname = data?.NICKNAME!!
@@ -700,8 +782,10 @@ class InitialLoginActivity : AppCompatActivity() {
                                 newProfile.profitrate = data?.PROFITRATE
 
                                 profileDbManager!!.updateManager(newProfile)
-                                Log.d("Giho", "manager nickname : " + profileDbManager!!.getNickname())
-
+                                Log.d(
+                                    "Giho",
+                                    "manager nickname : " + profileDbManager!!.getNickname()
+                                )
                             }
                         }
                     }
@@ -764,6 +848,7 @@ class InitialLoginActivity : AppCompatActivity() {
             questDb?.questDao()?.update(newQuest)
         }
     }
+
 
 
 

@@ -77,10 +77,14 @@ class DATACLASS {
     @Expose
     var IMAGENUMBER : Int
 
+    @SerializedName("OVERWRITE")
+    @Expose
+    var OVERWRITE : Int
+
 
 
     constructor(USERID: String, PASSWORD: String, DATE: String, MONEY: Int, VALUE1: Int, NICKNAME:String,PROFITRATE:Float, RELATIVEPROFITRATE:Float,ROUNDCOUNT:Int, HISTORY:Int, LEVEL : Int, EXP:Int, QUEST:Int, POTION:Int, SETCASH : Float, SETMONTHLY:Float, SETSALARYRAISE:Float,
-                IMAGENUMBER : Int) {
+                IMAGENUMBER : Int, OVERWRITE : Int) {
         this.USERID = USERID
         this.PASSWORD = PASSWORD
         this.DATE = DATE
@@ -99,5 +103,6 @@ class DATACLASS {
         this.SETMONTHLY = SETMONTHLY
         this.SETSALARYRAISE = SETSALARYRAISE
         this.IMAGENUMBER = IMAGENUMBER
+        this.OVERWRITE = OVERWRITE
     }
 }
