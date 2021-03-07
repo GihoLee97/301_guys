@@ -790,6 +790,15 @@ class InitialLoginActivity : AppCompatActivity() {
                         }
                     }
                     questdecode(data?.QUEST!!)
+
+                    val newQuest = Quest()
+                    newQuest.id = 31
+                    newQuest.achievement = data?.QUEST2!!
+                    newQuest.theme = questDb?.questDao()?.getAll()!![30].theme
+                    newQuest.questcontents = questDb?.questDao()?.getAll()!![30].questcontents
+                    newQuest.reward = questDb?.questDao()?.getAll()!![30].reward
+                    questDb?.questDao()?.update(newQuest)
+
                     val newGameset = GameSet()
                     newGameset.id = u_id+"0"
 

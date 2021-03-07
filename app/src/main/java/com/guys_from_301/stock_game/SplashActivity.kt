@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.quest
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
@@ -662,6 +663,15 @@ class SplashActivity : AppCompatActivity() {
                         profileDbManager!!.updateManager(newProfile)
                     }
                     questdecode(data?.QUEST!!)
+
+                    val newQuest = Quest()
+                    newQuest.id = 31
+                    newQuest.achievement = data?.QUEST2!!
+                    newQuest.theme = questDb?.questDao()?.getAll()!![30].theme
+                    newQuest.questcontents = questDb?.questDao()?.getAll()!![30].questcontents
+                    newQuest.reward = questDb?.questDao()?.getAll()!![30].reward
+                    questDb?.questDao()?.update(newQuest)
+
                     val newGameset = GameSet()
                     newGameset.id = u_id+"0"
 

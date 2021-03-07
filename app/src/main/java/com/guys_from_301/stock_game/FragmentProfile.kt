@@ -267,13 +267,14 @@ class FragmentProfile : Fragment() {
             override fun onFailure(call: Call<MutableList<DATACLASS_NOTICE>>, t: Throwable) {
                 println("---서버통신실패: "+t.message)
             }
-            override fun onResponse(call: Call<MutableList<DATACLASS_NOTICE>>, response: retrofit2.Response<MutableList<DATACLASS_NOTICE>>) {
+            override fun onResponse(call: Call<MutableList<DATACLASS_NOTICE>>,
+                response: retrofit2.Response<MutableList<DATACLASS_NOTICE>>) {
                 if (response.isSuccessful && response.body() != null) {
                     println("---서버통신성공")
                     var data = response.body()!!
-                    if(Notice_array == null){
-                        Notice_array = response.body()!!
-                        for(i in 0..data.size-1){
+                    if (noticedb?.noticeDao()?.getAll()!!.size >= 2) {
+                    } else {
+                        for (i in 0..data.size - 1) {
                             val newNotice = Notice()
                             newNotice.id = data[i].ID
                             newNotice.title = data[i].TITLE
@@ -281,9 +282,7 @@ class FragmentProfile : Fragment() {
                             newNotice.date = data[i].DATE
                             noticedb?.noticeDao()?.insert(newNotice)
                         }
-
                     }
-
                 }
             }
         })
