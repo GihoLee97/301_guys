@@ -1,5 +1,6 @@
 package com.guys_from_301.stock_game
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -18,7 +19,14 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.guys_from_301.stock_game.data.*
+import com.guys_from_301.stock_game.retrofit.RetrofitLevelUp
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 
 var totaltradeday: Int = 0
@@ -96,10 +104,19 @@ class NewResultNormalActivity: AppCompatActivity() {
             ll_only_result.visibility = View.INVISIBLE
             tv_only_result.visibility = View.INVISIBLE
         }
+        else{
+            funlevelup(
+                    profileDbManager!!.getLoginId()!!,
+                    profileDbManager!!.getLoginPw()!!,
+                    Math.round(totaltradeday*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
+            )
+            rewardByStack(Math.round(totaltradeday*1000* (relativeprofitrate+100)/100))
+        }
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
-        tv_experience.text = "+100"
+        tv_experience.text = "+"+totaltradeday+"exp"
+        tv_rewardStack.text = "+"+dec.format(Math.round(totaltradeday*1000* (relativeprofitrate+100)/100))
 
 
         if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"
@@ -197,8 +214,6 @@ class NewResultNormalActivity: AppCompatActivity() {
         gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
 
         val deleteRunnable = kotlinx.coroutines.Runnable {
-            if (gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = tradeday
-            else totaltradeday = gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!! + gamenormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! * 2
             gamenormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
             gamesetDB?.gameSetDao()?.deleteId(setId, accountID!!)
             Log.d("hongz", "게임 종료 gameset, gamenormal 삭제")
@@ -259,6 +274,53 @@ class NewResultNormalActivity: AppCompatActivity() {
                 pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, totaltradeday, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
         gamenormalDb?.gameNormalDao()?.insert(newGameNormalDB)//완료한 게임 히스토리 저장
     }
+
+    fun funlevelup(u_id: String, u_pw: String, u_exp: Int) {
+        val mContext: Context = this
+        var funlevel_up: RetrofitLevelUp? = null
+        val url = "http://stockgame.dothome.co.kr/test/levelup.php/"
+        var gson: Gson = GsonBuilder()
+                .setLenient()
+                .create()
+        //creating retrofit object
+        var retrofit =
+                Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build()
+        //creating our api
+        funlevel_up = retrofit.create(RetrofitLevelUp::class.java)
+
+        funlevel_up.levelup(getHash(u_id).trim(), getHash(u_pw).trim(), u_exp)
+                .enqueue(object : Callback<DATACLASS> {
+                    override fun onFailure(call: Call<DATACLASS>, t: Throwable) {
+                        println("---" + t.message)
+                    }
+
+                    override fun onResponse(
+                            call: Call<DATACLASS>,
+                            response: retrofit2.Response<DATACLASS>
+                    ) {
+                        if (response.isSuccessful && response.body() != null) {
+                            var data: DATACLASS = response.body()!!
+                            if (profileDbManager!!.getLevel()!! != data?.LEVEL) {
+                                islevelup = true
+                            }
+                            profileDbManager!!.setLevel(data?.LEVEL)
+                            profileDbManager!!.setExp(data?.EXP)
+                        }
+                    }
+                })
+
+    }
+
+    //도전과제 스텍 보상 함수
+    fun rewardByStack(reward: Int){
+        if (!profileDbManager!!.isEmpty(this)) {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!!+reward)
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()

@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="다음 레벨까지 300,000 포인트 남았습니다."
+                    android:text="투자를 진행하면 경험치가 쌓입니다"
                     android:textAppearance="@style/quest_levelDescription" />
             </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
-                android:text="적립형 도전 과제"
+                android:text="남은 도전 과제"
                 android:textAppearance="@style/main_moduleTitle" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -102,26 +102,26 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="20dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="32dp"
-                android:text="적립형 도전 과제"
-                android:textAppearance="@style/main_moduleTitle" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="24dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:text="적립형 도전 과제"-->
+<!--                android:textAppearance="@style/main_moduleTitle" />-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/qRecyclerView_oneshot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="20dp" />
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/qRecyclerView_oneshot"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="24dp"-->
+<!--                android:layout_marginTop="20dp" />-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:background="#FFFFFF" />
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:background="#FFFFFF" />-->
         </LinearLayout>
 
     </ScrollView>
