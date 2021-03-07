@@ -126,11 +126,11 @@ class NewResultNormalActivity: AppCompatActivity() {
             tv_yourProfit.setTextAppearance(applicationContext, R.style.gameResult_descriptionChangeDown)
         }
         tv_yourProfit.text = "당신은 " + dec.format(10000 * (100 + relativeprofitrate) / 100) + "원"
-        tv_totalTax.text = "$" + dec.format(taxtot)
-        tv_totalDividend.text = "$" + dec.format(dividendtot)
-        tv_totalFee.text = "$" + dec.format(tradecomtot)
-        tv_realizeGainNLoss.text = "$" + dec.format(profit)
-        tv_tradeday.text = gamePlayDay.toString() + "일"
+        tv_totalTax.text = "$ " + dec.format(taxtot)
+        tv_totalDividend.text = "$ " + dec.format(dividendtot)
+        tv_totalFee.text = "$ " + dec.format(tradecomtot)
+        tv_realizeGainNLoss.text = "$ " + dec.format(profit)
+        tv_tradeday.text = totaltradeday.toString() + "일"
 
         ll_goBackHome.setOnClickListener {
             GotoMainactivity()

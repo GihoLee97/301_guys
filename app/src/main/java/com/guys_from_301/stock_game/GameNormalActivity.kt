@@ -668,14 +668,14 @@ class GameNormalActivity : AppCompatActivity() {
         // 거래하기
         ll_trade.setOnClickListener {
             tradeBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
-            click = !click /////////////////////////////////////////////////////////////////////////
+            click = true /////////////////////////////////////////////////////////////////////////
         }
 
         // 자동
         ll_trade.setOnLongClickListener {
             if (!autobuy) {
                 autoBottomSheetDialog.show(supportFragmentManager, tradeBottomSheetDialog.tag)
-                click = !click ///////////////////////////////////////////////////////////////////////
+                click = true ///////////////////////////////////////////////////////////////////////
             } else {
                 autobuy = false
                 autoratio = 0
@@ -690,13 +690,13 @@ class GameNormalActivity : AppCompatActivity() {
         // 아이템
         ll_item.setOnClickListener {
             itemBottomSheetDialog.show(supportFragmentManager, itemBottomSheetDialog.tag)
-            click = !click /////////////////////////////////////////////////////////////////////////
+            click = true /////////////////////////////////////////////////////////////////////////
         }
 
         tv_assetTot.setOnClickListener {
             val dlg_asset = Dialog_asset(this@GameNormalActivity, monthlytemp, divlast, taxlast)
             dlg_asset.start()
-            click = !click /////////////////////////////////////////////////////////////////////////
+            click = true /////////////////////////////////////////////////////////////////////////
         }
 
         // 게임 내 뒤로가기 버튼
