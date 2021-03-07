@@ -13,6 +13,9 @@ import com.guys_from_301.stock_game.data.ProfileDB
 import com.kakao.sdk.user.UserApiClient
 import org.w3c.dom.Text
 
+val profileImageId = arrayOf(R.drawable.ic_profile_image_templete1,
+        R.drawable.ic_profile_image_templete2,R.drawable.ic_profile_image_templete3,
+        R.drawable.ic_profile_image_templete4,R.drawable.ic_profile_image_templete5)
 
 var realkakaoplayer = mutableListOf<Dataclass_kakao>()
 var arrayll = mutableListOf<Int>()
