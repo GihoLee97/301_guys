@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -59,11 +60,20 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         rg_profileImageSelect = findViewById(R.id.rg_profileImageSelect)
         rg_profileImageSelect.setOnCheckedChangeListener{ group, checkedId ->
             isRadioGroupChecked = true
+            Log.d("Giho","checkedId : "+checkedId.toString())
         }
 
 
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
             if(isRadioGroupChecked) {
+                var _u_imageNumber = 0
+                when(rg_profileImageSelect.checkedRadioButtonId){
+                    R.id.rb_image1 -> _u_imageNumber=0
+                    R.id.rb_image2 -> _u_imageNumber=1
+                    R.id.rb_image3 -> _u_imageNumber=2
+                    R.id.rb_image4 -> _u_imageNumber=3
+                    R.id.rb_image5 -> _u_imageNumber=4
+                }
                 val time1: LocalDateTime = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 val formatted = time1.format(formatter)
@@ -71,7 +81,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
                 signupnickcheck(getHash(_u_id).toString().trim(),
                         getHash(_u_pw).toString().trim(),
                         SignupDate, et_signup_nick.text.toString(),
-                        rg_profileImageSelect.checkedRadioButtonId, _u_method)
+                        _u_imageNumber, _u_method)
 //            Toast.makeText(this, "아이디: "+ u_id +"\n비밀번호: "+u_pw, Toast.LENGTH_LONG).show()
             } else{
                 findViewById<TextView>(R.id.tv_signup_final_ment_2).visibility = View.VISIBLE
