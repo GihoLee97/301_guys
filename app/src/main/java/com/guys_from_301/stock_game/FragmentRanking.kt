@@ -73,6 +73,7 @@ class FragmentRanking : Fragment() {
             v.findViewById<TextView>(R.id.tv_kakaoRanking).setTextAppearance(activity,R.style.ranking_scope_unchecked)
             v.findViewById<TextView>(R.id.tv_localRanking).setTextAppearance(activity,R.style.ranking_scope_checked)
         }
+
         // local ranking
         val ranker_list : MutableList<String> = mutableListOf(rank1_nick, rank2_nick, rank3_nick, rank4_nick,
                 rank5_nick,rank6_nick,rank7_nick,rank8_nick,rank9_nick,rank10_nick)
@@ -105,6 +106,18 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user8_money_local).text = rank8_money
         v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money
+
+        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]-1])
+        v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]-1])
+        v.findViewById<ImageView>(R.id.iv_user3_image_local).setImageResource(profileImageId[ranker_image[2]-1])
+        v.findViewById<ImageView>(R.id.iv_user4_image_local).setImageResource(profileImageId[ranker_image[3]-1])
+        v.findViewById<ImageView>(R.id.iv_user5_image_local).setImageResource(profileImageId[ranker_image[4]-1])
+        v.findViewById<ImageView>(R.id.iv_user6_image_local).setImageResource(profileImageId[ranker_image[5]-1])
+        v.findViewById<ImageView>(R.id.iv_user7_image_local).setImageResource(profileImageId[ranker_image[6]-1])
+        v.findViewById<ImageView>(R.id.iv_user8_image_local).setImageResource(profileImageId[ranker_image[7]-1])
+        v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]-1])
+        v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]-1])
+
         if(rank_number==1 ||rank_number==2||rank_number==3){
             v.findViewById<TextView>(ranker_local_nick!![rank_number-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
         }
