@@ -788,6 +788,7 @@ class GameNormalActivity : AppCompatActivity() {
         eventCount = eventCount+1
         if(eventCount == 1)   dlg_exit.start()
         if(click == false)  click = !click /////////////////////////////////////////////////////////////////////////////
+        Log.d("hongz","GameNormalActivity: eventCount="+ eventCount)
     }
 
     // 홈버튼 눌렀을 떄 게임 종료 다이얼로그 띄움(일시 정지 기능으로 사용)
@@ -800,6 +801,7 @@ class GameNormalActivity : AppCompatActivity() {
             if(eventCount == 1) dlg_exit.start()
         }
         if(click == false)  click = !click /////////////////////////////////////////////////////////////////////////////
+        Log.d("hongz","GameNormalActivity: eventCount="+ eventCount)
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2707,4 +2709,6 @@ class GameNormalActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
+
+
 }

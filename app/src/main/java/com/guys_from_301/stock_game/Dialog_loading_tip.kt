@@ -73,7 +73,7 @@ constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucen
                 newGameSet.endtime = localDateTime.toString()
                 newGameSet.profitrate = profitrate
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
-                Log.d("hongz", "gameset 업데이트")
+                Log.d("hongz", "Dialog_loading_tip: gameset 업데이트")
             }
             startGameSet = false
         }

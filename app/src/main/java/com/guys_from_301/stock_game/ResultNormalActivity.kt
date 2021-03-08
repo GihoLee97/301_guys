@@ -217,7 +217,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         val deleteRunnable = kotlinx.coroutines.Runnable {
             gamenormalDb?.gameNormalDao()?.deleteId(setId, accountID!!)
             gamesetDB?.gameSetDao()?.deleteId(setId, accountID!!)
-            Log.d("hongz", "게임 종료 gameset, gamenormal 삭제")
+            Log.d("hongz", "게임 종료 gameset"+ setId+", gamenormal 삭제")
         }
         val deleteThread = Thread(deleteRunnable)
         deleteThread.start()

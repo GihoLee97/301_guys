@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        //게임 저장시 gmaeset 업데이트
+        //게임 저장시 gameset 업데이트
         if(updateGameSet){
 //            val dialog = Dialog_loading(this@MainActivity)
 //            dialog.show()
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
                     newGameSet.setgamespeed = initialgameset.setgamespeed
                     newGameSet.setgamelength = initialgameset.setgamelength
                     newGameSet.accountId = initialgameset.accountId
-                    Log.d("hongz", "새gameset 추가 [id]: "+id)
+                    Log.d("hongz", "MainActivity: 새gameset 추가 [id]: "+id)
                 }
                 newGameSet.endtime = ""
                 gameSetDb?.gameSetDao()?.insert(newGameSet)
@@ -704,6 +704,11 @@ class MainActivity : AppCompatActivity() {
             }
             questAchieved = arrayListOf()
         }
+
+        eventCount = 0
+        Log.d("hongz","MainActivity: eventCount="+ eventCount)
+
+
     }
 
     override fun onStop() {

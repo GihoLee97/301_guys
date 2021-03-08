@@ -91,15 +91,17 @@ class FragmentHome : Fragment() {
             profitAchievement = 100
         }
         if (questRelativeProfitRateList.isEmpty()) {
-            questRelativeProfitRateList = listOf(Quest(0, "시장대비 수익률", "시장을 이기는 투자자","모든 도전과제 달성", 1))
+            questRelativeProfitRateList = listOf(Quest(0, "시장대비 수익률", "이기는 투자자","모든 도전과제 달성", 1))
             relativeProfitAchievement = 100
         }
         questList = listOf(questInGameProfitRateList.first(), questRelativeProfitRateList.first())
         achievementList = listOf(profitAchievement,relativeProfitAchievement)
         tv_questName1.text = questList[0].theme
         tv_questName2.text = questList[1].theme
-        tv_questDescription1.text = questList[0].questcontents.slice(IntRange(9,14))
-        tv_questDescription2.text = questList[1].questcontents.slice(IntRange(11,16))
+        if(questList[0].questcontents.length>13)  tv_questDescription1.text = questList[0].questcontents.slice(IntRange(9,questList[0].questcontents.length-1))
+        else tv_questDescription1.text = questList[0].questcontents
+        if(questList[1].questcontents.length>15)  tv_questDescription2.text = questList[1].questcontents.slice(IntRange(11,questList[1].questcontents.length-1))
+        else tv_questDescription2.text = questList[1].questcontents
         pb_quest1.setProgress(achievementList[0])
         pb_quest2.setProgress(achievementList[1])
 
@@ -134,8 +136,7 @@ class FragmentHome : Fragment() {
             startActivity(intent)
             startGameSet = true
         }
-//                mAdapter.notifyDataSetChanged()
-
+        mAdapter.notifyDataSetChanged()
         pRecyclerView.adapter = mAdapter
         val manager = LinearLayoutManager(_MainActivity!!, LinearLayoutManager.HORIZONTAL, false)
         pRecyclerView.setHasFixedSize(true)
@@ -221,6 +222,10 @@ class FragmentHome : Fragment() {
         }
 
         return v
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     companion object {

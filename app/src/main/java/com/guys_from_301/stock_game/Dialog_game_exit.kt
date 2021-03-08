@@ -84,7 +84,7 @@ class Dialog_game_exit(context: Context) {
                 val intent = Intent(mContext, MainActivity::class.java)
                 (mContext as Activity).finish()//수정함
                 mContext?.startActivity(intent)
-                Log.d("hongz","Dialog_game_exit 종료")
+                Log.d("hongz","Dialog_game_exit 게임 저장 후 종료")
             }
 
         }
@@ -113,6 +113,7 @@ class Dialog_game_exit(context: Context) {
             deleteThread.start()
 
             dlg.dismiss()
+            Log.d("hongz","Dialog_game_exit 게임 완전 종료 후 종료")
             gameend = !gameend //////////////////////////////////////////////////////////////////////
             endsuccess = true
             (mContext as Activity).finish()
@@ -121,6 +122,7 @@ class Dialog_game_exit(context: Context) {
         btncancel.setOnClickListener {
             eventCount = 0
             dlg.dismiss()
+            Log.d("hongz","Dialog_game_exit 닫힘")
             if (click == true) {
                 click = !click //////////////////////////////////////////////////////////////////////
             }
