@@ -969,18 +969,21 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
                             </LinearLayout>
 
-                            <LinearLayout
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="180dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="180"
                                 android:orientation="vertical">
                                 <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_ecoindex_front"
                                     android:layout_width="match_parent"
                                     android:layout_height="196dp"
                                     android:layout_marginRight="24dp"
                                     android:layout_marginLeft="4dp"
                                     android:layout_marginTop="20dp"
                                     android:background="@drawable/borderline_ecobig"
+                                    app:layout_constraintTop_toTopOf="parent"
                                     android:elevation="10dp"
                                     android:orientation="horizontal">
                                     <TextView
@@ -1000,6 +1003,19 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent">
                                     </com.github.mikephil.charting.charts.LineChart>
+
+                                    <ImageButton
+                                        android:id="@+id/ib_ecoindex_information"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:layout_editor_absoluteX="34dp"
+                                        tools:layout_editor_absoluteY="44dp"
+                                        android:background="@drawable/ic_ecoindex_information"
+                                        app:layout_constraintBottom_toBottomOf="@id/tv_ecoindex"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
                                     <TextView
                                         android:id="@+id/tv_ecoval"
                                         android:layout_width="wrap_content"
@@ -1009,8 +1025,63 @@
                                         android:text="0.0 %"
                                         android:textAppearance="@style/game_ecoindexvalbig2">
                                     </TextView>
+
                                 </androidx.constraintlayout.widget.ConstraintLayout>
-                            </LinearLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_ecoindex_back"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="196dp"
+                                    android:layout_marginRight="24dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginTop="20dp"
+                                    android:background="@drawable/borderline_ecobig"
+                                    android:visibility="invisible"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:id="@+id/tv_ecoindex_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="20dp"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:text="연준 기금 금리"
+                                        android:textAppearance="@style/ecoindex_title">
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tv_ecoindex_back"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="돌아가기"
+                                        android:textAppearance="@style/ecoindex_back"
+                                        tools:layout_editor_absoluteX="34dp"
+                                        tools:layout_editor_absoluteY="44dp"
+                                        app:layout_constraintBottom_toBottomOf="@id/tv_ecoindex_title"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:layout_marginTop="52dp"
+                                        >
+                                        <TextView
+                                            android:id="@+id/tv_ecoindex_description"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="연준 기금 금리"
+                                            android:textAppearance="@style/ecoindex_description"
+                                            >
+                                        </TextView>
+
+
+                                    </ScrollView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

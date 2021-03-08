@@ -1,9 +1,13 @@
 package com.guys_from_301.stock_game
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -156,6 +160,11 @@ var comlast: Float = 0F
 
 class GameNormalActivity : AppCompatActivity() {
 
+    //지표관련 변수들
+    lateinit var front_anim: AnimatorSet
+    lateinit var back_anim: AnimatorSet
+    var isFront = true
+    private val ecoindexDescription = listOf<String>("연준 기금 금리", "10년 만기 국채 이율", "산업생산량", "실업률", "인플레이션")
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
@@ -364,8 +373,14 @@ class GameNormalActivity : AppCompatActivity() {
     private lateinit var cl_unem: ConstraintLayout
     private lateinit var cl_inf: ConstraintLayout
 
+    private lateinit var cl_ecoindex_front: ConstraintLayout
+    private lateinit var cl_ecoindex_back: ConstraintLayout
     private lateinit var tv_ecoindex: TextView
+    private lateinit var tv_ecoindex_title : TextView
+    private lateinit var tv_ecoindex_description: TextView
     private lateinit var tv_ecoval: TextView
+    private lateinit var ib_information: ImageButton
+    private lateinit var tv_ecoindex_back: TextView
 
     private lateinit var cht_snp: LineChart
     private lateinit var cht_eco: LineChart
@@ -437,8 +452,14 @@ class GameNormalActivity : AppCompatActivity() {
         cl_unem = findViewById(R.id.cl_unem)
         cl_inf = findViewById(R.id.cl_inf)
 
+        cl_ecoindex_front = findViewById(R.id.cl_ecoindex_front)
+        cl_ecoindex_back = findViewById(R.id.cl_ecoindex_back)
         tv_ecoindex = findViewById(R.id.tv_ecoindex)
+        tv_ecoindex_title = findViewById(R.id.tv_ecoindex_title)
+        tv_ecoindex_description = findViewById(R.id.tv_ecoindex_description)
+        tv_ecoindex_back = findViewById(R.id.tv_ecoindex_back)
         tv_ecoval = findViewById(R.id.tv_ecoval)
+        ib_information = findViewById(R.id.ib_ecoindex_information)
 
         cht_snp = findViewById(R.id.cht_snp)
         cht_eco = findViewById(R.id.cht_eco)
@@ -718,31 +739,85 @@ class GameNormalActivity : AppCompatActivity() {
             ecoselect = 0
             cht_eco.data = fundD
             tv_ecoindex.text = "연준 기금 금리"
+            tv_ecoindex_title.text = tv_ecoindex.text
+            tv_ecoindex_description.text = ecoindexDescription[0]
             tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
         }
         cl_bond.setOnClickListener {
             ecoselect = 1
             cht_eco.data = bondD
-            tv_ecoindex.text = "10년 만기 국채 이율"
+            tv_ecoindex.text = "국채 이율"
+            tv_ecoindex_title.text = tv_ecoindex.text
+            tv_ecoindex_description.text = ecoindexDescription[1]
             tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
         }
         cl_indpro.setOnClickListener {
             ecoselect = 2
             cht_eco.data = indproD
             tv_ecoindex.text = "산업생산량"
+            tv_ecoindex_title.text = tv_ecoindex.text
+            tv_ecoindex_description.text = ecoindexDescription[2]
             tv_ecoval.text = per.format(indpro_val[indproIndex - 1].toFloat()) + " "
         }
         cl_unem.setOnClickListener {
             ecoselect = 3
             cht_eco.data = unemD
             tv_ecoindex.text = "실업률"
+            tv_ecoindex_title.text = tv_ecoindex.text
+            tv_ecoindex_description.text = ecoindexDescription[3]
             tv_ecoval.text = per.format(unem_val[unemIndex - 1].toFloat()) + " %"
         }
         cl_inf.setOnClickListener {
             ecoselect = 4
             cht_eco.data = infD
             tv_ecoindex.text = "인플레이션"
+            tv_ecoindex_title.text = tv_ecoindex.text
+            tv_ecoindex_description.text = ecoindexDescription[4]
             tv_ecoval.text = per.format(inf_val[infIndex - 1].toFloat()) + " %"
+        }
+
+//        //지표 설명 animator object
+//        val scale = applicationContext.resources.displayMetrics.density
+//        cl_ecoindex_front.cameraDistance = 8000 * scale
+//        cl_ecoindex_back.cameraDistance = 8000 * scale
+        var content : SpannableString = SpannableString(tv_ecoindex_back.text)
+        content.setSpan(UnderlineSpan(), 0, content.length,0)
+        tv_ecoindex_back.text = content
+//
+//        front_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.front_animator) as AnimatorSet
+//        back_anim = AnimatorInflater.loadAnimator(applicationContext, R.animator.back_animator) as AnimatorSet
+//
+//        ib_information.setOnClickListener {
+//            if(isFront){
+//            Log.d("hongz", "GameNormalActivity: 지표 뒤집기(앞)")
+//            front_anim.setTarget(cl_ecoindex_front)
+//            back_anim.setTarget(cl_ecoindex_back)
+//            front_anim.start()
+//            back_anim.start()
+//            isFront = false}
+//        }
+//        tv_ecoindex_back.setOnClickListener {
+//            if(!isFront){
+//            Log.d("hongz", "GameNormalActivity: 지표 뒤집기(뒤)")
+//            front_anim.setTarget(cl_ecoindex_back)
+//            back_anim.setTarget(cl_ecoindex_front)
+//            back_anim.start()
+//            front_anim.start()
+//            isFront = true}
+//        }
+        ib_information.setOnClickListener {
+            if(isFront){
+                cl_ecoindex_back.visibility = View.VISIBLE
+                cl_ecoindex_front.visibility = View.INVISIBLE
+                isFront = false
+            }
+        }
+        tv_ecoindex_back.setOnClickListener {
+            if(!isFront){
+                cl_ecoindex_back.visibility = View.INVISIBLE
+                cl_ecoindex_front.visibility = View.VISIBLE
+                isFront = true
+            }
         }
 
 
@@ -2283,7 +2358,7 @@ class GameNormalActivity : AppCompatActivity() {
                     tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
                 }
                 1 -> {
-                    tv_ecoindex.text = "10년 만기 국채 이율"
+                    tv_ecoindex.text = "국채 이율"
                     tv_ecoval.text = per.format(bond_val[bondIndex - 1].toFloat()) + " %"
                 }
                 2 -> {
