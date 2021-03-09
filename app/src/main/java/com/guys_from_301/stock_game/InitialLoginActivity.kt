@@ -588,11 +588,26 @@ class InitialLoginActivity : AppCompatActivity() {
                                 val newGameSet = GameSet()
                                 setId = u_id
                                 newGameSet.id = accountID+0
-                                newGameSet.setcash = 0
                                 newGameSet.setgamelength = START_GAME_LENGTH
                                 newGameSet.setgamespeed = START_GAME_SPEED
-                                newGameSet.setmonthly = 0
-                                newGameSet.setsalaryraise = 0
+                                if(data?.SETCASH == 10000F) newGameSet.setcash = 0
+                                else if(data?.SETCASH == 50000F) newGameSet.setcash = 1
+                                else if(data?.SETCASH == 100000F) newGameSet.setcash = 2
+                                else if(data?.SETCASH == 500000F) newGameSet.setcash = 3
+                                else if(data?.SETCASH == 1000000F) newGameSet.setcash = 4
+
+                                if(data?.SETMONTHLY == 1000F ) newGameSet.setmonthly = 0
+                                else if(data?.SETMONTHLY == 1500F ) newGameSet.setmonthly = 1
+                                else if(data?.SETMONTHLY == 2000F ) newGameSet.setmonthly = 2
+                                else if(data?.SETMONTHLY == 5000F ) newGameSet.setmonthly = 3
+                                else if(data?.SETMONTHLY == 10000F ) newGameSet.setmonthly = 4
+
+                                if(data?.SETSALARYRAISE == 4F) newGameSet.setsalaryraise = 0
+                                else if(data?.SETSALARYRAISE == 5F) newGameSet.setsalaryraise = 1
+                                else if(data?.SETSALARYRAISE == 6F) newGameSet.setsalaryraise = 2
+                                else if(data?.SETSALARYRAISE == 8F) newGameSet.setsalaryraise = 3
+                                else if(data?.SETSALARYRAISE == 10F) newGameSet.setsalaryraise = 4
+
                                 newGameSet.accountId = accountID!!
                                 gameSetDb?.gameSetDao()?.insert(newGameSet)
                                 newGameSet.id = accountID+0

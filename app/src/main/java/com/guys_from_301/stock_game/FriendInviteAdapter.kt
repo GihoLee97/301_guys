@@ -174,7 +174,7 @@ class FriendInviteAdapter(val context: Context, var friends: Friends<Friend>, va
                         addThread.start()
                         rewardByStack(100000)
                         questAchieved.add(friendquest)
-
+                        quest2(getHash(profileDbManager!!.getLoginId()!!), questDb?.questDao()?.getAll()!![30].achievement)
                         Toast.makeText(context, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
                         kakaoMessageManager.sendMessageonlyone(uuid, kakaoMessageManager.dummy)
                     }
