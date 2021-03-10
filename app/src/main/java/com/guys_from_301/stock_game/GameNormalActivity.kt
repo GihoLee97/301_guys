@@ -164,7 +164,11 @@ class GameNormalActivity : AppCompatActivity() {
     lateinit var front_anim: AnimatorSet
     lateinit var back_anim: AnimatorSet
     var isFront = true
-    private val ecoindexDescription = listOf<String>("연준 기금 금리", "10년 만기 국채 이율", "산업생산량", "실업률", "인플레이션")
+    private val ecoindexDescription = listOf<String>("금리가 높아지면 기업의 이자부담이 커지지만 경제가 좋아 기업이 벌어들이는 돈이 더 많은 관계로 주가가 뛰게 됩니다. 금리가 고공행진을 이어나간다면 주가가 하락하기 시작합니다.",
+            "주식시장은 채권수익률이 급등하면 좋지 않은 것이라 볼 수 있습니다. 채권수익률이 크게 오르면 리스크를 안고 주식투자할 이유가 없겠죠? 사람들은 안전하게 채권을 사는 방법을 선택합니다.",
+            "실제 생산량을 지수화하여 측정하는 지표가 바로 \"산업 생산 지수\"입니다. 산업 생산 지수는 2012년 기준 지수를 100으로 설정하였습니다.",
+            "실업률은 경제활동인구에 대한 실업자 수의 비율입니다. 경제활동인구란 만 15세 이상의 국민 중 일할 의사와 능력을 동시에 가진 사람을 뜻합니다. 주부, 군인, 환자, 교도소 수감자, 실망노동자는 비경제활동인구에 속하며 실업률 산출시 제외됩니다.",
+            "인플레이션이 발생하면 주가는 하락을 하는 것이 일반적입니다. 중앙은행은 보통 금리를 높여 인플레이션을 억제합니다. 그 결과 채권의 수익률이 높아지고 자금은 채권 쪽으로 몰려 주식의 가격은 하락을 하게 됩니다.")
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // 차트 데이터 및 차트 설정 변수 생성
     private val given = 1250 // 게임 시작시 주어지는 과거 데이터의 구간: 5년
@@ -738,7 +742,7 @@ class GameNormalActivity : AppCompatActivity() {
         cl_fund.setOnClickListener {
             ecoselect = 0
             cht_eco.data = fundD
-            tv_ecoindex.text = "연준 기금 금리"
+            tv_ecoindex.text = "금리"
             tv_ecoindex_title.text = tv_ecoindex.text
             tv_ecoindex_description.text = ecoindexDescription[0]
             tv_ecoval.text = per.format(fund_val[fundIndex - 1].toFloat()) + " %"
