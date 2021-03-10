@@ -7,8 +7,9 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="256dp"
+        android:layout_height="212dp"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:background="@drawable/ic_rectangle_negotiation"
         android:elevation="5dp">
