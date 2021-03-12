@@ -445,7 +445,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price1x)
-                np_ratio.value = (100 * quant / quant1x)
+                np_ratio.value = (100F * quant / quant1x).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#3B80FF"))
             }
             btn_tradeok.isEnabled = true
@@ -473,7 +473,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(price3x)
-                np_ratio.value = (100 * quant / quant3x)
+                np_ratio.value = (100F * quant / quant3x).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#3B80FF"))
             }
             btn_tradeok.isEnabled = true
@@ -501,7 +501,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv1x)
-                np_ratio.value = (100 * quant / quantinv1x)
+                np_ratio.value = (100F * quant / quantinv1x).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#3B80FF"))
             }
             btn_tradeok.isEnabled = true
@@ -529,7 +529,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 v_left.setBackgroundResource(R.drawable.ic_path_left_blue)
                 tv_tradetitle.setTextAppearance(R.style.trade_titlesell)
                 tv_tradeprice.text = "$ " + dec.format(priceinv3x)
-                np_ratio.value = (100 * quant / quantinv3x)
+                np_ratio.value = (100F * quant / quantinv3x).roundToInt()
                 btn_tradeok.setBackgroundColor(Color.parseColor("#3B80FF"))
             }
             btn_tradeok.isEnabled = true
@@ -683,7 +683,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                                 quant += 1
                                 tv_tradequant.text = quant.toString()
                                 tv_tradeprice.text = "$ " + dec.format(quant * price1x)
-                                np_ratio.value = 100 * quant / quant1x
+                                np_ratio.value = (100F * quant / quant1x).roundToInt()
                             } else if (quant == quant1x) {
                                 Toast.makeText(view.context, "매도할 수 있는 최대 수량입니다", Toast.LENGTH_SHORT).show()
                             }
@@ -693,7 +693,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                                 quant += 1
                                 tv_tradequant.text = quant.toString()
                                 tv_tradeprice.text = "$ " + dec.format(quant * price3x)
-                                np_ratio.value = 100 * quant / quant3x
+                                np_ratio.value = (100F * quant / quant3x).roundToInt()
                             } else if (quant == quant3x) {
                                 Toast.makeText(view.context, "매도할 수 있는 최대 수량입니다", Toast.LENGTH_SHORT).show()
                             }
@@ -703,7 +703,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                                 quant += 1
                                 tv_tradequant.text = quant.toString()
                                 tv_tradeprice.text = "$ " + dec.format(quant * priceinv1x)
-                                np_ratio.value = 100 * quant / quantinv1x
+                                np_ratio.value = (100F * quant / quantinv1x).roundToInt()
                             } else if (quant == quantinv1x) {
                                 Toast.makeText(view.context, "매도할 수 있는 최대 수량입니다", Toast.LENGTH_SHORT).show()
                             }
@@ -713,7 +713,7 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                                 quant += 1
                                 tv_tradequant.text = quant.toString()
                                 tv_tradeprice.text = "$ " + dec.format(quant * priceinv3x)
-                                np_ratio.value = 100 * quant / quantinv3x
+                                np_ratio.value = (100F * quant / quantinv3x).roundToInt()
                             } else if (quant == quantinv3x) {
                                 Toast.makeText(view.context, "매도할 수 있는 최대 수량입니다", Toast.LENGTH_SHORT).show()
                             }
@@ -792,11 +792,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                 1 -> {
                     when (select) {
                         0 -> {
-                            if (((newVal / 100F * quant1x).roundToInt()-(newVal / 100F * quant1x)>0)) {
-                                quant = (newVal / 100F * quant1x).roundToInt() - 1
-                                if (quant==0) {
-                                    quant = 1
-                                }
+                            if (newVal==100) {
+                                quant = quant1x
                             } else {
                                 quant = (newVal / 100F * quant1x).roundToInt()
                                 if (quant==0) {
@@ -807,11 +804,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             tv_tradeprice.text = "$ " + dec.format(quant * price1x)
                         }
                         1 -> {
-                            if (((newVal / 100F * quant3x).roundToInt()-(newVal / 100F * quant3x)>0)) {
-                                quant = (newVal / 100F * quant3x).roundToInt() - 1
-                                if (quant==0) {
-                                    quant = 1
-                                }
+                            if (newVal==100) {
+                                quant = quant3x
                             } else {
                                 quant = (newVal / 100F * quant3x).roundToInt()
                                 if (quant==0) {
@@ -822,11 +816,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             tv_tradeprice.text = "$ " + dec.format(quant * price3x)
                         }
                         2 -> {
-                            if (((newVal / 100F * quantinv1x).roundToInt()-(newVal / 100F * quantinv1x)>0)) {
-                                quant = (newVal / 100F * quantinv1x).roundToInt() - 1
-                                if (quant==0) {
-                                    quant = 1
-                                }
+                            if (newVal==100) {
+                                quant = quantinv1x
                             } else {
                                 quant = (newVal / 100F * quantinv1x).roundToInt()
                                 if (quant==0) {
@@ -837,11 +828,8 @@ class TradeBottomDialogFragment(context: Context) : BottomSheetDialogFragment() 
                             tv_tradeprice.text = "$ " + dec.format(quant * priceinv1x)
                         }
                         3 -> {
-                            if (((newVal / 100F * quantinv3x).roundToInt()-(newVal / 100F * quantinv3x)>0)) {
-                                quant = (newVal / 100F * quantinv3x).roundToInt() - 1
-                                if (quant==0) {
-                                    quant = 1
-                                }
+                            if (newVal==100) {
+                                quant = quantinv3x
                             } else {
                                 quant = (newVal / 100F * quantinv3x).roundToInt()
                                 if (quant==0) {
