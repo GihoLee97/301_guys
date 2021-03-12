@@ -708,7 +708,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="26dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -727,8 +727,10 @@
                         <LinearLayout
                             android:layout_marginTop="4dp"
                             android:layout_width="match_parent"
-                            android:layout_height="15dp"
+                            android:layout_height="50dp"
                             android:orientation="horizontal"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
                             android:background="@color/white">
                             <LinearLayout
                                 android:layout_width="44dp"
@@ -738,6 +740,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:gravity="center_vertical"
                                 android:text="뉴스"
                                 android:textAppearance="@style/game_newstitle"
                                 android:layout_weight="23">
@@ -750,7 +753,9 @@
                             <TextView
                                 android:id="@+id/tv_news"
                                 android:layout_width="229dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
                                 android:text="뉴스스스스스스스스스스"
                                 android:textAppearance="@style/game_news"
                                 android:layout_weight="229">
