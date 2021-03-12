@@ -18,6 +18,8 @@ class InitialSetPwActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_set_pw)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
+
         et_signup_pw = findViewById(R.id.et_signup_pw)
         et_signup_pw_check = findViewById(R.id.et_signup_pw_check)
         onlyAlphabetFilterToEnglishET(et_signup_pw)

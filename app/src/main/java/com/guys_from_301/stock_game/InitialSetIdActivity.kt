@@ -21,6 +21,8 @@ class InitialSetIdActivity : AppCompatActivity() {
         mContext = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_set_id)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
+
         findViewById<ImageButton>(R.id.ib_go_signup_main).setOnClickListener{
             onBackPressed()
         }

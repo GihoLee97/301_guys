@@ -90,6 +90,8 @@ class SplashActivity : AppCompatActivity() {
     private var profileDb : ProfileDB? = null
     val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
 
+    val printCheck = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_splash)
@@ -241,7 +243,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     // 입력 확인
-                    //println("[SNP] 날짜 : " + snp_date[count - 1] + " | " + "값 : " + snp_val[count - 1] + " | " + "거래량 : " + snp_vol[count - 1] + " | " + "COUNT = $count")
+                    if(printCheck)
+                        println("[SNP] 날짜 : " + snp_date[count - 1] + " | " + "값 : " + snp_val[count - 1] + " | " + "거래량 : " + snp_vol[count - 1] + " | " + "COUNT = $count")
                     // [0]: Date, [1]: Open, [2]: High, [3]: Low, [4]: Close, [5]: Adj Close, [6]: Volume
                     // 1950-01-03 (헤더 포함 5498번쨰 행)부터 거래량 정보 유효(이전은 0, null 아님).
                     // Open, High, Low, Close 값은 1967-06-30 까지 동일, 1967-07-03 (헤더 포함 9897번째 행)부터 세분화 되어 각각의 값이 달라짐.
@@ -255,7 +258,8 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     fileReader!!.close()
                     csvReader!!.close()
-                    println("[SNP] size : " + snp_date.size.toString())
+                    if(printCheck)
+                        println("[SNP] size : " + snp_date.size.toString())
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : SNP !") // 에러 메시지 출력
@@ -280,7 +284,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     //입력 확인
-                    //println("[FundRate] 날짜 : " + fund_date[count - 1] + " | " + "값 : " + fund_val[count - 1])
+                    if(printCheck)
+                        println("[FundRate] 날짜 : " + fund_date[count - 1] + " | " + "값 : " + fund_val[count - 1])
                     // [0]: Date, [1]: value
                     // 1954-07-01 (헤더 포함 17번쨰 행)부터 정보 유효.
                     // 이후 일별 데이터(매일 O, 거래일 X)
@@ -295,7 +300,8 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     fileReader!!.close()
                     csvReader!!.close()
-                    println("[FundRate] size : " + fund_date.size.toString())
+                    if(printCheck)
+                        println("[FundRate] size : " + fund_date.size.toString())
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : !") // 에러 메시지 출력
@@ -320,7 +326,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     //입력 확인
-                    //println("[BondRate] 날짜 : " + bond_date[count - 1] + " | " + "값 : " + bond_val[count - 1])
+                    if(printCheck)
+                        println("[BondRate] 날짜 : " + bond_date[count - 1] + " | " + "값 : " + bond_val[count - 1])
                     // [0]: Date, [1]: value
                     // 1962-01-02 (헤더 포함 17번쨰 행)부터 정보 유효.
                     // 이후 일별 데이터(거래일)
@@ -335,7 +342,8 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     fileReader!!.close()
                     csvReader!!.close()
-                    //println("[Bondrate] size : " + bond_date.size.toString())
+                    if(printCheck)
+                        println("[Bondrate] size : " + bond_date.size.toString())
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : BondRate !") // 에러 메시지 출력
@@ -361,7 +369,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     //입력 확인
-                    //println("[IndPro] 날짜 : " + indpro_date[count - 1] + " | " + "값 : " + indpro_val[count - 1])
+                    if(printCheck)
+                        println("[IndPro] 날짜 : " + indpro_date[count - 1] + " | " + "값 : " + indpro_val[count - 1])
                     // [0]: Date, [1]: value
                     // 1919-01-01 (헤더 포함 17번쨰 행)부터 정보 유효.
                     // 이후 월별 데이터(매월 1일)
@@ -376,7 +385,8 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     fileReader!!.close()
                     csvReader!!.close()
-                    //println("[IndPro] size : " + indpro_date.size.toString())
+                    if(printCheck)
+                        println("[IndPro] size : " + indpro_date.size.toString())
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : IndPro !") // 에러 메시지 출력
@@ -402,7 +412,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     //입력 확인
-                    //println("[UnEm] 날짜 : " + unem_date[count - 1] + " | " + "값 : " + unem_val[count - 1])
+                    if(printCheck)
+                        println("[UnEm] 날짜 : " + unem_date[count - 1] + " | " + "값 : " + unem_val[count - 1])
                     // [0]: Date, [1]: value
                     // 1948-01-01 (헤더 포함 17번쨰 행)부터 정보 유효.
                     // 이후 월별 데이터(표기상 매월 1일)
@@ -442,7 +453,8 @@ class SplashActivity : AppCompatActivity() {
                     count += 1
 
                     //입력 확인
-                    //println("[InfRate] 날짜 : " + inf_date[count - 1] + " | " + "값 : " + inf_val[count - 1])
+                    if(printCheck)
+                        println("[InfRate] 날짜 : " + inf_date[count - 1] + " | " + "값 : " + inf_val[count - 1])
                     // [0]: Date, [1]: value
                     // 1914-12-01 (헤더 포함 17번쨰 행)부터 정보 유효.
                     // 이후 년별 데이터(표기상 매년 12월 1일)
@@ -457,7 +469,7 @@ class SplashActivity : AppCompatActivity() {
                 try {
                     fileReader!!.close()
                     csvReader!!.close()
-                    //println("[InfRate] size : " + inf_date.size.toString())
+                    println("[InfRate] size : " + inf_date.size.toString())
                     count = 0
                 } catch (e: IOException) {
                     println("Closing fileReader/csvParser Error : InfRate !") // 에러 메시지 출력
