@@ -278,10 +278,10 @@
         <TextView
             android:id="@+id/tv_item4debug"
             android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="피로도"
-            android:textAppearance="@style/game_dialog_bottom_sheet_item_tiredness"/>
+            android:textAppearance="@style/game_dialog_bottom_sheet_item_tiredness" />
 
         <ProgressBar
             android:id="@+id/pb_itemfatigue"

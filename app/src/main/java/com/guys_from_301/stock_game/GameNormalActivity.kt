@@ -125,7 +125,7 @@ private val dcp3x: Float = 0.99F // 괴리율(Discrepancy):  3x, inv3x
 var item1Active: Boolean = false // 시간 되돌리기
 var item2Active: Boolean = false // 뉴스 제공량
 var item3Active: Boolean = false // 3x, -3x 레버리지 거래 오픈
-var item4Active: Boolean = false // 3x, -3x 레버리지 거래 오픈
+var item4Active: Boolean = true // 3x, -3x 레버리지 거래 오픈
 
 var item1Length: Int = 0 // 되돌릴 거래일 수
 var item1Able: Int = 0 // 되돌릴 수 있는 시간 범위
@@ -589,7 +589,7 @@ class GameNormalActivity : AppCompatActivity() {
             item1Active = false
             item2Active = false
             item3Active = false
-            item4Active = false
+            item4Active = true
             item1Length = 0
             item1Able = 0
 

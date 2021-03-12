@@ -411,7 +411,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="게임 내 월별 수익률"
+                    android:text="게임 내 월별 자산"
                     android:textAppearance="@style/gameResult_smallTitle"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -435,13 +435,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal"
+                    android:visibility="invisible"
                     android:gravity="right">
 
                     <TextView
                         android:id="@+id/tv_game_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1999년 06월 수익률"
+                        android:text="1999년 06월 자산"
                         android:textAppearance="@style/gameResult_pinPoint"/>
                     
                     <TextView
