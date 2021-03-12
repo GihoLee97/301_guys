@@ -67,6 +67,9 @@ class FragmentHome : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_home, container, false)
+        activity?.window?.statusBarColor = resources.getColor(R.color.white)
+
+
         itemDb = ItemDB.getInstace(_MainActivity!!)
 
         tv_profitRate = v.findViewById(R.id.tv_profitRate)

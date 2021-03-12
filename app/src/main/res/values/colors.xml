@@ -17,4 +17,6 @@
     <color name="attention">#F96209</color>
     <color name="ignore">#6C7B8E</color>
 
+    <color name="themeFragment">#ED9D0B</color>
+
 </resources>

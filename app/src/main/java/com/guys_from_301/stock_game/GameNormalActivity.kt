@@ -406,6 +406,7 @@ class GameNormalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_normal)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
         val random = Random()
 //       val dialog = Dialog_loading(this@GameNormalActivity)
 //        dialog.show()

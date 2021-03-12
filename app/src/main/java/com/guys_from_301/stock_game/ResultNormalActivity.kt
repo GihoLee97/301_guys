@@ -63,6 +63,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_normal)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
 
         gameend = false // 게임 전역번수 초기화
         endsuccess = false // 게임 전역번수 초기화

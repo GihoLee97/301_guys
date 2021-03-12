@@ -1067,7 +1067,7 @@ c        <item name="android:textSize">20sp</item>
     <style name="ecoindex_description">
         <item name="android:fontFamily">@font/paybooc_otf_medium</item>
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">#4B586B</item>
     </style>
 
     <style name="ecoindex_back">

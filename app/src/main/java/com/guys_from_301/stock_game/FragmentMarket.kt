@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -86,6 +87,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     ): View? {
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_market, container, false)
+        activity?.window?.statusBarColor = resources.getColor(R.color.themeFragment)
+
         gameSetDB = GameSetDB.getInstace(mContext)
         var gameset = gameSetDB?.gameSetDao()?.getAll(accountID!!)?.get(0)
         //viewmodel

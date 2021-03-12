@@ -11,6 +11,7 @@ import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.delay
 
 val profileImageId = arrayOf(R.drawable.ic_profile_image_templete1,
         R.drawable.ic_profile_image_templete2,R.drawable.ic_profile_image_templete3,
@@ -32,7 +33,7 @@ var friendimage = mutableListOf<String>()
 
 
 class FragmentRanking : Fragment() {
-    val coloron = "#F68A06"
+    val coloron = "#ED9D0B"
     val coloroff = "#FFFFFF"
 //    var profileDb : ProfileDB? = null
     private lateinit var tv_my_level: TextView
@@ -51,6 +52,7 @@ class FragmentRanking : Fragment() {
     ): View? {
         var v : View = inflater.inflate(R.layout.fragment_ranking, container, false)
 //        profileDb = ProfileDB.getInstace(_MainActivity!!)
+        activity?.window?.statusBarColor = resources.getColor(R.color.themeFragment)
 
         if(profileDbManager!!.getLogin()!! != 4 ){
             v.findViewById<TextView>(R.id.tv_friend_invite).visibility = View.GONE

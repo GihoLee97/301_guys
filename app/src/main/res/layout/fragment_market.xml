@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F68A06"
+            android:background="@color/themeFragment"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="24dp"
-                    android:background="#F68A06"
+                    android:background="@color/themeFragment"
                     android:text="구매내역"
                     android:textAppearance="@style/market_receipt"
                     app:layout_constraintRight_toRightOf="parent"

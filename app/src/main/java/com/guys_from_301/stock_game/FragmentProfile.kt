@@ -53,6 +53,8 @@ class FragmentProfile : Fragment() {
         getnotice("1")
         // Inflate the layout for this fragment
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
+        activity?.window?.statusBarColor = resources.getColor(R.color.white)
+
         tv_pw_change = v.findViewById(R.id.tv_pw_change)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
         tv_my_nick.text = profileDbManager!!.getNickname()
@@ -238,7 +240,6 @@ class FragmentProfile : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         tv_my_nick.text = profileDbManager!!.getNickname()
     }
 

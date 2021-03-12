@@ -19,6 +19,7 @@ class Dialog_loading_tip
 constructor(context: Context) : Dialog(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen){
     private var gameSetDb: GameSetDB? = null
     init {
+
         setContentView(R.layout.dialog_loading_tip)
         val random = Random()
         val mContext : Context = context

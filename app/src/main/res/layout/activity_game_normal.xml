@@ -1072,6 +1072,7 @@
                                             android:id="@+id/tv_ecoindex_description"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
+                                            android:lineSpacingExtra="4sp"
                                             android:text="금리가 높아지면 기업의 이자부담이 커지지만 경제가 좋아 기업이 벌어들이는 돈이 더 많은 관계로 주가가 뛰게 됩니다. 금리가 고공행진을 이어나간다면 주가가 하락하기 시작합니다."
                                             android:textAppearance="@style/ecoindex_description"
                                             >
