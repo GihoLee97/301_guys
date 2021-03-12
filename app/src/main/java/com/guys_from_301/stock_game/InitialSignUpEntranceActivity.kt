@@ -100,6 +100,7 @@ class InitialSignUpEntranceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_sign_up_entrance)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
 
         btn_googleSignIn = findViewById(R.id.btn_googleSignIn)
         btn_generalLogin = findViewById(R.id.btn_generalLogin)

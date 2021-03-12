@@ -194,6 +194,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        //TODO!!!!!!!!! 카카오 뒤짐....
         //내 정보
         UserApiClient.instance.me { user, error ->
             if (error!=null)

@@ -138,7 +138,8 @@ class FragmentRanking : Fragment() {
         v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]]); ranker_local_image.add(R.id.iv_user9_image_local)
         v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]]); ranker_local_image.add(R.id.iv_user10_image_local)
 
-        myLocalImageViewId = ranker_local_image[rank_number-1]
+        if(rank_number!=0)
+            myLocalImageViewId = ranker_local_image[rank_number-1]
 
         if(rank_number==1 ||rank_number==2||rank_number==3){
             v.findViewById<TextView>(ranker_local_nick!![rank_number-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
@@ -308,7 +309,8 @@ class FragmentRanking : Fragment() {
         super.onResume()
         requireActivity().runOnUiThread {
             Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
-            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
+            if(myLocalImageViewId!=0)
+                Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
         }
     }
 }

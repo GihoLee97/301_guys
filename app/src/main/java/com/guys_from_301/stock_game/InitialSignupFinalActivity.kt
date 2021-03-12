@@ -33,6 +33,8 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         mContext = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_signup_final)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
+
         if (intent.hasExtra("u_id") && intent.hasExtra("u_pw")) {
             _u_id = intent.getStringExtra("u_id")!!
             _u_pw = intent.getStringExtra("u_pw")!!

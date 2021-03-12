@@ -130,6 +130,8 @@ class InitialLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_login)
+        window?.statusBarColor = resources.getColor(R.color.themeFragment)
+
         btn_googleSignIn = findViewById(R.id.btn_googleSignIn)
         btn_generalLogin = findViewById(R.id.btn_generalLogin)
         btn_kakaoLogin = findViewById(R.id.btn_kakaoLogin)
