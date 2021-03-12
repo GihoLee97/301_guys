@@ -79,6 +79,7 @@
                 android:id="@+id/tv_notice_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:lineSpacingExtra="4sp"
                 android:text="S&amp;P 500은 500개 대형기업의 주식을 포함한 지수입니다."
                 android:textAppearance="@style/tip_detail_description"
                 android:paddingTop="32dp"

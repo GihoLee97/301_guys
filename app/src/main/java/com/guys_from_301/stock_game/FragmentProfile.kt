@@ -90,16 +90,12 @@ class FragmentProfile : Fragment() {
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
-        v.findViewById<LinearLayout>(R.id.ll_version_info).setOnClickListener{
-            //TODO: 버전정보
-            Toast.makeText(_MainActivity, "버전정보 구현해야 함", Toast.LENGTH_LONG).show()
-        }
-        v.findViewById<LinearLayout>(R.id.ll_game_option).setOnClickListener{
-            val intent = Intent(_MainActivity, SettingActivity::class.java)
-            startActivity(intent)
-        }
         v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
             pushAlarmManager.openSetting(activity as MainActivity)
+        }
+        v.findViewById<LinearLayout>(R.id.ll_purchaseHistory).setOnClickListener {
+            val intent = Intent(_MainActivity, PurchaseHistoryAcitivity::class.java)
+            startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_sign_out).setOnClickListener{
             if(profileDbManager!!.getLogin() == 1){
