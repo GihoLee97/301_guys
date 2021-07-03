@@ -139,7 +139,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         }
 
         // billing Manager for purchase process
-        billingManager = BillingManager(mContext as Activity)
+        billingManager = BillingManager(mContext as Activity, marketViewModel)
 
 
         //초기자산 협상
@@ -212,13 +212,19 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
         //스텍 구매
         cl_buy_stack1.setOnClickListener{
-            marketViewModel.BuyStack(100)
+            var PRODUCT_ID = "game_money_1000"
+            billingManager.purchase(PRODUCT_ID,1000)
+//            marketViewModel.BuyStack(100)
         }
         cl_buy_stack2.setOnClickListener{
-            marketViewModel.BuyStack(200)
+            var PRODUCT_ID = "game_money_2000"
+            billingManager.purchase(PRODUCT_ID,2000)
+//            marketViewModel.BuyStack(200)
         }
         cl_buy_stack3.setOnClickListener{
-            marketViewModel.BuyStack(1000)
+            var PRODUCT_ID = "game_money_10000"
+            billingManager.purchase(PRODUCT_ID,10000)
+//            marketViewModel.BuyStack(1000)
         }
         //물약 구매
         cl_buy_potion.setOnClickListener{
