@@ -51,8 +51,8 @@
 
         <TextView
             android:id="@+id/tv_change_icon"
-            android:layout_width="113dp"
-            android:layout_height="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="프로필 아이콘 바꾸기"
             android:layout_marginTop="23dp"
             android:textAppearance="@style/profile_set_change_icon"
