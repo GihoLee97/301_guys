@@ -1,6 +1,7 @@
 package com.guys_from_301.stock_game
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -125,6 +126,7 @@ class MarketViewModel(_marketActivity : Context): ViewModel() {
     }
 
     fun BuyStack(payment: Int){
+        Log.d("Giho", "BuyStack")
         _stack.value = _stack.value?.plus(payment)
         //TODO: 결제 함수가 생기면 결제가 확인되어야 buymoney 실행하게 변경해야 함
         buymoney(getHash(profileDbManager!!.getLoginId()!!), _stack.value!!)

@@ -69,6 +69,7 @@
         android:background="@drawable/profile_set_crossbar"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_change_nickname"
         android:layout_width="match_parent"
         android:layout_height="52dp">
 
@@ -108,6 +109,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
         android:id="@+id/cl_change_pw"
         android:layout_width="match_parent"
         android:layout_height="52dp">
