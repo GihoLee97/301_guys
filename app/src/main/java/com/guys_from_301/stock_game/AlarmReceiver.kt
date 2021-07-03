@@ -43,7 +43,7 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_logo_white)
                 .setContentTitle("TARDIS")
-                .setContentText("지금 나의 투자 랭킹은 어떨까?")
+                .setContentText("지금 TARDIS에서 나의 투자 성적은 어떨까?")
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
