@@ -107,6 +107,7 @@ class Dialog_nick(context: Context, first_login: Boolean) {
                             if (okcode == "555") {
                                 Toast.makeText(mContext, "닉네임이 변경되었습니다.", Toast.LENGTH_LONG).show()
                                 profileDbManager!!.setNickname(et_nickname_change.text.toString())
+                                liveText.value = profileDbManager!!.getNickname()!!
 //                                viewModel.setnWriteNickname(et_nickname_change.text.toString())
                                 tv_nick_change_ment_1.visibility = View.INVISIBLE
                                 update(getHash(profileDbManager!!.getLoginId()!!).trim(),
