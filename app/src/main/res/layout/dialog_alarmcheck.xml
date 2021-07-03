@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_gravity="center"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="256dp"
+    android:layout_height="120dp"
+    android:background="@drawable/alarm_borderline">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="휴대폰 설정으로 이동합니다."
+            android:textAppearance="@style/ecoindex_back"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:text="알림설정을 위해 휴대폰 설정으로 이동합니다."
+            android:textAppearance="@style/game_exit_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="256dp"
+        android:layout_height="36dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="안할래요"
+            android:textAppearance="@style/game_exit_button"
+            android:background="@drawable/game_exit_button"/>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="이동하기"
+            android:textAppearance="@style/game_save_button"
+            android:background="@drawable/game_save_button"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>

@@ -93,7 +93,10 @@ class FragmentProfile : Fragment() {
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
-            pushAlarmManager.openSetting(activity as MainActivity)
+
+            val dlg = Dialog_alarmcheck(_MainActivity!!)
+            dlg.start()
+            //Todo:
         }
         v.findViewById<LinearLayout>(R.id.ll_purchaseHistory).setOnClickListener {
             val intent = Intent(_MainActivity, PurchaseHistoryAcitivity::class.java)
