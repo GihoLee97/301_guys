@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.android.billingclient.api.*
@@ -22,14 +21,14 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
     private val PREF_FILE = "MyPref"
     private val PURCHASE_KEY = "purchase"
     private var viewModel = _viewModel
-    private var money = 0
+    private var added_money = 0
 
     val billingClient = BillingClient.newBuilder(activity).enablePendingPurchases()
             .setListener(this).build()
 
     fun purchase(_PRODUCT_ID : String, _money : Int){
         PRODUCT_ID = _PRODUCT_ID
-        money = _money
+        added_money = _money
         if (billingClient.isReady)
             initiatePurchase(PRODUCT_ID)
         else{
@@ -220,11 +219,11 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
                 // Grant entitlement to the user. and restart activity
                 savePurchaseValueToPref(true)
                 Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
-                viewModel.BuyStack(money)
+                viewModel.BuyStack(added_money)
                 activity.recreate()
             }
             else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_NOT_OWNED){
-                viewModel.BuyStack(money)
+                viewModel.BuyStack(added_money)
                 activity.recreate()
             }
             else{
@@ -239,7 +238,7 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
                             savePurchaseValueToPref(true)
                             Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
 //                            Log.d("Giho", "service connected / comsumeAsync2")
-                            viewModel.BuyStack(money)
+                            viewModel.BuyStack(added_money)
 //                            Log.d("Giho", "service connected / comsumeAsync3")
 
                             activity.recreate()
