@@ -567,7 +567,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(100000)
+                        rewardByStack(100)
                         questAchieved.add(questList[i])
                     }
                     1-> if(tradeday>=20000){
@@ -577,7 +577,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(200000)
+                        rewardByStack(200)
                         questAchieved.add(questList[i])
                     }
                     2-> if(tradeday>=30000){
@@ -587,7 +587,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(300000)
+                        rewardByStack(300)
                         questAchieved.add(questList[i])
                     }
                     3-> if(tradeday>=50000){
@@ -597,7 +597,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(500000)
+                        rewardByStack(500)
                         questAchieved.add(questList[i])
                     }
                     4-> if(tradeday>=100000){
@@ -607,7 +607,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(1000000)
+                        rewardByStack(1000)
                         questAchieved.add(questList[i])
                     }
 
@@ -627,7 +627,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(10000)
+                        rewardByStack(100)
                         questAchieved.add(questList[i])
                     }
                     1-> if(countGame>=5){
@@ -637,7 +637,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(20000)
+                        rewardByStack(200)
                         questAchieved.add(questList[i])
                     }
                     2-> if(countGame>=10){
@@ -647,7 +647,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(30000)
+                        rewardByStack(300)
                         questAchieved.add(questList[i])
                     }
                     3-> if(countGame>=50){
@@ -657,7 +657,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(40000)
+                        rewardByStack(400)
                         questAchieved.add(questList[i])
                     }
                     4-> if(countGame>=100){
@@ -667,7 +667,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         val addThread = Thread(addRunnable)
                         addThread.start()
-                        rewardByStack(50000)
+                        rewardByStack(500)
                         questAchieved.add(questList[i])
                     }
                 }

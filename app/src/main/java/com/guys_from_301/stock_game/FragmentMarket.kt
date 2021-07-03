@@ -72,8 +72,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     var isLoading = false
     var money: Int = 0
     var value1: Int = 0
-    val moneyreward: Int = 1000000
-    val value1reward: Int = 5000
+    val moneyreward: Int = 100
+    val value1reward: Int = 500
 
     var mContext : Context = _MainActivity!!
 
@@ -275,8 +275,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         } else {
             value1 = 0
         }
-        Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
-        Toast.makeText(mContext, "보상지급: +100만 스택, -5000 피로도\n현재 보유 스택: "+money+"\n현재 피로도: "+value1, Toast.LENGTH_LONG).show()
+        Toast.makeText(mContext, "보상지급: +100 스택, -5000 피로도\n현재 보유 스택: " + money + "\n현재 피로도: " + value1, Toast.LENGTH_LONG).show()
         // 서버에 업데이트
         update(getHash(profileDbManager!!.getLoginId()!!).trim(),
                 getHash(profileDbManager!!.getLoginPw()!!).trim(),

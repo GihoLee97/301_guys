@@ -111,13 +111,13 @@ class NewResultNormalActivity: AppCompatActivity() {
                     profileDbManager!!.getLoginPw()!!,
                     Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
             )
-            rewardByStack(Math.round(gamePlayDay*1000* (relativeprofitrate+100)/100))
+            rewardByStack(Math.round(gamePlayDay* (relativeprofitrate+100) / 1000))
         }
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
         tv_experience.text = "+"+gamePlayDay+"exp"
-        tv_rewardStack.text = "+"+dec.format(Math.round(gamePlayDay*1000* (relativeprofitrate+100)/100))
+        tv_rewardStack.text = "+"+dec.format(Math.round(gamePlayDay* (relativeprofitrate+100)/1000))
 
 
         if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"

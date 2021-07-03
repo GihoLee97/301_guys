@@ -81,7 +81,7 @@ class FriendActivity  : AppCompatActivity() {
                 }
                 val addThread = Thread(addRunnable)
                 addThread.start()
-                rewardByStack(100000)
+                rewardByStack(1000)
                 questAchieved.add(friendquest)
                 Toast.makeText(this, "초대를 보냈습니다.", Toast.LENGTH_LONG).show()
             }
