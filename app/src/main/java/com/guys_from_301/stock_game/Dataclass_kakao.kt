@@ -19,7 +19,7 @@ class Dataclass_kakao {
 
     @SerializedName("MONEY")
     @Expose
-    var MONEY : Int
+    var MONEY : Float
 
     @SerializedName("LEVEL")
     @Expose
@@ -29,7 +29,7 @@ class Dataclass_kakao {
     @Expose
     var IMAGE : String
 
-    constructor(NAME :String, NICKNAME:String, ID:String, MONEY:Int, LEVEL:Int, IMAGE :String) {
+    constructor(NAME :String, NICKNAME:String, ID:String, MONEY:Float, LEVEL:Int, IMAGE :String) {
         this.NAME = NAME
         this.NICKNAME = NICKNAME
         this.ID = ID

@@ -152,7 +152,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center|right"
-                android:text="현재 스택   "/>
+                android:text="현재 시장 수익률   "/>
             <TextView
                 android:id="@+id/tv_my_stack"
                 android:layout_width="match_parent"
