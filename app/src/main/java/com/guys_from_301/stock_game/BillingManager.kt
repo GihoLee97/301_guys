@@ -107,7 +107,20 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
             Log.d("giholee", (purchase.purchaseState == Purchase.PurchaseState.PENDING).toString())
             Log.d("giholee", (purchase.purchaseState == Purchase.PurchaseState.UNSPECIFIED_STATE).toString())
 
-
+//            var ackPurchase =
+//                AcknowledgePurchaseResponseListener { billingResult ->
+//                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+//                        //if purchase is acknowledged
+//                        // Grant entitlement to the user. and restart activity
+//                        savePurchaseValueToPref(true)
+//                        Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
+//                        viewModel.BuyStack(money)
+//                        consume(purchase)
+//                        activity.recreate()
+//                    }
+//                    else
+//                        Log.d("giholee", "fail to acknowledge")
+//                }
 
             if (PRODUCT_ID.equals(purchase.skus[0]) && purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                 if (!verifyValidSignature(purchase.originalJson, purchase.signature)) {
@@ -126,7 +139,8 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
                     val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                         .setPurchaseToken(purchase.purchaseToken)
                         .build()
-                    billingClient.acknowledgePurchase(acknowledgePurchaseParams, ackPurchase)
+//                    billingClient.acknowledgePurchase(acknowledgePurchaseParams, ackPurchase)
+                    consume(purchase)
                 } else {
                     // Grant entitlement to the user on item purchase
                     // restart activity
@@ -137,7 +151,6 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
                             "Item Purchased",
                             Toast.LENGTH_SHORT
                         ).show()
-                        viewModel.BuyStack(money)
                         consume(purchase)
                         activity.recreate()
                     }
@@ -172,19 +185,12 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
     }
 
     private fun savePurchaseValueToPref(value: Boolean) {
+//        Log.d("Giho", "savePurchaseValueToPref : before")
         getPreferenceEditObject().putBoolean(PURCHASE_KEY, value).commit()
+//        Log.d("Giho", "savePurchaseValueToPref : after")
     }
 
-    var ackPurchase =
-        AcknowledgePurchaseResponseListener { billingResult ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                //if purchase is acknowledged
-                // Grant entitlement to the user. and restart activity
-                savePurchaseValueToPref(true)
-                Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
-                activity.recreate()
-            }
-        }
+
 
     /**
      * Verifies that the purchase was signed correctly for this developer's public key.
@@ -208,7 +214,52 @@ class BillingManager(_activity: Activity, _viewModel: MarketViewModel) : Purchas
             .setPurchaseToken(purchase.purchaseToken)
             .build()
 
-        billingClient.consumeAsync(consumeParams) { billingResult, purchaseToken -> }
+        billingClient.consumeAsync(consumeParams, ConsumeResponseListener { billingResult, s ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                //if purchase is acknowledged
+                // Grant entitlement to the user. and restart activity
+                savePurchaseValueToPref(true)
+                Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
+                viewModel.BuyStack(money)
+                activity.recreate()
+            }
+            else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_NOT_OWNED){
+                viewModel.BuyStack(money)
+                activity.recreate()
+            }
+            else{
+                Log.d("giholee", "fail to acknowledge : "+billingResult.responseCode.toString())
+                billingClient.startConnection(object : BillingClientStateListener {
+                    override fun onBillingSetupFinished(billingResult: BillingResult) {
+                        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                            // The BillingClient is ready. You can query purchases here.
+                            Log.d("Giho", "service connected / comsumeAsync")
+                            //if purchase is acknowledged
+                            // Grant entitlement to the user. and restart activity
+                            savePurchaseValueToPref(true)
+                            Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
+//                            Log.d("Giho", "service connected / comsumeAsync2")
+                            viewModel.BuyStack(money)
+//                            Log.d("Giho", "service connected / comsumeAsync3")
+
+                            activity.recreate()
+                        } else {
+                            Toast.makeText(
+                                activity,
+                                "Billing response is not okay!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            consume(purchase)
+                        }
+                    }
+                    override fun onBillingServiceDisconnected() {
+                        Toast.makeText(activity,"Billing service disconnected! / comsumeAsync",Toast.LENGTH_LONG).show()
+                        consume(purchase)
+                    }
+                })
+            }
+
+        })
     }
 
 }

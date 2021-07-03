@@ -77,6 +77,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
 
     var mContext : Context = _MainActivity!!
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
