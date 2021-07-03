@@ -1,8 +1,11 @@
 package com.guys_from_301.stock_game
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,6 +75,5 @@ class NewMainActivity : AppCompatActivity() {
         }
         val thread = Thread(r)
         thread.start()
-
     }
 }

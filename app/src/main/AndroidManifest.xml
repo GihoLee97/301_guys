@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.guys_from_301.stock_game">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- queries에 카카오톡 패키지 추가 -->
+    <uses-permission android:name="android.permission.VIBRATE"/> <!-- 푸시알림 진동 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/> <!-- 푸시알림 잠금화면일때도 작동 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/> <!-- 재부팅 후에도 푸시알림 작동 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -125,6 +129,18 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
+
+        <receiver android:name=".AlarmReceiver"
+            android:exported="false"/>
+
+        <receiver android:name=".AlarmBootReceiver"
+            android:enabled="false"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
