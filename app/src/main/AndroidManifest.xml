@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PurchaseHistoryAcitivity"></activity>
+        <activity android:name=".ProfileSetActivity"></activity>
+        <activity android:name=".PurchaseHistoryAcitivity" />
         <activity android:name=".SupportActivity" />
         <activity android:name=".NoticeDetailActivity" />
         <activity android:name=".TipDetailActivity" />

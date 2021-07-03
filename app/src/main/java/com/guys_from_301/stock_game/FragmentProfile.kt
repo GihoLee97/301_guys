@@ -38,8 +38,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  */
 class FragmentProfile : Fragment() {
-
-
 //    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
     private lateinit var tv_pw_change : TextView
@@ -84,16 +82,21 @@ class FragmentProfile : Fragment() {
             }
         }
 //        v.findViewById<ImageView>(R.id.iv_my_image).
-        v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
-            val dlg = Dialog_nick(_MainActivity!!, false)
-            dlg.start()
+        v.findViewById<TextView>(R.id.tv_profile_change).setOnClickListener{
+//            val dlg = Dialog_nick(_MainActivity!!, false)
+//            dlg.start()
+            val intent = Intent(_MainActivity, ProfileSetActivity::class.java)
+            startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
-            pushAlarmManager.openSetting(activity as MainActivity)
+
+            val dlg = Dialog_alarmcheck(_MainActivity!!)
+            dlg.start()
+            //Todo:
         }
         v.findViewById<LinearLayout>(R.id.ll_purchaseHistory).setOnClickListener {
             val intent = Intent(_MainActivity, PurchaseHistoryAcitivity::class.java)

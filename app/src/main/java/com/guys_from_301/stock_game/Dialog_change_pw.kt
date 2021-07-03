@@ -44,7 +44,6 @@ class Dialog_change_pw(context: Context) {
         et_futurePw = dlg.findViewById(R.id.et_futurePw)
         et_futurePwCheck = dlg.findViewById(R.id.et_futurePwCheck)
         tv_pwChangeNotice = dlg.findViewById(R.id.tv_pwChangeNotice)
-
         et_presentPW.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }

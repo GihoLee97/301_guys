@@ -24,7 +24,7 @@ var arraytvmoney = mutableListOf<Int>()
 var arrayimage = mutableListOf<Int>()
 // 친구 정보
 var friendid = mutableListOf<String>()
-var friendmoney = mutableListOf<Int>()
+var friendmoney = mutableListOf<Float>()
 var friendlevel = mutableListOf<Int>()
 var friendnick = mutableListOf<String>()
 var friendname = mutableListOf<String>()
@@ -116,16 +116,16 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user9_nickname_local).text = rank9_nick; ranker_local_nick.add(R.id.tv_user9_nickname_local)
         v.findViewById<TextView>(R.id.tv_user10_nickname_local).text = rank10_nick; ranker_local_nick.add(R.id.tv_user10_nickname_local)
 
-        v.findViewById<TextView>(R.id.tv_user1_money_local).text = rank1_money
-        v.findViewById<TextView>(R.id.tv_user2_money_local).text = rank2_money
-        v.findViewById<TextView>(R.id.tv_user3_money_local).text = rank3_money
-        v.findViewById<TextView>(R.id.tv_user4_money_local).text = rank4_money
-        v.findViewById<TextView>(R.id.tv_user5_money_local).text = rank5_money
-        v.findViewById<TextView>(R.id.tv_user6_money_local).text = rank6_money
-        v.findViewById<TextView>(R.id.tv_user7_money_local).text = rank7_money
-        v.findViewById<TextView>(R.id.tv_user8_money_local).text = rank8_money
-        v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money
-        v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money
+        v.findViewById<TextView>(R.id.tv_user1_money_local).text = rank1_money + "%"
+        v.findViewById<TextView>(R.id.tv_user2_money_local).text = rank2_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user3_money_local).text = rank3_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user4_money_local).text = rank4_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user5_money_local).text = rank5_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user6_money_local).text = rank6_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user7_money_local).text = rank7_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user8_money_local).text = rank8_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money+ "%"
+        v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money+ "%"
 
         v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]]); ranker_local_image.add(R.id.iv_user1_image_local)
         v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]]); ranker_local_image.add(R.id.iv_user2_image_local)
@@ -219,12 +219,12 @@ class FragmentRanking : Fragment() {
                         else if(i>=4 && i<=10){
                             //TODO: 아직
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
@@ -244,12 +244,12 @@ class FragmentRanking : Fragment() {
                         else if(i>=4 && i<=10){
                             //TODO: 아직
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString()
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
@@ -273,7 +273,7 @@ class FragmentRanking : Fragment() {
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
         tv_my_stack = v.findViewById(R.id.tv_my_stack)
-        tv_my_stack.text = profileDbManager!!.getMoney()!!.toString()
+        tv_my_stack.text = profileDbManager!!.getRelativeProfit()!!.toString() + "%"
         tv_my_nick.text = profileDbManager!!.getNickname()!!
         tv_my_level.text = "레벨 " + profileDbManager!!.getLevel()!!.toString()
         v.findViewById<TextView>(R.id.tv_friend_invite).setOnClickListener{
@@ -289,7 +289,7 @@ class FragmentRanking : Fragment() {
         }
         for (cnt in 1..friendlevel.size){
             if(friendlevel[cnt-1] != -1){
-                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", "c", 0, 0, "d")
+                var tmp : Dataclass_kakao = Dataclass_kakao("a", "b", "c", 0f, 0, "d")
                 tmp?.NAME = friendname[cnt-1];
                 tmp?.NICKNAME = friendnick[cnt-1];
                 tmp?.ID = friendid[cnt-1]
@@ -299,7 +299,6 @@ class FragmentRanking : Fragment() {
                 realkakaoplayer.add(tmp)
             }
         }
-
         //sort
         realkakaoplayer.sortByDescending { it.MONEY }
 

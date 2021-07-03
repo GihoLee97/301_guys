@@ -526,12 +526,12 @@ class MainActivity : AppCompatActivity() {
                     println("---성공")
                     for(i in 0..u_number-1){
                         if(response.body()!![i]==null){
-                            friendmoney.add(-1)
+                            friendmoney.add(-1f)
                             friendlevel.add(-1)
                             friendnick.add("존재하지 않는 아이디")
                         }
                         else{
-                            friendmoney.add(data[i].MONEY)
+                            friendmoney.add(data[i].RELATIVEPROFITRATE)
                             friendlevel.add(data[i].LEVEL)
                             friendnick.add(data[i].NICKNAME)
                         }
@@ -539,7 +539,7 @@ class MainActivity : AppCompatActivity() {
                     friendid.add(getHash(profileDbManager!!.getLoginId()!!))
                     friendname.add(my_name)
                     friendnick.add(profileDbManager!!.getNickname()!!)
-                    friendmoney.add(profileDbManager!!.getMoney()!!)
+                    friendmoney.add(profileDbManager!!.getRelativeProfit()!!)
                     friendlevel.add(profileDbManager!!.getLevel()!!)
                     friendimage.add(my_image!!)
                 }
