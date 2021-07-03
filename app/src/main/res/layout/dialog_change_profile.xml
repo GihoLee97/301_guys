@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="256dp"
+        android:layout_height="212dp"
+        android:background="@drawable/nickname_change_borderline">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="프로필 아이콘 변경"
+                android:textAppearance="@style/profile_icon_change_title"
+                android:background="@color/white"/>
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="23dp"
+                android:layout_height="80dp">
+                <RadioGroup
+                    android:id="@+id/rg_profileImageChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rb_icon1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_icon12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/profile_change_icon"/>
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+                    </LinearLayout>
+                </RadioGroup>
+
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tv_profileImageChangeNotice"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="이미지를 선택해 주세요."
+                android:textAppearance="@style/initial_signUp_pw_notice"
+                android:visibility="invisible"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="256dp"
+            android:layout_height="36dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_profile_change"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="프로필 변경하기"
+                android:textAppearance="@style/game_save_button"
+                android:background="@drawable/nickname_change_ok_box_gray"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ib_cancel"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/game_exit_cancel"/>
+</LinearLayout>

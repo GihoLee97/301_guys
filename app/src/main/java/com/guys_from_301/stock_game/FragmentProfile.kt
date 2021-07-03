@@ -38,11 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  */
 class FragmentProfile : Fragment() {
-
-
 //    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
-    private lateinit var tv_pw_change : TextView
     private lateinit var googleAuth : FirebaseAuth
     var loginMethod : String? = null
 
@@ -55,7 +52,6 @@ class FragmentProfile : Fragment() {
         var v : View = inflater.inflate(R.layout.fragment_profile, container, false)
         activity?.window?.statusBarColor = resources.getColor(R.color.white)
 
-        tv_pw_change = v.findViewById(R.id.tv_pw_change)
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
         tv_my_nick.text = profileDbManager!!.getNickname()
         v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager!!.getLevel().toString()
@@ -77,23 +73,23 @@ class FragmentProfile : Fragment() {
         }
         else{ // general login
             v.findViewById<ImageView>(R.id.iv_my_image).loadCircularImage(profileImageId[profileDbManager!!.getImageNum()!!], 5F, Color.parseColor("#F4730B"))
-            tv_pw_change.visibility = View.VISIBLE
-            tv_pw_change.setOnClickListener {
-                val dlg = Dialog_change_pw(_MainActivity!!)
-                dlg.start()
-            }
         }
 //        v.findViewById<ImageView>(R.id.iv_my_image).
-        v.findViewById<TextView>(R.id.tv_nickname_change).setOnClickListener{
-            val dlg = Dialog_nick(_MainActivity!!, false)
-            dlg.start()
+        v.findViewById<TextView>(R.id.tv_profile_change).setOnClickListener{
+//            val dlg = Dialog_nick(_MainActivity!!, false)
+//            dlg.start()
+            val intent = Intent(_MainActivity, ProfileSetActivity::class.java)
+            startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_notice).setOnClickListener{
             val intent = Intent(_MainActivity, NoticeActivity::class.java)
             startActivity(intent)
         }
         v.findViewById<LinearLayout>(R.id.ll_alarmSetting).setOnClickListener {
-            pushAlarmManager.openSetting(activity as MainActivity)
+
+            val dlg = Dialog_alarmcheck(_MainActivity!!)
+            dlg.start()
+            //Todo:
         }
         v.findViewById<LinearLayout>(R.id.ll_purchaseHistory).setOnClickListener {
             val intent = Intent(_MainActivity, PurchaseHistoryAcitivity::class.java)

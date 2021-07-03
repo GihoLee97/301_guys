@@ -3,11 +3,16 @@ package com.guys_from_301.stock_game
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -49,6 +54,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
+import java.util.*
 import kotlin.math.roundToInt
 
 var accountID: String? = null
@@ -121,16 +127,11 @@ class MainActivity : AppCompatActivity() {
 //        mAdView = findViewById(R.id.adView)
 //        val adRequest = AdRequest.Builder().build()
 //        mAdView.loadAd(adRequest)
-        //푸쉬알람 관련 코드
-        // Logging set to help debug issues, remove before releasing your app.
-        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
-        // OneSignal Initialization
-        OneSignal.initWithContext(this)
-        OneSignal.setAppId(ONESIGNAL_APP_ID)
+
+        cancelAlarm()
 
         //초기자산값 변수
         val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
-
 
 
         //게임 저장시 gameset 업데이트
@@ -409,6 +410,8 @@ class MainActivity : AppCompatActivity() {
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
         if (time2 in 0..2000) {
+            // 푸시알람설정
+            setAlarm()
             // 이거 3줄 다 써야 안전하게 종료
             moveTaskToBack(true)
             finishAffinity()
@@ -672,6 +675,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setAlarm() {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(this, AlarmReceiver::class.java)  // 1
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, AlarmReceiver.NOTIFICATION_ID, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val triggerTime = (SystemClock.elapsedRealtime()
+                + 5 * 1000)
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerTime,
+            pendingIntent
+        )
+    }
+
+    fun cancelAlarm() {
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(this, AlarmReceiver::class.java)  // 1
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, AlarmReceiver.NOTIFICATION_ID, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        alarmManager.cancel(pendingIntent)
+    }
+
+
     override fun onResume() {
         super.onResume()
 
@@ -731,8 +765,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
-
     }
 
 }

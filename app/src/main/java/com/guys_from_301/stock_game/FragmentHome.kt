@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.guys_from_301.stock_game.data.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,11 +48,12 @@ class FragmentHome : Fragment() {
     private lateinit var pb_quest1: ProgressBar
     private lateinit var pb_quest2: ProgressBar
     private lateinit var tv_profitRate: TextView
+    private lateinit var rv_games: ViewPager
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
     private var gameNormalDB: GameNormalDB? = null
-    private var game = listOf<GameSet>()
-    lateinit var mAdapter: MyGameSetAdapter
+    private var game = ArrayList<GameSet>()
+    lateinit var mAdapter: MyGameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,14 +115,16 @@ class FragmentHome : Fragment() {
         gameNormalDB = GameNormalDB.getInstace(_MainActivity!!)
         Log.d("hongz", "사용자 계정: "+ accountID!!)
         mAdapter = gameNormalDB?.let {
-            MyGameSetAdapter(_MainActivity!!, game){ game -> setId = game.id }
+            MyGameAdapter(_MainActivity!!, game){ game -> setId = game.id }
         }!!
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(_MainActivity!!)
-        val pRecyclerView = v.findViewById<RecyclerView>(R.id.rv_games)
-        pRecyclerView.layoutManager = layoutManager
+        val gamePager = v.findViewById<ViewPager>(R.id.rv_games)
+        gamePager.setPadding(50,0,50,0)
+        gamePager.pageMargin = 0
 
-        game = gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!
+        game = ArrayList(gameDb?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!)
         //초기자산값 변수
+        game.reverse()
         val initialgameset = gameDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
         if (initialgameset != null) {
             setCash = SET_CASH_STEP[initialgameset.setcash]
@@ -133,19 +137,19 @@ class FragmentHome : Fragment() {
 //            if (gameNormalDB?.gameNormalDao()?.getSetWithNormal(gameDb?.gameSetDao()?.getAll(accountID!!)!![i].id, accountID!!).isNullOrEmpty()) {
 //            }
 //        }
-        mAdapter = MyGameSetAdapter(_MainActivity!!, game){
+        mAdapter = MyGameAdapter(_MainActivity!!, game){
             gameUnit -> setId = gameUnit.id
             val intent = Intent(_MainActivity!!, GameNormalActivity::class.java)
             startActivity(intent)
             startGameSet = true
         }
         mAdapter.notifyDataSetChanged()
-        pRecyclerView.adapter = mAdapter
+        gamePager.adapter = mAdapter
         val manager = LinearLayoutManager(_MainActivity!!, LinearLayoutManager.HORIZONTAL, false)
-        pRecyclerView.setHasFixedSize(true)
+        //gamePager.setHasFixedSize(true)
         manager.reverseLayout = true
         manager.stackFromEnd = true
-        pRecyclerView.layoutManager = manager
+        //gamePager.layoutManager = manager
 
 
 
