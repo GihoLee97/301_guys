@@ -32,11 +32,11 @@ const val RAISE_SET_SALARY_RAISE = 0.5F
 val SET_CASH_STEP = listOf<Float>(10000F, 50000F, 100000F, 500000F, 1000000F)
 val SET_MONTHLY_STEP = listOf<Float>(1000F, 1500F, 2000F, 5000F, 10000F)
 val SET_SALARY_RAISE_STEP = listOf<Float>(4F,5F,6F,8F,10F)
-const val ITEM_COST = 100000
+const val ITEM_COST = 1000
 const val STACK1_COST = 100
 const val STACK2_COST = 200
 const val STACK3_COST = 1000
-const val POTION_COST = 500000
+const val POTION_COST = 5000
 
 class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     // TODO: Rename and change types of parameters

@@ -1,5 +1,6 @@
 package com.guys_from_301.stock_game
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -28,6 +29,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
+import kotlin.math.roundToInt
 
 var totaltradeday: Int = 0
 var isHistory: Boolean = false
@@ -60,6 +62,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     private var gamesetDB: GameSetDB? = null
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_normal)
@@ -111,13 +114,13 @@ class NewResultNormalActivity: AppCompatActivity() {
                     profileDbManager!!.getLoginPw()!!,
                     Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
             )
-            rewardByStack(Math.round(gamePlayDay* (relativeprofitrate+100) / 1000))
+            rewardByStack((tradeday * (relativeprofitrate + 100) / 500).roundToInt())
         }
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
         tv_experience.text = "+"+gamePlayDay+"exp"
-        tv_rewardStack.text = "+"+dec.format(Math.round(gamePlayDay* (relativeprofitrate+100)/1000))
+        tv_rewardStack.text = "+"+dec.format((tradeday * (relativeprofitrate + 100) / 500).roundToInt())
 
 
         if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"
@@ -317,18 +320,23 @@ class NewResultNormalActivity: AppCompatActivity() {
     }
 
     //도전과제 스텍 보상 함수
-    fun rewardByStack(reward: Int){
-        if (!profileDbManager!!.isEmpty(this)) {
-            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!!+reward)
+    fun rewardByStack(reward: Int) {
+        var temp = profileDbManager!!.getMoney()!!
+        if (temp>=2000000000) {
+            profileDbManager!!.setMoney(temp)
+        } else {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
+            temp = profileDbManager!!.getMoney()!!
+            if (temp < 0) {
+                profileDbManager!!.setMoney(0)
+            }
         }
     }
-
 
     override fun onResume() {
         super.onResume()
         profileDbManager!!.refresh(this)
     }
-
 
     override fun onStop() {
         super.onStop()
@@ -339,5 +347,4 @@ class NewResultNormalActivity: AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
-
 }

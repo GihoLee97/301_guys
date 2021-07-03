@@ -2544,9 +2544,16 @@ class GameNormalActivity : AppCompatActivity() {
 //    }
 
     //도전과제 스텍 보상 함수
-    fun rewardByStack(reward: Int){
-        if (!profileDbManager!!.isEmpty(this@GameNormalActivity)) {
-            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!!+reward)
+    fun rewardByStack(reward: Int) {
+        var temp = profileDbManager!!.getMoney()!!
+        if (temp>=2000000000) {
+            profileDbManager!!.setMoney(temp)
+        } else {
+            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
+            temp = profileDbManager!!.getMoney()!!
+            if (temp < 0) {
+                profileDbManager!!.setMoney(0)
+            }
         }
     }
 
@@ -2559,7 +2566,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(100)
+                            rewardByStack(1000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2569,7 +2576,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(200)
+                            rewardByStack(2000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2579,7 +2586,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(300)
+                            rewardByStack(3000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2589,7 +2596,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(500)
+                            rewardByStack(5000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2599,7 +2606,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(1000)
+                            rewardByStack(6000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2609,7 +2616,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(2000)
+                            rewardByStack(7000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2619,7 +2626,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(3000)
+                            rewardByStack(8000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2629,7 +2636,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(4000)
+                            rewardByStack(9000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2639,7 +2646,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(5000)
+                            rewardByStack(10000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2649,7 +2656,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(10000)
+                            rewardByStack(20000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2669,7 +2676,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(100)
+                            rewardByStack(1000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2679,7 +2686,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(200)
+                            rewardByStack(2000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2689,7 +2696,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(500)
+                            rewardByStack(3000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2699,7 +2706,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(1000)
+                            rewardByStack(5000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2709,7 +2716,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(2000)
+                            rewardByStack(10000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2729,7 +2736,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(100)
+                            rewardByStack(10000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2739,7 +2746,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{
                             questList?.get(i)?.let { questDb?.questDao()?.insert(it)
-                            rewardByStack(200)
+                            rewardByStack(40000)
                             }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2750,7 +2757,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(300)
+                            rewardByStack(160000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2760,7 +2767,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(500)
+                            rewardByStack(640000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()
@@ -2770,7 +2777,7 @@ class GameNormalActivity : AppCompatActivity() {
                         questList?.get(i)?.achievement = 1
                         val addRunnable = Runnable{questList?.get(i)?.let {
                             questDb?.questDao()?.insert(it)
-                            rewardByStack(1000)
+                            rewardByStack(2560000)
                         }}
                         val addThread = Thread(addRunnable)
                         addThread.start()

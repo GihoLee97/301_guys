@@ -70,7 +70,7 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="100,000"
+                android:text="1,000"
                 android:layout_weight="17"
                 android:textAppearance="@style/negotiation_dialog_stack"/>
             <ImageView
