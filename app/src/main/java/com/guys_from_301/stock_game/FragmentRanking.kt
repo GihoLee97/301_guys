@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 val profileImageId = arrayOf(R.drawable.ic_profile_image_templete1,
         R.drawable.ic_profile_image_templete2,R.drawable.ic_profile_image_templete3,
@@ -22,6 +23,8 @@ var arrayll = mutableListOf<Int>()
 var arraytvname = mutableListOf<Int>()
 var arraytvmoney = mutableListOf<Int>()
 var arrayimage = mutableListOf<Int>()
+
+
 // 친구 정보
 var friendid = mutableListOf<String>()
 var friendmoney = mutableListOf<Float>()
@@ -151,7 +154,6 @@ class FragmentRanking : Fragment() {
 
         Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
 
-
         friendsort()
         if(profileDbManager!!.getLogin() != 4){
                 v.findViewById<TextView>(R.id.tv_local_space).visibility = View.GONE
@@ -217,14 +219,13 @@ class FragmentRanking : Fragment() {
                             v.findViewById<TextView>(arraytvname[i-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
                         }
                         else if(i>=4 && i<=10){
-                            //TODO: 아직
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
@@ -242,14 +243,13 @@ class FragmentRanking : Fragment() {
                             v.findViewById<TextView>(arraytvname[i-1]).setTextAppearance(R.style.ranking_rank_nickname_highlight_1to3)
                         }
                         else if(i>=4 && i<=10){
-                            //TODO: 아직
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = realkakaoplayer[i-1].MONEY.toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
@@ -273,7 +273,7 @@ class FragmentRanking : Fragment() {
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
         tv_my_stack = v.findViewById(R.id.tv_my_stack)
-        tv_my_stack.text = profileDbManager!!.getRelativeProfit()!!.toString() + "%"
+        tv_my_stack.text = ((profileDbManager!!.getRelativeProfit()!! * 100).roundToInt() / 10f).toString() + "%"
         tv_my_nick.text = profileDbManager!!.getNickname()!!
         tv_my_level.text = "레벨 " + profileDbManager!!.getLevel()!!.toString()
         v.findViewById<TextView>(R.id.tv_friend_invite).setOnClickListener{

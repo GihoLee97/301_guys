@@ -3,6 +3,7 @@ package com.guys_from_301.stock_game
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,13 +17,19 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.test.core.app.ApplicationProvider
+import com.android.billingclient.api.*
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.guys_from_301.stock_game.data.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.*
 
 //아이템 효과 변수들
@@ -93,7 +100,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         gameSetDB = GameSetDB.getInstace(mContext)
         var gameset = gameSetDB?.gameSetDao()?.getAll(accountID!!)?.get(0)
         //viewmodel
-        val marketViewModel = MarketViewModel(_MainActivity!!)
+        val marketViewModel = MarketViewModel(_MainActivity!!,requireActivity())
 
         //cl
         cl_todayStack = v.findViewById(R.id.cl_todayStack)
@@ -139,8 +146,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             }
         }
 
-        // billing Manager for purchase process
-        billingManager = BillingManager(mContext as Activity, marketViewModel)
+//        // billing Manager for purchase process
+//        billingManager = BillingManager(mContext as Activity, marketViewModel)
 
 
         //초기자산 협상
@@ -214,17 +221,17 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         //스텍 구매
         cl_buy_stack1.setOnClickListener{
             var PRODUCT_ID = "game_money_1000"
-            billingManager.purchase(PRODUCT_ID,1000)
+            marketViewModel.purchase(PRODUCT_ID,1000)
 //            marketViewModel.BuyStack(100)
         }
         cl_buy_stack2.setOnClickListener{
             var PRODUCT_ID = "game_money_2000"
-            billingManager.purchase(PRODUCT_ID,2000)
+            marketViewModel.purchase(PRODUCT_ID,2000)
 //            marketViewModel.BuyStack(200)
         }
         cl_buy_stack3.setOnClickListener{
             var PRODUCT_ID = "game_money_10000"
-            billingManager.purchase(PRODUCT_ID,10000)
+            marketViewModel.purchase(PRODUCT_ID,10000)
 //            marketViewModel.BuyStack(1000)
         }
         //물약 구매
@@ -295,7 +302,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
                 profileDbManager!!.getLevel()!!
         )
         // profiledb에 업데이트
-        val marketViewModel = MarketViewModel(_MainActivity!!)
+        val marketViewModel = MarketViewModel(_MainActivity!!,requireActivity())
         marketViewModel.BuyStack(moneyreward)
         tv_mountOfStack.text = dec.format(profileDbManager!!.getMoney()).toString()
     }
