@@ -72,7 +72,7 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
 
     fun writeDataBase(){
         if (!profileDbManager!!.isEmpty(marketActivity)) {
-            profileDbManager!!.setMoney(_stack.value!!)
+            profileDbManager!!.setnWriteMoney(_stack.value!!)
         }
         var write = Runnable {
             gameSetDb = GameSetDB.getInstace(marketActivity)
@@ -137,11 +137,14 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
     }
 
     fun BuyStack(payment: Int){
-        Log.d("Giho", "BuyStack")
-        _stack.value = _stack.value?.plus(payment)
+        Log.d("Giho", "BuyStack"+_stack.value.toString() + payment.toString())
+//        _stack.value = _stack.value?.plus(payment)
+//        _stack.value = _stack.value!! + payment
+
         //TODO: 결제 함수가 생기면 결제가 확인되어야 buymoney 실행하게 변경해야 함
-        buymoney(getHash(profileDbManager!!.getLoginId()!!), _stack.value!!)
-        writeDataBase()
+        buymoney(getHash(profileDbManager!!.getLoginId()!!), _stack.value!!,payment)
+        Log.d("Giho", "BuyStack+ "+_stack.value.toString())
+
     }
 
     fun BuyPotion(){
@@ -155,7 +158,7 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
         super.onCleared()
     }
 
-    fun buymoney(u_id: String, u_money : Int) {
+    fun buymoney(u_id: String, u_money : Int, payment: Int) {
         Log.d("Giho", "Buymoney")
         var funbuymoney: RetrofitBuyMoney? = null
         val url = "http://stockgame.dothome.co.kr/test/buymoney.php/"
@@ -170,14 +173,17 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
                         .build()
         //creating our api
         funbuymoney= retrofit.create(RetrofitBuyMoney::class.java)
-        funbuymoney.setasset(u_id, u_money).enqueue(object : Callback<String> {
+        funbuymoney.setasset(u_id, u_money + payment).enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Toast.makeText(_MainActivity, t.message, Toast.LENGTH_LONG).show()
             }
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if (response.isSuccessful && response.body() != null) {
                     if(response.body()!! == "555"){
+                        _stack.value = _stack.value?.plus(payment)
                         Toast.makeText(_MainActivity, "서버에 올라감", Toast.LENGTH_LONG).show()
+                        writeDataBase()
+
                     }
                     else if(response.body()!! == "666"){
                         Toast.makeText(_MainActivity, "오류 발생", Toast.LENGTH_LONG).show()
