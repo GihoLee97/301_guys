@@ -692,7 +692,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         val triggerTime = (SystemClock.elapsedRealtime()
-                + 5 * 1000)
+                + 3*24*60*60*1000)
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
             triggerTime,
