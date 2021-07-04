@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.mikephil.charting.charts.LineChart
@@ -145,8 +146,9 @@ class NewResultNormalActivity: AppCompatActivity() {
         }
 
         btn_share.setOnClickListener {
-            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox), this, this)
-            shareManager.shareBinaryWithKakao(this, path)
+            Toast.makeText(this, "히스토리 창으로 이동해서 공유하세요!", Toast.LENGTH_LONG).show()
+//            val path = captureUtil.captureAndSaveViewWithKakao(findViewById(R.id.cl_shareBox), this, this)
+//            shareManager.shareBinaryWithKakao(this, path)
         }
 
     }
