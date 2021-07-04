@@ -489,7 +489,7 @@ class GameNormalActivity : AppCompatActivity() {
         val initialgameset = gameSetDb?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
         var gameset = gameSetDb?.gameSetDao()?.getSetWithId(setId, accountID!!)
         //setId = gameSetDb?.gameSetDao()?.getId()!!
-        if (gameset != null) { gl = 250 * gameset.setgamelength }
+        if (gameset != null) { gl = 260 * gameset.setgamelength }
         var sp = random.nextInt((snp_date.size - gl - given - 30)) + given // Starting Point
 
         // 값 표준화: 시작일(sp)을 100으로
@@ -1152,7 +1152,7 @@ class GameNormalActivity : AppCompatActivity() {
 
         // 차트 레이아웃 생성 //////////////////////////////////////////////////////////////
         runOnUiThread {
-            tv_timeleft.text = (29).toString()+"년 "+(12).toString()+"개월"
+            tv_timeleft.text = (setGamelength - 1).toString()+"년 "+(12).toString()+"개월"
 
             // 차트 생성
             cht_snp.animateXY(1, 1)
@@ -1620,17 +1620,17 @@ class GameNormalActivity : AppCompatActivity() {
 
                             monthToggle = 0
 
-                            if (countMonth < 12) {
+                            if (countMonth < 11) {
                                 countMonth += 1
                             } else {
                                 countYear += 1
-                                countMonth = 1
+                                countMonth = 0
                             }
 
                             preMonth = snpDate_sf.month
 
                             // 설정한 게임 플레이 기간에 도달
-                            if (countYear > setGamelength) {
+                            if (countYear > setGamelength - 1 ) {
                                 gameend = true
                                 endsuccess = true
                                 break
@@ -2381,14 +2381,10 @@ class GameNormalActivity : AppCompatActivity() {
             }
         }
 
-        if (countMonth==12) {
-            runOnUiThread {
-                tv_timeleft.text = (29 - countYear - 1).toString()+"년 "+(12).toString()+"개월"
-            }
-        } else {
-            runOnUiThread {
-                tv_timeleft.text = (29 - countYear).toString()+"년 "+(12-countMonth).toString()+"개월"
-            }
+
+        runOnUiThread {
+            tv_timeleft.text =
+                (setGamelength - 1 - countYear).toString() + "년 " + (12 - countMonth).toString() + "개월"
         }
     }
 

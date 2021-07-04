@@ -20,6 +20,6 @@ data class GameSet(@PrimaryKey(autoGenerate = false ) var id: String,
                    @ColumnInfo(name = "accountId") var accountId: String
 
 ) {
-    constructor(): this("",0,0,0,30,0,0F, "","")
+    constructor(): this("",0,0,0,20,0,0F, "","")
 
 }

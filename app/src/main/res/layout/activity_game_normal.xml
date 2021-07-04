@@ -88,7 +88,7 @@
                 android:layout_height="15dp"
                 android:layout_marginTop="148dp"
                 android:layout_marginRight="24dp"
-                android:text="29년 12개월"
+                android:text="19년 12개월"
                 android:textAppearance="@style/game_timetitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
