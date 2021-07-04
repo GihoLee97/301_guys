@@ -95,22 +95,6 @@ class Dialog_game_exit(context: Context) {
 //            Toast.makeText(context, "메인 액티비티 종료", Toast.LENGTH_SHORT).show()
 //            dlg.dismiss()
 //            (context as GameNormalActivity).finish()
-            profileDbManager!!.setValue1(value1now)
-            profileDbManager!!.setProfitRate((profileDbManager!!.getProfitRate()!! * profileDbManager!!.getHistory()!! + profitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
-            profileDbManager!!.setRelativeProfit((profileDbManager!!.getRelativeProfit()!! * profileDbManager!!.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
-            profileDbManager!!.setHistory(profileDbManager!!.getHistory()!!+ tradeday)
-            val deleteRunnable = Runnable {
-                // 피로도 저감 시간 저장
-                var nowtime = System.currentTimeMillis() // 현재 시간
-                val newItem = Item()
-                newItem.id = itemDb?.itemDao()!!.getId()
-                newItem.potion = itemDb?.itemDao()!!.getAll()[0].potion
-                newItem.lasttime = nowtime
-                itemDb?.itemDao()?.update(newItem)
-                //
-            }
-            val deleteThread = Thread(deleteRunnable)
-            deleteThread.start()
 
             dlg.dismiss()
             Log.d("hongz","Dialog_game_exit 게임 완전 종료 후 종료")

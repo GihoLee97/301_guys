@@ -63,7 +63,7 @@ class NewHistoryActivity : AppCompatActivity() {
             dividendtot = gameUnit.dividendtot
             tradecomtot = gameUnit.tradecomtot
             profit = gameUnit.profit
-            totaltradeday = gameUnit.item1able
+            tradeday = gameUnit.item1able
             val intent = Intent(this@NewHistoryActivity, NewResultNormalActivity::class.java)
             startActivity(intent)
         }

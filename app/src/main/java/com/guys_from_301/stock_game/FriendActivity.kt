@@ -109,9 +109,18 @@ class FriendActivity  : AppCompatActivity() {
 
 
     //도전과제 스텍 보상 함수
-    fun rewardByStack(reward: Int){
+    fun rewardByStack(reward: Int) {
         if (!profileDbManager!!.isEmpty(this)) {
-            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
+            var temp = profileDbManager!!.getMoney()!!
+            if (temp >= 2000000000) {
+                profileDbManager!!.setMoney(temp)
+            } else {
+                profileDbManager!!.setMoney(temp + reward)
+                temp = profileDbManager!!.getMoney()!!
+                if (temp < 0) {
+                    profileDbManager!!.setMoney(0)
+                }
+            }
         }
     }
 

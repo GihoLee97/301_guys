@@ -550,14 +550,16 @@ class MainActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int) {
-        var temp = profileDbManager!!.getMoney()!!
-        if (temp>=2000000000) {
-            profileDbManager!!.setMoney(temp)
-        } else {
-            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
-            temp = profileDbManager!!.getMoney()!!
-            if (temp < 0) {
-                profileDbManager!!.setMoney(0)
+        if (!profileDbManager!!.isEmpty(this)) {
+            var temp = profileDbManager!!.getMoney()!!
+            if (temp >= 2000000000) {
+                profileDbManager!!.setMoney(temp)
+            } else {
+                profileDbManager!!.setMoney(temp + reward)
+                temp = profileDbManager!!.getMoney()!!
+                if (temp < 0) {
+                    profileDbManager!!.setMoney(0)
+                }
             }
         }
     }

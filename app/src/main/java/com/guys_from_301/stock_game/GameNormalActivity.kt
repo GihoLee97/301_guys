@@ -855,9 +855,6 @@ class GameNormalActivity : AppCompatActivity() {
 
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
     }
 
 
@@ -2389,8 +2386,9 @@ class GameNormalActivity : AppCompatActivity() {
     }
 
     // 게임 종료 시 결과창으로 이동
-    private fun endgame() {
+    private suspend fun endgame() {
         if (gameend && endsuccess) {
+            tradeday = dayPlus
             cash += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (2F - tradecomrate)// 현금에 매도금액 추가
             sold += quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x // 총 매도 금액 최신화
             tradecomtot += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F) // 총 수수로 최신화
@@ -2458,12 +2456,17 @@ class GameNormalActivity : AppCompatActivity() {
             else surplusCount = 0
             surplusQuestList?.let { checkQuestSurplus(surplusCount, it) }
 
+            profileDbManager!!.setValue1(value1now)
+            profileDbManager!!.setProfitRate((profileDbManager!!.getProfitRate()!! * profileDbManager!!.getHistory()!! + profitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+            profileDbManager!!.setRelativeProfit((profileDbManager!!.getRelativeProfit()!! * profileDbManager!!.getHistory()!! + relativeprofitrate * tradeday) / (profileDbManager!!.getHistory()!! + tradeday))
+            profileDbManager!!.setHistory(profileDbManager!!.getHistory()!!+ tradeday)
+
             // 자산내역 DB 저장
             val addRunnable = Runnable {
                 var localDateTime = LocalDateTime.now()
                 val newGameNormalDB = GameNormal(localDateTime.toString(), asset, cash, input, bought, sold, evaluation, profit, profitrate, profittot, profityear, "자산 차트", 0F, 0F, 0, 0, quant1x, quant3x, quantinv1x, quantinv3x,
-                        bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
-                        pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
+                    bought1x, bought3x, boughtinv1x, boughtinv3x, aver1x, aver3x, averinv1x, averinv3x, buylim1x, buylim3x, buyliminv1x, buyliminv3x, price1x, price3x, priceinv1x, priceinv3x, val1x, val3x, valinv1x, valinv3x,
+                    pr1x, pr3x, prinv1x, prinv3x, setMonthly, monthToggle, tradecomtot, 0F, dividendtot, taxtot, "nothing", item1Active, item1Length, item1Able, item2Active, item3Active, item4Active, autobuy, autoratio, auto1x, endpoint, countYear, countMonth, snpNowdays, snpNowVal, snpDiff, setId, relativeprofitrate, localdatatime, accountID!!)
                 gameNormalDb?.gameNormalDao()?.insert(newGameNormalDB)
             }
             val addThread = Thread(addRunnable)
@@ -2541,14 +2544,16 @@ class GameNormalActivity : AppCompatActivity() {
 
     //도전과제 스텍 보상 함수
     fun rewardByStack(reward: Int) {
-        var temp = profileDbManager!!.getMoney()!!
-        if (temp>=2000000000) {
-            profileDbManager!!.setMoney(temp)
-        } else {
-            profileDbManager!!.setMoney(profileDbManager!!.getMoney()!! + reward)
-            temp = profileDbManager!!.getMoney()!!
-            if (temp < 0) {
-                profileDbManager!!.setMoney(0)
+        if (!profileDbManager!!.isEmpty(this)) {
+            var temp = profileDbManager!!.getMoney()!!
+            if (temp >= 2000000000) {
+                profileDbManager!!.setMoney(temp)
+            } else {
+                profileDbManager!!.setMoney(temp + reward)
+                temp = profileDbManager!!.getMoney()!!
+                if (temp < 0) {
+                    profileDbManager!!.setMoney(0)
+                }
             }
         }
     }
