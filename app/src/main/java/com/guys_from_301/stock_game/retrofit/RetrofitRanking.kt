@@ -18,5 +18,3 @@ interface RetrofitRanking {
             @Field("u_id") u_id : String
     ): Call<Array<String>>
 }
-
-

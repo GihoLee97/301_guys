@@ -15,11 +15,20 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.delay
+import kotlin.math.floor
 import kotlin.math.roundToInt
 
-val profileImageId = arrayOf(R.drawable.ic_icon01_frog,
-        R.drawable.ic_icon02_rocket,R.drawable.ic_icon03_kid,
-        R.drawable.ic_icon04_parrot,R.drawable.ic_icon05_bitcoin, R.drawable.ic_icon06_ant, R.drawable.ic_icon07_hanriver, R.drawable.ic_icon08_119, R.drawable.ic_icon09_cow, R.drawable.ic_icon10_cloud)
+val profileImageId = arrayOf(R.drawable.icon01_lv1, R.drawable.icon01_lv2, R.drawable.icon01_lv3, R.drawable.icon01_lv4, R.drawable.icon01_lv5,
+        R.drawable.icon02_lv1, R.drawable.icon02_lv2, R.drawable.icon02_lv3, R.drawable.icon02_lv4, R.drawable.icon02_lv5,
+        R.drawable.icon03_lv1, R.drawable.icon03_lv2, R.drawable.icon03_lv3, R.drawable.icon03_lv4, R.drawable.icon03_lv5,
+        R.drawable.icon04_lv1, R.drawable.icon04_lv2, R.drawable.icon04_lv3, R.drawable.icon04_lv4, R.drawable.icon04_lv5,
+        R.drawable.icon05_lv1, R.drawable.icon05_lv2, R.drawable.icon05_lv3, R.drawable.icon05_lv4, R.drawable.icon05_lv5,
+        R.drawable.icon06_lv1, R.drawable.icon06_lv2, R.drawable.icon06_lv3, R.drawable.icon06_lv4, R.drawable.icon06_lv5,
+        R.drawable.icon07_lv1, R.drawable.icon07_lv2, R.drawable.icon07_lv3, R.drawable.icon07_lv4, R.drawable.icon07_lv5,
+        R.drawable.icon08_lv1, R.drawable.icon08_lv2, R.drawable.icon08_lv3, R.drawable.icon08_lv4, R.drawable.icon08_lv5,
+        R.drawable.icon09_lv1, R.drawable.icon09_lv2, R.drawable.icon09_lv3, R.drawable.icon09_lv4, R.drawable.icon09_lv5,
+        R.drawable.icon10_lv1, R.drawable.icon10_lv2, R.drawable.icon10_lv3, R.drawable.icon10_lv4, R.drawable.icon10_lv5
+        )
 
 var realkakaoplayer = mutableListOf<Dataclass_kakao>()
 var arrayll = mutableListOf<Int>()
@@ -134,18 +143,18 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money+ "%"
 
         // 로컬 랭커 테두리
-        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(R.drawable.pepe) ; ranker_local_image.add(R.id.iv_user1_image_local)
 
-//        v.findViewById<ImageView>(R.id.iv_user1_image_local).loadCircularImage(R.drawable.pepe, 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user1_image_local)
-        v.findViewById<ImageView>(R.id.iv_user2_image_local).loadCircularImage(profileImageId[ranker_image[1]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user2_image_local)
-        v.findViewById<ImageView>(R.id.iv_user3_image_local).loadCircularImage(profileImageId[ranker_image[2]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user3_image_local)
-        v.findViewById<ImageView>(R.id.iv_user4_image_local).loadCircularImage(profileImageId[ranker_image[3]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user4_image_local)
-        v.findViewById<ImageView>(R.id.iv_user5_image_local).loadCircularImage(profileImageId[ranker_image[4]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user5_image_local)
-        v.findViewById<ImageView>(R.id.iv_user6_image_local).loadCircularImage(profileImageId[ranker_image[5]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user6_image_local)
-        v.findViewById<ImageView>(R.id.iv_user7_image_local).loadCircularImage(profileImageId[ranker_image[6]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user7_image_local)
-        v.findViewById<ImageView>(R.id.iv_user8_image_local).loadCircularImage(profileImageId[ranker_image[7]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user8_image_local)
-        v.findViewById<ImageView>(R.id.iv_user9_image_local).loadCircularImage(profileImageId[ranker_image[8]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user9_image_local)
-        v.findViewById<ImageView>(R.id.iv_user10_image_local).loadCircularImage(profileImageId[ranker_image[9]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user10_image_local)
+        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]*5 + floor((ranker_stack[0] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user1_image_local)
+        v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]*5 + floor((ranker_stack[1] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user2_image_local)
+        v.findViewById<ImageView>(R.id.iv_user3_image_local).setImageResource(profileImageId[ranker_image[2]*5 + floor((ranker_stack[2] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user3_image_local)
+        v.findViewById<ImageView>(R.id.iv_user4_image_local).setImageResource(profileImageId[ranker_image[3]*5 + floor((ranker_stack[3] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user4_image_local)
+        v.findViewById<ImageView>(R.id.iv_user5_image_local).setImageResource(profileImageId[ranker_image[4]*5 + floor((ranker_stack[4] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user5_image_local)
+        v.findViewById<ImageView>(R.id.iv_user6_image_local).setImageResource(profileImageId[ranker_image[5]*5 + floor((ranker_stack[5] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user6_image_local)
+        v.findViewById<ImageView>(R.id.iv_user7_image_local).setImageResource(profileImageId[ranker_image[6]*5 + floor((ranker_stack[6] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user7_image_local)
+        v.findViewById<ImageView>(R.id.iv_user8_image_local).setImageResource(profileImageId[ranker_image[7]*5 + floor((ranker_stack[7] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user8_image_local)
+        v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]*5 + floor((ranker_stack[8] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user9_image_local)
+        v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]*5 + floor((ranker_stack[9] / 400000000f)).toInt()]) ; ranker_local_image.add(R.id.iv_user10_image_local)
+
 
         if(rank_number!=0)
             myLocalImageViewId = ranker_local_image[rank_number-1]
@@ -158,7 +167,9 @@ class FragmentRanking : Fragment() {
         }
         // kakao ranking
 
-        Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
+//        Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt() ]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
+
+        v.findViewById<ImageView>(R.id.iv_my_image_local).setImageResource(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()])
 
         friendsort()
         if(profileDbManager!!.getLogin() != 4){
@@ -319,10 +330,12 @@ class FragmentRanking : Fragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().runOnUiThread {
-            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+
+
 
             if(myLocalImageViewId!=0)
-                Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
+                Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
                 // here?
         }
     }
