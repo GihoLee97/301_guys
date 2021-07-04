@@ -221,17 +221,17 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         //스텍 구매
         cl_buy_stack1.setOnClickListener{
             var PRODUCT_ID = "game_money_1000"
-            marketViewModel.purchase(PRODUCT_ID,1000)
+            marketViewModel.purchase(PRODUCT_ID,20000)
 //            marketViewModel.BuyStack(100)
         }
         cl_buy_stack2.setOnClickListener{
             var PRODUCT_ID = "game_money_2000"
-            marketViewModel.purchase(PRODUCT_ID,2000)
+            marketViewModel.purchase(PRODUCT_ID,40000)
 //            marketViewModel.BuyStack(200)
         }
         cl_buy_stack3.setOnClickListener{
             var PRODUCT_ID = "game_money_10000"
-            marketViewModel.purchase(PRODUCT_ID,10000)
+            marketViewModel.purchase(PRODUCT_ID,100000)
 //            marketViewModel.BuyStack(1000)
         }
         //물약 구매
