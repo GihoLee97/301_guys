@@ -342,6 +342,57 @@ class NewResultNormalActivity: AppCompatActivity() {
         profileDbManager!!.refresh(this)
     }
 
+    override fun onPause() {
+        //새로운 빈 게임 생성
+        gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
+        gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
+        //초기자산값 변수
+        val initialgameset = gamesetDB?.gameSetDao()?.getSetWithId(accountID+0, accountID!!)
+        var gamesetList = gamesetDB?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)
+        var existence = false   //새 게임 존재 여부
+        for (game in gamesetDB?.gameSetDao()?.getPick(accountID!!,accountID!!+1,accountID!!+2,accountID!!+3)!!) {
+            var emptyCount : Int = 0
+            if (game.endtime == "") {
+                existence = true
+                emptyCount++
+            }
+            if(emptyCount == 2) gamesetDB?.gameSetDao()?.delete(game)
+        }
+        if (gamesetList != null) {
+            if (!existence && gamesetList.size < 3) {
+                val newGameSet = GameSet()
+
+                if (gamesetList.size == 1) {
+                    if (gamesetList.last().id.last() == '1') newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList.last().id.last() == '2') newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList.last().id.last() == '3') newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외1"
+                } else if (gamesetList.size == 2) {
+                    if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+3
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '1'.toInt()+'3'.toInt()) newGameSet.id = initialgameset?.accountId+2
+                    else if (gamesetList[0].id.last().toInt() + gamesetList[1].id.last().toInt() == '3'.toInt()+'2'.toInt()) newGameSet.id = initialgameset?.accountId+1
+                    else newGameSet.id = "예외2"
+                } else if (gamesetList.size == 0){
+                    newGameSet.id = accountID+1
+                }
+                //예전거 누적
+                if (initialgameset != null) {
+                    val id = newGameSet.id
+                    newGameSet.setcash = initialgameset.setcash
+                    newGameSet.setmonthly = initialgameset.setmonthly
+                    newGameSet.setsalaryraise = initialgameset.setsalaryraise
+                    newGameSet.setgamespeed = initialgameset.setgamespeed
+                    newGameSet.setgamelength = initialgameset.setgamelength
+                    newGameSet.accountId = initialgameset.accountId
+                    Log.d("hongz", "MainActivity: 새gameset 추가 [id]: "+id)
+                }
+                newGameSet.endtime = ""
+                gamesetDB?.gameSetDao()?.insert(newGameSet)
+            }
+        }
+        super.onPause()
+    }
+
     override fun onStop() {
         super.onStop()
         profileDbManager!!.write2database()
