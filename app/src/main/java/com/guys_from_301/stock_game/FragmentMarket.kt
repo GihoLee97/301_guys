@@ -231,7 +231,7 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         }
         cl_buy_stack3.setOnClickListener{
             var PRODUCT_ID = "game_money_10000"
-            marketViewModel.purchase(PRODUCT_ID,100000)
+            marketViewModel.purchase(PRODUCT_ID,400000)
 //            marketViewModel.BuyStack(1000)
         }
         //물약 구매
