@@ -137,12 +137,6 @@ class FragmentProfile : Fragment() {
         super.onPause()
     }
 
-//
-    override fun onStart() {
-//        profileActivityViewModel.refresh()
-        super.onStart()
-    }
-
 
     fun <T> ImageView.loadCircularImage(
             model: T,

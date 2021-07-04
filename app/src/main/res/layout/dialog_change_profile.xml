@@ -37,11 +37,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <View
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
                         <RadioButton
                             android:id="@+id/rb_icon1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon01_frog"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -50,7 +53,7 @@
                             android:id="@+id/rb_icon2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon02_rocket"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -59,7 +62,7 @@
                             android:id="@+id/rb_icon3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon03_kid"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -68,7 +71,7 @@
                             android:id="@+id/rb_icon4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon04_parrot"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -77,7 +80,7 @@
                             android:id="@+id/rb_icon5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon05_bitcoin"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -86,7 +89,7 @@
                             android:id="@+id/rb_icon6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon06_ant"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -95,7 +98,7 @@
                             android:id="@+id/rb_icon7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon07_hanriver"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -104,7 +107,7 @@
                             android:id="@+id/rb_icon8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon08_119"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -113,7 +116,7 @@
                             android:id="@+id/rb_icon9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon09_cow"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
@@ -122,28 +125,12 @@
                             android:id="@+id/rb_icon10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
+                            android:button="@drawable/ic_icon10_cloud"/>
                         <View
                             android:layout_width="12dp"
                             android:layout_height="match_parent"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_icon11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
-                        <View
-                            android:layout_width="12dp"
-                            android:layout_height="match_parent"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_icon12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/profile_change_icon"/>
-                        <View
-                            android:layout_width="12dp"
-                            android:layout_height="match_parent"/>
                     </LinearLayout>
                 </RadioGroup>
 

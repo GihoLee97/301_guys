@@ -35,8 +35,6 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
     private lateinit var rb_image8 : RadioButton
     private lateinit var rb_image9 : RadioButton
     private lateinit var rb_image10 : RadioButton
-    private lateinit var rb_image11 : RadioButton
-    private lateinit var rb_image12 : RadioButton
 
     var _u_id : String = ""
     var _u_pw : String = ""
@@ -56,9 +54,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         rb_image8 = findViewById(R.id.rb_icon8)
         rb_image9 = findViewById(R.id.rb_icon9)
         rb_image10 = findViewById(R.id.rb_icon10)
-        rb_image11 = findViewById(R.id.rb_icon11)
-        rb_image12 = findViewById(R.id.rb_icon12)
-        val images: List<RadioButton> = listOf(rb_image1,rb_image2,rb_image3,rb_image4,rb_image5,rb_image6,rb_image7,rb_image8,rb_image9,rb_image10,rb_image11,rb_image12)
+        val images: List<RadioButton> = listOf(rb_image1,rb_image2,rb_image3,rb_image4,rb_image5,rb_image6,rb_image7,rb_image8,rb_image9,rb_image10)
         var _u_imageNumber = 0
 
         if (intent.hasExtra("u_id") && intent.hasExtra("u_pw")) {
@@ -95,7 +91,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 0
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -108,7 +104,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 1
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -121,7 +117,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 2
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -134,7 +130,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 3
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -147,7 +143,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 4
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -160,7 +156,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 5
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -173,7 +169,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 6
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -186,7 +182,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 7
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -199,7 +195,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 8
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -212,34 +208,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 9
-                for ( i: Int in 0..11){
-                    if(i != _u_imageNumber) {
-                        images[i].isChecked = false
-                        images[i].alpha = 0.5F
-                    }
-                    else images[i].alpha = 1F
-                }
-            }
-        }
-        rb_image11.setOnCheckedChangeListener{ group, checked ->
-            isRadioGroupChecked = true
-            if(checked) {
-                _u_imageNumber = 10
-                for ( i: Int in 0..11){
-                    if(i != _u_imageNumber) {
-                        images[i].isChecked = false
-                        images[i].alpha = 0.5F
-                    }
-                    else images[i].alpha = 1F
-                }
-            }
-
-        }
-        rb_image12.setOnCheckedChangeListener{ group, checked ->
-            isRadioGroupChecked = true
-            if(checked) {
-                _u_imageNumber = 11
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -263,8 +232,6 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
                     R.id.rb_icon8 -> _u_imageNumber=7
                     R.id.rb_icon9 -> _u_imageNumber=8
                     R.id.rb_icon10 -> _u_imageNumber=9
-                    R.id.rb_icon11 -> _u_imageNumber=10
-                    R.id.rb_icon12 -> _u_imageNumber=11
                 }
                 val time1: LocalDateTime = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")

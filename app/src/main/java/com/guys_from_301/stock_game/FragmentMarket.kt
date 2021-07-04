@@ -236,9 +236,16 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
         }
         //물약 구매
         cl_buy_potion.setOnClickListener{
-            marketViewModel.BuyPotion()
-            val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
-            marketViewModel.getPotion().value?.let { it1 -> dialogUnsuccess.start(6, it1) }
+            if (marketViewModel.getStack().value!! >= POTION_COST) {
+                marketViewModel.BuyPotion()
+                val dialogUnsuccess = mContext?.let { Dialog_negotiation_unsuccess(it) }
+                marketViewModel.getPotion().value?.let { it1 -> dialogUnsuccess.start(6, it1) }
+            }
+            else{
+                val dialogununsucess = mContext?.let {Dialog_negotiation_unsuccess(it)}
+                marketViewModel.getPotion().value?.let {it1 -> dialogununsucess.start(4, 0)}
+            }
+
         }
 
         tv_marketReceipt.setOnClickListener {
