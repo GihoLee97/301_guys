@@ -17,9 +17,9 @@ import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
-val profileImageId = arrayOf(R.drawable.ic_profile_image_templete1,
-        R.drawable.ic_profile_image_templete2,R.drawable.ic_profile_image_templete3,
-        R.drawable.ic_profile_image_templete4,R.drawable.ic_profile_image_templete5)
+val profileImageId = arrayOf(R.drawable.ic_icon01_frog,
+        R.drawable.ic_icon02_rocket,R.drawable.ic_icon03_kid,
+        R.drawable.ic_icon04_parrot,R.drawable.ic_icon05_bitcoin, R.drawable.ic_icon06_ant, R.drawable.ic_icon07_hanriver, R.drawable.ic_icon08_119, R.drawable.ic_icon09_cow, R.drawable.ic_icon10_cloud)
 
 var realkakaoplayer = mutableListOf<Dataclass_kakao>()
 var arrayll = mutableListOf<Int>()
@@ -94,7 +94,7 @@ class FragmentRanking : Fragment() {
 
 
         v.findViewById<ImageView>(R.id.iv_my_image_local).setOnClickListener {
-            val dlg = Dialog_imageChange(_MainActivity!!)
+            val dlg = Dialog_change_profile(_MainActivity!!)
             dlg.start()
         }
 

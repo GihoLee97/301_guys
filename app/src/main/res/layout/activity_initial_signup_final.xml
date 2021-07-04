@@ -75,7 +75,7 @@
                     android:id="@+id/rb_icon1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon01_frog"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>

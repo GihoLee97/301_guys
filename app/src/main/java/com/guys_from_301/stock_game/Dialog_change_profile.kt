@@ -64,9 +64,7 @@ class Dialog_change_profile(context: Context) {
         rb_image8 = dlg.findViewById(R.id.rb_icon8)
         rb_image9 = dlg.findViewById(R.id.rb_icon9)
         rb_image10 = dlg.findViewById(R.id.rb_icon10)
-        rb_image11 = dlg.findViewById(R.id.rb_icon11)
-        rb_image12 = dlg.findViewById(R.id.rb_icon12)
-        val images: List<RadioButton> = listOf(rb_image1,rb_image2,rb_image3,rb_image4,rb_image5,rb_image6,rb_image7,rb_image8,rb_image9,rb_image10,rb_image11,rb_image12)
+        val images: List<RadioButton> = listOf(rb_image1,rb_image2,rb_image3,rb_image4,rb_image5,rb_image6,rb_image7,rb_image8,rb_image9,rb_image10)
 
         isRadioGroupChecked = false
 
@@ -76,7 +74,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 0
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -90,7 +88,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 1
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -104,7 +102,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 2
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -118,7 +116,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 3
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -132,7 +130,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 4
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -146,7 +144,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 5
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -160,7 +158,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 6
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -174,7 +172,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 7
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -188,7 +186,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 8
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -202,7 +200,7 @@ class Dialog_change_profile(context: Context) {
             isRadioGroupChecked = true
             if(checked) {
                 _u_imageNumber = 9
-                for ( i: Int in 0..11){
+                for ( i: Int in 0..9){
                     if(i != _u_imageNumber) {
                         images[i].isChecked = false
                         images[i].alpha = 0.5F
@@ -212,34 +210,7 @@ class Dialog_change_profile(context: Context) {
             }
             btn_image_change.setBackgroundResource(R.drawable.nickname_change_ok_box)
         }
-        rb_image11.setOnCheckedChangeListener{ group, checked ->
-            isRadioGroupChecked = true
-            if(checked) {
-                _u_imageNumber = 10
-                for ( i: Int in 0..11){
-                    if(i != _u_imageNumber) {
-                        images[i].isChecked = false
-                        images[i].alpha = 0.5F
-                    }
-                    else images[i].alpha = 1F
-                }
-            }
-            btn_image_change.setBackgroundResource(R.drawable.nickname_change_ok_box)
-        }
-        rb_image12.setOnCheckedChangeListener{ group, checked ->
-            isRadioGroupChecked = true
-            if(checked) {
-                _u_imageNumber = 11
-                for ( i: Int in 0..11){
-                    if(i != _u_imageNumber) {
-                        images[i].isChecked = false
-                        images[i].alpha = 0.5F
-                    }
-                    else images[i].alpha = 1F
-                }
-            }
-            btn_image_change.setBackgroundResource(R.drawable.nickname_change_ok_box)
-        }
+
 
 
         rg_profileImageChange.setOnCheckedChangeListener{ group, checkedId ->
