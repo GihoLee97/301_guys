@@ -241,6 +241,11 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
             marketViewModel.getPotion().value?.let { it1 -> dialogUnsuccess.start(6, it1) }
         }
 
+        tv_marketReceipt.setOnClickListener {
+            val intent = Intent(activity, PurchaseHistoryAcitivity::class.java)
+            startActivity(intent)
+        }
+
         return v
     }
 

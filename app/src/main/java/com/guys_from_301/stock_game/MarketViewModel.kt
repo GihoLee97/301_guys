@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel() {
     //변수 선언
@@ -286,21 +286,6 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
             Log.d("giholee", (purchase.purchaseState == Purchase.PurchaseState.PENDING).toString())
             Log.d("giholee", (purchase.purchaseState == Purchase.PurchaseState.UNSPECIFIED_STATE).toString())
 
-//            var ackPurchase =
-//                AcknowledgePurchaseResponseListener { billingResult ->
-//                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-//                        //if purchase is acknowledged
-//                        // Grant entitlement to the user. and restart activity
-//                        savePurchaseValueToPref(true)
-//                        Toast.makeText(getApplicationContext(), "Item Purchased", Toast.LENGTH_SHORT).show()
-//                        viewModel.BuyStack(money)
-//                        consume(purchase)
-//                        activity.recreate()
-//                    }
-//                    else
-//                        Log.d("giholee", "fail to acknowledge")
-//                }
-
             if (PRODUCT_ID.equals(purchase.skus[0]) && purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                 if (!verifyValidSignature(purchase.originalJson, purchase.signature)) {
                     // Invalid purchase
@@ -318,7 +303,6 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
                     val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                         .setPurchaseToken(purchase.purchaseToken)
                         .build()
-//                    billingClient.acknowledgePurchase(acknowledgePurchaseParams, ackPurchase)
                     consume(purchase)
                 } else {
                     // Grant entitlement to the user on item purchase
@@ -331,7 +315,6 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
                             Toast.LENGTH_SHORT
                         ).show()
                         consume(purchase)
-//                        marketActivity.recreate() TODO
                     }
                 }
             } else if (PRODUCT_ID.equals(purchase.skus[0]) && purchase.purchaseState == Purchase.PurchaseState.PENDING) {
