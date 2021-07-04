@@ -268,7 +268,8 @@ class FragmentMarket : Fragment() ,  RewardedVideoAdListener {
     }
 
     fun loadad() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", AdRequest.Builder().build())
+        mRewardedVideoAd.loadAd(getString(R.string.google_admob_id), AdRequest.Builder().build())
+//        ca-app-pub-9988044147017146~8641712393
     }
 
     override fun onRewardedVideoAdClosed() {
