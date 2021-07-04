@@ -73,6 +73,7 @@ var rank7_nick :String = ""; var rank7_money :String = ""; var rank8_nick :Strin
 var rank9_nick :String = ""; var rank9_money :String = ""; var rank10_nick :String = ""; var rank10_money :String = ""
 // ranker image
 var ranker_image = mutableListOf<Int>()
+var ranker_stack = mutableListOf<Int>()
 //gameset update 여부
 var updateGameSet: Boolean = false
 var startGameSet: Boolean = false
@@ -457,12 +458,18 @@ class MainActivity : AppCompatActivity() {
                     rank8_nick = response.body()!![7]; rank8_money = response.body()!![17]
                     rank9_nick = response.body()!![8]; rank9_money = response.body()!![18]
                     rank10_nick = response.body()!![9]; rank10_money = response.body()!![19]
+
                     if(ranker_image != null){
                         ranker_image.clear()
                     }
+                    if(ranker_stack != null){
+                        ranker_stack.clear()
+                    }
                     for(i in 0..9){
                         ranker_image.add(response.body()!![20+i].toInt())
+                        ranker_stack.add(response.body()!![30+i].toInt())
                     }
+                    Log.d("sw---", "---stack"+ ranker_stack[0].toString())
                 }
             }
         })
