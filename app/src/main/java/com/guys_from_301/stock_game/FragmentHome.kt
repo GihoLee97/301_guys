@@ -2,11 +2,13 @@ package com.guys_from_301.stock_game
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.timer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,11 +53,14 @@ class FragmentHome : Fragment() {
     private lateinit var pb_quest1: ProgressBar
     private lateinit var pb_quest2: ProgressBar
     private lateinit var tv_profitRate: TextView
+    private lateinit var tv_profitRate_kr: TextView
     private lateinit var rv_games: ViewPager
+    private lateinit var ll_title: LinearLayout
     //게임 데이터 불러올 변수
     private var gameDb: GameSetDB? = null
     private var gameNormalDB: GameNormalDB? = null
     private var game = ArrayList<GameSet>()
+    private var title_kr = arrayListOf<String>("누적 수익률", "시장대비수익률", "누적투자일", "레벨", "보유스택")
     lateinit var mAdapter: MyGameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,15 +81,83 @@ class FragmentHome : Fragment() {
 
 
         itemDb = ItemDB.getInstace(_MainActivity!!)
-
         tv_profitRate = v.findViewById(R.id.tv_profitRate)
+        tv_profitRate_kr = v.findViewById(R.id.tv_profitRate_kr)
         tv_questName1 = v.findViewById(R.id.tv_questName1)
         tv_questName2 = v.findViewById(R.id.tv_questName2)
         tv_questDescription1 = v.findViewById(R.id.tv_questDescription1)
         tv_questDescription2 = v.findViewById(R.id.tv_questDescription2)
         pb_quest1 = v.findViewById(R.id.pb_quest1)
         pb_quest2 = v.findViewById(R.id.pb_quest2)
-        tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
+        ll_title = v.findViewById(R.id.ll_title)
+        val random = Random()
+        var num = random.nextInt(title_kr.size)
+        tv_profitRate_kr.text = title_kr[num]
+        when(num){
+            0->tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
+            1->tv_profitRate.text = per.format(profileDbManager!!.getRelativeProfit()!!).toString()+"%"
+            2->tv_profitRate.text = profileDbManager!!.getHistory()!!.toString()+"일"
+            3->tv_profitRate.text = profileDbManager!!.getLevel()!!.toString()
+            4->tv_profitRate.text = dec.format(profileDbManager!!.getMoney()!!).toString()
+        }
+
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val job1 = launch {
+//                while (true) {
+//                    num = num+1
+//                    num = num % 5
+//                    ll_title.animate().apply {
+//                        duration = 250
+//                        rotationXBy(180.00000f).withEndAction{
+//                        }.start()
+//                        delay(260L)
+//                        tv_profitRate_kr.text = title_kr[num]
+//                        when(num){
+//                            0->tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
+//                            1->tv_profitRate.text = per.format(profileDbManager!!.getRelativeProfit()!!).toString()+"%"
+//                            2->tv_profitRate.text = profileDbManager!!.getHistory()!!.toString()+"일"
+//                            3->tv_profitRate.text = profileDbManager!!.getLevel()!!.toString()
+//                            4->tv_profitRate.text = dec.format(profileDbManager!!.getMoney()!!).toString()
+//                        }
+//                        duration = 250
+//                        rotationXBy(180.00000f).withEndAction{
+//                        }.start()
+//                        delay(5000L)
+//                    }
+//
+//
+//                }
+//            }
+//        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val job1 = launch {
+                while (true) {
+                    num = num+1
+                    num = num % 5
+                    tv_profitRate_kr.text = title_kr[num]
+                    when(num){
+                        0->tv_profitRate.text = per.format(profileDbManager!!.getProfitRate()!!).toString()+"%"
+                        1->tv_profitRate.text = per.format(profileDbManager!!.getRelativeProfit()!!).toString()+"%"
+                        2->tv_profitRate.text = profileDbManager!!.getHistory()!!.toString()+"일"
+                        3->tv_profitRate.text = profileDbManager!!.getLevel()!!.toString()
+                        4->tv_profitRate.text = dec.format(profileDbManager!!.getMoney()!!).toString()
+                    }
+
+                    ll_title.animate().apply {
+                        duration = 500
+                        rotationXBy(360.00000f).withEndAction{
+                        }.start()
+                        delay(5000L)
+                    }
+
+
+                }
+            }
+        }
+
+
+
 
         //도전과제 실시간 반영
         var profitAchievement = 0
