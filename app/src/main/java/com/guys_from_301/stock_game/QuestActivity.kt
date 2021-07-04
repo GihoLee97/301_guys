@@ -4,10 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +25,7 @@ class QuestActivity : AppCompatActivity() {
     private var questPlayedGameList = listOf<Quest>()
     private var questInviteList = listOf<Quest>()
     private lateinit var tv_level : TextView
+    private lateinit var pb_experience : ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +35,8 @@ class QuestActivity : AppCompatActivity() {
         profileDb = ProfileDB.getInstace(this)
         tv_level = findViewById(R.id.tv_level)
         tv_level.text = "레벨 "+ profileDbManager!!.getLevel()!!
+        pb_experience = findViewById(R.id.pb_experience)
+        pb_experience.progress = profileDbManager!!.getExp()!! / (profileDbManager!!.getLevel()!! * 10)
         var mAdapter = MyQuestAdapter(this, questList, achievementList)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         val qRecyclerView = findViewById<RecyclerView>(R.id.qRecyclerView)

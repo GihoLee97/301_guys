@@ -39,6 +39,7 @@ class NewResultNormalActivity: AppCompatActivity() {
     //view 요소들
     private lateinit var tv_profitRateFinal: TextView
     private lateinit var tv_experience: TextView
+    private lateinit var tv_levelup : TextView
     private lateinit var tv_rewardStack: TextView
     private lateinit var tv_tradeday: TextView
     private lateinit var tv_relativeProfitRate: TextView
@@ -75,6 +76,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         //view에 연결
         tv_profitRateFinal = findViewById(R.id.tv_profitRateFinal)
         tv_experience = findViewById(R.id.tv_experience)
+        tv_levelup = findViewById(R.id.tv_level_up)
         tv_rewardStack = findViewById(R.id.tv_rewardStack)
         tv_tradeday = findViewById(R.id.tv_tradeday)
         tv_relativeProfitRate = findViewById(R.id.tv_relativeprofitrate)
@@ -119,9 +121,11 @@ class NewResultNormalActivity: AppCompatActivity() {
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
-        tv_experience.text = "+"+gamePlayDay+"exp"
+        tv_experience.text = "+"+Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()+"exp"
         tv_rewardStack.text = "+"+dec.format((tradeday * (relativeprofitrate + 100) / 500).roundToInt())
-
+        if(profileDbManager!!.getExp()!! + Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt() >= profileDbManager!!.getLevel()!! * 1000){
+            tv_levelup.text = "레벨 업! " + profileDbManager!!.getLevel()!! +" -> " + (profileDbManager!!.getLevel()!! + 1).toString()
+        }
 
         if (relativeprofitrate > 0) tv_relativeProfitRate.text = "+" + per.format(relativeprofitrate) + "%"
         else {

@@ -156,10 +156,14 @@
                             android:textAppearance="@style/game_profitratenum" />
                     </LinearLayout>
 
-                    <View
+                    <TextView
+                        android:id="@+id/tv_level_up"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:textAppearance="@style/game_profitrate"
+                        android:gravity="right"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
             </LinearLayout>
