@@ -22,6 +22,9 @@ interface QuestDao {
     @Update
     fun update(quest: Quest)
 
+    @Query("DELETE FROM Quest")
+    fun deleteSignOut()
+
     @Query("DELETE from Quest")
     fun deleteAll()
 }

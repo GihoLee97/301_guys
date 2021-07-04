@@ -32,11 +32,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BlankFragment2.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentProfile : Fragment() {
 //    private val profileActivityViewModel = ProfileActivityViewModel(_MainActivity!!)
     private lateinit var tv_my_nick : TextView
@@ -55,7 +50,7 @@ class FragmentProfile : Fragment() {
         tv_my_nick = v.findViewById(R.id.tv_my_nick)
         tv_my_nick.text = profileDbManager!!.getNickname()
         v.findViewById<TextView>(R.id.tv_my_level).text = "레벨 " + profileDbManager!!.getLevel().toString()
-        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager!!.getExp()!!
+        v.findViewById<ProgressBar>(R.id.pb_exp_bar).progress = profileDbManager!!.getExp()!! / (profileDbManager!!.getLevel()!! * 10)
         if(profileDbManager!!.getLogin() == 4){ // kakao login
             UserApiClient.instance.me { user, error ->
                 if (error!=null)
@@ -105,10 +100,9 @@ class FragmentProfile : Fragment() {
             else if(profileDbManager!!.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
-            updatelogOutInFo2DB(loginMethod!!)
-            val intent = Intent(_MainActivity,NewInitialActivity::class.java)
-            startActivity(intent)
-            activity?.finishAffinity()
+            val dlg_sign_out = Dialog_sign_out(_MainActivity!!, loginMethod!!)
+            dlg_sign_out.start()
+
 //            requireActivity().finish()
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
@@ -223,15 +217,6 @@ class FragmentProfile : Fragment() {
         paint.strokeWidth = borderSize
         canvas.drawCircle(centerX, centerY, circleRadius, paint)
         return newBitmap
-    }
-    fun updatelogOutInFo2DB(method : String){
-        var loginMethod = 0
-        if(method=="GENERAL") loginMethod = 1
-        else if(method=="GOOGLE") loginMethod = 2
-        else if(method=="KAKAO") loginMethod = 4
-        if(!profileDbManager!!.isEmpty(_MainActivity!!)) {
-            profileDbManager!!.setLogin(profileDbManager!!.getLogin()!!-loginMethod)
-        }
     }
 
     override fun onResume() {

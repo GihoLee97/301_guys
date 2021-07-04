@@ -44,6 +44,9 @@ interface GameNormalDao {
     @Update
     fun update(gameNormal: GameNormal)
 
+    @Query("DELETE FROM GameNormal")
+    fun deleteSignOut()
+
     @Query("SELECT id FROM GameNormal WHERE accountId = :accountID")
     fun getId(accountID : String): List<String>
 
