@@ -218,16 +218,16 @@ class InitialLoginActivity : AppCompatActivity() {
             }
         })
         et_id.transformationMethod = HideReturnsTransformationMethod.getInstance()
-        et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
+        et_pw.transformationMethod = PasswordTransformationMethod.getInstance()
         iv_visibility.setOnClickListener {
             visibility = !visibility
             if(visibility) {
                 iv_visibility.setImageResource(R.drawable.ic_visible)
-                et_pw.transformationMethod = PasswordTransformationMethod.getInstance()
+                et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
             }
             else {
                 iv_visibility.setImageResource(R.drawable.ic_invisible)
-                et_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                et_pw.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         }
 
