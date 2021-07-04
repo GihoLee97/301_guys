@@ -62,7 +62,7 @@ var _MainActivity : Context? = null
 const val START_CASH = 10000F
 const val START_MONTHLY = 1000F
 const val START_SALARY_RAISE = 6F
-const val START_GAME_LENGTH = 30
+const val START_GAME_LENGTH = 20
 const val START_GAME_SPEED = 3
 //푸쉬알람 ID
 const val ONESIGNAL_APP_ID = "b096a9b0-2d91-48b5-886b-b3e8d6ba0116"
@@ -128,6 +128,7 @@ class MainActivity : AppCompatActivity() {
 //        val adRequest = AdRequest.Builder().build()
 //        mAdView.loadAd(adRequest)
 
+        // 기존 알림 삭제
         cancelAlarm()
 
         //초기자산값 변수
