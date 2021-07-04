@@ -46,6 +46,9 @@ interface GameSetDao {
     @Query("DELETE FROM GameSet WHERE id IS :id  AND accountId = :accountID")
     fun deleteId(id: String, accountID : String)
 
+    @Query("DELETE FROM GameSet")
+    fun deleteSignOut()
+
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     fun insert(gameSet: GameSet)
 

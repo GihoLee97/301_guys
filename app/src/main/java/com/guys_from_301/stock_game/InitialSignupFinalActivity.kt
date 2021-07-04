@@ -25,6 +25,18 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
     private lateinit var et_signup_nick : EditText
     private lateinit var rg_profileImageSelect : RadioGroup
     private var isRadioGroupChecked = false
+    private lateinit var rb_image1 : RadioButton
+    private lateinit var rb_image2 : RadioButton
+    private lateinit var rb_image3 : RadioButton
+    private lateinit var rb_image4 : RadioButton
+    private lateinit var rb_image5 : RadioButton
+    private lateinit var rb_image6 : RadioButton
+    private lateinit var rb_image7 : RadioButton
+    private lateinit var rb_image8 : RadioButton
+    private lateinit var rb_image9 : RadioButton
+    private lateinit var rb_image10 : RadioButton
+    private lateinit var rb_image11 : RadioButton
+    private lateinit var rb_image12 : RadioButton
 
     var _u_id : String = ""
     var _u_pw : String = ""
@@ -34,6 +46,20 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial_signup_final)
         window?.statusBarColor = resources.getColor(R.color.themeFragment)
+        rb_image1 = findViewById(R.id.rb_icon1)
+        rb_image2 = findViewById(R.id.rb_icon2)
+        rb_image3 = findViewById(R.id.rb_icon3)
+        rb_image4 = findViewById(R.id.rb_icon4)
+        rb_image5 = findViewById(R.id.rb_icon5)
+        rb_image6 = findViewById(R.id.rb_icon6)
+        rb_image7 = findViewById(R.id.rb_icon7)
+        rb_image8 = findViewById(R.id.rb_icon8)
+        rb_image9 = findViewById(R.id.rb_icon9)
+        rb_image10 = findViewById(R.id.rb_icon10)
+        rb_image11 = findViewById(R.id.rb_icon11)
+        rb_image12 = findViewById(R.id.rb_icon12)
+        val images: List<RadioButton> = listOf(rb_image1,rb_image2,rb_image3,rb_image4,rb_image5,rb_image6,rb_image7,rb_image8,rb_image9,rb_image10,rb_image11,rb_image12)
+        var _u_imageNumber = 0
 
         if (intent.hasExtra("u_id") && intent.hasExtra("u_pw")) {
             _u_id = intent.getStringExtra("u_id")!!
@@ -65,16 +91,180 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
             Log.d("Giho","checkedId : "+checkedId.toString())
         }
 
+                rb_image1.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 0
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image2.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 1
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image3.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 2
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image4.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 3
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image5.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 4
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+       }
+        rb_image6.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 5
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image7.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 6
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image8.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 7
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image9.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 8
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image10.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 9
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+        rb_image11.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 10
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+
+        }
+        rb_image12.setOnCheckedChangeListener{ group, checked ->
+            isRadioGroupChecked = true
+            if(checked) {
+                _u_imageNumber = 11
+                for ( i: Int in 0..11){
+                    if(i != _u_imageNumber) {
+                        images[i].isChecked = false
+                        images[i].alpha = 0.5F
+                    }
+                    else images[i].alpha = 1F
+                }
+            }
+        }
+
 
         findViewById<Button>(R.id.btn_go_on).setOnClickListener{
             if(isRadioGroupChecked) {
-                var _u_imageNumber = 0
                 when(rg_profileImageSelect.checkedRadioButtonId){
-                    R.id.rb_image1 -> _u_imageNumber=0
-                    R.id.rb_image2 -> _u_imageNumber=1
-                    R.id.rb_image3 -> _u_imageNumber=2
-                    R.id.rb_image4 -> _u_imageNumber=3
-                    R.id.rb_image5 -> _u_imageNumber=4
+                    R.id.rb_icon1 -> _u_imageNumber=0
+                    R.id.rb_icon2 -> _u_imageNumber=1
+                    R.id.rb_icon3 -> _u_imageNumber=2
+                    R.id.rb_icon4 -> _u_imageNumber=3
+                    R.id.rb_icon5 -> _u_imageNumber=4
+                    R.id.rb_icon6 -> _u_imageNumber=5
+                    R.id.rb_icon7 -> _u_imageNumber=6
+                    R.id.rb_icon8 -> _u_imageNumber=7
+                    R.id.rb_icon9 -> _u_imageNumber=8
+                    R.id.rb_icon10 -> _u_imageNumber=9
+                    R.id.rb_icon11 -> _u_imageNumber=10
+                    R.id.rb_icon12 -> _u_imageNumber=11
                 }
                 val time1: LocalDateTime = LocalDateTime.now()
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")

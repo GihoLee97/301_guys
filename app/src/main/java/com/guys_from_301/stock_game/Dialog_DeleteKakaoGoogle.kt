@@ -15,6 +15,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.guys_from_301.stock_game.retrofit.RetrofitDelete
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.guys_from_301.stock_game.data.GameNormalDB
+import com.guys_from_301.stock_game.data.GameSetDB
+import com.guys_from_301.stock_game.data.QuestDB
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +32,9 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
     private lateinit var btnCancel: ImageButton
     private lateinit var et_nickname: EditText
     private lateinit var tv_nick_change_ment_1 : TextView
+    private var gameNormalDb: GameNormalDB? = null
+    private var gameSetDb: GameSetDB? = null
+    private var questDb: QuestDB? = null
 
     fun start() {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE) //타이틀바 제거
@@ -40,6 +46,10 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
         btnCancel = dlg.findViewById(R.id.btn_deletecancel)
         et_nickname = dlg.findViewById(R.id.et_nickname)
         tv_nick_change_ment_1 = dlg.findViewById(R.id.tv_pwChangeNotice)
+
+        gameNormalDb = GameNormalDB.getInstace(dlg.context)
+        gameSetDb = GameSetDB.getInstace(dlg.context)
+        questDb = QuestDB.getInstance(dlg.context)
 
         et_nickname.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -62,6 +72,9 @@ class Dialog_DeleteKakaoGoogle(context: Context, method : String) {
                     getHash(profileDbManager!!.getLoginId()!!).trim(),
                     getHash(profileDbManager!!.getLoginPw()!!).trim()
                 )
+                gameSetDb?.gameSetDao()?.deleteSignOut()
+                gameNormalDb?.gameNormalDao()?.deleteSignOut()
+                questDb?.questDao()?.deleteSignOut()
                 signOut(loginMethod)
                 dlg.dismiss()
             }

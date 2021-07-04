@@ -100,10 +100,9 @@ class FragmentProfile : Fragment() {
             else if(profileDbManager!!.getLogin() == 4){
                 loginMethod =  "KAKAO"
             }
-            updatelogOutInFo2DB(loginMethod!!)
-            val intent = Intent(_MainActivity,NewInitialActivity::class.java)
-            startActivity(intent)
-            activity?.finishAffinity()
+            val dlg_sign_out = Dialog_sign_out(_MainActivity!!, loginMethod!!)
+            dlg_sign_out.start()
+
 //            requireActivity().finish()
         }
         v.findViewById<LinearLayout>(R.id.ll_withdraw).setOnClickListener{
@@ -218,15 +217,6 @@ class FragmentProfile : Fragment() {
         paint.strokeWidth = borderSize
         canvas.drawCircle(centerX, centerY, circleRadius, paint)
         return newBitmap
-    }
-    fun updatelogOutInFo2DB(method : String){
-        var loginMethod = 0
-        if(method=="GENERAL") loginMethod = 1
-        else if(method=="GOOGLE") loginMethod = 2
-        else if(method=="KAKAO") loginMethod = 4
-        if(!profileDbManager!!.isEmpty(_MainActivity!!)) {
-            profileDbManager!!.setLogin(profileDbManager!!.getLogin()!!-loginMethod)
-        }
     }
 
     override fun onResume() {

@@ -59,11 +59,136 @@
 
     </LinearLayout>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rg_profileImageSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/rb_icon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/profile_change_icon"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+                    android:id="@+id/rb_icon12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/ic_ellipse_63__1_"/>
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </RadioGroup>
+
+
+    </HorizontalScrollView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="당신의 닉네임을 설정해주세요 :)"
-        android:layout_marginTop="60dp"
+        android:text="아이콘과 닉네임을 설정해주세요 :)"
+        android:layout_marginTop="32dp"
         android:layout_marginHorizontal="24dp"
         android:textAppearance="@style/initial_signUp_id_ment" />
 
@@ -123,58 +248,6 @@
         android:textAppearance="@style/initial_signUp_pw_notice"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="당신의 프로필 이미지을 설정해주세요 :)"
-        android:layout_marginTop="28dp"
-        android:layout_marginHorizontal="24dp"
-        android:textAppearance="@style/initial_signUp_id_ment" />
-
-    <RadioGroup
-        android:id="@+id/rg_profileImageSelect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginHorizontal="24dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_image1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:button="@drawable/profile_image_selector1"/>
-
-        <RadioButton
-            android:id="@+id/rb_image2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/profile_image_selector2"/>
-
-        <RadioButton
-            android:id="@+id/rb_image3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/profile_image_selector3"/>
-
-        <RadioButton
-            android:id="@+id/rb_image4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/profile_image_selector4"/>
-
-        <RadioButton
-            android:id="@+id/rb_image5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/profile_image_selector5"/>
-    </RadioGroup>
 
     <TextView
         android:visibility="invisible"
