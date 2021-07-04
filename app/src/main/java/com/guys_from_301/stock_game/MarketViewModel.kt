@@ -181,9 +181,7 @@ class MarketViewModel(_marketActivity : Context, _activity: Activity): ViewModel
                 if (response.isSuccessful && response.body() != null) {
                     if(response.body()!! == "555"){
                         _stack.value = _stack.value?.plus(payment)
-                        Toast.makeText(_MainActivity, "서버에 올라감", Toast.LENGTH_LONG).show()
                         writeDataBase()
-
                     }
                     else if(response.body()!! == "666"){
                         Toast.makeText(_MainActivity, "오류 발생", Toast.LENGTH_LONG).show()

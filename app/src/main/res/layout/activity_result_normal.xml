@@ -191,7 +191,7 @@
                                 android:layout_marginStart="24dp"
                                 android:layout_weight="1"
                                 android:gravity="left"
-                                android:text="보상 스텍"
+                                android:text="보상 스택"
                                 android:textAppearance="@style/game_profitrate" />
 
                             <TextView

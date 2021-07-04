@@ -1,6 +1,6 @@
 package com.guys_from_301.stock_game
 
-import android.graphics.Color
+import android.graphics.*
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
@@ -130,16 +133,19 @@ class FragmentRanking : Fragment() {
         v.findViewById<TextView>(R.id.tv_user9_money_local).text = rank9_money+ "%"
         v.findViewById<TextView>(R.id.tv_user10_money_local).text = rank10_money+ "%"
 
-        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(profileImageId[ranker_image[0]]); ranker_local_image.add(R.id.iv_user1_image_local)
-        v.findViewById<ImageView>(R.id.iv_user2_image_local).setImageResource(profileImageId[ranker_image[1]]); ranker_local_image.add(R.id.iv_user2_image_local)
-        v.findViewById<ImageView>(R.id.iv_user3_image_local).setImageResource(profileImageId[ranker_image[2]]); ranker_local_image.add(R.id.iv_user3_image_local)
-        v.findViewById<ImageView>(R.id.iv_user4_image_local).setImageResource(profileImageId[ranker_image[3]]); ranker_local_image.add(R.id.iv_user4_image_local)
-        v.findViewById<ImageView>(R.id.iv_user5_image_local).setImageResource(profileImageId[ranker_image[4]]); ranker_local_image.add(R.id.iv_user5_image_local)
-        v.findViewById<ImageView>(R.id.iv_user6_image_local).setImageResource(profileImageId[ranker_image[5]]); ranker_local_image.add(R.id.iv_user6_image_local)
-        v.findViewById<ImageView>(R.id.iv_user7_image_local).setImageResource(profileImageId[ranker_image[6]]); ranker_local_image.add(R.id.iv_user7_image_local)
-        v.findViewById<ImageView>(R.id.iv_user8_image_local).setImageResource(profileImageId[ranker_image[7]]); ranker_local_image.add(R.id.iv_user8_image_local)
-        v.findViewById<ImageView>(R.id.iv_user9_image_local).setImageResource(profileImageId[ranker_image[8]]); ranker_local_image.add(R.id.iv_user9_image_local)
-        v.findViewById<ImageView>(R.id.iv_user10_image_local).setImageResource(profileImageId[ranker_image[9]]); ranker_local_image.add(R.id.iv_user10_image_local)
+        // 로컬 랭커 테두리
+        v.findViewById<ImageView>(R.id.iv_user1_image_local).setImageResource(R.drawable.pepe) ; ranker_local_image.add(R.id.iv_user1_image_local)
+
+//        v.findViewById<ImageView>(R.id.iv_user1_image_local).loadCircularImage(R.drawable.pepe, 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user1_image_local)
+        v.findViewById<ImageView>(R.id.iv_user2_image_local).loadCircularImage(profileImageId[ranker_image[1]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user2_image_local)
+        v.findViewById<ImageView>(R.id.iv_user3_image_local).loadCircularImage(profileImageId[ranker_image[2]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user3_image_local)
+        v.findViewById<ImageView>(R.id.iv_user4_image_local).loadCircularImage(profileImageId[ranker_image[3]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user4_image_local)
+        v.findViewById<ImageView>(R.id.iv_user5_image_local).loadCircularImage(profileImageId[ranker_image[4]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user5_image_local)
+        v.findViewById<ImageView>(R.id.iv_user6_image_local).loadCircularImage(profileImageId[ranker_image[5]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user6_image_local)
+        v.findViewById<ImageView>(R.id.iv_user7_image_local).loadCircularImage(profileImageId[ranker_image[6]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user7_image_local)
+        v.findViewById<ImageView>(R.id.iv_user8_image_local).loadCircularImage(profileImageId[ranker_image[7]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user8_image_local)
+        v.findViewById<ImageView>(R.id.iv_user9_image_local).loadCircularImage(profileImageId[ranker_image[8]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user9_image_local)
+        v.findViewById<ImageView>(R.id.iv_user10_image_local).loadCircularImage(profileImageId[ranker_image[9]], 5F, Color.parseColor("#F4730B")); ranker_local_image.add(R.id.iv_user10_image_local)
 
         if(rank_number!=0)
             myLocalImageViewId = ranker_local_image[rank_number-1]
@@ -220,12 +226,14 @@ class FragmentRanking : Fragment() {
                         }
                         else if(i>=4 && i<=10){
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 100f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+//                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+//here
+                        v.findViewById<ImageView>(arrayimage[i-1]).loadCircularImage(realkakaoplayer[i-1].IMAGE, 5F, Color.parseColor("#F4730B"))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 100f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
                         Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
                     }
@@ -244,14 +252,18 @@ class FragmentRanking : Fragment() {
                         }
                         else if(i>=4 && i<=10){
                         }
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 100f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                       // Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+                        //here
+                        v.findViewById<ImageView>(arrayimage[i-1]).loadCircularImage(realkakaoplayer[i-1].IMAGE, 5F, Color.parseColor("#F4730B"))
                     }
                     else{
-                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 10f).toString() + "%"
+                        v.findViewById<TextView>(arraytvmoney[i-1]).text = ((realkakaoplayer[i-1].MONEY*100).roundToInt() / 100f).toString() + "%"
                         v.findViewById<TextView>(arraytvname[i-1]).text = realkakaoplayer[i-1].NAME
-                        Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+ //                       Glide.with(v).load(realkakaoplayer[i-1].IMAGE).circleCrop().into(v.findViewById<ImageView>(arrayimage[i-1]))
+  //here
+                        v.findViewById<ImageView>(arrayimage[i-1]).loadCircularImage(realkakaoplayer[i-1].IMAGE, 5F, Color.parseColor("#F4730B"))
                     }
                     if(i==4){
                         v.findViewById<LinearLayout>(R.id.ll_kakaoUser4to10).visibility = View.VISIBLE
@@ -273,7 +285,7 @@ class FragmentRanking : Fragment() {
         tv_my_level = v.findViewById(R.id.tv_my_level)
         tv_my_nick =  v.findViewById(R.id.tv_my_nick)
         tv_my_stack = v.findViewById(R.id.tv_my_stack)
-        tv_my_stack.text = ((profileDbManager!!.getRelativeProfit()!! * 100).roundToInt() / 10f).toString() + "%"
+        tv_my_stack.text = ((profileDbManager!!.getRelativeProfit()!! * 100).roundToInt() / 100f).toString() + "%"
         tv_my_nick.text = profileDbManager!!.getNickname()!!
         tv_my_level.text = "레벨 " + profileDbManager!!.getLevel()!!.toString()
         v.findViewById<TextView>(R.id.tv_friend_invite).setOnClickListener{
@@ -308,8 +320,86 @@ class FragmentRanking : Fragment() {
         super.onResume()
         requireActivity().runOnUiThread {
             Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+
             if(myLocalImageViewId!=0)
                 Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
+                // here?
         }
     }
+
+    fun <T> ImageView.loadCircularImage(
+            model: T,
+            borderSize: Float = 0F,
+            borderColor: Int = Color.WHITE
+    ) {
+        Glide.with(context)
+                .asBitmap()
+                .load(model)
+                .apply(RequestOptions.circleCropTransform())
+                .into(object : BitmapImageViewTarget(this) {
+                    override fun setResource(resource: Bitmap?) {
+                        setImageDrawable(
+                                resource?.run {
+                                    RoundedBitmapDrawableFactory.create(
+                                            resources,
+                                            if (borderSize > 0) {
+                                                createBitmapWithBorder(borderSize, borderColor)
+                                            } else {
+                                                this
+                                            }
+                                    ).apply {
+                                        isCircular = true
+                                    }
+                                }
+                        )
+                    }
+                })
+    }
+
+    /**
+     * Create a new bordered bitmap with the specified borderSize and borderColor
+     *
+     * @param borderSize - The border size in pixel
+     * @param borderColor - The border color
+     * @return A new bordered bitmap with the specified borderSize and borderColor
+     */
+    private fun Bitmap.createBitmapWithBorder(borderSize: Float, borderColor: Int): Bitmap {
+        val borderOffset = (borderSize * 2).toInt()
+        val halfWidth = width / 2
+        val halfHeight = height / 2
+        val circleRadius = Math.min(halfWidth, halfHeight).toFloat()
+        val newBitmap = Bitmap.createBitmap(
+                width + borderOffset,
+                height + borderOffset,
+                Bitmap.Config.ARGB_8888
+        )
+
+        // Center coordinates of the image
+        val centerX = halfWidth + borderSize
+        val centerY = halfHeight + borderSize
+
+        val paint = Paint()
+        val canvas = Canvas(newBitmap).apply {
+            // Set transparent initial area
+            drawARGB(0, 0, 0, 0)
+        }
+
+        // Draw the transparent initial area
+        paint.isAntiAlias = true
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(centerX, centerY, circleRadius, paint)
+
+        // Draw the image
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(this, borderSize, borderSize, paint)
+
+        // Draw the createBitmapWithBorder
+        paint.xfermode = null
+        paint.style = Paint.Style.STROKE
+        paint.color = borderColor
+        paint.strokeWidth = borderSize
+        canvas.drawCircle(centerX, centerY, circleRadius, paint)
+        return newBitmap
+    }
+
 }
