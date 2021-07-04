@@ -2393,8 +2393,8 @@ class GameNormalActivity : AppCompatActivity() {
             sold += quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x // 총 매도 금액 최신화
             tradecomtot += (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F) // 총 수수로 최신화
             comlast = (quant1x*price1x+quant3x*price3x+quantinv1x*priceinv1x+quantinv3x*priceinv3x) * (tradecomrate - 1F)
-            if (gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = tradeday
-            else totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!! + gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! * 2
+            if (gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!! == 0) totaltradeday = 0
+            else totaltradeday = gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.sum()!! + gameNormalDb?.gameNormalDao()?.getSetWithNormalItem1Able(setId, accountID!!)?.size!!*2 - 1
 
             if (price1x >= aver1x) {
                 profityear += (price1x - aver1x) * quant1x

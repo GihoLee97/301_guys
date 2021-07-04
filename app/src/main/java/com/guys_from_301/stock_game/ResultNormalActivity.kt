@@ -104,7 +104,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         // 해당 게임 db 삭제
         deletedata()
 
-        var gamePlayDay = totaltradeday+ tradeday
+        var gamePlayDay = totaltradeday + tradeday
         if (isHistory) {
             tv_monthly_profit.visibility = View.INVISIBLE
             cl_monthly_profitrate_chart.visibility = View.INVISIBLE
@@ -117,13 +117,13 @@ class NewResultNormalActivity: AppCompatActivity() {
                     profileDbManager!!.getLoginPw()!!,
                     Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()
             )
-            rewardByStack((tradeday * (relativeprofitrate + 100) / 500).roundToInt())
+            rewardByStack((gamePlayDay * (relativeprofitrate + 100) / 100).roundToInt())
         }
 
         if (profitrate > 0) tv_profitRateFinal.text = "+" + per.format(profitrate) + "%"
         else tv_profitRateFinal.text = per.format(profitrate) + "%"
         tv_experience.text = "+"+Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt()+"exp"
-        tv_rewardStack.text = "+"+dec.format((tradeday * (relativeprofitrate + 100) / 500).roundToInt())
+        tv_rewardStack.text = "+"+dec.format((gamePlayDay * (relativeprofitrate + 100) / 100).roundToInt())
         if(profileDbManager!!.getExp()!! + Math.round(gamePlayDay*Math.pow(0.99, profileDbManager!!.getLevel()!!.toDouble())).toInt() >= profileDbManager!!.getLevel()!! * 1000){
             tv_levelup.text = "레벨 업! " + profileDbManager!!.getLevel()!! +" -> " + (profileDbManager!!.getLevel()!! + 1).toString()
         }
@@ -139,7 +139,7 @@ class NewResultNormalActivity: AppCompatActivity() {
         tv_totalDividend.text = "$ " + dec.format(dividendtot)
         tv_totalFee.text = "$ " + dec.format(tradecomtot)
         tv_realizeGainNLoss.text = "$ " + dec.format(profit)
-        tv_tradeday.text =tradeday.toString() + "일"
+        tv_tradeday.text = gamePlayDay.toString() + "일"
 
         ll_goBackHome.setOnClickListener {
             GotoMainactivity()
@@ -256,14 +256,11 @@ class NewResultNormalActivity: AppCompatActivity() {
         gamenormalDb = GameNormalDB.getInstace(this@NewResultNormalActivity)
         gamesetDB = GameSetDB.getInstace(this@NewResultNormalActivity)
         var profittotal: Float = profitrate
-        var money = profileDbManager!!.getMoney()!!
         println("---zz" + profittotal)
         println("---zz" + profitrate)
 
 
         // 사용자 profiledb의 money 업데이트
-        if (!java.lang.Float.isNaN(profittotal))
-            profileDbManager!!.setMoney(Math.round(money.toFloat() * (1.0 + profittotal * 0.01).toFloat()))
         if (isSafeCompleted)
             profileDbManager!!.setRoundCount(profileDbManager!!.getRoundCount()!! + 1)
 
