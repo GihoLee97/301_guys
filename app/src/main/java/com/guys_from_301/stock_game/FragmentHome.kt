@@ -70,6 +70,8 @@ class FragmentHome : Fragment() {
 //            param2 = it.getString(ARG_PARAM2)
         }
 
+        requestPermission(requireContext(),requireActivity())
+
 
     }
 
