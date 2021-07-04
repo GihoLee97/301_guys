@@ -266,7 +266,7 @@
         android:id="@+id/btn_go_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="타디스 시작하기"
+        android:text="타디스 시작하기 (로그인으로 이동)"
         android:layout_marginTop="48dp"
         android:gravity="center"
         android:background="@drawable/initial_box_go_on_gray"
