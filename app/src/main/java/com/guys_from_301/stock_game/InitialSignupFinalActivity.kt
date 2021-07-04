@@ -302,7 +302,7 @@ class InitialSignupFinalActivity : AppCompatActivity()  {
                     }
                     else if(response.body()!! == "666"){
                         findViewById<TextView>(R.id.tv_signup_final_ment_1).visibility = View.INVISIBLE
-                        val intent = Intent(mContext, InitialLoginActivity::class.java)
+                        val intent = Intent(mContext, InitialSignUpCompleteActivity::class.java)
                         if(method == "general"){
                             intent.putExtra("u_id", _u_id)
                             intent.putExtra("u_pw", _u_pw)

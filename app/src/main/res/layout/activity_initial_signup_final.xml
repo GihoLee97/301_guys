@@ -75,7 +75,7 @@
                     android:id="@+id/rb_icon1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_icon01_frog"/>
+                    android:button="@drawable/ic_icon01_frog_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -84,7 +84,7 @@
                     android:id="@+id/rb_icon2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon02_rocket_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -93,7 +93,7 @@
                     android:id="@+id/rb_icon3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon03_kid_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -102,7 +102,7 @@
                     android:id="@+id/rb_icon4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon04_parrot_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -111,7 +111,7 @@
                     android:id="@+id/rb_icon5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon05_bitcoin_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -120,7 +120,7 @@
                     android:id="@+id/rb_icon6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon06_ant_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -129,7 +129,7 @@
                     android:id="@+id/rb_icon7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/profile_change_icon"/>
+                    android:button="@drawable/ic_icon07_hanriver_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -138,7 +138,7 @@
                     android:id="@+id/rb_icon8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon08_119_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -147,7 +147,7 @@
                     android:id="@+id/rb_icon9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon09_cow_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -156,25 +156,7 @@
                     android:id="@+id/rb_icon10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
-                <View
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"/>
-
-                <RadioButton
-                    android:id="@+id/rb_icon11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
-                <View
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"/>
-
-                <RadioButton
-                    android:id="@+id/rb_icon12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/ic_ellipse_63__1_"/>
+                    android:button="@drawable/ic_icon10_cloud_copy"/>
                 <View
                     android:layout_width="12dp"
                     android:layout_height="match_parent"/>
@@ -207,7 +189,7 @@
             android:layout_width="300dp"
             android:layout_height="30dp"
             android:inputType="text"
-            android:hint="6자리 이상으로 입력해주세요"
+            android:hint="닉네임을 입력해주세요"
             android:background="@null"
             android:layout_gravity="center"
             android:gravity="center|left"/>
@@ -266,7 +248,7 @@
         android:id="@+id/btn_go_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="타디스 시작하기 (로그인으로 이동)"
+        android:text="회원가입 완료하기"
         android:layout_marginTop="48dp"
         android:gravity="center"
         android:background="@drawable/initial_box_go_on_gray"
