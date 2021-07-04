@@ -65,19 +65,36 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_donot_purchase"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="120dp">
 
             <TextView
                 android:id="@+id/tv_donot_purchase"
                 android:layout_width="247dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp"
-                android:text="최근 구매 내역이 존재하지 않습니다. \n 내역에는 현금 구매만 보여집니다"
+                android:text="최근 구매 내역이 존재하지 않습니다.\n 내역에는 현금 구매만 보여집니다"
+                android:textAppearance="@style/purchase_history_show_nohistory"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_check_purchase_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/initial_pw_go_on_ok"
+            android:text="구매 내역 확인 하기"
+            android:textAppearance="@style/purchase_history_show"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
