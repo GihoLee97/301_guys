@@ -248,6 +248,7 @@ class ProfileDbManager(initialActivity : Context){
         imageNum = newImageNum
         change = true
         updateHashValue()
+        write2database()
     }
 
     // setter

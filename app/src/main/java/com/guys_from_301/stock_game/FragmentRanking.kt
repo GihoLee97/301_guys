@@ -167,8 +167,10 @@ class FragmentRanking : Fragment() {
         }
         // kakao ranking
 
-        Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
-        //여기
+//        Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt() ]).circleCrop().into(v.findViewById(R.id.iv_my_image_local))
+
+        v.findViewById<ImageView>(R.id.iv_my_image_local).setImageResource(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()])
+
         friendsort()
         if(profileDbManager!!.getLogin() != 4){
                 v.findViewById<TextView>(R.id.tv_local_space).visibility = View.GONE
@@ -328,10 +330,12 @@ class FragmentRanking : Fragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().runOnUiThread {
-            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+            Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()]).circleCrop().into(requireView().findViewById(R.id.iv_my_image_local))
+
+
 
             if(myLocalImageViewId!=0)
-                Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
+                Glide.with(_MainActivity!!).load(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()]).circleCrop().into(requireView().findViewById(myLocalImageViewId))
                 // here?
         }
     }

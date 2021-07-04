@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import kotlin.math.floor
 
 var liveText : MutableLiveData<String> = MutableLiveData()
 
@@ -21,6 +23,7 @@ class ProfileSetActivity : AppCompatActivity() {
     private lateinit var ib_back: ImageButton
     private lateinit var cl_change_nickname: ConstraintLayout
     private lateinit var tv_nickname : TextView
+    private lateinit var iv_icon : ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +35,10 @@ class ProfileSetActivity : AppCompatActivity() {
         tv_change_icon = findViewById(R.id.tv_change_icon)
         cl_change_nickname = findViewById(R.id.cl_change_nickname)
         ib_back = findViewById(R.id.ib_back)
+        iv_icon = findViewById(R.id.iv_icon)
         tv_nickname.text = profileDbManager!!.getNickname()
 
+        iv_icon.setImageResource(profileImageId[profileDbManager!!.getImageNum()!!*5+floor((profileDbManager!!.getMoney()!! / 400000000f)).toInt()])
         if (profileDbManager!!.getLogin() == 1) { // general login
             cl_change_pw.visibility = View.VISIBLE
         }
